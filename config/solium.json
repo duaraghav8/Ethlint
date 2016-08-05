@@ -1,0 +1,40 @@
+{
+	"rules": {
+
+		"lbrace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that every if, for, while and do statement is followed by an opening curly brace '{'"
+		},
+
+		"mixedcase": {
+			"enabled": true,
+			"recommended": false,
+			"type": "warning",
+			"description": "Ensure that all variable, function and parameter names follow the mixedCase naming convention"
+		},
+
+		"camelcase": {
+			"enabled": true,
+			"recommended": false,
+			"type": "warning",
+			"description": "Ensure that contract, library, modifier and struct names follow CamelCase notation"
+		},
+
+		"uppercase": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that all constants (and only constants) contain only upper case letters and underscore"
+		},
+
+		"no-with": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure no use of with statements in the code"
+		}
+
+	}
+}
