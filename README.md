@@ -26,6 +26,49 @@ To run the linter over your entire project, use the following command in your ro
 solium
 ```
 
+#Plugging in your custom rules
+1. Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rule-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rule-filename": "./my-rules.js"```
+
+The format for writing your custom rule file is:
+
+```my-rules.js```
+
+```js
+module.exports = {
+  'my-rule-name-1': function (context) {
+    //Solium internally uses EventEmitter and emits an event every time it enters or leaves a node during the Depth First Traversal of the AST
+    context.on ('IfStatement', function (emittedObject) {
+    
+      //exit property is set to true if we are leaving the node
+      if (emittedObject.exit) {
+        return;
+      }
+      
+      //View the node representing an If Statement 
+      console.log (emittedObject.node);
+      
+      //report an error
+      context.report ({
+        node: emittedObject.node,
+        message: 'I JUST ENTERED AN IF STATEMENT!!',
+        line: 1,  //optional
+        column: 2 //optional
+      });
+      
+    });
+  },
+  
+  'my-rule-name-2': function (context) {
+  }
+};
+```
+
+See the [existing rules](https://github.com/duaraghav8/Solium/tree/master/lib/rules) to get an idea of how the rules are making use of the context object being provided to them.
+
+2. Then, inside the ```rules``` object in the same file, set your rule names to ```true```. 
+
+**NOTE**: If you write a rule whose name clashes with the name of a pre-defined rule, your custom rule overrides the pre-defined one.
+
 #Integrate Solium in your app
 To access Solium's API, first install it:
 
