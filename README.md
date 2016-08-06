@@ -1,5 +1,7 @@
 # Solium
-Solium is a linter for Solidity which uses Abstract Syntax Trees and allows the user to enable/disable existing rules and add their own ones!
+Solium is a linter for Solidity which uses Abstract Syntax Trees and allows the user to enable/disable existing rules and add their own ones! 
+
+It internally uses [solparse](https://github.com/duaraghav8/solparse) to parse your solidity code into a Spider Monkey compliant AST
 
 #Install
 ```bash
@@ -27,11 +29,9 @@ solium
 ```
 
 #Plugging in your custom rules
-1. Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rule-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rule-filename": "./my-rules.js"```
+-> Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rule-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rule-filename": "./my-rules.js"```
 
-The format for writing your custom rule file is:
-
-```my-rules.js```
+The format for writing your custom rule file (for example, ```my-rules.js```) is:
 
 ```js
 module.exports = {
@@ -59,13 +59,24 @@ module.exports = {
   },
   
   'my-rule-name-2': function (context) {
+    context.on ('ContractStatement', function (emittedObject) {
+      //similarly define this rule to do something with Contract Declarations
+    });
   }
 };
 ```
+**NOTE**: The best way to know which event you're looking for is to simply install [solparse](https://github.com/duaraghav8/solparse) or [solidity-parser](https://github.com/ConsenSys/solidity-parser), then parse your code into the AST and see the value of the ```type``` field of the node that you wish to target.
 
 See the [existing rules](https://github.com/duaraghav8/Solium/tree/master/lib/rules) to get an idea of how the rules are making use of the context object being provided to them.
 
-2. Then, inside the ```rules``` object in the same file, set your rule names to ```true```. 
+-> Then, inside the ```rules``` object in the same file, set your rule names to ```true```. For instance:
+
+```json
+"rules": {
+  "my-rule-name-1": true,
+  "my-rule-name-2": true
+}
+```
 
 **NOTE**: If you write a rule whose name clashes with the name of a pre-defined rule, your custom rule overrides the pre-defined one.
 
