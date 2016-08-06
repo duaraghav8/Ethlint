@@ -1,6 +1,20 @@
 {
 	"rules": {
 
+		"imports-on-top": {
+			"enabled": true,
+			"recommended": true,
+			"type": "Error",
+			"description": "Ensure that all import statements are on top of the file"
+		},
+
+		"blank-lines": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that top-level declarations are surrounded by 2 blank lines"
+		},
+
 		"lbrace": {
 			"enabled": true,
 			"recommended": true,
