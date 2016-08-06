@@ -7,7 +7,7 @@ npm install -g solium
 ```
 
 #Usage
-In the root directory of your DApp, run the following once:
+In the root directory of your DApp, run the following:
 ```bash
 solium --init
 ```
