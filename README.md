@@ -29,7 +29,7 @@ solium
 ```
 
 #Plugging in your custom rules
--> Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rule-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rule-filename": "./my-rules.js"```
+-> Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rules-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rules-filename": "./my-rules.js"```
 
 The format for writing your custom rule file (for example, ```my-rules.js```) is:
 
