@@ -12,7 +12,7 @@ In the root directory of your DApp, run the following:
 solium --init
 ```
 
-This create ```.soliumrc``` inside your root directory, which has the configuration for the enabled rules.
+This creates ```.soliumrc``` inside your root directory, which has the configuration for the enabled rules.
 
 You can disable a particular rule by setting its value to ```false```
 
