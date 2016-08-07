@@ -34,7 +34,7 @@ This lints all the files inside your project with ```.sol``` extension.
 
 #Additional Options
 
-1. use ```solium --hot``` to enable Hot loading (Hot swapping). This currently works only over the full project.
+1. use ```solium --hot``` to enable Hot loading (Hot swapping).
 
 #Plugging in your custom rules
 -> Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rules-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rules-filename": "./my-rules.js"```
