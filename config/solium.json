@@ -4,15 +4,15 @@
 		"imports-on-top": {
 			"enabled": true,
 			"recommended": true,
-			"type": "Error",
+			"type": "error",
 			"description": "Ensure that all import statements are on top of the file"
 		},
 
-		"blank-lines": {
+		"variable-declarations": {
 			"enabled": true,
 			"recommended": true,
-			"type": "warning",
-			"description": "Ensure that top-level declarations are surrounded by 2 blank lines"
+			"type": "error",
+			"description": "Ensure that array declarations don't have space between the type and brackets"
 		},
 
 		"lbrace": {
