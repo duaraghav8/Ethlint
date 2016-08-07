@@ -112,3 +112,6 @@ errorObjects.forEach ( (err) => {
 ```
 
 For a list of all available rules, see [solium.json](https://github.com/duaraghav8/Solium/blob/master/config/solium.json).
+
+#Contributing
+Please see the Developer Guide to understand how to contribute rules to this repository.
