@@ -15,6 +15,13 @@
 			"description": "Ensure that array declarations don't have space between the type and brackets"
 		},
 
+		"operator-whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that operators are surrounded by a single space on either side"
+		},
+
 		"lbrace": {
 			"enabled": true,
 			"recommended": true,
