@@ -1,6 +1,6 @@
 #Contributing rules to this repository
 
-Ideally, you would want to write a rule that complies with the Solidity [Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). However, if you feel that a certain rule is not mentioned the guide of contradicts a rule mentioned in the guide but is crucial to the linter, please raise an Issue to discuss this rule. Once, finalized, you may proceed to develop the rule, test it, and make a PR.
+Ideally, you would want to write a rule that complies with the Solidity [Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). However, if you feel that a certain rule is not mentioned in the guide or contradicts a rule mentioned in the guide but is crucial to the linter, please raise an Issue to discuss this rule. Once, finalized, you may proceed to develop the rule, test it, and make a PR.
 
 Let's take an example rule that you wish to add: 'foo-bar'.
 
@@ -16,8 +16,11 @@ Let's take an example rule that you wish to add: 'foo-bar'.
 ```
 
 Set ```enabled``` to ```true``` if you want to keep your rule enabled by default.
+
 Set ```recommended``` to ```true``` (this field currently doesn't play a role in the linter).
+
 Set ```type``` to either ```error``` or ```warning```, depending on the severity of the rule.
+
 Describe exactly what your rule does inside ```description```
 
 -> Add a new file called ```foo-bar.js``` inside the **lib/rules** directory. Below is the basic template for the rule file:
