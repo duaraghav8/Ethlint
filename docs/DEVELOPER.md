@@ -43,6 +43,10 @@ module.exports = {
 		 * getLine (node) - get the line number on which the specified node's code starts
 		 * getColumn (node) - get column no. on which the node's code starts
 		 * getParent (node) - get the parent node of the specified node
+		 * getNextChar (node) - get 1 character after the code of specified node
+		 * getPrevChar (node) - get 1 character before the code of specified node
+		 * getNextChars (node, charCount) - get charCount no. of characters after the code of specified node
+		 * getPrevChars (node, charCount) - get charCount no. of characters befre the code of specified node
 		 */
 		var sourceCodeObject = context.getSourceCode ();
 
