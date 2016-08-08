@@ -100,6 +100,7 @@ npm install --save solium
 ```js
 let Solium = require ('solium'),
   sourceCode = 'contract fOO_bar { function HELLO_WORLD () {} }';
+  //sourceCode can alternatively be a Buffer object
     
 let errorObjects = Solium.lint (sourceCode, {
   rules: {
