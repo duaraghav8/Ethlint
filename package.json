@@ -14,7 +14,10 @@
     "Solidity",
     "Abstract-Syntax-Tree"
   ],
-  "repository": "https://github.com/duaraghav8/Solium.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/duaraghav8/Solium.git"
+  },
   "author": "Raghav Dua <duaraghav8@gmail.com>",
   "license": "MIT",
   "dependencies": {

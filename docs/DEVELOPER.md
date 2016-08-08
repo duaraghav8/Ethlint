@@ -78,7 +78,11 @@ module.exports = {
 
 			context.report ({
 				node: node,
-				message: 'Your message: try to make it as short and descriptive as possible'
+				message: 'Your message: try to make it as short and descriptive as possible',
+				location: {	//optional
+					line: 1,	//optional
+					column: 2	//optional
+				}
 			});
 
 		});

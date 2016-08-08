@@ -59,8 +59,10 @@ module.exports = {
       context.report ({
         node: emittedObject.node,
         message: 'I JUST ENTERED AN IF STATEMENT!!',
-        line: 1,  //optional
-        column: 2 //optional
+        location: { //optional
+          line: 1,  //optional
+          column: 2 //optional
+        }
       });
       
     });
