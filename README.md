@@ -103,6 +103,7 @@ let Solium = require ('solium'),
   //sourceCode can alternatively be a Buffer object
     
 let errorObjects = Solium.lint (sourceCode, {
+  'custom-rules-filename': null,  //see above if you wish to add custom rules
   rules: {
     camelcase: true,
     mixedcase: true
