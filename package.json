@@ -7,7 +7,7 @@
     "solium": "./bin/solium.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha ./test/*/*.js --reporter spec"
   },
   "keywords": [
     "Lint",
@@ -26,5 +26,11 @@
     "sol-digger": "0.0.1",
     "sol-explore": "^1.6.1",
     "solparse": "^1.0.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.0.2",
+    "should": "^11.0.0",
+    "supertest": "^2.0.0"
   }
 }
