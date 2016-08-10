@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for Solium.js
+ * @fileoverview Tests for solium.js
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
