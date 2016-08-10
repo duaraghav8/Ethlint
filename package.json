@@ -23,7 +23,7 @@
   "dependencies": {
     "chokidar": "^1.6.0",
     "commander": "^2.9.0",
-    "sol-digger": "0.0.1",
+    "sol-digger": "0.0.2",
     "sol-explore": "^1.6.1",
     "solparse": "^1.0.0"
   },
