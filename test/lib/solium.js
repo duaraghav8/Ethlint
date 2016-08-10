@@ -71,7 +71,36 @@ describe ('Checking Exported Solium API', function () {
 		errorMessages.should.be.instanceof (Array);
 		errorMessages.length.should.equal (0);
 
+		//all event listeners should've been removed
 		Object.keys (Solium._events).length.should.equal (0);
+
+		done ();
+	});
+
+	it ('should handle invalid arguments when calling Solium.report ()', function (done) {
+		var astValidationMessageRegExp = /AST/,
+			messageValidationRegExp = /error description/;
+		
+		//basic validation
+		Solium.report.bind (Solium, null).should.throw ('Invalid error object');
+		Solium.report.bind (Solium).should.throw ('Invalid error object');
+
+		//isASTNode validation
+		Solium.report.bind (Solium, {node: null}).should.throw (astValidationMessageRegExp);
+		Solium.report.bind (Solium, {node: undefined}).should.throw (astValidationMessageRegExp);
+		Solium.report.bind (Solium, {node: 100}).should.throw (astValidationMessageRegExp);
+		Solium.report.bind (Solium, {node:{}}).should.throw (astValidationMessageRegExp);
+		Solium.report.bind (Solium, {node: {type: 100}}).should.throw (astValidationMessageRegExp);
+
+		//message validation
+		Solium.report.bind (Solium, {node: {type: 'Type'}}).should.throw (messageValidationRegExp);
+		Solium.report.bind (Solium, {node: {type: 'Type'}, message: ''}).should.throw (messageValidationRegExp);
+		Solium.report.bind (Solium, {node: {type: 'Type'}, message: null}).should.throw (messageValidationRegExp);
+		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 100}).should.throw (messageValidationRegExp);
+
+		//should not throw error with minimal valid object
+		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 'H'}).should.not.throw ();
+		Solium.reset ();	//clear everything
 
 		done ();
 	});
@@ -110,33 +139,73 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
-	it ('should handle invalid arguments when calling Solium.report ()', function (done) {
-		var astValidationMessageRegExp = /AST/,
-			messageValidationRegExp = /error description/;
-		
-		//basic validation
-		Solium.report.bind (null, null).should.throw ('Invalid error object');
-		Solium.report.bind (null).should.throw ('Invalid error object');
+	it ('should handle all invalid arguments for Solium.lint ()', function (done) {
+		var minimalConfig = { rules: {} },
+			minimalSourceCode = 'var foo = 100;';
 
-		//isASTNode validation
-		Solium.report.bind (null, {node: null}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (null, {node: undefined}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (null, {node: 100}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (null, {node:{}}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (null, {node: {type: 100}}).should.throw (astValidationMessageRegExp);
+		//sourceCode text validation
+		Solium.lint.bind (Solium, '', minimalConfig).should.throw ();
+		Solium.lint.bind (Solium, null, minimalConfig).should.throw ();
+		Solium.lint.bind (Solium, 100, minimalConfig).should.throw ();
 
-		//message validation
-		Solium.report.bind (null, {node: {type: 'Type'}}).should.throw (messageValidationRegExp);
-		Solium.report.bind (null, {node: {type: 'Type'}, message: ''}).should.throw (messageValidationRegExp);
-		Solium.report.bind (null, {node: {type: 'Type'}, message: null}).should.throw (messageValidationRegExp);
-		Solium.report.bind (null, {node: {type: 'Type'}, message: 100}).should.throw (messageValidationRegExp);
+		//config object validation
+		Solium.lint.bind (Solium, minimalSourceCode).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: null}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: 'foo'}).should.throw ();
 
-		//should not throw error with minimal valid object
-		Solium.report.bind (null, {node: {type: 'Type'}, message: 'H'}).should.not.throw ();
-		Solium.reset ();	//clear everything
-
+		//minimal valid arguments
+		Solium.lint.bind (Solium, minimalSourceCode, minimalConfig).should.not.throw ();
+		Solium.reset ();
 
 		done ();
+	});
+
+	it ('should function as expected when valid arguments are provided', function (done) {
+		var minimalConfig = { rules: {} },
+			minimalSourceCode = 'var foo = 100;';
+		var emissionCounter = 5;
+
+		function testComplete () {
+			Solium.reset ();
+			done ();
+		}
+
+		Solium.on ('Program', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('VariableDeclaration', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('VariableDeclarator', function (emitted) {
+			emitted.exit.should.be.type ('boolean');
+			emitted.node.should.be.type ('object');
+			emitted.node.should.have.ownProperty ('parent');
+			emitted.node.parent.should.be.type ('object');
+			emitted.node.parent.should.have.ownProperty ('type');
+			emitted.node.id.name.should.equal ('foo');
+
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('Identifier', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('Literal', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		//without any rules applied
+		var errorObjects = Solium.lint (minimalSourceCode, minimalConfig, true);
+		errorObjects.length.should.equal (0);
 	});
 
 });
