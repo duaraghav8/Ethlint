@@ -72,4 +72,52 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		done ();
 	});
 
+	it ('should behave as expected upon calling getNextChar ()', function (done) {
+		var sourceCodeObject = new SourceCode (sourceCodeText);
+
+		sourceCodeObject.getNextChar.bind (sourceCodeObject, {}).should.throw ();
+		sourceCodeObject.getNextChar.bind (sourceCodeObject).should.throw ();
+		sourceCodeObject.getNextChar (varDeclarator).should.equal (';');
+
+		done ();
+	});
+
+	it ('should behave as expected upon calling getPrevChar ()', function (done) {
+		var sourceCodeObject = new SourceCode (sourceCodeText);
+
+		sourceCodeObject.getPrevChar.bind (sourceCodeObject, {}).should.throw ();
+		sourceCodeObject.getPrevChar.bind (sourceCodeObject).should.throw ();
+		sourceCodeObject.getPrevChar (varDeclarator).should.equal (' ');
+
+		done ();
+	});
+
+	it ('should behave as expected upon calling getNextChars ()', function (done) {
+		var sourceCodeObject = new SourceCode (sourceCodeText);
+
+		sourceCodeObject.getNextChars.bind (sourceCodeObject, {}).should.throw ();
+		sourceCodeObject.getNextChars.bind (sourceCodeObject).should.throw ();
+		sourceCodeObject.getNextChars (varDeclarator).should.equal ('');
+		sourceCodeObject.getNextChars (varDeclarator, 1).should.equal (';');
+		sourceCodeObject.getNextChars (varDeclarator, -1).should.equal (';');
+		sourceCodeObject.getNextChars (varDeclarator, 100).should.equal (';\n\t}\n\n}');
+
+		done ();
+	});
+
+	it ('should behave as expected upon calling getPrevChars ()', function (done) {
+		var sourceCodeObject = new SourceCode (sourceCodeText);
+
+		sourceCodeObject.getPrevChars.bind (sourceCodeObject, {}).should.throw ();
+		sourceCodeObject.getPrevChars.bind (sourceCodeObject).should.throw ();
+		sourceCodeObject.getPrevChars (varDeclarator).should.equal ('');
+		sourceCodeObject.getPrevChars (varDeclarator, 4).should.equal ('var ');
+		sourceCodeObject.getPrevChars (varDeclarator, -4).should.equal ('var ');
+		sourceCodeObject.getPrevChars (varDeclarator, 100).should.equal (
+			'contract Visual {\n\n\tfunction foo () {\n\t\tvar '
+		);
+
+		done ();
+	});
+
 });
