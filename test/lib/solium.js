@@ -161,6 +161,31 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
+	it ('should not alter the configuration passed by user in any way', function (done) {
+		var userConfig = {
+			'custom-rules-file': null,
+			rules: {
+				'mixedcase': true,
+				'camelcase': false
+			}
+		};
+		var minimalSourceCode = 'var foo = 100;';
+
+		Solium.lint (minimalSourceCode, userConfig);
+
+		userConfig.should.be.type ('object');
+		userConfig.should.have.ownProperty ('custom-rules-file', null);
+		userConfig.should.have.ownProperty ('rules');
+		userConfig.rules.should.be.type ('object');
+		userConfig.rules.should.have.ownProperty ('mixedcase', true);
+		userConfig.rules.should.have.ownProperty ('camelcase', false);
+		Object.keys (userConfig).length.should.equal (2);
+
+		Solium.reset ();
+
+		done ();
+	});
+
 	it ('should function as expected when valid arguments are provided', function (done) {
 		var minimalConfig = { rules: {} },
 			minimalSourceCode = 'var foo = 100;';

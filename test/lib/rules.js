@@ -40,19 +40,52 @@ describe ('Checking exported rules object', function () {
 		//valid userRules object
 		rules.load.bind (rules, {}).should.not.throw ();
 
-		rules.load.bind (rules, {}, 'blahblah.txt').should.throw ();	//giving a non-existent file
+		rules.load.bind (rules, {}, 'blahblah.txt').should.throw ();	//giving a non-existent file for customRulesFilePath
 		
 		done ();
 	});
 
-	it ('should', function (done) {
-		rules.load ({ 'mixedcase': true });
+	it ('should return a rule object after valid call to load () & get ()', function (done) {
+		var config = { 'mixedcase': true, 'camelcase': false }
+		rules.load (config);
 		
 		var ret = rules.get ('mixedcase');
 		ret.should.be.type ('object');
 		ret.should.have.ownProperty ('verify');
 		ret.verify.should.be.type ('function');
+
+		ret = rules.get ('camelcase');
+		(typeof ret).should.equal ('undefined');
+
 		rules.reset ();
+
+		done ();
+	});
+
+	it ('rules set to false must be deleted, rest should be expanded with rule meta info', function (done) {
+		var config = {
+			'mixedcase': true,
+			'camelcase': false,
+			'NON_EXISTANT_RULE_1': true,
+			'NON_EXISTANT_RULE_2': false
+		};
+
+		rules.load (config);
+
+		config.should.be.type ('object');
+		config.should.not.have.ownProperty ('camelcase');
+		config.should.not.have.ownProperty ('NON_EXISTANT_RULE_2');
+
+		//a non-existant rule set to true must NOT be deleted by load (), this might be a custom-defined rule
+		config.should.have.ownProperty ('NON_EXISTANT_RULE_1', true);
+		config.should.have.ownProperty ('mixedcase');
+		config.mixedcase.should.be.type ('object');
+		config.mixedcase.should.have.ownProperty ('enabled', true);
+		config.mixedcase.should.have.ownProperty ('custom', false);
+		config.mixedcase.should.have.ownProperty ('recommended');
+		config.mixedcase.should.have.ownProperty ('type');
+		config.mixedcase.should.have.ownProperty ('description');
+		config.mixedcase.should.have.ownProperty ('id');
 
 		done ();
 	});
