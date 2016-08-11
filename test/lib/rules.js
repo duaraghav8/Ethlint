@@ -50,7 +50,7 @@ describe ('Checking exported rules object', function () {
 	});
 
 	it ('should return a rule object after valid call to load () & get ()', function (done) {
-		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true }
+		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true, 'lbrace': true }
 		rules.load (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 		
 		var ret = rules.get ('mixedcase');
@@ -66,6 +66,11 @@ describe ('Checking exported rules object', function () {
 		ret.should.have.ownProperty ('verify');
 		ret.verify.should.be.type ('function');
 
+		ret = rules.get ('lbrace');
+		ret.should.be.type ('object');
+		ret.should.have.ownProperty ('verify');
+		ret.verify.should.be.type ('function');
+
 		rules.reset ();
 
 		done ();
@@ -75,6 +80,7 @@ describe ('Checking exported rules object', function () {
 		var config = {
 			'mixedcase': true,
 			'camelcase': false,
+			'lbrace': true,
 			'CUSTOM_RULE': true,	//not defined in config/solium.json, is a user-defined rule,
 			'NON_EXISTANT_RULE_2': false
 		};
@@ -107,7 +113,14 @@ describe ('Checking exported rules object', function () {
 		config.CUSTOM_RULE.should.have.ownProperty ('id');
 		config.CUSTOM_RULE.id.should.be.type ('number');
 
-		//WRITE TESTS FOR OVERLAPPING RULE////////////////////////////////////////
+		config.should.have.ownProperty ('lbrace');
+		config.lbrace.should.be.type ('object');
+		config.lbrace.should.have.ownProperty ('enabled', true);
+		config.lbrace.should.have.ownProperty ('custom', false);
+		config.lbrace.should.have.ownProperty ('type');
+		config.lbrace.type.should.equal ('custom-error');
+		config.lbrace.should.have.ownProperty ('id');
+		config.lbrace.id.should.be.type ('number');
 
 		done ();
 	});
