@@ -33,9 +33,7 @@ describe ('Checking Exported Solium API', function () {
 		sourceCode.should.be.type ('object');
 		sourceCode.constructor.name.should.equal ('SourceCode');
 
-		sourceCode.should.have.ownProperty ('text');
-		should.equal (sourceCode.text, null);
-
+		sourceCode.should.have.ownProperty ('text', '');
 		sourceCode.should.have.property ('getLine');
 		(typeof sourceCode.getLine).should.equal ('function');
 		sourceCode.should.have.property ('getColumn');
