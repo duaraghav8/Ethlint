@@ -7,7 +7,7 @@
     "solium": "./bin/solium.js"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha ./test/*/*.js --reporter spec"
+    "test": "./node_modules/.bin/mocha ./test/*/*.js ./test/*/*/*.js --reporter spec"
   },
   "keywords": [
     "Lint",

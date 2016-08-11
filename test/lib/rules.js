@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for rules.js
+ * @fileoverview Tests for lib/rules.js
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
