@@ -45,4 +45,16 @@ describe ('Checking exported rules object', function () {
 		done ();
 	});
 
+	it ('should', function (done) {
+		rules.load ({ 'mixedcase': true });
+		
+		var ret = rules.get ('mixedcase');
+		ret.should.be.type ('object');
+		ret.should.have.ownProperty ('verify');
+		ret.verify.should.be.type ('function');
+		rules.reset ();
+
+		done ();
+	});
+
 });
