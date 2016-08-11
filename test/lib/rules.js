@@ -6,7 +6,8 @@
 'use strict';
 
 var should = require ('should');
-var rules = require ('../../lib/rules');
+var rules = require ('../../lib/rules'),
+	path = require ('path');
 
 describe ('Checking exported rules object', function () {
 
@@ -40,14 +41,17 @@ describe ('Checking exported rules object', function () {
 		//valid userRules object
 		rules.load.bind (rules, {}).should.not.throw ();
 
+		//specified rule is neither pre-defined nor custom
+		rules.load.bind (rules, {'NON_EXISTANT_RULE_1': true}).should.throw ();
+
 		rules.load.bind (rules, {}, 'blahblah.txt').should.throw ();	//giving a non-existent file for customRulesFilePath
 		
 		done ();
 	});
 
 	it ('should return a rule object after valid call to load () & get ()', function (done) {
-		var config = { 'mixedcase': true, 'camelcase': false }
-		rules.load (config);
+		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true }
+		rules.load (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 		
 		var ret = rules.get ('mixedcase');
 		ret.should.be.type ('object');
@@ -57,35 +61,53 @@ describe ('Checking exported rules object', function () {
 		ret = rules.get ('camelcase');
 		(typeof ret).should.equal ('undefined');
 
+		ret = rules.get ('CUSTOM_RULE');
+		ret.should.be.type ('object');
+		ret.should.have.ownProperty ('verify');
+		ret.verify.should.be.type ('function');
+
 		rules.reset ();
 
 		done ();
 	});
 
-	it ('rules set to false must be deleted, rest should be expanded with rule meta info', function (done) {
+	it ('rules set to false to be deleted, rest (pre-defined) should be expanded with rule meta info', function (done) {
 		var config = {
 			'mixedcase': true,
 			'camelcase': false,
-			'NON_EXISTANT_RULE_1': true,
+			'CUSTOM_RULE': true,	//not defined in config/solium.json, is a user-defined rule,
 			'NON_EXISTANT_RULE_2': false
 		};
 
-		rules.load (config);
+		rules.load (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 
 		config.should.be.type ('object');
 		config.should.not.have.ownProperty ('camelcase');
 		config.should.not.have.ownProperty ('NON_EXISTANT_RULE_2');
 
 		//a non-existant rule set to true must NOT be deleted by load (), this might be a custom-defined rule
-		config.should.have.ownProperty ('NON_EXISTANT_RULE_1', true);
+
 		config.should.have.ownProperty ('mixedcase');
 		config.mixedcase.should.be.type ('object');
 		config.mixedcase.should.have.ownProperty ('enabled', true);
 		config.mixedcase.should.have.ownProperty ('custom', false);
 		config.mixedcase.should.have.ownProperty ('recommended');
+		config.mixedcase.recommended.should.be.type ('boolean');
 		config.mixedcase.should.have.ownProperty ('type');
 		config.mixedcase.should.have.ownProperty ('description');
 		config.mixedcase.should.have.ownProperty ('id');
+		config.mixedcase.id.should.be.type ('number');
+
+		config.should.have.ownProperty ('CUSTOM_RULE');
+		config.CUSTOM_RULE.should.be.type ('object');
+		config.CUSTOM_RULE.should.have.ownProperty ('enabled', true);
+		config.CUSTOM_RULE.should.have.ownProperty ('custom', false);
+		config.CUSTOM_RULE.should.have.ownProperty ('type');
+		config.CUSTOM_RULE.type.should.equal ('custom-error');
+		config.CUSTOM_RULE.should.have.ownProperty ('id');
+		config.CUSTOM_RULE.id.should.be.type ('number');
+
+		//WRITE TESTS FOR OVERLAPPING RULE////////////////////////////////////////
 
 		done ();
 	});
