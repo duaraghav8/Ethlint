@@ -13,10 +13,10 @@ describe ('Testing astUtils Object', function () {
 	var sourceCode = 'contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}',
 		varDeclarator = {
 			type: 'VariableDeclarator',
-  			id: { type: 'Identifier', name: 'x', start: 42, end: 43 },
-  			init: { type: 'Literal', value: 100, start: 46, end: 49 },
-  			start: 42,
-  			end: 49
+  			id: { type: 'Identifier', name: 'x', start: 44, end: 45 },
+  			init: { type: 'Literal', value: 100, start: 48, end: 51 },
+  			start: 44,
+  			end: 51
   		};
 
 	it ('should expose a set of functions for use', function (done) {
