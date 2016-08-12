@@ -119,3 +119,18 @@ For a list of all available rules, see [solium.json](https://github.com/duaragha
 
 #Contributing
 Please see the [Developer Guide](https://github.com/duaraghav8/Solium/blob/master/docs/DEVELOPER.md) to understand how to contribute rules to this repository.
+
+##Setup
+
+Clone the repository, traverse to the root directory of the project, then install dependencies:
+```
+npm install
+```
+
+##Running Tests
+```
+npm test
+```
+
+#License
+##MIT

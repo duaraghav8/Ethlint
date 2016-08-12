@@ -50,7 +50,7 @@ describe ('Checking exported rules object', function () {
 	});
 
 	it ('should return a rule object after valid call to load () & get ()', function (done) {
-		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true, 'lbrace': true }
+		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true, 'lbrace': true };
 		rules.load (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 		
 		var ret = rules.get ('mixedcase');
@@ -66,10 +66,15 @@ describe ('Checking exported rules object', function () {
 		ret.should.have.ownProperty ('verify');
 		ret.verify.should.be.type ('function');
 
+		//overlapping rule - lbrace (custom) should overwrite lbrace (pre-defined)
 		ret = rules.get ('lbrace');
 		ret.should.be.type ('object');
 		ret.should.have.ownProperty ('verify');
 		ret.verify.should.be.type ('function');
+
+		//rule definition exists in the file but shouldn't be included in rules because we don't enable it
+		ret = rules.get ('not-included');
+		(typeof ret).should.equal ('undefined');
 
 		rules.reset ();
 
