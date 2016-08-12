@@ -16,13 +16,13 @@ describe ('Checking Exported Solium API', function () {
 		Solium.should.be.instanceof (EventEmitter);
 		
 		Solium.should.have.ownProperty ('reset');
-		(typeof Solium.reset).should.equal ('function');
+		Solium.reset.should.be.type ('function');
 		Solium.should.have.ownProperty ('lint');
-		(typeof Solium.lint).should.equal ('function');
+		Solium.lint.should.be.type ('function');
 		Solium.should.have.ownProperty ('report');
-		(typeof Solium.report).should.equal ('function');
+		Solium.report.should.be.type ('function');
 		Solium.should.have.ownProperty ('getSourceCode');
-		(typeof Solium.getSourceCode).should.equal ('function');
+		Solium.getSourceCode.should.be.type ('function');
 
 		done ();
 	});
@@ -35,23 +35,23 @@ describe ('Checking Exported Solium API', function () {
 
 		sourceCode.should.have.ownProperty ('text', '');
 		sourceCode.should.have.property ('getLine');
-		(typeof sourceCode.getLine).should.equal ('function');
+		sourceCode.getLine.should.be.type ('function');
 		sourceCode.should.have.property ('getColumn');
-		(typeof sourceCode.getColumn).should.equal ('function');
+		sourceCode.getColumn.should.be.type ('function');
 		sourceCode.should.have.property ('getParent');
-		(typeof sourceCode.getParent).should.equal ('function');
+		sourceCode.getParent.should.be.type ('function');
 
 		sourceCode.should.have.property ('getText');
-		(typeof sourceCode.getText).should.equal ('function');
+		sourceCode.getText.should.be.type ('function');
 
 		sourceCode.should.have.property ('getNextChar');
-		(typeof sourceCode.getNextChar).should.equal ('function');
+		sourceCode.getNextChar.should.be.type ('function');
 		sourceCode.should.have.property ('getPrevChar');
-		(typeof sourceCode.getPrevChar).should.equal ('function');
+		sourceCode.getPrevChar.should.be.type ('function');
 		sourceCode.should.have.property ('getNextChars');
-		(typeof sourceCode.getNextChars).should.equal ('function');
+		sourceCode.getNextChars.should.be.type ('function');
 		sourceCode.should.have.property ('getPrevChars');
-		(typeof sourceCode.getPrevChars).should.equal ('function');
+		sourceCode.getPrevChars.should.be.type ('function');
 
 		done ();
 	});
