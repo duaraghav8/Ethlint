@@ -90,14 +90,15 @@ describe ('Testing RuleContext object', function () {
 		done ();
 	});
 
-	/*it ('should behave as expected upon calling on ()', function (done) {
-		Solium.lint (sourceCode, { rules: {} });
+	it ('should behave as expected upon calling on ()', function (done) {
 		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
 
 		rcObject.on ('ContractStatement', function (emitted) {
 			Solium.reset ();
 			done ();
 		});
-	});*/
+
+		Solium.lint (sourceCode, { rules: {} }, true);
+	});
 
 });
