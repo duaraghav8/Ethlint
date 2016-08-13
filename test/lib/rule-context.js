@@ -64,6 +64,20 @@ describe ('Testing RuleContext object', function () {
 		done ();
 	});
 
+	it ('should handle invalid argument(s) passed to report ()', function (done) {
+		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
+
+		rcObject.report.bind (rcObject).should.throw ();
+		rcObject.report.bind (rcObject, null).should.throw ();
+		rcObject.report.bind (rcObject, 100).should.throw ();
+		rcObject.report.bind (rcObject, 'foo').should.throw ();
+		rcObject.report.bind (rcObject, []).should.throw ();
+
+		//rcObject.report.bind (rcObject, {}).should.not.throw ();
+
+		done ();
+	});
+
 	it ('should behave as expected upon calling report ()', function (done) {
 		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
 
