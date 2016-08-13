@@ -73,8 +73,6 @@ describe ('Testing RuleContext object', function () {
 		rcObject.report.bind (rcObject, 'foo').should.throw ();
 		rcObject.report.bind (rcObject, []).should.throw ();
 
-		//rcObject.report.bind (rcObject, {}).should.not.throw ();
-
 		done ();
 	});
 
