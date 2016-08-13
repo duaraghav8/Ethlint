@@ -62,6 +62,13 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure that no empty blocks {} exist"
+		},
+
+		"no-unused-vars": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Flag all the variables that were declared but never used"
 		}
 
 	}
