@@ -16,9 +16,9 @@ In the root directory of your DApp, run the following:
 solium --init
 ```
 
-This creates ```.soliumrc.json``` inside your root directory, which has the configuration for the enabled and custom rules.
+This creates ```.soliumrc.json``` and ```.soliumignore``` inside your root directory, which have the configuration for the enabled and custom rules and files and folders to ignore while running the linter respectively.
 
-You can disable a particular rule by setting its value to ```false```
+You can disable a particular rule by setting its value to ```false``` in ```.soliumrc.json```
 
 In order to lint a specific file, use:
 ```bash
