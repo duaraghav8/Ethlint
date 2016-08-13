@@ -55,6 +55,13 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure no use of with statements in the code"
+		},
+
+		"no-empty-blocks": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that no empty blocks {} exist"
 		}
 
 	}
