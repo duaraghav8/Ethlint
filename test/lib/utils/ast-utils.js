@@ -61,6 +61,16 @@ describe ('Testing astUtils Object', function () {
 		done ();
 	});
 
+	it ('should handle invalid argument(s) passed to getParent ()', function (done) {
+		astUtils.getParent.bind (astUtils).should.throw ();
+		astUtils.getParent.bind (astUtils, null).should.throw ();
+		astUtils.getParent.bind (astUtils, 100).should.throw ();
+		astUtils.getParent.bind (astUtils, 'foo').should.throw ();
+		astUtils.getParent.bind (astUtils, []).should.throw ();
+
+		done ();
+	});
+
 	it ('should return correct line no. upon getLine() with valid AST node & sourceCode init()ed', function (done) {
   		astUtils.init (sourceCode);
   		astUtils.getLine (varDeclarator).should.equal (4)
@@ -69,10 +79,30 @@ describe ('Testing astUtils Object', function () {
 		done ();
 	});
 
+	it ('should handle invalid argument(s) passed to getLine ()', function (done) {
+		astUtils.getLine.bind (astUtils).should.throw ();
+		astUtils.getLine.bind (astUtils, null).should.throw ();
+		astUtils.getLine.bind (astUtils, 100).should.throw ();
+		astUtils.getLine.bind (astUtils, 'foo').should.throw ();
+		astUtils.getLine.bind (astUtils, []).should.throw ();
+
+		done ();
+	});
+
 	it ('should return correct column no. upon getColumn() with valid AST node & sourceCode init()ed', function (done) {
 		astUtils.init (sourceCode);
 		//astUtils.getColumn (varDeclarator).should.equal (/*COLUMN NO. - LOGIC NOT WRITTEN YET*/);
 		astUtils.init ('');
+
+		done ();
+	});
+
+	it ('should handle invalid argument(s) passed to getColumn ()', function (done) {
+		astUtils.getColumn.bind (astUtils).should.throw ();
+		astUtils.getColumn.bind (astUtils, null).should.throw ();
+		astUtils.getColumn.bind (astUtils, 100).should.throw ();
+		astUtils.getColumn.bind (astUtils, 'foo').should.throw ();
+		astUtils.getColumn.bind (astUtils, []).should.throw ();
 
 		done ();
 	});
