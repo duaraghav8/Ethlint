@@ -69,6 +69,13 @@
 			"recommended": true,
 			"type": "error",
 			"description": "Flag all the variables that were declared but never used"
+		},
+
+		"double-quotes": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that string are quoted with double-quotes only"
 		}
 
 	}
