@@ -12,6 +12,13 @@
 			"enabled": true,
 			"recommended": true,
 			"type": "error",
+			"description": "Ensure that names 'l', 'O' & 'I' are not used for variables"
+		},
+
+		"array-declarations": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
 			"description": "Ensure that array declarations don't have space between the type and brackets"
 		},
 
