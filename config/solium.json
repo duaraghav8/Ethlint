@@ -83,6 +83,13 @@
 			"recommended": true,
 			"type": "error",
 			"description": "Ensure that string are quoted with double-quotes only"
+		},
+
+		"blank-lines": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that there is exactly a 2-line gap between Contract and Funtion declarations"
 		}
 
 	}
