@@ -120,4 +120,89 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		done ();
 	});
 
+	it ('should behave as expected upon calling getStringBetweenNodes ()', function (done) {
+		var sourceCodeText = 'var x = 100;\n\tvar (y) = 200;\n\n\tvar z = 300;',
+			sourceCodeObject = new SourceCode (sourceCodeText);
+
+		var prevNode = {
+  			"type": "VariableDeclaration",
+  			"declarations": [
+    			{
+      				"type": "VariableDeclarator",
+      				"id": {
+        				"type": "Identifier",
+        				"name": "x",
+        				"start": 4,
+        				"end": 5
+      				},
+      				"init": {
+        				"type": "Literal",
+        				"value": 100,
+        				"start": 8,
+        				"end": 11
+      				},
+      				"start": 4,
+      				"end": 11
+    			}
+  			],
+  			"start": 0,
+  			"end": 12
+		};
+
+    	var currentNode = {
+  			"type": "VariableDeclaration",
+  			"declarations": [
+    			{
+      				"type": "VariableDeclarator",
+      				"id": {
+        				"type": "Identifier",
+        				"name": "z",
+        				"start": 35,
+        				"end": 36
+      				},
+      				"init": {
+        				"type": "Literal",
+        				"value": 300,
+        				"start": 39,
+        				"end": 42
+      				},
+      				"start": 35,
+      				"end": 42
+    			}
+  			],
+  			"start": 31,
+  			"end": 43
+		};
+
+		sourceCodeObject
+			.getStringBetweenNodes (prevNode, currentNode)
+			.should.equal ('\n\tvar (y) = 200;\n\n\t');
+
+		sourceCodeObject
+			.getStringBetweenNodes
+			.bind (sourceCodeObject).should.throw ();
+
+		sourceCodeObject
+			.getStringBetweenNodes
+			.bind (sourceCodeObject, 1, 1).should.throw ();
+
+		sourceCodeObject
+			.getStringBetweenNodes
+			.bind (sourceCodeObject, {}, {}).should.throw ();
+
+		sourceCodeObject
+			.getStringBetweenNodes
+			.bind (sourceCodeObject, null, null).should.throw ();
+
+		sourceCodeObject
+			.getStringBetweenNodes
+			.bind (sourceCodeObject, [], []).should.throw ();
+
+		sourceCodeObject
+			.getStringBetweenNodes
+			.bind (sourceCodeObject, currentNode, prevNode).should.throw ();
+
+		done ();
+	});
+
 });
