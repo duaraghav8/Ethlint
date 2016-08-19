@@ -84,6 +84,15 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.getNextChar.bind (sourceCodeObject, {}).should.throw ();
 		sourceCodeObject.getNextChar.bind (sourceCodeObject).should.throw ();
 		sourceCodeObject.getNextChar (varDeclarator).should.equal (';');
+		//Imitate the last node (with no chars after its code), the function should return null
+		(sourceCodeObject.getNextChar (
+			{type: 'LastNode', end: sourceCodeText.length}
+		) === null).should.equal (true);
+
+		//extreme
+		(sourceCodeObject.getNextChar (
+			{type: 'LastNode', end: 100000}
+		) === null).should.equal (true);
 
 		done ();
 	});
@@ -94,6 +103,15 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.getPrevChar.bind (sourceCodeObject, {}).should.throw ();
 		sourceCodeObject.getPrevChar.bind (sourceCodeObject).should.throw ();
 		sourceCodeObject.getPrevChar (varDeclarator).should.equal (' ');
+		//Imitate the first node (with no chars before its code), the function should return null
+		(sourceCodeObject.getPrevChar (
+			{type: 'FirstNode', start: 0}
+		) === null).should.equal (true);
+
+		//extreme
+		(sourceCodeObject.getPrevChar (
+			{type: 'FirstNode', start: -100000}
+		) === null).should.equal (true);
 
 		done ();
 	});
