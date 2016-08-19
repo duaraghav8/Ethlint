@@ -31,6 +31,9 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.should.have.property ('getLine');
 		sourceCodeObject.getLine.should.be.type ('function');
 
+		sourceCodeObject.should.have.property ('getEndingLine');
+		sourceCodeObject.getLine.should.be.type ('function');
+
 		sourceCodeObject.should.have.property ('getColumn');
 		sourceCodeObject.getColumn.should.be.type ('function');
 
@@ -51,6 +54,9 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.getNextChars.should.be.type ('function');
 
 		sourceCodeObject.should.have.property ('getPrevChars');
+		sourceCodeObject.getPrevChars.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('getStringBetweenNodes');
 		sourceCodeObject.getPrevChars.should.be.type ('function');
 
 		done ();

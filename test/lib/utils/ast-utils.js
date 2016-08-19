@@ -11,13 +11,55 @@ var astUtils = require ('../../../lib/utils/ast-utils');
 describe ('Testing astUtils Object', function () {
 
 	var sourceCode = 'contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}',
+
 		varDeclarator = {
 			type: 'VariableDeclarator',
   			id: { type: 'Identifier', name: 'x', start: 44, end: 45 },
   			init: { type: 'Literal', value: 100, start: 48, end: 51 },
   			start: 44,
   			end: 51
-  		};
+  		},
+
+  		functionDeclaration = {
+			"type": "FunctionDeclaration",
+			"name": "foo",
+			"params": null,
+			"modifiers": null,
+			"body": {
+				"type": "BlockStatement",
+				"body": [
+				{
+        			"type": "VariableDeclaration",
+        			"declarations": [
+          			{
+            			"type": "VariableDeclarator",
+            			"id": {
+              				"type": "Identifier",
+              				"name": "x",
+              				"start": 44,
+              				"end": 45
+            			},
+            			"init": {
+              			"type": "Literal",
+              			"value": 100,
+              			"start": 48,
+              			"end": 51
+            			},
+            			"start": 44,
+            			"end": 51
+          			}
+        			],
+        			"start": 40,
+        			"end": 52
+      			}
+    			],
+    			"start": 40,
+    			"end": 52
+  			},
+  			"is_abstract": false,
+  			"start": 20,
+  			"end": 57
+		};
 
 	it ('should expose a set of functions for use', function (done) {
 		astUtils.should.have.ownProperty ('init');
@@ -73,7 +115,8 @@ describe ('Testing astUtils Object', function () {
 
 	it ('should return correct line no. upon getLine() with valid AST node & sourceCode init()ed', function (done) {
   		astUtils.init (sourceCode);
-  		astUtils.getLine (varDeclarator).should.equal (4)
+  		astUtils.getLine (varDeclarator).should.equal (4);
+  		astUtils.getLine (functionDeclaration).should.equal (3);
   		astUtils.init ('');
 
 		done ();
@@ -103,6 +146,26 @@ describe ('Testing astUtils Object', function () {
 		astUtils.getColumn.bind (astUtils, 100).should.throw ();
 		astUtils.getColumn.bind (astUtils, 'foo').should.throw ();
 		astUtils.getColumn.bind (astUtils, []).should.throw ();
+
+		done ();
+	});
+
+	it ('should return correct line no. on getEndingLine() with valid AST node & sourceCode init()ed', function (done) {
+  		astUtils.init (sourceCode);
+  		astUtils.getEndingLine (varDeclarator).should.equal (4);
+  		astUtils.getEndingLine (functionDeclaration).should.equal (5);
+  		//console.log ('***********', astUtils.getEndingLine (functionDeclaration));
+  		astUtils.init ('');
+
+		done ();
+	});
+
+	it ('should handle invalid argument(s) passed to getLine ()', function (done) {
+		astUtils.getEndingLine.bind (astUtils).should.throw ();
+		astUtils.getEndingLine.bind (astUtils, null).should.throw ();
+		astUtils.getEndingLine.bind (astUtils, 100).should.throw ();
+		astUtils.getEndingLine.bind (astUtils, 'foo').should.throw ();
+		astUtils.getEndingLine.bind (astUtils, []).should.throw ();
 
 		done ();
 	});
