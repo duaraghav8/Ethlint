@@ -154,7 +154,6 @@ describe ('Testing astUtils Object', function () {
   		astUtils.init (sourceCode);
   		astUtils.getEndingLine (varDeclarator).should.equal (4);
   		astUtils.getEndingLine (functionDeclaration).should.equal (5);
-  		//console.log ('***********', astUtils.getEndingLine (functionDeclaration));
   		astUtils.init ('');
 
 		done ();
