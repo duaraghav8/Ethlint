@@ -44,6 +44,9 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.should.have.property ('getText');
 		sourceCodeObject.getText.should.be.type ('function');
 
+		sourceCodeObject.should.have.property ('getTextOnLine');
+		sourceCodeObject.getText.should.be.type ('function');
+
 		sourceCodeObject.should.have.property ('getNextChar');
 		sourceCodeObject.getNextChar.should.be.type ('function');
 
