@@ -90,6 +90,13 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure that there is exactly a 2-line gap between Contract and Funtion declarations"
+		},
+
+		"indentation": {
+			"enabled": true,
+			"recommended": false,
+			"type": "warning",
+			"description": "Ensure consistent indentation of 2 spaces per level"
 		}
 
 	}
