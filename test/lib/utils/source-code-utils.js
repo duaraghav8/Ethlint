@@ -229,4 +229,25 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		done ();
 	});
 
+	it ('should behave as expected upon calling getTextOnLine()', function (done) {
+		var sourceCodeObject = new SourceCode (sourceCodeText),
+			sourceCodeTextLines = sourceCodeText.split ('\n');
+
+		for (var i = 0; i < sourceCodeTextLines.length; i++) {
+			sourceCodeObject.getTextOnLine (i+1)
+				.should.equal (sourceCodeTextLines [i]);
+		}
+
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject).should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, null).should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, '').should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, 0).should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, '1').should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, -1).should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, 100).should.throw ();
+		sourceCodeObject.getTextOnLine.bind (sourceCodeObject, 2.3).should.throw ();
+
+		done ();
+	});
+
 });
