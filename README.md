@@ -35,6 +35,7 @@ This lints all the files inside your project with ```.sol``` extension.
 #Additional Options
 
 1. use ```solium --hot``` to enable Hot loading (Hot swapping).
+2. When new rules are added in subsequent versions and you update Solium, you need not re-initialize with ```--init```. Simply run ```solium --sync``` in your root directory and it automatically adds the newly added rules to your ```.soliumrc.json```. The sync options **doesn't change anything else in your confiuration files**.
 
 #Plugging in your custom rules
 -> Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rules-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rules-filename": "./my-rules.js"```
