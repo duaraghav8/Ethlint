@@ -97,6 +97,13 @@
 			"recommended": false,
 			"type": "warning",
 			"description": "Ensure consistent indentation of 2 spaces per level"
+		},
+
+		"whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Specify where whitespace is suitable and where it isn't"
 		}
 
 	}
