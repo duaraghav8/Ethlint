@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for double-quotes rule
+ * @fileoverview Tests for imports-on-top rule
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
@@ -13,14 +13,14 @@ var Solium = require ('../../../../lib/solium'),
 var userConfig = {
   "custom-rules-filename": null,
   "rules": {
-    "double-quotes": true,
+    "imports-on-top": true,
   }
 };
 
-describe ('[RULE] double-quotes: Acceptances', function () {
+describe ('[RULE] imports-on-top: Acceptances', function () {
 
-	it ('should accept strings quoted with double quotes', function (done) {
-		var code = fs.readFileSync (path.join (__dirname, './accept/double-quoted.sol'), 'utf8'),
+	it ('should accept if all import statements are on top of the file', function (done) {
+		var code = fs.readFileSync (path.join (__dirname, './accept/on-top.sol'), 'utf8'),
 			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -33,14 +33,14 @@ describe ('[RULE] double-quotes: Acceptances', function () {
 });
 
 
-describe ('[RULE] double-quotes: Rejections', function () {
+describe ('[RULE] imports-on-top: Rejections', function () {
 
-	it ('should reject strings quoted with single quotes', function (done) {
-		var code = fs.readFileSync (path.join (__dirname, './reject/single-quoted.sol'), 'utf8'),
+	it ('should reject any import statement NOT on top of file', function (done) {
+		var code = fs.readFileSync (path.join (__dirname, './reject/intermingled.sol'), 'utf8'),
 			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (5);
+		errors.length.should.equal (3);
 
 		Solium.reset ();
 		done ();
