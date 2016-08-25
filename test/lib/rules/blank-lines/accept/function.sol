@@ -5,6 +5,10 @@ contract A {
 
 
 contract B is A {
+	struct Chumma {
+		uint x;
+	}
+	
     function spam() {
 
     }
