@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for blank-lines rule
+ * @fileoverview Tests for camelcase rule
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
