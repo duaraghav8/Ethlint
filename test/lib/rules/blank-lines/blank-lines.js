@@ -26,6 +26,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -36,6 +37,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -46,6 +48,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -56,6 +59,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -66,6 +70,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -85,6 +90,7 @@ describe ('[RULE] blank-lines: Rejections', function () {
 		errors [1].node.name.should.equal ('Bcd');
 		errors [2].node.name.should.equal ('Cde');
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -99,6 +105,7 @@ describe ('[RULE] blank-lines: Rejections', function () {
 		errors [1].node.name.should.equal ('Bcd');
 		errors [2].node.name.should.equal ('Cde');
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -111,6 +118,7 @@ describe ('[RULE] blank-lines: Rejections', function () {
 
 		errors [0].node.name.should.equal ('spam');
 
+		Solium.reset ();
 		done ();
 	});
 

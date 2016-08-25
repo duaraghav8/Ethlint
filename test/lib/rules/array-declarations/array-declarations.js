@@ -23,6 +23,7 @@ describe ('[RULE] array-declarations: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -33,6 +34,7 @@ describe ('[RULE] array-declarations: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -48,6 +50,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 		errors.length.should.equal (1);
 		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -59,6 +62,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 		errors.length.should.equal (1);
 		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -70,6 +74,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 		errors.length.should.equal (1);
 		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -81,6 +86,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 		errors.length.should.equal (1);
 		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
 
+		Solium.reset ();
 		done ();
 	});
 
