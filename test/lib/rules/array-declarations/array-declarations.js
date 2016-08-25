@@ -14,7 +14,7 @@ var userConfig = {
   }
 };
 
-describe ('Acceptances', function () {
+describe ('[RULE] array-declarations: Acceptances', function () {
 
 	it ('should accept "uint[] x;"', function (done) {
 		var code = 'uint[] x;',
@@ -38,7 +38,7 @@ describe ('Acceptances', function () {
 
 });
 
-describe ('Rejections', function () {
+describe ('[RULE] array-declarations: Rejections', function () {
 
 	it ('should reject "uint[ ] x;"', function (done) {
 		var code = 'uint[ ] x;',
