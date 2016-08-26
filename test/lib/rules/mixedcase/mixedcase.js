@@ -476,30 +476,4 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		done ();
 	});
 
-	/*----------------VARIABLE DEC RULE-------------------------------------------------
-	it ('should reject names "l", "o", "I"', function (done) {
-		var code = [
-			'var l;',
-			'var o;',
-			'var I;'
-		];
-		var errors;
-
-		errors = Solium.lint (code [0], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [1], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [2], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		Solium.reset ();
-		done ();
-	});
-*/
-
 });
