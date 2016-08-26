@@ -13,7 +13,7 @@ var Solium = require ('../../../../lib/solium'),
 var userConfig = {
   "custom-rules-filename": null,
   "rules": {
-    "imports-on-top": true,
+    "imports-on-top": true
   }
 };
 

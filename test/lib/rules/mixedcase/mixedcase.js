@@ -11,7 +11,7 @@ var Solium = require ('../../../../lib/solium');
 var userConfig = {
   "custom-rules-filename": null,
   "rules": {
-    "mixedcase": true,
+    "mixedcase": true
   }
 };
 

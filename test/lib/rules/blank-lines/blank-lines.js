@@ -13,7 +13,7 @@ var Solium = require ('../../../../lib/solium'),
 var userConfig = {
   "custom-rules-filename": null,
   "rules": {
-    "blank-lines": true,
+    "blank-lines": true
   }
 };
 

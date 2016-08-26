@@ -13,7 +13,7 @@ var Solium = require ('../../../../lib/solium'),
 var userConfig = {
   "custom-rules-filename": null,
   "rules": {
-    "no-unused-vars": true,
+    "no-unused-vars": true
   }
 };
 
