@@ -25,7 +25,8 @@ describe ('[RULE] no-unused-vars: Acceptances', function () {
 			'uint x = 100; function foo () returns (uint) { return x; }',
 			'bytes32 x = "hello"; function foo () returns (bytes32) { return x; }',
 			'string x = "hello"; function foo () returns (int) { return x; }',
-			'address x = 0x0; function foo () returns (address) { return x; }'
+			'address x = 0x0; function foo () returns (address) { return x; }',
+			'mapping (address => uint) x; function foo () returns (mapping) { return x; }'
 		];
 		var errors;
 
@@ -46,6 +47,10 @@ describe ('[RULE] no-unused-vars: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [4], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [5], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -63,7 +68,8 @@ describe ('[RULE] no-unused-vars: Rejections', function () {
 			'uint x = 100;',
 			'bytes32 x = "hello";',
 			'string x = "hello";',
-			'address x = 0x0;'
+			'address x = 0x0;',
+			'mapping (address => uint) x;'
 		];
 		var errors;
 
@@ -84,6 +90,10 @@ describe ('[RULE] no-unused-vars: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [4], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		errors = Solium.lint (code [5], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
