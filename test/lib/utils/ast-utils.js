@@ -114,10 +114,10 @@ describe ('Testing astUtils Object', function () {
 	});
 
 	it ('should return correct line no. upon getLine() with valid AST node & sourceCode init()ed', function (done) {
-  		astUtils.init (sourceCode);
-  		astUtils.getLine (varDeclarator).should.equal (4);
-  		astUtils.getLine (functionDeclaration).should.equal (3);
-  		astUtils.init ('');
+		astUtils.init (sourceCode);
+		astUtils.getLine (varDeclarator).should.equal (4);
+		astUtils.getLine (functionDeclaration).should.equal (3);
+		astUtils.init ('');
 
 		done ();
 	});
@@ -133,8 +133,61 @@ describe ('Testing astUtils Object', function () {
 	});
 
 	it ('should return correct column no. upon getColumn() with valid AST node & sourceCode init()ed', function (done) {
-		astUtils.init (sourceCode);
-		//astUtils.getColumn (varDeclarator).should.equal (/*COLUMN NO. - LOGIC NOT WRITTEN YET*/);
+		astUtils.init ('[1,2,386267,-19028.87];');
+		var literals = [
+			{ type: 'Literal', value: 1, start: 1, end: 2 },
+			{ type: 'Literal', value: 2, start: 3, end: 4 },
+			{ type: 'Literal', value: 386267, start: 5, end: 11 },
+			{
+				type: 'UnaryExpression',
+				operator: '-',
+				argument: { type: 'Literal', value: 19028.87, start: 13, end: 21 },
+				prefix: true,
+				start: 12,
+				end: 21
+			} 
+		];
+
+		astUtils.getColumn (literals [0]).should.equal (1);
+		astUtils.getColumn (literals [1]).should.equal (3);
+		astUtils.getColumn (literals [2]).should.equal (5);
+		astUtils.getColumn (literals [3]).should.equal (12);
+
+		astUtils.init ('\n["foo",\n"bar",\t\t"baz"];');
+		literals = [
+			{ type: 'Literal', value: 'foo', start: 2, end: 7 },
+  			{ type: 'Literal', value: 'bar', start: 9, end: 14 },
+  			{ type: 'Literal', value: 'baz', start: 17, end: 22 }
+  		];
+
+		astUtils.getColumn (literals [0]).should.equal (1);
+		astUtils.getColumn (literals [1]).should.equal (0);
+		astUtils.getColumn (literals [2]).should.equal (8);
+
+		astUtils.init ('function foo () {\n\t[1,2,3,4];\n}');
+		literals = [
+			{ type: 'Literal', value: 1, start: 20, end: 21 },
+     		{ type: 'Literal', value: 2, start: 22, end: 23 },
+     		{ type: 'Literal', value: 3, start: 24, end: 25 },
+     		{ type: 'Literal', value: 4, start: 26, end: 27 }
+     	];
+
+     	astUtils.getColumn (literals [0]).should.equal (2);
+		astUtils.getColumn (literals [1]).should.equal (4);
+		astUtils.getColumn (literals [2]).should.equal (6);
+		astUtils.getColumn (literals [3]).should.equal (8);
+
+		astUtils.init ('\n\n(10,\n\n "foo"\n\n,\t189.2786)');
+		literals = [
+			{ type: 'Literal', value: 10, start: 3, end: 5 },
+     		{ type: 'Literal', value: 'foo', start: 9, end: 14 },
+     		{ type: 'Literal', value: 189.2786, start: 18, end: 26 }
+     	];
+
+     	astUtils.getColumn (literals [0]).should.equal (1);
+		astUtils.getColumn (literals [1]).should.equal (1);
+		astUtils.getColumn (literals [2]).should.equal (2);
+
 		astUtils.init ('');
 
 		done ();
@@ -150,11 +203,82 @@ describe ('Testing astUtils Object', function () {
 		done ();
 	});
 
+	it ('should return correct ending column upon getEndingColumn () with valid AST node & sourceCode init()ed', function (done) {
+		astUtils.init ('[1,2,386267,-19028.87];');
+		var literals = [
+			{ type: 'Literal', value: 1, start: 1, end: 2 },
+			{ type: 'Literal', value: 2, start: 3, end: 4 },
+			{ type: 'Literal', value: 386267, start: 5, end: 11 },
+			{
+				type: 'UnaryExpression',
+				operator: '-',
+				argument: { type: 'Literal', value: 19028.87, start: 13, end: 21 },
+				prefix: true,
+				start: 12,
+				end: 21
+			} 
+		];
+
+		astUtils.getEndingColumn (literals [0]).should.equal (1);
+		astUtils.getEndingColumn (literals [1]).should.equal (3);
+		astUtils.getEndingColumn (literals [2]).should.equal (10);
+		astUtils.getEndingColumn (literals [3]).should.equal (20);
+
+		astUtils.init ('\n["foo",\n"bar",\t\t"baz"];');
+		literals = [
+			{ type: 'Literal', value: 'foo', start: 2, end: 7 },
+  			{ type: 'Literal', value: 'bar', start: 9, end: 14 },
+  			{ type: 'Literal', value: 'baz', start: 17, end: 22 }
+  		];
+
+		astUtils.getEndingColumn (literals [0]).should.equal (5);
+		astUtils.getEndingColumn (literals [1]).should.equal (4);
+		astUtils.getEndingColumn (literals [2]).should.equal (12);
+
+		astUtils.init ('function foo () {\n\t[1,2,3,4];\n}');
+		literals = [
+			{ type: 'Literal', value: 1, start: 20, end: 21 },
+     		{ type: 'Literal', value: 2, start: 22, end: 23 },
+     		{ type: 'Literal', value: 3, start: 24, end: 25 },
+     		{ type: 'Literal', value: 4, start: 26, end: 27 }
+     	];
+
+     	astUtils.getEndingColumn (literals [0]).should.equal (2);
+		astUtils.getEndingColumn (literals [1]).should.equal (4);
+		astUtils.getEndingColumn (literals [2]).should.equal (6);
+		astUtils.getEndingColumn (literals [3]).should.equal (8);
+
+		astUtils.init ('\n\n(10,\n\n "foo"\n\n,\t189.2786)');
+		literals = [
+			{ type: 'Literal', value: 10, start: 3, end: 5 },
+     		{ type: 'Literal', value: 'foo', start: 9, end: 14 },
+     		{ type: 'Literal', value: 189.2786, start: 18, end: 26 }
+     	];
+
+     	astUtils.getEndingColumn (literals [0]).should.equal (2);
+		astUtils.getEndingColumn (literals [1]).should.equal (5);
+		astUtils.getEndingColumn (literals [2]).should.equal (9);
+
+		astUtils.init ('');
+
+		done ();
+	});
+
+	it ('should handle invalid argument(s) passed to getEndingColumn ()', function (done) {
+		astUtils.getEndingLine.bind (astUtils).should.throw ();
+		astUtils.getEndingLine.bind (astUtils, null).should.throw ();
+		astUtils.getEndingLine.bind (astUtils, 100).should.throw ();
+		astUtils.getEndingLine.bind (astUtils, 'foo').should.throw ();
+		astUtils.getEndingLine.bind (astUtils, []).should.throw ();
+
+		done ();
+	});
+
 	it ('should return correct line no. on getEndingLine() with valid AST node & sourceCode init()ed', function (done) {
-  		astUtils.init (sourceCode);
-  		astUtils.getEndingLine (varDeclarator).should.equal (4);
-  		astUtils.getEndingLine (functionDeclaration).should.equal (5);
-  		astUtils.init ('');
+		astUtils.init (sourceCode);
+		astUtils.getEndingLine (varDeclarator).should.equal (4);
+		astUtils.getEndingLine (functionDeclaration).should.equal (5);
+		astUtils.init ('');
 
 		done ();
 	});

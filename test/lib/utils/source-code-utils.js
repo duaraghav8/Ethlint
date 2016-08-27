@@ -37,6 +37,9 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.should.have.property ('getColumn');
 		sourceCodeObject.getColumn.should.be.type ('function');
 
+		sourceCodeObject.should.have.property ('getEndingColumn');
+		sourceCodeObject.getEndingColumn.should.be.type ('function');
+
 		sourceCodeObject.should.have.property ('getParent');
 		sourceCodeObject.getParent.should.be.type ('function');
 
