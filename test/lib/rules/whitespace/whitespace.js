@@ -81,6 +81,41 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should allow the code that provides nothing to check, i.e., no arguments in CallExpression / no properties in ObjectExpression', function (done) {
+		var code = 'call ();',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'call ({});';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = '[];';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'function foo () {}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'if (true) {}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 
@@ -120,12 +155,12 @@ describe ('[RULE] whitespace: Rejections', function () {
 		done ();
 	});
 
-	/*it ('should reject code which has whitespace immediately before a comma or semicolon', function (done) {
+	it ('should reject code which has whitespace immediately before a comma or semicolon', function (done) {
 		var code = 'function spam(uint i , Coin coin) ;',
 			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		//errors.length.should.equal (2);
 
 		code = '[1 , 2, 3 , 4,5];',
 		errors = Solium.lint (code, userConfig);
@@ -139,33 +174,29 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
-		code = 'call ({name: "foo" , age: 20,id: 1 ,dept: "math"})',
+		code = 'call ({name: "foo"\n, age: 20,id: 1 ,dept: "math"})',
 		errors = Solium.lint (code, userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
-		code = 'var x  , y,z\t,  foo;',
+		code = '(1 ,2\t,3\n,4);',
 		errors = Solium.lint (code, userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (3);
 
-		code = 'var (x  , y,z\t,  foo) = (1 ,2 ,3 ,4)',
-		errors = Solium.lint (code, userConfig);
-		
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (5);
+		//SUPPORT FOR var (x, y) = (1,2) doesn't yet exist in solparse
 
 		/*code = 'var (x  , y,z\t,  foo) = (1,2,3,4)',
 		errors = Solium.lint (code, userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);*
+		errors.length.should.equal (2);*/
 
 		Solium.reset ();
 		done ();
-	});*/
+	});
 
 	it ('should reject assignment operators that do not have exactly 1 space on either side of them', function (done) {
 		var code = [
