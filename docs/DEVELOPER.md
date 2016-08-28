@@ -87,6 +87,50 @@ module.exports = {
 
 See the [existing rules](https://github.com/duaraghav8/Solium/tree/master/lib/rules) to better understand rule implementation.
 
+-> For the last step, navigate to **test/lib/rules**, create a directory ```foo-bar```. Inside the directory, create a file ```foo-bar.js```. Use the below template for your rule:
+
+```js
+/**
+ * @fileoverview Tests for foo-bar rule
+ * @author Name <YOUR_EMAIL_ID>
+ */
+
+'use strict';
+
+var should = require ('should');
+var Solium = require ('../../../../lib/solium');
+
+//INSERT YOUR RULE'S NAME IN THE BELOW userConfig Object, leave the rest of the object untouched
+var userConfig = {
+  "custom-rules-filename": null,
+  "rules": {
+    "foo-bar": true
+  }
+};
+
+describe ('[RULE] foo-bar: Acceptances', function () {
+	it ('should ... ', function (done) {
+		//-------------------------YOUR TEST CASES
+		
+		Solium.reset ();
+		done ();
+	});
+});
+
+describe ('[RULE] foo-bar: Rejections', function () {
+	it ('should ... ', function (done) {
+		//-------------------------YOUR TEST CASES
+		
+		Solium.reset ();
+		done ();
+	});
+});
+```
+
+Use ```Should.js``` to implement tests for your rule. Write code snippets of both types - those that should be accepted without errors and those that should fail in the presence of your rule.
+
+See the [existing rule tests](https://github.com/duaraghav8/Solium/tree/master/test/lib/rules) for a better understanding.
+
 ##That's it!
 Yep, you're done and ready to make a Pull Request.
 
