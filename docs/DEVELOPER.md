@@ -38,15 +38,8 @@ module.exports = {
 	verify: function (context) {
 
 		/**
-		 * sourceCodeObject can provide various functionalities:
-		 * getText (node) - get source code for the specified node. If no arguments given, it returns the complete source code
-		 * getLine (node) - get the line number on which the specified node's code starts
-		 * getColumn (node) - get column no. on which the node's code starts
-		 * getParent (node) - get the parent node of the specified node
-		 * getNextChar (node) - get 1 character after the code of specified node
-		 * getPrevChar (node) - get 1 character before the code of specified node
-		 * getNextChars (node, charCount) - get charCount no. of characters after the code of specified node
-		 * getPrevChars (node, charCount) - get charCount no. of characters befre the code of specified node
+		 * The SourceCode object provides several functions for the developer to make use of.
+		 * See below for a list of all functions.
 		 */
 		var sourceCodeObject = context.getSourceCode ();
 
@@ -98,3 +91,29 @@ See the [existing rules](https://github.com/duaraghav8/Solium/tree/master/lib/ru
 Yep, you're done and ready to make a Pull Request.
 
 Hopefully, you didn't have much trouble following this guide. If you think it has some flaws or it could be improved in some way, please open up an issue.
+
+#Functions available to rule implementers
+
+```getText (node)``` - get source code for the specified node. If no arguments given, it returns the complete source code
+
+```getTextOnLine (lineNumber)``` - get the complete text on the specified line number (```lineNumber``` is an Integer)
+
+```getLine (node)``` - get the line number on which the specified node's code **starts**
+
+```getEndingLine (node)``` - get the line number on which the specified node's code **ends**
+
+```getColumn (node)``` - get column no. of the **first character** of the specified node's code
+
+```getEndingColumn (node)``` - get column no. of the **last character** of the specified node's code
+
+```getParent (node)``` - get the parent node of the specified node
+
+```getNextChar (node)``` - get 1 character after the code of specified node
+
+```getPrevChar (node)``` - get 1 character before the code of specified node
+
+```getNextChars (node, charCount)``` - get charCount no. of characters after the code of specified node
+
+```getPrevChars (node, charCount)``` - get charCount no. of characters befre the code of specified node
+
+```getStringBetweenNodes (prevNode, nextNode)``` - get the complete code between 2 specified nodes. (The code ranges from ```prevNode.end``` (inclusive) to ```nextNode.start``` (exclusive)
