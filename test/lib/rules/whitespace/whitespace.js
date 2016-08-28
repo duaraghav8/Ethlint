@@ -220,7 +220,8 @@ describe ('[RULE] whitespace: Rejections', function () {
 			'string octa\n= "gon";',
 			'bytes32 hexa="gon";',
 			'address mine= 0x0;',
-			'address his =0x1;'
+			'address his =0x1;',
+			'var humpty\n="dumpty";'
 		];
 		var errors;
 
@@ -259,6 +260,10 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors = Solium.lint (code [8], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
+
+		errors = Solium.lint (code [9], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
 
 		Solium.reset ();
 		done ();
