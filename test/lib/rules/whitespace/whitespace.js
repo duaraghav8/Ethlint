@@ -285,6 +285,12 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
+		code = 'using Foo for Bar.baz\t;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
 		////////////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////////////
