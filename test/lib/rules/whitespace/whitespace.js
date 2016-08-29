@@ -66,6 +66,18 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		code = 'var foobar = "Hello World";';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'fooBar (baz ({\nhello: "world"\n}));';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	});
@@ -174,6 +186,30 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		//errors.length.should.equal (2);
 
+		code = 'var foobar = 100 ;'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'var foobar = 100\n;'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'var foobar = 100\t;'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'var foobar = 100/*abc*/;'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
 		code = '[1 , 2, 3 , 4,5];',
 		errors = Solium.lint (code, userConfig);
 
@@ -264,6 +300,42 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors = Solium.lint (code [9], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
+
+		code = 'var x\n=\n"hello world";'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		code = 'var x\t=\t"hello world";'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		code = 'var x = /*abc*/"hello world";'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'var x =/*abc*/ "hello world";'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'var x/*abc*/ = "hello world";'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'var x /*abc*/= "hello world";'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
 
 		Solium.reset ();
 		done ();
