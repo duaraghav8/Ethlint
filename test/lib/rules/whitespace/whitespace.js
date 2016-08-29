@@ -37,6 +37,12 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		code = 'foo ["fun"]; bar.baz;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	});
@@ -180,6 +186,18 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (8);
+
+		code = 'ham[/**/"1"/**/];';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		code = 'ham[\t"1"\t];';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
 
 		Solium.reset ();
 		done ();
