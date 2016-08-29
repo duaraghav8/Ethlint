@@ -78,6 +78,12 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		code = 'function foo (uint x, string y);';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	});
@@ -180,6 +186,9 @@ describe ('[RULE] whitespace: Rejections', function () {
 	});
 
 	it ('should reject code which has whitespace immediately before a comma or semicolon', function (done) {
+		////////////////////////////////////////////////////////////////////////////
+		// SEMICOLON
+
 		var code = 'function spam(uint i , Coin coin) ;',
 			errors = Solium.lint (code, userConfig);
 
@@ -209,6 +218,35 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
+
+		code = 'function foo (uint x, string y) ;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function foo (uint x, string y)\t;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function foo (uint x, string y)\n;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function foo (uint x, string y)/*abc*/;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		////////////////////////////////////////////////////////////////////////////
+
+		////////////////////////////////////////////////////////////////////////////
+		// COMMA
 
 		code = '[1 , 2, 3 , 4,5];',
 		errors = Solium.lint (code, userConfig);
