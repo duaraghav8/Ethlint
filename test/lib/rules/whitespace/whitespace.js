@@ -261,6 +261,18 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
+		code = 'x [0] = fooBar () ;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'x [0] = fooBar ()/**/;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
 		////////////////////////////////////////////////////////////////////////////
 
 		////////////////////////////////////////////////////////////////////////////
