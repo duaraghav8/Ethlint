@@ -70,6 +70,16 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 
 	it ('should behave as expected upon calling getText ()', function (done) {
 		var sourceCodeObject = new SourceCode (sourceCodeText);
+		var functionCallText = 'fooBar ();',
+			functionCallNode = { type: 'ExpressionStatement',
+  				expression: 
+   				{ type: 'CallExpression',
+     				callee: { type: 'Identifier', name: 'fooBar', start: 0, end: 6 },
+     				arguments: [],
+     				start: 0,
+     			end: 9 },
+  				start: 0,
+  			end: 10 };
 
 		sourceCodeObject.getText.bind (sourceCodeObject, {}).should.throw ();
 
@@ -80,6 +90,10 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.getText (varDeclarator, 4, 1).should.equal ('var x = 100;');
 		sourceCodeObject.getText (varDeclarator, -4, -1).should.equal ('var x = 100;');
 		sourceCodeObject.getText (varDeclarator, 100, 100).should.equal (sourceCodeText);
+
+		sourceCodeObject = new SourceCode (functionCallText);
+
+		sourceCodeObject.getText (functionCallNode).should.equal (functionCallText);
 
 		done ();
 	});
