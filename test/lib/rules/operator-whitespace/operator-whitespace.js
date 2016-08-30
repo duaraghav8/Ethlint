@@ -124,7 +124,8 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 			'x.foo /**/<=/**/ bar ();',
 			'x.foo% clu++;',
 			'x.foo/**/ <= /**/(1 - 45);',
-			'(90.89 * 1) /**///**/ (100 - 76 % (3**2));'
+			'(90.89 * 1) /**/-/**/ (100 - 76 % (3**2));',
+			'x.foo\n**\nbar ();'
 		];
 		var errors;
 
@@ -177,6 +178,10 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 		errors.length.should.equal (2);
 
 		errors = Solium.lint (code [12], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [13], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
