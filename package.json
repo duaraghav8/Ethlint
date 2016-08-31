@@ -26,7 +26,7 @@
     "lodash": "^4.14.2",
     "sol-digger": "0.0.2",
     "sol-explore": "^1.6.1",
-    "solparse": "^1.0.6"
+    "solparse": "^1.0.7"
   },
   "devDependencies": {
     "chai": "^3.5.0",

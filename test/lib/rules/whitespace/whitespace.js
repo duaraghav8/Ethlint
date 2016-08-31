@@ -143,6 +143,18 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		code = 'var (x, y, z) = (10, 20, 30);';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'var (x, y, z) = fooBar ();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	});
