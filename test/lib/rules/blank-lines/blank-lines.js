@@ -74,6 +74,17 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		done ();
 	});
 
+	it ('should not enfore blank line rules on top level declarations other than contract & library declarations', function (done) {
+		var code = 'import * as x from "y";\nimport * as x from "y";\nimport * as x from "y";\n\n\ncontract Yoda {}',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 
@@ -86,9 +97,9 @@ describe ('[RULE] blank-lines: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (3);
 
-		errors [0].node.name.should.equal ('Abc');
-		errors [1].node.name.should.equal ('Bcd');
-		errors [2].node.name.should.equal ('Cde');
+		errors [0].node.name.should.equal ('Bcd');
+		errors [1].node.name.should.equal ('Cde');
+		errors [2].node.name.should.equal ('Def');
 
 		Solium.reset ();
 		done ();
@@ -101,9 +112,9 @@ describe ('[RULE] blank-lines: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (3);
 
-		errors [0].node.name.should.equal ('Abc');
-		errors [1].node.name.should.equal ('Bcd');
-		errors [2].node.name.should.equal ('Cde');
+		errors [0].node.name.should.equal ('Bcd');
+		errors [1].node.name.should.equal ('Cde');
+		errors [2].node.name.should.equal ('Def');
 
 		Solium.reset ();
 		done ();
