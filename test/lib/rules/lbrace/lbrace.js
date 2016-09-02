@@ -232,7 +232,6 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.length.should.equal (1);
 
 
-		/////////////////////////////////////////////////////////////////////////////////////////////////////
 		code = 'if (true){}';
 		errors = Solium.lint (code, userConfig);
 
@@ -262,50 +261,50 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		code = 'if (true) {} else if (true)  {}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		code = 'if (true) {} else if (true)\t{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		code = 'if (true) {} else if (true)/*comment*/{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 
 		code = 'if (true) {} else{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		code = 'if (true) {} else  {}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		code = 'if (true) {} else\t{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		code = 'if (true) {} else/*comment*/{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 
 		code = 'function foo (uint x) public modif returns (address){}';
@@ -331,7 +330,7 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 		code = 'while (true){}';
 		errors = Solium.lint (code, userConfig);
@@ -467,4 +466,27 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		done ();
 	});
 
+
+	it ('should reject clauses which are not on their own line', function (done) {
+		var code = 'if (true) {h();} else if (true) {h();} else {h();}',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		code = 'if (true) {h();} else {h();}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {h();} else if (true) {h();}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
 });
