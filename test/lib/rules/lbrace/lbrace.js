@@ -107,18 +107,6 @@ describe ('[RULE] lbrace: Acceptances', function () {
 	it ('should allow single-item, single-line bodies without braces', function (done) {
 		var code, errors;
 
-		/*
-		//////////////////////////////////////////////////////////////////////////////////
-		//NOT SURE if all-in-single-line pattern is allowed in style guide or not.
-		//////////////////////////////////////////////////////////////////////////////////
-
-		code = 'if (true) sayHello ();';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-		*/
-
 		//since this rule doesn't lint for indentation, only \n without \t should also be valid
 		code = 'if (true)\nnewNumber = (10 * 78 + 982 % 6**2);\nelse\nnewNumber = 0;';
 		errors = Solium.lint (code, userConfig);
@@ -498,6 +486,96 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 	});
 
 
+	it ('should reject clauses with empty statements', function (done) {
+		var code = 'if (true);',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse if (true) {}\nelse;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse if (true);';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
+
+	it ('should reject statements which are neither inside blocks nor completely reside on a single line', function (done) {
+		var code = 'if (true)\nPacman ({\n\tname: "Shannon"\n});',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse\nPacman ({\n\tname: "Shannon"\n});';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse if (true) {}\nelse\nPacman ({\n\tname: "Shannon"\n});';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse if (true)\nPacman ({\n\tname: "Shannon"\n});';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
+
+	it ('should reject statements which exist on the same line as clause and are not brace-enclosed', function (done) {
+		var code = 'if (true) sayHello ();',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse sayHello();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse if (true) {}\nelse sayHello();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {}\nelse if (true) sayHello ();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
+
 	it ('should reject clauses which are not on their own line', function (done) {
 		var code = 'if (true) {h();} else if (true) {h();} else {h();}',
 			errors = Solium.lint (code, userConfig);
@@ -512,6 +590,30 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.length.should.equal (1);
 
 		code = 'if (true) {h();} else if (true) {h();}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {h();} else if (true) hello ();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		code = 'if (true) {h();}\nelse if (true) hello ();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {h();} else hello ();';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true) {h();}\nelse hello ();';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
