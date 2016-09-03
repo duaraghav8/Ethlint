@@ -257,54 +257,54 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.length.should.equal (1);
 
 
-		code = 'if (true) {} else if (true){}';
+		code = 'if (true) {}\nelse if (true){}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
-		code = 'if (true) {} else if (true)  {}';
+		code = 'if (true) {}\nelse if (true)  {}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
-		code = 'if (true) {} else if (true)\t{}';
+		code = 'if (true) {}\nelse if (true)\t{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
-		code = 'if (true) {} else if (true)/*comment*/{}';
+		code = 'if (true) {}\nelse if (true)/*comment*/{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
 
-		code = 'if (true) {} else{}';
+		code = 'if (true) {}\nelse{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
-		code = 'if (true) {} else  {}';
+		code = 'if (true) {}\nelse  {}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
-		code = 'if (true) {} else\t{}';
+		code = 'if (true) {}\nelse\t{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
-		code = 'if (true) {} else/*comment*/{}';
+		code = 'if (true) {}\nelse/*comment*/{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
 
 		code = 'function foo (uint x) public modif returns (address){}';
@@ -462,6 +462,37 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 
 
 	it ('should reject all short declarations whose opening brace is not on the same line as theirs', function (done) {
+		var code = 'contract Foo is Bar, Baz\n{}',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'library Foo is Bar, Baz\n{}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'if (true)\n{}\nelse if (true)\n{}\nelse\n{}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (3);
+
+		code = 'while (true)\n{}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'for (;;)\n{}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+
 		Solium.reset ();
 		done ();
 	});
