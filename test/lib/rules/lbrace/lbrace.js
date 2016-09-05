@@ -623,27 +623,4 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		done ();
 	});
 
-
-	it ('should reject control structures \'if\', \'while\', and \'for\' if there is no space between them and the parenthetic block representing their conditional.', function (done) {
-		var code = 'if(true) {}\nelse if(true) {}',
-			errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
-
-		code = 'for(;;) {}';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'while(true) {}';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		Solium.reset ();
-		done ();
-	});
 });
