@@ -479,6 +479,31 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
+
+		code = 'function lotsOfArgs (\n\tuint x,\n\tstring y,\n\taddress z\n){\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function lotsOfArgs (\n\tuint x,\n\tstring y,\n\taddress z\n)  {\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function lotsOfArgs (\n\tuint x,\n\tstring y,\n\taddress z\n)\t{\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function lotsOfArgs (\n\tuint x,\n\tstring y,\n\taddress z\n)/*comment*/{\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
 		Solium.reset ();
 		done ();
 	});
@@ -515,6 +540,11 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
+		code = 'function increment(uint x) public onlyowner returns (uint)\n{\n\treturn x + 1;\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
 
 		Solium.reset ();
 		done ();
