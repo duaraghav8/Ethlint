@@ -17,7 +17,7 @@ var userConfig = {
 
 describe ('[RULE] lbrace: Acceptances', function () {
 
-	it ('should accept abstract functions', function (done) {
+	it ('should allow abstract functions', function (done) {
 		var code = 'function abstractFunc (uint x, string y) public returns (boolean);',
 			errors = Solium.lint (code, userConfig);
 
@@ -28,7 +28,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 		done ();
 	});
 
-	it ('should accept (short-declaration) bodies with opening brace on same line after a single space', function (done) {
+	it ('should allow (short-declaration) bodies with opening brace on same line after a single space', function (done) {
 		var code = 'contract Visual {}',
 			errors = Solium.lint (code, userConfig);
 
@@ -164,7 +164,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 		done ();
 	});
 
-	it ('should accept else clauses beginning on the same line as closing brace of if consequent', function (done) {
+	it ('should allow else clauses beginning on the same line as closing brace of if consequent', function (done) {
 		var code = 'if (true) {h();} else if (true) {h();} else {h();}',
 			errors = Solium.lint (code, userConfig);
 
@@ -204,7 +204,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 
 describe ('[RULE] lbrace: Rejections', function (done) {
 
-	it ('should reject any opening brace which is not preceeded by EXACTLY single space', function (done) {
+	it ('should reject any opening brace which is not preceeded by EXACTLY single space (exception: functions with modifiers)', function (done) {
 		var code = 'contract FooBar{}',
 			errors = Solium.lint (code, userConfig);
 
@@ -324,31 +324,6 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.length.should.equal (1);
 
 		code = 'if (true) {} else/*comment*/{}';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-
-		code = 'function foo (uint x) public modif returns (address){}';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'function foo (uint x) public modif returns (address)  {}';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'function foo (uint x) public modif returns (address)\t{}';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'function foo (uint x) public modif returns (address)/*comment*/{}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -480,6 +455,31 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.length.should.equal (1);
 
 
+		code = 'function foo (uint x) public modif returns (address){}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function foo (uint x) public modif returns (address)  {}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function foo (uint x) public modif returns (address)\t{}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function foo (uint x) public modif returns (address)/*comment*/{}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+
 		code = 'function lotsOfArgs (\n\tuint x,\n\tstring y,\n\taddress z\n){\n\tfoobar ();\n}';
 		errors = Solium.lint (code, userConfig);
 
@@ -499,6 +499,36 @@ describe ('[RULE] lbrace: Rejections', function (done) {
 		errors.length.should.equal (1);
 
 		code = 'function lotsOfArgs (\n\tuint x,\n\tstring y,\n\taddress z\n)/*comment*/{\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
+
+	it ('should reject all function declarations having multiple modifiers over multiple lines whose brace does not open on the line after the last modifier', function (done) {
+		var code = 'function lotsOfArgs ()\n\tpublic\n\treturns (address){\n\tfoobar ();\n}',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function lotsOfArgs ()\n\tpublic\n\treturns (address) {\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function lotsOfArgs ()\n\tpublic\n\treturns (address)\t{\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'function lotsOfArgs ()\n\tpublic\n\treturns (address)  {\n\tfoobar ();\n}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
