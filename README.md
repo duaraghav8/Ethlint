@@ -1,4 +1,5 @@
-# Solium
+![solium](https://cloud.githubusercontent.com/assets/12758282/18283522/4b206522-7483-11e6-9bcd-2a70ebc8cfdb.png)
+
 Solium is a linter for Solidity which uses Abstract Syntax Trees and allows the user to enable/disable existing rules and add their own ones! 
 
 It internally uses [solparse](https://github.com/duaraghav8/solparse) to parse your solidity code into a Spider Monkey compliant AST
