@@ -136,5 +136,8 @@ npm install
 npm test
 ```
 
+#Blog
+[Medium](https://medium.com/solium)
+
 #License
 ##MIT
