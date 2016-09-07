@@ -103,7 +103,7 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
-	it ('should push a sample error object in messages upong calling Solium.report ()', function (done) {
+	it ('should push a sample error object in messages upon calling Solium.report ()', function (done) {
 		var sampleErrorObject = {
 			ruleName: 'sample',
 			type: 'error',
@@ -187,6 +187,53 @@ describe ('Checking Exported Solium API', function () {
 	it ('should function as expected when valid arguments are provided', function (done) {
 		var minimalConfig = { rules: {} },
 			minimalSourceCode = 'var foo = 100;';
+		var emissionCounter = 5;
+
+		function testComplete () {
+			Solium.reset ();
+			done ();
+		}
+
+		Solium.on ('Program', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('VariableDeclaration', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('VariableDeclarator', function (emitted) {
+			emitted.exit.should.be.type ('boolean');
+			emitted.node.should.be.type ('object');
+			emitted.node.should.have.ownProperty ('parent');
+			emitted.node.parent.should.be.type ('object');
+			emitted.node.parent.should.have.ownProperty ('type');
+			emitted.node.id.name.should.equal ('foo');
+
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('Identifier', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		Solium.on ('Literal', function () {
+			--emissionCounter;
+			!emissionCounter && testComplete ();
+		});
+
+		//without any rules applied
+		var errorObjects = Solium.lint (minimalSourceCode, minimalConfig, true);
+		errorObjects.length.should.equal (0);
+	});
+
+	it ('should function as expected even if a Buffer object is provided instead of String', function (done) {
+		var minimalConfig = { rules: {} },
+			minimalSourceCode = new Buffer ('var foo = 100;');
 		var emissionCounter = 5;
 
 		function testComplete () {
