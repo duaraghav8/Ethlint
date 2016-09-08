@@ -48,7 +48,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
+		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
@@ -60,7 +60,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
+		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
@@ -72,7 +72,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
+		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
@@ -84,7 +84,54 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no space between square brackets. Use [] instead.');
+		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject "uint [] x;" (space between literal and opening brackets', function (done) {
+		var code = 'uint [] x;',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal ('There should be no whitespace between literal uint and \'[]\'');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject "string\n[] x;" (linebreak between literal and opening brackets', function (done) {
+		var code = 'string\n[] x;',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal ('There should be no whitespace between literal string and \'[]\'');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject "bytes32\t[] x;" (tab between literal and opening brackets', function (done) {
+		var code = 'bytes32\t[] x;',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal ('There should be no whitespace between literal bytes32 and \'[]\'');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject "uint  [  ] x;"', function (done) {
+		var code = 'uint  [  ] x;',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
 
 		Solium.reset ();
 		done ();
