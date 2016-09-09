@@ -33,7 +33,9 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 			'(90.89 * 1) / (100 - 76 % (3**2));',
 			'!x + --8;',
 			'(90.89 * 1) / (100 - 76 % 3**2);',
-			'a ** b + c ** d'
+			'a ** b + c ** d;',
+			'8 * 9 / 3 % 2;',
+			'1 + 8 - 67;'
 		];
 		var errors;
 
@@ -101,6 +103,14 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		errors = Solium.lint (code [16], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [17], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	})
@@ -125,7 +135,9 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 			'x.foo% clu++;',
 			'x.foo/**/ <= /**/(1 - 45);',
 			'(90.89 * 1) /**/-/**/ (100 - 76 % (3**2));',
-			'x.foo\n**\nbar ();'
+			'x.foo\n**\nbar ();',
+			'8 *\n9 /\t3 % 2;',
+			'1+ 8- 67;'
 		];
 		var errors;
 
@@ -182,6 +194,14 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 		errors.length.should.equal (2);
 
 		errors = Solium.lint (code [13], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [14], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [15], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
