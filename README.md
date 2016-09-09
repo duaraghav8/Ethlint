@@ -4,7 +4,7 @@ Solium is a linter for Solidity which uses Abstract Syntax Trees and allows the 
 
 It internally uses [solparse](https://github.com/duaraghav8/solparse) to parse your solidity code into a Spider Monkey compliant AST
 
-Solium aims to comply with the official [Solidity Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). In future, Solium would allow its users to choose between certain rules (for example - tabs vs. spaces).
+Solium aims to comply with the official [Solidity Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). Follow our [blog](https://medium.com/solium) in order to stay up to date with the latest news.
 
 #Install
 ```bash
@@ -136,9 +136,6 @@ npm install
 ```
 npm test
 ```
-
-#Blog
-[Medium](https://medium.com/solium)
 
 #License
 ##MIT
