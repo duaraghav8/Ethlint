@@ -204,7 +204,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 
 describe ('[RULE] lbrace: Rejections', function (done) {
 
-	it ('should reject any opening brace which is not preceeded by EXACTLY single space (exception: functions with modifiers)', function (done) {
+	it ('should reject any opening brace which is not preceded by EXACTLY single space (exception: functions with modifiers)', function (done) {
 		var code = 'contract FooBar{}',
 			errors = Solium.lint (code, userConfig);
 

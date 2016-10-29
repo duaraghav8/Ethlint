@@ -19,7 +19,7 @@ var userConfig = {
 
 describe ('[RULE] blank-lines: Acceptances', function () {
 
-	it ('should accept contract declarations succeeded by 2 blank lines (all declarations except for last)', function (done) {
+	it ('should accept contract declarations succeded by 2 blank lines (all declarations except for last)', function (done) {
 		var code = fs.readFileSync (path.join (__dirname, './accept/contract.sol'), 'utf8'),
 			errors = Solium.lint (code, userConfig);
 
@@ -30,7 +30,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		done ();
 	});
 
-	it ('should accept library declarations succeeded by 2 blank lines (all declarations except for last)', function (done) {
+	it ('should accept library declarations succeded by 2 blank lines (all declarations except for last)', function (done) {
 		var code = fs.readFileSync (path.join (__dirname, './accept/library.sol'), 'utf8'),
 			errors = Solium.lint (code, userConfig);
 
