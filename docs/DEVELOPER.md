@@ -160,4 +160,4 @@ Hopefully, you didn't have much trouble following this guide. If you think it ha
 
 ```getPrevChars (node, charCount)``` - get charCount no. of characters befre the code of specified node
 
-```getStringBetweenNodes (prevNode, nextNode)``` - get the complete code between 2 specified nodes. (The code ranges from ```prevNode.end``` (inclusive) to ```nextNode.start``` (exclusive)
+```getStringBetweenNodes (prevNode, nextNode)``` - get the complete code between 2 specified nodes. (The code ranges from ```prevNode.end``` (inclusive) to ```nextNode.start``` (exclusive) )
