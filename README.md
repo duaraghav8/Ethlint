@@ -139,6 +139,7 @@ npm test
 
 ##Contributors and Testers
 [Elena Dimitrova](https://github.com/elenadimitrova)
+
 [Federico Bond](https://github.com/federicobond)
 
 #License
