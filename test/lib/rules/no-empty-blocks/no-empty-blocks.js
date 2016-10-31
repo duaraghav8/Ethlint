@@ -47,6 +47,17 @@ describe ('[RULE] no-empty-blocks: Acceptances', function () {
 		done ();
 	});
 
+	it ('should ACCEPT all EMPTY function declarations (see fallback functions)', function (done) {
+		var code = 'function foo () {}',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 	it ('should accept all non-empty if-else declarations', function (done) {
 		var code = 'if (true) { foo (); } else { bar (); }',
 			errors = Solium.lint (code, userConfig);
@@ -105,17 +116,6 @@ describe ('[RULE] no-empty-blocks: Rejections', function () {
 
 		code = 'library Foo {}';
 		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		Solium.reset ();
-		done ();
-	});
-
-	it ('should reject all empty function declarations', function (done) {
-		var code = 'function foo () {}',
-			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);

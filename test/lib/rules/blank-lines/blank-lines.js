@@ -74,7 +74,7 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 		done ();
 	});
 
-	it ('should not enfore blank line rules on top level declarations other than contract & library declarations', function (done) {
+	it ('should not enforce blank line rules on top level declarations other than contract & library declarations', function (done) {
 		var code = 'import * as x from "y";\nimport * as x from "y";\nimport * as x from "y";\n\n\ncontract Yoda {} import * as foo from "bar.sol";',
 			errors = Solium.lint (code, userConfig);
 
