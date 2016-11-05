@@ -28,7 +28,7 @@ solium --file foobar.sol
 
 To run the linter over your entire project, use the following command in your root directory:
 ```bash
-solium
+solium --dir .
 ```
 
 This lints all the files inside your project with ```.sol``` extension.
