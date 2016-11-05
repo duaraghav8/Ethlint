@@ -19,7 +19,7 @@ var userConfig = {
 
 describe ('[RULE] imports-on-top: Acceptances', function () {
 
-	it ('should accept if all import statements are on top of the file', function (done) {
+	it ('should accept if all import statements are on top of the file (but below the optional PRAGMA directive)', function (done) {
 		var code = fs.readFileSync (path.join (__dirname, './accept/on-top.sol'), 'utf8'),
 			errors = Solium.lint (code, userConfig);
 
