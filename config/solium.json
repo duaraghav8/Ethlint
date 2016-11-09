@@ -96,7 +96,7 @@
 			"enabled": true,
 			"recommended": false,
 			"type": "warning",
-			"description": "Ensure consistent indentation of 2 spaces per level"
+			"description": "Ensure consistent indentation of 4 spaces per level"
 		},
 
 		"whitespace": {
