@@ -31,4 +31,13 @@ contract Chumma {
     {
         return 2;
     }
+
+    /**
+     * @notice this function returns something important
+     * @return description
+     */
+    function yetAnotherFunction() constant returns(uint256)
+    {
+        return 3;
+    }
 }
