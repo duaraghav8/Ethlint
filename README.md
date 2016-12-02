@@ -144,5 +144,7 @@ npm test
 
 [Federico Bond](https://github.com/federicobond)
 
+[Christopher Gewecke](https://github.com/cgewecke)
+
 #License
 ##MIT
