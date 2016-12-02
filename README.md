@@ -35,7 +35,7 @@ This lints all the files inside your project with ```.sol``` extension.
 
 #Additional Options
 
-1. Use ```solium --hot``` to enable Hot loading (Hot swapping).
+1. Use ```solium --watch``` to enable Hot loading (Hot swapping).
 
 2. When new rules are added in subsequent versions and you update Solium, you need not re-initialize with ```--init```. Simply run ```solium --sync``` in your root directory and it automatically adds the newly added rules to your ```.soliumrc.json```. The sync option **doesn't change anything else in your configuration files**.
 
