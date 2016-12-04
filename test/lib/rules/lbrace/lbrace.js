@@ -165,6 +165,29 @@ describe ('[RULE] lbrace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should allow opening brace to be on its own line in case a function has modifiers (without brackets)', function (done) {
+		var code = 'function modifs ()\npublic\nowner\npriced(0)\npayable\n{\n\tfoobar ();\n}',
+		    errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'function modifs (\n\tuint x,\n\tstring y\n)\npublic\nowner\npriced\nreturns (uint)\n{\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'pragma solidity ^4.4.0;\nimport {high} from "low.sol";\n\n\ncontract MyContract {\n    address public myAddress;\n\n    function MyContract(\n        uint x,\n        string y\n    )\n    public\n    returns (uint)\n    {\n        myAddress = address(this);\n    }\n}'
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 	it ('should allow opening brace to be on its own line in case a function has base constructor arguments', function (done) {
 		var code = 'function baseArgs ()\n\tA (10)\n\tB ("hello")\n\tC (0x0)\n\tD (frodo)\n{\n\tfoobar ();\n}',
 			errors = Solium.lint (code, userConfig);
