@@ -165,6 +165,17 @@ describe ('[RULE] lbrace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should allow opening brace to be on its own line in case a function has modifiers (without brackets)', function (done) {
+		var code = 'function modifs ()\npublic\nowner\npriced(0)\npayable\n{\n\tfoobar ();\n}',
+		    errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 	it ('should allow opening brace to be on its own line in case a function has base constructor arguments', function (done) {
 		var code = 'function baseArgs ()\n\tA (10)\n\tB ("hello")\n\tC (0x0)\n\tD (frodo)\n{\n\tfoobar ();\n}',
 			errors = Solium.lint (code, userConfig);

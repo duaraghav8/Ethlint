@@ -34,22 +34,43 @@ describe ('Checking Exported Solium API', function () {
 		sourceCode.constructor.name.should.equal ('SourceCode');
 
 		sourceCode.should.have.ownProperty ('text', '');
+
 		sourceCode.should.have.property ('getLine');
 		sourceCode.getLine.should.be.type ('function');
+
 		sourceCode.should.have.property ('getColumn');
 		sourceCode.getColumn.should.be.type ('function');
+
+		sourceCode.should.have.property ('getEndingColumn');
+		sourceCode.getColumn.should.be.type ('function');
+		
 		sourceCode.should.have.property ('getParent');
+		sourceCode.getParent.should.be.type ('function');
+
+		sourceCode.should.have.property ('getEndingLine');
+		sourceCode.getParent.should.be.type ('function');
+		
+		sourceCode.should.have.property ('isASTNode');
 		sourceCode.getParent.should.be.type ('function');
 
 		sourceCode.should.have.property ('getText');
 		sourceCode.getText.should.be.type ('function');
 
+		sourceCode.should.have.property ('getTextOnLine');
+		sourceCode.getText.should.be.type ('function');
+		
+		sourceCode.should.have.property ('getStringBetweenNodes');
+		sourceCode.getText.should.be.type ('function');
+
 		sourceCode.should.have.property ('getNextChar');
 		sourceCode.getNextChar.should.be.type ('function');
+		
 		sourceCode.should.have.property ('getPrevChar');
 		sourceCode.getPrevChar.should.be.type ('function');
+		
 		sourceCode.should.have.property ('getNextChars');
 		sourceCode.getNextChars.should.be.type ('function');
+		
 		sourceCode.should.have.property ('getPrevChars');
 		sourceCode.getPrevChars.should.be.type ('function');
 
