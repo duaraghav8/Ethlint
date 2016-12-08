@@ -160,6 +160,12 @@ describe ('[RULE] lbrace: Acceptances', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
+
+		code = 'function modifs (\n\tuint x,\n\tstring y\n)\npublic\nowner\npriced\nreturns (uint) \t\n{\n\tfoobar ();\n}';
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
 		
 		Solium.reset ();
 		done ();
