@@ -22,8 +22,11 @@ describe ('[RULE] camelcase: Acceptances', function () {
 			'contract Hello {}',
 			'contract HelloWorld {}',
 			'contract He {}',
-			'contract HeLlOWoRlD {}',
-			'contract HeLLOWORLd {}'
+			'contract HELlOWoRlD {}',
+			'contract HeLLOWORLd {}',
+			'contract MyToken2 {}',
+			'contract My29Token10 {}',
+			'contract M123 {}'
 		];
 		var errors;
 
@@ -44,6 +47,18 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [4], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [5], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [6], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -56,8 +71,11 @@ describe ('[RULE] camelcase: Acceptances', function () {
 			'library Hello {}',
 			'library HelloWorld {}',
 			'library He {}',
-			'library HeLlOWoRlD {}',
-			'library HeLLOWORLd {}'
+			'library HELlOWoRlD {}',
+			'library HeLLOWORLd {}',
+			'library MyToken2 {}',
+			'library My29Token10 {}',
+			'library M123 {}'
 		];
 		var errors;
 
@@ -78,6 +96,18 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [4], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [5], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [6], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -87,11 +117,14 @@ describe ('[RULE] camelcase: Acceptances', function () {
 
 	it ('accepts valid event names', function (done) {
 		var code = [
-			'event Hello',
-			'event HelloWorld',
-			'event He',
-			'event HeLlOWoRlD',
-			'event HeLLOWORLd'
+			'event Hello();',
+			'event HelloWorld();',
+			'event He();',
+			'event HELlOWoRlD();',
+			'event HeLLOWORLd();',
+			'event MyToken2();',
+			'event My29Token10();',
+			'event M123();'
 		];
 		var errors;
 
@@ -112,6 +145,18 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [4], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [5], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [6], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -124,8 +169,11 @@ describe ('[RULE] camelcase: Acceptances', function () {
 			'struct Hello {}',
 			'struct HelloWorld {}',
 			'struct He {}',
-			'struct HeLlOWoRlD {}',
-			'struct HeLLOWORLd {}'
+			'struct HELlOWoRlD {}',
+			'struct HeLLOWORLd {}',
+			'struct MyToken2 {}',
+			'struct My29Token10 {}',
+			'struct M123 {}'
 		];
 		var errors;
 
@@ -146,6 +194,18 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [4], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [5], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [6], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -161,13 +221,10 @@ describe ('[RULE] camelcase: Rejections', function () {
 	it ('rejects invalid contract names', function (done) {
 		var code = [
 			'contract hello {}',
-			'contract HElloWorld {}',
 			'contract H {}',
 			'contract h {}',
-			'contract Hello1World {}',
-			'contract h {}',
-			'contract Hello123 {}',
 			'contract Hello_World {}',
+			'contract hello_1world {}'
 		];
 		var errors;
 
@@ -188,18 +245,6 @@ describe ('[RULE] camelcase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [4], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [5], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [6], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
@@ -209,14 +254,11 @@ describe ('[RULE] camelcase: Rejections', function () {
 
 	it ('rejects invalid library names', function (done) {
 		var code = [
-			'contract hello {}',
-			'contract HElloWorld {}',
-			'contract H {}',
-			'contract h {}',
-			'contract Hello1World {}',
-			'contract h {}',
-			'contract Hello123 {}',
-			'contract Hello_World {}',
+			'library hello {}',
+			'library H {}',
+			'library h {}',
+			'library Hello_World {}',
+			'library hello_1world {}'
 		];
 		var errors;
 
@@ -237,18 +279,6 @@ describe ('[RULE] camelcase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [4], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [5], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [6], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
@@ -258,14 +288,11 @@ describe ('[RULE] camelcase: Rejections', function () {
 
 	it ('rejects invalid event names', function (done) {
 		var code = [
-			'contract hello {}',
-			'contract HElloWorld {}',
-			'contract H {}',
-			'contract h {}',
-			'contract Hello1World {}',
-			'contract h {}',
-			'contract Hello123 {}',
-			'contract Hello_World {}',
+			'event hello();',
+			'event H();',
+			'event h();',
+			'event Hello_World();',
+			'event hello_1world();'
 		];
 		var errors;
 
@@ -286,18 +313,6 @@ describe ('[RULE] camelcase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [4], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [5], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [6], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
@@ -307,14 +322,11 @@ describe ('[RULE] camelcase: Rejections', function () {
 
 	it ('rejects invalid struct names', function (done) {
 		var code = [
-			'contract hello {}',
-			'contract HElloWorld {}',
-			'contract H {}',
-			'contract h {}',
-			'contract Hello1World {}',
-			'contract h {}',
-			'contract Hello123 {}',
-			'contract Hello_World {}',
+			'struct hello {}',
+			'struct H {}',
+			'struct h {}',
+			'struct Hello_World {}',
+			'struct hello_1world {}'
 		];
 		var errors;
 
@@ -335,18 +347,6 @@ describe ('[RULE] camelcase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [4], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [5], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [6], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
