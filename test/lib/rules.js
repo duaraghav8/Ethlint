@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var rules = require ('../../lib/rules'),
 	path = require ('path');
 

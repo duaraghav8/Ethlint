@@ -5,9 +5,7 @@
 
 'use strict';
 
-var should = require ('should');
-var SourceCode = require ('../../../lib/utils/source-code-utils'),
-	Solium = require ('../../../lib/solium');
+var SourceCode = require ('../../../lib/utils/source-code-utils');
 
 describe ('Testing SourceCode instance for exposed functionality', function () {
 	var sourceCodeText = 'contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}',

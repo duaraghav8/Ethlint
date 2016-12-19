@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var astUtils = require ('../../../lib/utils/ast-utils');
 
 describe ('Testing astUtils Object', function () {
@@ -81,7 +80,7 @@ describe ('Testing astUtils Object', function () {
 	});
 
 	it ('should correctly classify argument as AST Node or non-AST Node upon calling isASTNode ()', function (done) {
-		var ian = astUtils.isASTNode, temp;
+		var ian = astUtils.isASTNode;
 
 		ian ().should.equal (false);
 		ian (null).should.equal (false);

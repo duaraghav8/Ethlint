@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var Solium = require ('../../../../lib/solium');
 
 var userConfig = {
@@ -231,7 +230,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 });
 
 
-describe ('[RULE] lbrace: Rejections', function (done) {
+describe ('[RULE] lbrace: Rejections', function () {
 
 	it ('should reject any opening brace which is not preceded by EXACTLY single space (exception: functions with modifiers)', function (done) {
 		var code = 'contract FooBar{}',
