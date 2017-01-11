@@ -97,7 +97,6 @@ See the [existing rules](https://github.com/duaraghav8/Solium/tree/master/lib/ru
 
 'use strict';
 
-var should = require ('should');
 var Solium = require ('../../../../lib/solium');
 
 //INSERT YOUR RULE'S NAME IN THE BELOW userConfig Object, leave the rest of the object untouched

@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var jsUtils = require ('../../../lib/utils/js-utils');
 
 describe ('Test jsUtils functions', function () {

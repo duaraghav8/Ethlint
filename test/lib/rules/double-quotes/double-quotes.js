@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var Solium = require ('../../../../lib/solium'),
 	fs = require ('fs'),
 	path = require ('path');

@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var EventGenerator = require ('../../../lib/utils/node-event-generator'),
 	Solium = require ('../../../lib/solium');
 

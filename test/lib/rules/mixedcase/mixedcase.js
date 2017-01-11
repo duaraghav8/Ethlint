@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var Solium = require ('../../../../lib/solium');
 
 var userConfig = {
@@ -125,7 +124,7 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		done ();
 	});
 
-	if ('should accept all valid variable declarations', function (done) {
+	it ('should accept all valid variable declarations', function (done) {
 		var code = [
 			'var helloWorld;',
 			'var h;',
@@ -179,7 +178,7 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		done ();
 	});
 
-	if ('should accept all valid declarative expressions', function (done) {
+	it ('should accept all valid declarative expressions', function (done) {
 		var code = [
 			'uint helloWorld;',
 			'address h;',

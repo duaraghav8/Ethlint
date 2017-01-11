@@ -5,10 +5,7 @@
 
 'use strict';
 
-var should = require ('should');
-var Solium = require ('../../../../lib/solium'),
-	fs = require ('fs'),
-	path = require ('path');
+var Solium = require ('../../../../lib/solium');
 
 var userConfig = {
 	"custom-rules-filename": null,

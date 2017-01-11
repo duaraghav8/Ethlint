@@ -5,7 +5,6 @@
 
 'use strict';
 
-var should = require ('should');
 var RuleContext = require ('../../lib/rule-context'),
 	Solium = require ('../../lib/solium'),
 	_ = require ('lodash');
@@ -105,7 +104,7 @@ describe ('Testing RuleContext object', function () {
 	it ('should behave as expected upon calling on ()', function (done) {
 		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
 
-		rcObject.on ('ContractStatement', function (emitted) {
+		rcObject.on ('ContractStatement', function () {
 			Solium.reset ();
 			done ();
 		});
