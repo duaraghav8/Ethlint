@@ -146,5 +146,7 @@ npm test
 
 [Christopher Gewecke](https://github.com/cgewecke)
 
+[Ulrich Petri](https://github.com/ulope)
+
 #License
 ##MIT
