@@ -5,7 +5,8 @@
 
 'use strict';
 
-var jsUtils = require ('../../../lib/utils/js-utils');
+var Solium = require ('../../../lib/solium'),
+	jsUtils = require('../../../lib/utils/js-utils');
 
 describe ('Test jsUtils functions', function () {
 
@@ -16,7 +17,7 @@ describe ('Test jsUtils functions', function () {
 		done ();
 	});
 
-	it ('should correctly classify whether argument is a non-array, non-null object', function (done) {
+	it ('isStrictlyObject: should correctly classify whether argument is a non-array, non-null object', function (done) {
 		var iso = jsUtils.isStrictlyObject;
 
 		iso ().should.equal (false);
@@ -29,5 +30,4 @@ describe ('Test jsUtils functions', function () {
 
 		done ();
 	});
-
 });
