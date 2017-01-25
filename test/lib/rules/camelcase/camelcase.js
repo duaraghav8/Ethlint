@@ -6,6 +6,9 @@
 'use strict';
 
 var Solium = require ('../../../../lib/solium');
+var wrappers = require ('../../../utils/wrappers');
+var toContract = wrappers.toContract;
+var addPragma = wrappers.addPragma;
 
 var userConfig = {
   "custom-rules-filename": null,
@@ -28,6 +31,8 @@ describe ('[RULE] camelcase: Acceptances', function () {
 			'contract M123 {}'
 		];
 		var errors;
+
+		code = code.map(function(item){return addPragma(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -78,6 +83,8 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		];
 		var errors;
 
+		code = code.map(function(item){return addPragma(item)});
+
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -127,6 +134,8 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		];
 		var errors;
 
+		code = code.map(function(item){return toContract(item)});
+
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -175,6 +184,8 @@ describe ('[RULE] camelcase: Acceptances', function () {
 			'struct M123 {}'
 		];
 		var errors;
+
+		code = code.map(function(item){return toContract(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -227,6 +238,8 @@ describe ('[RULE] camelcase: Rejections', function () {
 		];
 		var errors;
 
+		code = code.map(function(item){return addPragma(item)});
+
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
@@ -260,6 +273,8 @@ describe ('[RULE] camelcase: Rejections', function () {
 			'library hello_1world {}'
 		];
 		var errors;
+
+		code = code.map(function(item){return addPragma(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -295,6 +310,8 @@ describe ('[RULE] camelcase: Rejections', function () {
 		];
 		var errors;
 
+		code = code.map(function(item){return toContract(item)});
+
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
@@ -328,6 +345,8 @@ describe ('[RULE] camelcase: Rejections', function () {
 			'struct hello_1world {}'
 		];
 		var errors;
+
+		code = code.map(function(item){return toContract(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

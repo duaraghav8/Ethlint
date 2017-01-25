@@ -6,6 +6,8 @@
 'use strict';
 
 var Solium = require ('../../../../lib/solium');
+var wrappers = require ('../../../utils/wrappers');
+var toContract = wrappers.toContract;
 
 var userConfig = {
   "custom-rules-filename": null,
@@ -24,6 +26,8 @@ describe ('[RULE] uppercase: Acceptances', function () {
 			'string constant HELLO = "dd";'
 		];
 		var errors;
+
+		code = code.map(function(item){return toContract(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -60,6 +64,8 @@ describe ('[RULE] uppercase: Rejections', function () {
 			'string constant H2O = "dd";'
 		];
 		var errors;
+
+		code = code.map(function(item){return toContract(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

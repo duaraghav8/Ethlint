@@ -6,6 +6,10 @@
 'use strict';
 
 var Solium = require ('../../../../lib/solium');
+var wrappers = require ('../../../utils/wrappers');
+var toContract = wrappers.toContract;
+var toFunction = wrappers.toFunction;
+var addPragma = wrappers.addPragma;
 
 var userConfig = {
   "custom-rules-filename": null,
@@ -18,13 +22,13 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 	it ('should allow function / event calls with 0 args only if the name is followed by "()"', function (done) {
 		var code = 'func ();',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'foo.func ();';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -35,37 +39,37 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 	it ('should allow function / event calls with no extraneous whitespace', function (done) {
 		var code = 'spam(ham[1], Coin({name: "ham"}));',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'foo.bar (10, 20, 30);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'foo.bar (10, 20, 30);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'foo (10, 20).func ();';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'foo ["func ()"] ();';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'foo ["func (10, 20)"] ();';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -76,14 +80,14 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 	it ('should allow single-line function body to have 1 extraneous space on either side', function (done) {
 		var code = 'function singleLine() { spam(); }',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		//it is fine EVEN IF there is no extraneous space
 		code = 'function singleLine() {spam();}';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -94,25 +98,25 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 	it ('should allow code which doesn\'t have whitespace immediately before a comma or semicolon', function (done) {
 		var code = 'function spam(uint i, Coin coin);',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'var foobar = "Hello World";';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'fooBar (baz ({\nhello: "world"\n}));';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'function foo (uint x, string y);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -123,31 +127,31 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 	it ('should allow exactly 1 space on either side of an assignment operator', function (done) {
 		var code = 'x = 100; y = "hello world"; string exa = "bytes";',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'x += 100; y *= 10; z -= 10;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'var x = 100;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'var (x, y, z) = (10, 20, 30);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'var (x, y, z) = fooBar ();';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -158,31 +162,31 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 	it ('should allow the code that provides nothing to check, i.e., no arguments in CallExpression / no properties in ObjectExpression', function (done) {
 		var code = 'call ();',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'call ({});';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = '[];';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'function foo () {}';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
 		code = 'if (true) {}';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -198,37 +202,37 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 	it ('should reject function / event calls with 0 args if the name is followed by brackets with whitespace between them', function (done) {
 		var code = 'func ( );',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'func (\t);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'func (\n);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'func (/**/);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'foo ["func ()"] ( );';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'foo ().func (\t);';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
@@ -239,19 +243,19 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 	it ('should reject function / event calls with having extraneous whitespace', function (done) {
 		var code = 'spam( ham[ 1 ], Coin( { name: "ham" } ) );',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (8);
 
 		code = 'ham[/**/"1"/**/];';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = 'ham[\t"1"\t];';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
@@ -265,85 +269,85 @@ describe ('[RULE] whitespace: Rejections', function () {
 		// SEMICOLON
 
 		var code = 'function spam(uint i , Coin coin) ;',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		//errors.length.should.equal (2);
 
 		code = 'var foobar = 100 ;'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'var foobar = 100\n;'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'var foobar = 100\t;'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'var foobar = 100/*abc*/;'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'function foo (uint x, string y) ;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'function foo (uint x, string y)\t;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'function foo (uint x, string y)\n;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'function foo (uint x, string y)/*abc*/;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'x [0] = fooBar () ;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'x [0] = fooBar ()/**/;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'import * as C from "chuh"/**/;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (addPragma(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'using Foo for *\t;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'using Foo for Bar.baz\t;';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
@@ -354,25 +358,25 @@ describe ('[RULE] whitespace: Rejections', function () {
 		// COMMA
 
 		code = '[1 , 2, 3 , 4,5];',
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = 'call (10\t, 20, 30 ,40,50);',
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = 'call ({name: "foo"\n, age: 20,id: 1 ,dept: "math"})',
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = '(1 ,2\t,3\n,4);',
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (3);
@@ -403,6 +407,8 @@ describe ('[RULE] whitespace: Rejections', function () {
 			'var humpty\n="dumpty";'
 		];
 		var errors;
+
+		code = code.map(function(item){return toFunction(item)});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -445,37 +451,37 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.length.should.equal (2);
 
 		code = 'var x\n=\n"hello world";'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = 'var x\t=\t"hello world";'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = 'var x = /*abc*/"hello world";'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'var x =/*abc*/ "hello world";'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'var x/*abc*/ = "hello world";'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'var x /*abc*/= "hello world";'
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
@@ -486,19 +492,19 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 	it ('should reject control structures \'if\', \'while\', and \'for\' if there is no space between them and the parenthetic block representing their conditional.', function (done) {
 		var code = 'if(true) {}\nelse if(true) {}',
-			errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
 		code = 'for(;;) {}';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
 		code = 'while(true) {}';
-		errors = Solium.lint (code, userConfig);
+		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);

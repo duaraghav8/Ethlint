@@ -6,7 +6,8 @@
 'use strict';
 
 var Solium = require ('../../../../lib/solium');
-
+var wrappers = require ('../../../utils/wrappers');
+var toContract = wrappers.toContract;
 var userConfig = {
 	"custom-rules-filename": null,
 	"rules": {
@@ -17,7 +18,7 @@ var userConfig = {
 describe ('[RULE] deprecated-suicide', function () {
 
 	it ('should reject contracts using suicide', function (done) {
-		var code = 'function foo () { suicide(0x0); }',
+		var code = toContract('function foo () { suicide(0x0); }'),
 
 		errors = Solium.lint (code, userConfig);
 
