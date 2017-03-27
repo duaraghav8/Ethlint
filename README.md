@@ -6,12 +6,12 @@ It internally uses [solparse](https://github.com/duaraghav8/solparse) to parse y
 
 Solium aims to comply with the official [Solidity Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). Follow our [blog](https://medium.com/solium) in order to stay up to date with the latest news.
 
-#Install
+# Install
 ```bash
 npm install -g solium
 ```
 
-#Usage
+# Usage
 In the root directory of your DApp, run the following:
 ```bash
 solium --init
@@ -33,7 +33,7 @@ solium --dir .
 
 This lints all the files inside your project with ```.sol``` extension.
 
-#Additional Options
+# Additional Options
 
 1. Use ```solium --watch``` to enable Hot loading (Hot swapping).
 
@@ -43,7 +43,7 @@ This lints all the files inside your project with ```.sol``` extension.
 
 4. Use `solium --reporter=gcc` or `solium --reporter=pretty` to configure the output
 
-#Plugging in your custom rules
+# Plugging in your custom rules
 -> Open up the ```.soliumrc.json``` configuration file and set the value of ```custom-rules-filename``` to the path of the file that defines your rules. You can either provide an absolute path or a path relative to the directory in which .soliumrc.json resides. For example: ```"custom-rules-filename": "./my-rules.js"```
 
 The format for writing your custom rule file (for example, ```my-rules.js```) is:
@@ -97,13 +97,13 @@ See the [existing rules](https://github.com/duaraghav8/Solium/tree/master/lib/ru
 
 **NOTE**: If you write a rule whose name clashes with the name of a pre-defined rule, your custom rule overrides the pre-defined one.
 
-#Integrate Solium in your app
+# Integrate Solium in your app
 To access Solium's API, first install it:
 
 ```bash
 npm install --save solium
 ```
-##Usage
+## Usage
 ```js
 let Solium = require ('solium'),
   sourceCode = 'contract fOO_bar { function HELLO_WORLD () {} }';
@@ -124,22 +124,22 @@ errorObjects.forEach ( (err) => {
 
 For a list of all available rules, see [solium.json](https://github.com/duaraghav8/Solium/blob/master/config/solium.json).
 
-#Contributing
+# Contributing
 Please see the [Developer Guide](https://github.com/duaraghav8/Solium/blob/master/docs/DEVELOPER.md) to understand how to contribute rules to this repository.
 
-##Setup
+## Setup
 
 Clone the repository, traverse to the root directory of the project, then install dependencies:
 ```
 npm install
 ```
 
-##Running Tests
+## Running Tests
 ```
 npm test
 ```
 
-##Contributors and Testers
+## Contributors and Testers
 [Elena Dimitrova](https://github.com/elenadimitrova)
 
 [Federico Bond](https://github.com/federicobond)
@@ -148,5 +148,5 @@ npm test
 
 [Ulrich Petri](https://github.com/ulope)
 
-#License
-##MIT
+# License
+## MIT
