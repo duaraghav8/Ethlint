@@ -1,4 +1,4 @@
-#Contributing rules to this repository
+# Contributing rules to this repository
 
 Ideally, you would want to write a rule that complies with the Solidity [Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). However, if you feel that a certain rule is not mentioned in the guide or contradicts a rule mentioned in the guide but is crucial to the linter, please raise an Issue to discuss this rule. Once, finalized, you may proceed to develop the rule, test it, and make a PR.
 
@@ -130,12 +130,12 @@ Use ```Should.js``` to implement tests for your rule. Write code snippets of bot
 
 See the [existing rule tests](https://github.com/duaraghav8/Solium/tree/master/test/lib/rules) for a better understanding.
 
-##That's it!
+## That's it!
 Yep, you're done and ready to make a Pull Request.
 
 Hopefully, you didn't have much trouble following this guide. If you think it has some flaws or it could be improved in some way, please open up an issue.
 
-#Functions available to rule implementers
+# Functions available to rule implementers
 
 ```getText (node)``` - get source code for the specified node. If no arguments given, it returns the complete source code
 
