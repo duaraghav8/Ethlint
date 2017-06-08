@@ -132,7 +132,7 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
-		code = 'x += 100; y *= 10; z -= 10;';
+		code = 'x += 100; y *= 10; z -= 10; f /= 100; p |= akjh; ufx ^= 10.289; jack &= jones; p <<= 78; c >>= 100; perc %= 0;';
 		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -151,6 +151,12 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		code = 'var (x, y, z) = fooBar ();';
+		errors = Solium.lint (toFunction(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'uint newNumber = (10 * 78 + 982 % 6**2);';
 		errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -420,7 +426,7 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors = Solium.lint (code [2], userConfig);
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [3], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -428,7 +434,7 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors = Solium.lint (code [4], userConfig);
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [5], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -436,7 +442,7 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors = Solium.lint (code [6], userConfig);
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [7], userConfig);
 		errors.constructor.name.should.equal ('Array');
