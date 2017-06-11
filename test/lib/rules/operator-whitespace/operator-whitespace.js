@@ -41,7 +41,8 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 			'1909 + 189 * 1 ** 29 / 190;',
 			'1909 + 189*1 ** 29/190;',
 			'1909+189*1**29/190;',
-			'x+189 * uy ** dex / 190;'
+			'x+189 * uy ** dex / 190;',
+			'z = foo ().baz;'
 		];
 		var errors;
 
@@ -132,6 +133,10 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [21], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [22], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
