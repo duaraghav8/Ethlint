@@ -37,7 +37,11 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 			'(90.89 * 1) / (100 - 76 % 3**2);',
 			'a ** b + c ** d;',
 			'8 * 9 / 3 % 2;',
-			'1 + 8 - 67;'
+			'1 + 8 - 67;',
+			'1909 + 189 * 1 ** 29 / 190;',
+			'1909 + 189*1 ** 29/190;',
+			'1909+189*1**29/190;',
+			'x+189 * uy ** dex / 190;'
 		];
 		var errors;
 
@@ -115,6 +119,22 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
+		errors = Solium.lint (code [18], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [19], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [20], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [21], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	})
@@ -141,7 +161,11 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 			'(90.89 * 1) /**/-/**/ (100 - 76 % (3**2));',
 			'x.foo\n**\nbar ();',
 			'8 *\n9 /\t3 % 2;',
-			'1+ 8- 67;'
+			'1+ 8- 67;',
+			'1909\n+\n189 * 1 ** 29 / 190;',
+			'1909\t+ 189*1\t** 29/190;',
+			'1909+ 189 *1**29/190;',
+			'x+189 * uy\t**\tdex / 190;'
 		];
 		var errors;
 
@@ -208,6 +232,22 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 		errors.length.should.equal (2);
 
 		errors = Solium.lint (code [15], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [16], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [17], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [18], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (2);
+
+		errors = Solium.lint (code [19], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
