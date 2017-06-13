@@ -148,5 +148,9 @@ npm test
 
 [Ulrich Petri](https://github.com/ulope)
 
+
+## External Resources
+**@travs** has released [Solium for Atom](https://atom.io/packages/linter-solium)
+
 # License
 ## MIT
