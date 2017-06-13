@@ -150,7 +150,7 @@ npm test
 
 
 ## External Resources
-**@travs** has released [Solium for Atom](https://atom.io/packages/linter-solium)
+[Travis](https://github.com/travs) has released [Solium for Atom](https://atom.io/packages/linter-solium)
 
 # License
 ## MIT
