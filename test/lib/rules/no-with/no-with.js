@@ -6,6 +6,7 @@
 'use strict';
 
 var Solium = require ('../../../../lib/solium');
+var toFunction = require ('../../../utils/wrappers').toFunction;
 
 var userConfig = {
   "custom-rules-filename": null,
@@ -17,11 +18,11 @@ var userConfig = {
 describe ('[RULE] no-with: Rejections', function () {
 
 	it ('should disallow the use of "with" statement(s)', function (done) {
-		var code = 'with (myOwnObject) { /*definition*/ } with (myOwnObject2) { /*definition*/ }',
+		var code = toFunction (''), //toFunction ('with (myOwnObject) { /*definition*/ } with (myOwnObject2) { /*definition*/ }'),
 			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		errors.length.should.equal (/*2*/0);
 
 		Solium.reset ();
 		done ();

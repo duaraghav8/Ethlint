@@ -21,7 +21,6 @@ describe ('[RULE] no-unused-vars: Acceptances', function () {
 
 	it ('should accept all variables that are used at least once in the same program', function (done) {
 		var code = [
-			'var x = 100; function foo () returns (uint) { return x; }',
 			'uint x = 100; function foo () returns (uint) { return x; }',
 			'bytes32 x = "hello"; function foo () returns (bytes32) { return x; }',
 			'string x = "hello"; function foo () returns (int) { return x; }',
@@ -49,10 +48,6 @@ describe ('[RULE] no-unused-vars: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [4], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-
-		errors = Solium.lint (code [5], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 

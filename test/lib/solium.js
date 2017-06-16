@@ -6,6 +6,7 @@
 'use strict';
 
 var Solium = require ('../../lib/solium'),
+	wrappers = require ('../utils/wrappers'),
 	EventEmitter = require ('events').EventEmitter;
 
 describe ('Checking Exported Solium API', function () {
@@ -81,7 +82,7 @@ describe ('Checking Exported Solium API', function () {
 
 		var minmalConfig = { rules: {} };
 		var sourceCode = Solium.getSourceCode ();
-		var errorMessages = Solium.lint ('var foo = 100;', minmalConfig, true)
+		var errorMessages = Solium.lint (wrappers.toFunction ('var foo = 100;'), minmalConfig, true)
 
 		sourceCode.text.should.equal ('');
 		(sourceCode.getText ()).should.equal (sourceCode.text);
@@ -139,7 +140,7 @@ describe ('Checking Exported Solium API', function () {
 
 		Solium.report (sampleErrorObject);
 
-		var errorObjects = Solium.lint ('var foo = 100;', minmalConfig, true),
+		var errorObjects = Solium.lint (wrappers.toFunction ('var foo = 100;'), minmalConfig, true),
 			err = errorObjects [0];
 
 		errorObjects.length.should.equal (1);
@@ -159,7 +160,7 @@ describe ('Checking Exported Solium API', function () {
 
 	it ('should handle all invalid arguments for Solium.lint ()', function (done) {
 		var minimalConfig = { rules: {} },
-			minimalSourceCode = 'var foo = 100;';
+			minimalSourceCode = wrappers.toFunction ('var foo = 100;');
 
 		//sourceCode text validation
 		Solium.lint.bind (Solium, '', minimalConfig).should.throw ();
@@ -187,7 +188,7 @@ describe ('Checking Exported Solium API', function () {
 				'camelcase': false
 			}
 		};
-		var minimalSourceCode = 'var foo = 100;';
+		var minimalSourceCode = wrappers.toFunction ('var foo = 100;');
 
 		Solium.lint (minimalSourceCode, userConfig);
 
@@ -206,7 +207,7 @@ describe ('Checking Exported Solium API', function () {
 
 	it ('should function as expected when valid arguments are provided', function (done) {
 		var minimalConfig = { rules: {} },
-			minimalSourceCode = 'var foo = 100;';
+			minimalSourceCode = wrappers.toFunction ('var foo = 100;');
 		var emissionCounter = 5;
 
 		function testComplete () {
@@ -253,7 +254,7 @@ describe ('Checking Exported Solium API', function () {
 
 	it ('should function as expected even if a Buffer object is provided instead of String', function (done) {
 		var minimalConfig = { rules: {} },
-			minimalSourceCode = new Buffer ('var foo = 100;');
+			minimalSourceCode = new Buffer (wrappers.toFunction ('var foo = 100;'));
 		var emissionCounter = 5;
 
 		function testComplete () {

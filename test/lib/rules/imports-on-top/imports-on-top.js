@@ -39,7 +39,7 @@ describe ('[RULE] imports-on-top: Rejections', function () {
 			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (3);
+		errors.length.should.equal (1);
 
 		Solium.reset ();
 		done ();

@@ -63,17 +63,11 @@ describe ('[RULE] pragma-on-top: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
-		code = 'pragma solidity ^4.4.0;\ncontract Foo {\npragma solidity ^4.4.0;\n}';
+		code = 'pragma solidity ^4.4.0;\ncontract Foo {}\npragma solidity ^4.4.0;';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-
-		code = 'if (true) { pragma solidity ^4.4.0; } else { pragma solidity ^4.0.0; }';
-		errors = Solium.lint (code, userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (3);
 
 		Solium.reset ();
 		done ();

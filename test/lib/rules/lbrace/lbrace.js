@@ -50,7 +50,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
-		code = 'struct Student {\n\tstring name;\n\tuint age;\n\taddress account\n}';
+		code = 'struct Student {\n\tstring name;\n\tuint age;\n\taddress account;\n}';
 		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
