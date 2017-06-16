@@ -54,6 +54,17 @@ describe ('[RULE] no-unused-vars: Acceptances', function () {
 		Solium.reset ();
 		done ();
 	});
+
+	it ('should accept if the variable\'s usage occurs above its declaration & definition.', function (done) {
+		var code = 'contract Owned {\nfunction setOwner(address _new) onlyOwner { NewOwner(owner, _new); owner = _new; }\naddress public owner = msg.sender;}',
+			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
 });
 
 
