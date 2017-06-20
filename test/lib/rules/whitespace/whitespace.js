@@ -284,7 +284,13 @@ describe ('[RULE] whitespace: Rejections', function () {
 			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		//errors.length.should.equal (2);
+		errors.length.should.equal (2);
+
+		code = 'function spam() ;'
+		errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
 
 		code = 'var foobar = 100 ;'
 		errors = Solium.lint (toFunction(code), userConfig);
@@ -381,7 +387,7 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
 
-		code = 'call ({name: "foo"\n, age: 20,id: 1 ,dept: "math"})',
+		code = 'call ({name: "foo"\n, age: 20,id: 1 ,dept: "math"});',
 		errors = Solium.lint (toFunction(code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');

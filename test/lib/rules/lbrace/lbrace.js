@@ -462,31 +462,6 @@ describe ('[RULE] lbrace: Rejections', function () {
 		errors.length.should.equal (1);
 
 
-		code = 'with (true){}';
-		errors = Solium.lint (toFunction(code), userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'with (true)  {}';
-		errors = Solium.lint (toFunction(code), userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'with (true)\t{}';
-		errors = Solium.lint (toFunction(code), userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		code = 'with (true)/*comment*/{}';
-		errors = Solium.lint (toFunction(code), userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-
 		code = 'function foo (uint x) public modif returns (address){}';
 		errors = Solium.lint (toContract(code), userConfig);
 
