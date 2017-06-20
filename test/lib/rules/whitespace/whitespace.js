@@ -179,18 +179,6 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
-		code = 'call ({});';
-		errors = Solium.lint (toFunction(code), userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-
-		code = '[];';
-		errors = Solium.lint (toFunction(code), userConfig);
-
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-
 		code = 'function foo () {}';
 		errors = Solium.lint (toContract(code), userConfig);
 
