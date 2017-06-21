@@ -241,12 +241,12 @@ describe ('[RULE] whitespace: Rejections', function () {
 		done ();
 	});
 
-	it ('should reject function / event calls with having extraneous whitespace', function (done) {
+	it ('should reject function / event calls having extraneous whitespace', function (done) {
 		var code = 'spam( ham[ 1 ], Coin( { name: "ham" } ) );',
 			errors = Solium.lint (toFunction(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (8);
+		errors.length.should.equal (4);
 
 		code = 'ham[/**/"1"/**/];';
 		errors = Solium.lint (toFunction(code), userConfig);
@@ -379,7 +379,7 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors = Solium.lint (toFunction(code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);
+		//errors.length.should.equal (2);
 
 		code = '(1 ,2\t,3\n,4);',
 		errors = Solium.lint (toFunction(code), userConfig);
@@ -387,13 +387,17 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (3);
 
-		//SUPPORT FOR var (x, y) = (1,2) doesn't yet exist in solparse
-
-		/*code = 'var (x  , y,z\t,  foo) = (1,2,3,4)',
-		errors = Solium.lint (code, userConfig);
+		code = 'var (x  , y,z\t,  foo) = (1,2,3,4);',
+		errors = Solium.lint (toFunction (code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (2);*/
+		//errors.length.should.equal (2);
+
+		code = 'var (x, y, z, foo) = (1 ,2,3\t,4);',
+		errors = Solium.lint (toFunction (code), userConfig);
+		
+		errors.constructor.name.should.equal ('Array');
+		//errors.length.should.equal (2);
 
 		Solium.reset ();
 		done ();
