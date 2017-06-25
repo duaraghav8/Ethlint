@@ -206,6 +206,17 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should allow acceptable comma whitespace between Name-Value declarations', function (done) {
+		var code = 'myStruct ({a:100, b:9028,\nc: 19082,d:"hello world",\n\t\te:"this passes YOLO"});',
+			errors = Solium.lint (toFunction (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 
@@ -540,6 +551,31 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (8);
+
+		//With comments
+		code = 'myStruct ({a: /*hello*/"hello", b/*ss*/: 190, c/*ssaa*/:/*67*/-19028});';
+		errors = Solium.lint (toFunction (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (3);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject unacceptable comma whitespace between Name-Value declarations', function (done) {
+		var code = 'myStruct ({a:100 , b:9028 ,c: 19082,  d:"hello world",\n\ne:"this passes YOLO"  ,e: 100\t,\tf: 18972});',
+			errors = Solium.lint (toFunction (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (6);
+
+		//even comments are not acceptable between commas
+		code = 'myStruct ({a:100/*hello*/, b:foo (100),/**/c: 19082, /*shi*/d:"hello world",\n/**/e:"this passes YOLO",e: 100/**/,/**/f: 18972});';
+		errors = Solium.lint (toFunction (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (5);
 
 		Solium.reset ();
 		done ();
