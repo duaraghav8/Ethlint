@@ -195,6 +195,17 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should allow Name-Value assignments following either of the spacing patterns: ":", " : ", ": "', function (done) {
+		var code = 'myStruct ({a: 100, b : "hello", c : -1908});',
+			errors = Solium.lint (toFunction (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 
@@ -518,6 +529,17 @@ describe ('[RULE] whitespace: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject the Name-Value assignments NOT following either of the spacing patterns: ":", " : ", ": "', function (done) {
+		var code = 'myStruct ({a: 100, b : "hello", c : -1908, d:  10, e :190, f  :  19098, g   : 100, h        :       19028, i\n:100, j\n:\n81972, k : \t"hola"});',
+			errors = Solium.lint (toFunction (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (8);
 
 		Solium.reset ();
 		done ();
