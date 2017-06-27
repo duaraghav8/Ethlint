@@ -401,7 +401,7 @@ describe ('[RULE] whitespace: Rejections', function () {
 		errors = Solium.lint (toFunction(code), userConfig);
 		
 		errors.constructor.name.should.equal ('Array');
-		//errors.length.should.equal (2);
+		errors.length.should.equal (2);
 
 		code = '(1 ,2\t,3\n,4);',
 		errors = Solium.lint (toFunction(code), userConfig);
