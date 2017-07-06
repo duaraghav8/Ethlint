@@ -564,11 +564,11 @@ describe ('[RULE] whitespace: Rejections', function () {
 	});
 
 	it ('should reject unacceptable comma whitespace between Name-Value declarations', function (done) {
-		var code = 'myStruct ({a:100 , b:9028 ,c: 19082,  d:"hello world",\n\ne:"this passes YOLO"  ,e: 100\t,\tf: 18972});',
+		var code = 'myStruct ({a:100 , b:9028 ,c: 19082,  d:"hello world",\n\ne:"this passes YOLO"  ,e: 100\t,\tf: 18972, \ng: "cola"});',
 			errors = Solium.lint (toFunction (code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (6);
+		errors.length.should.equal (7);
 
 		//even comments are not acceptable between commas
 		code = 'myStruct ({a:100/*hello*/, b:foo (100),/**/c: 19082, /*shi*/d:"hello world",\n/**/e:"this passes YOLO",e: 100/**/,/**/f: 18972});';
