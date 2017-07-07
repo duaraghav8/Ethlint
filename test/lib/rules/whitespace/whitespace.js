@@ -96,7 +96,7 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		done ();
 	});
 
-	it ('should allow code which doesn\'t have whitespace immediately before a comma or semicolon', function (done) {
+	it ('should allow informal params in function declaration which don\'t have whitespace immediately before a comma or semicolon', function (done) {
 		var code = 'function spam(uint i, Coin coin);',
 			errors = Solium.lint (toContract(code), userConfig);
 
@@ -116,6 +116,23 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		code = 'function foo (uint x, string y);';
+		errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should allow informal params in modifier declaration which don\'t have whitespace immediately before a comma or semicolon', function (done) {
+		var code = 'modifier spam(uint i, Coin coin) {_;}',
+			errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'modifier foo (uint extralargevarname, string yoloswag) {_;}';
 		errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -420,6 +437,12 @@ describe ('[RULE] whitespace: Rejections', function () {
 		
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
+
+		code = 'modifier foo (uint xyz , string less\t, string chiken\n, address bar/*hello*/, mapping mp, uint errorless) {_;}',
+		errors = Solium.lint (toContract (code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (4);
 
 		Solium.reset ();
 		done ();
