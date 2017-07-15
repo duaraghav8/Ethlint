@@ -117,7 +117,7 @@ let errorObjects = Solium.lint (sourceCode, {
   }
 });
 
-errorObjects.forEach ( (err) => {
+errorObjects.forEach ((err) => {
   console.log (err);
 });
 ```
