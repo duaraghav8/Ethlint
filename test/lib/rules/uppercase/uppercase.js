@@ -23,27 +23,22 @@ describe ('[RULE] uppercase: Acceptances', function () {
 			'uint constant HE = 100;',
 			'address constant HELLO_WORLD = 0x0;',
 			'bytes32 constant HELLOWORLD = "dd";',
-			'string constant HELLO = "dd";'
+			'string constant HELLO = "dd";',
+			'address constant HELLO_NUMBER_9 = 0x0;',
+			'uint constant HELLO_NUMBER_0 = 190;',
+			'string constant HELLO_NUMBER89116 = "hello";',
+			'string constant HELLO_98_NUMBER = "number";',
+			'address constant H0 = 0x1;'
 		];
 		var errors;
 
 		code = code.map(function(item){return toContract(item)});
 
-		errors = Solium.lint (code [0], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-
-		errors = Solium.lint (code [1], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-
-		errors = Solium.lint (code [2], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
-
-		errors = Solium.lint (code [3], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
+		code.forEach (function (declaration) {
+			errors = Solium.lint (declaration, userConfig);
+			errors.constructor.name.should.equal ('Array');
+			errors.length.should.equal (0);
+		});
 
 		Solium.reset ();
 		done ();
@@ -60,8 +55,7 @@ describe ('[RULE] uppercase: Rejections', function () {
 			'address constant hello_world = 0x0;',
 			'bytes32 constant helloworld= "dd";',
 			'string constant HellO = "dd";',
-			'string constant HeO = "dd";',
-			'string constant H2O = "dd";'
+			'string constant HeO = "dd";'
 		];
 		var errors;
 
@@ -84,10 +78,6 @@ describe ('[RULE] uppercase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [4], userConfig);
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
-
-		errors = Solium.lint (code [5], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
