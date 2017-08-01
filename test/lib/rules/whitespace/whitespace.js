@@ -14,7 +14,12 @@ var addPragma = wrappers.addPragma;
 var userConfig = {
   "custom-rules-filename": null,
   "rules": {
-    "whitespace": true
+	"whitespace": true,
+	"conditionals-whitespace": true,
+	"comma-whitespace": true,
+	"operator-whitespace": true,
+	"semicolon-whitespace": true,
+	"function-whitespace": true,
   }
 };
 

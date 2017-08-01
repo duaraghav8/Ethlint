@@ -29,6 +29,34 @@
 			"description": "Ensure that operators are surrounded by a single space on either side"
 		},
 
+		"conditionals-whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that there is exactly one space between conditional operators and parenthetic blocks"
+		},
+
+		"comma-whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that there is no whitespace or comments between comma delimited elements and commas"
+		},
+
+		"semicolon-whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that there is no whitespace or comments before semicolons"
+		},
+
+		"function-whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure function calls and declaration have (or don't have) whitespace in appropriate locations"
+		},
+
 		"lbrace": {
 			"enabled": true,
 			"recommended": true,
@@ -97,6 +125,13 @@
 			"recommended": false,
 			"type": "warning",
 			"description": "Ensure consistent indentation of 4 spaces per level"
+		},
+
+		"overflow-indentation": {
+			"enabled": true,
+			"recommended": false,
+			"type": "warning",
+			"description": "In the case of 4+ elements in the same line require they are instead put on a single line each"
 		},
 
 		"whitespace": {
