@@ -10,7 +10,7 @@ var RuleContext = require ('../../lib/rule-context'),
 	_ = require ('lodash');
 
 describe ('Testing RuleContext object', function () {
-	var ruleMeta = {
+	var ruleDesc = {
 		enabled: true,
 		recommended: true,
 		type: 'test-warning',
@@ -21,7 +21,7 @@ describe ('Testing RuleContext object', function () {
 	var sourceCode = 'contract Visual {\n\tfunction foobar () {}\n}';
 
 	it ('should create a RuleContext instance and expose an API when valid arguments are passed', function (done) {
-		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, {}, Solium);
 
 		rcObject.should.be.type ('object');
 		rcObject.should.be.instanceOf (RuleContext);
@@ -42,7 +42,7 @@ describe ('Testing RuleContext object', function () {
 
 		rcObject.should.have.ownProperty ('meta');
 		rcObject.meta.should.be.type ('object');
-		_.isEqual (rcObject.meta, ruleMeta).should.equal (true);
+		_.isEqual (rcObject.meta, ruleDesc).should.equal (true);
 		Object.getOwnPropertyDescriptor (rcObject, 'meta').writable.should.equal (false);	//check for read-only
 
 		done ();
@@ -52,7 +52,7 @@ describe ('Testing RuleContext object', function () {
 		var rcObject, scObject;
 
 		Solium.lint (sourceCode, { rules: {} });
-		rcObject = new RuleContext ('foo', ruleMeta, Solium);
+		rcObject = new RuleContext ('foo', ruleDesc, { fixable: 'code' }, Solium);
 		scObject = rcObject.getSourceCode ();
 
 		scObject.should.be.type ('object');
@@ -64,7 +64,7 @@ describe ('Testing RuleContext object', function () {
 	});
 
 	it ('should handle invalid argument(s) passed to report ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, {}, Solium);
 
 		rcObject.report.bind (rcObject).should.throw ();
 		rcObject.report.bind (rcObject, null).should.throw ();
@@ -76,7 +76,7 @@ describe ('Testing RuleContext object', function () {
 	});
 
 	it ('should behave as expected upon calling report ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, { fixable: 'whitespace' }, Solium);
 
 		rcObject.report ({
 			node: {type: 'TestNode', start: 0, end: 2},
@@ -102,7 +102,7 @@ describe ('Testing RuleContext object', function () {
 	});
 
 	it ('should behave as expected upon calling on ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleMeta, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, {}, Solium);
 
 		rcObject.on ('ContractStatement', function () {
 			Solium.reset ();
