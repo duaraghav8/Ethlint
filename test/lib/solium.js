@@ -118,7 +118,7 @@ describe ('Checking Exported Solium API', function () {
 		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 100}).should.throw (messageValidationRegExp);
 
 		//should not throw error with minimal valid object
-		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 'H'}).should.not.throw ();
+		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 'H', ruleMeta: {}}).should.not.throw ();
 		Solium.reset ();	//clear everything
 
 		done ();
@@ -134,7 +134,8 @@ describe ('Checking Exported Solium API', function () {
 				end: 3
 			},
 			location: {	line: 1, column: 2 },
-			message: 'boo!'
+			message: 'boo!',
+			ruleMeta: {}
 		};
 		var minmalConfig = { rules: {} };
 
