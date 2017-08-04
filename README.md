@@ -77,7 +77,7 @@ module.exports = {
         fix: function (fixer) {
           // fixer provides a set of functions to apply fixes on code range or node.
           // Let's try to delete the node altogether!
-          fixer.remove (this.node);
+          return fixer.remove (this.node);
         }
       });
       
