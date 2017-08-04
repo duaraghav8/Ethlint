@@ -212,7 +212,7 @@ The `fix()` function written by a rule dev can return one of the following:
 Also, given fixes won't be applied unless your rule also exports the `meta.fixable` property. For eg-
 ```js
 module.exports = {
-	meta: { fixable: 'code'	// alternatively, the value could be 'whitespace' },
+	meta: { fixable: 'code'	/* alternatively, the value could be 'whitespace'*/ },
 	verify: function (..) {..}
 };
 ```
