@@ -35,6 +35,10 @@ Describe exactly what your rule does inside ```description```
 
 module.exports = {
 
+	meta: {
+		fixable: 'whitespace'
+	},
+
 	verify: function (context) {
 
 		/**
@@ -75,6 +79,14 @@ module.exports = {
 				location: {	//optional
 					line: 1,	//optional
 					column: 2	//optional
+				},
+				fix: function (fixer) {
+					// fixer object exposes a set of functions to operate on nodes or range of source code.
+					// An example could be that you want to replace the contents of the current node:
+					return fixer.replaceText (this.node, 'BLAH_BLAH');
+					
+					// If you want to return multiple fixes, simply return them inside an array.
+					// Scroll down for an exhaustive list of methods provided by fixer.
 				}
 			});
 
@@ -162,3 +174,45 @@ Hopefully, you didn't have much trouble following this guide. If you think it ha
 ```isASTNode (arg)``` - Returns ```true``` if the given argument is a valid (Spider-Monkey compliant) AST Node
 
 ```getStringBetweenNodes (prevNode, nextNode)``` - get the complete code between 2 specified nodes. (The code ranges from ```prevNode.end``` (inclusive) to ```nextNode.start``` (exclusive) )
+
+# Functions provided by the fixer object
+
+`insertTextAfter (node, text)` - inserts text after the given node
+
+`insertTextAfterRange (range, text)` - inserts text after the given range
+
+`insertTextBefore(node, text)` - inserts text before the given node
+
+`insertTextBeforeRange(range, text)` - inserts text before the given range
+
+`remove (node)` - removes the given node
+
+`removeRange(range)` - removes text in the given range
+
+`replaceText(node, text)` - replaces the text in the given node
+
+`replaceTextRange(range, text)` - replaces the text in the given range
+
+
+Where `range` is an array of 2 integers, like `[12, 19]`, `node` is a valid AST node and `text` is a valid string.
+
+The above functions all return a `Fixer` Packet that looks like:
+```js
+{
+	range: [2, 10],
+	text: 'hello world'
+}
+```
+
+The `fix()` function written by a rule dev can return one of the following:
+1. a `Fixer` packet.
+2. An array of `Fixer` packets
+
+**NOTE:** If you make a `fix()` function which returns multiple fixing objects, those fixing objects must not be overlapped.
+Also, given fixes won't be applied unless your rule also exports the `meta.fixable` property. For eg-
+```js
+module.exports = {
+	meta: { fixable: 'code'	// alternatively, the value could be 'whitespace' },
+	verify: function (..) {..}
+};
+```
