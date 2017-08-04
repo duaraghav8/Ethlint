@@ -51,9 +51,6 @@ The format for writing your custom rule file (for example, ```my-rules.js```) is
 ```js
 module.exports = {
   'my-rule-name-1': function (context) {
-    meta: {
-      fixable: 'code',
-    },
 
     //Solium internally uses EventEmitter and emits an event every time it enters or leaves a node during the Depth First Traversal of the AST
     context.on ('IfStatement', function (emittedObject) {
@@ -73,11 +70,6 @@ module.exports = {
         location: { //optional
           line: 1,  //optional
           column: 2 //optional
-        },
-        fix: function (fixer) {
-          // fixer provides a set of functions to apply fixes on code range or node.
-          // Let's try to delete the node altogether!
-          return fixer.remove (this.node);
         }
       });
       
