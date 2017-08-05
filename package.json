@@ -13,7 +13,9 @@
   "keywords": [
     "Lint",
     "Solidity",
-    "Abstract-Syntax-Tree"
+    "Abstract-Syntax-Tree",
+    "Ethereum",
+    "Smart-Contracts"
   ],
   "repository": {
     "type": "git",
