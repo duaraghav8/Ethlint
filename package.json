@@ -1,6 +1,6 @@
 {
   "name": "solium",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "A flexible, stand-alone linter for Ethereum Solidity",
   "main": "./lib/solium.js",
   "bin": {
