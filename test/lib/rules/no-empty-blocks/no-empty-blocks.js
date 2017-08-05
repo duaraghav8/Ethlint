@@ -20,7 +20,7 @@ var userConfig = {
 
 describe ('[RULE] no-empty-blocks: Acceptances', function () {
 
-	it ('should accept all non-empty contract & library statements', function (done) {
+	it ('should accept all non-empty contract, library and interface statements', function (done) {
 		var code = 'contract Foo { event bar (); }',
 			errors = Solium.lint (addPragma(code), userConfig);
 
@@ -28,6 +28,12 @@ describe ('[RULE] no-empty-blocks: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		code = 'library Foo { event bar (); }';
+		errors = Solium.lint (addPragma(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = 'interface Foo { event bar (); }';
 		errors = Solium.lint (addPragma(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -108,7 +114,7 @@ describe ('[RULE] no-empty-blocks: Acceptances', function () {
 
 describe ('[RULE] no-empty-blocks: Rejections', function () {
 
-	it ('should reject all empty contract & library statements', function (done) {
+	it ('should reject all empty contract, library & interface statements', function (done) {
 		var code = 'contract Foo {}',
 			errors = Solium.lint (addPragma(code), userConfig);
 
@@ -116,6 +122,12 @@ describe ('[RULE] no-empty-blocks: Rejections', function () {
 		errors.length.should.equal (1);
 
 		code = 'library Foo {}';
+		errors = Solium.lint (addPragma(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		code = 'interface Foo {}';
 		errors = Solium.lint (addPragma(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
