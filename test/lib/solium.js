@@ -19,6 +19,8 @@ describe ('Checking Exported Solium API', function () {
 		Solium.reset.should.be.type ('function');
 		Solium.should.have.ownProperty ('lint');
 		Solium.lint.should.be.type ('function');
+		Solium.should.have.ownProperty ('lintAndFix');
+		Solium.lint.should.be.type ('function');
 		Solium.should.have.ownProperty ('report');
 		Solium.report.should.be.type ('function');
 		Solium.should.have.ownProperty ('getSourceCode');
