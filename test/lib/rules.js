@@ -12,8 +12,8 @@ describe ('Checking exported rules object', function () {
 
 	it ('should be an object that exposes a set of functions', function (done) {
 		rules.should.be.type ('object');
-		rules.should.have.ownProperty ('load');
-		rules.load.should.be.type ('function');
+		rules.should.have.ownProperty ('loadUsingDeprecatedConfigFormat');
+		rules.loadUsingDeprecatedConfigFormat.should.be.type ('function');
 		rules.should.have.ownProperty ('get');
 		rules.get.should.be.type ('function');
 
@@ -31,26 +31,26 @@ describe ('Checking exported rules object', function () {
 		done ();
 	});
 
-	it ('should handle invalid arguments passed to rules.load ()', function (done) {
+	it ('should handle invalid arguments passed to rules.loadUsingDeprecatedConfigFormat ()', function (done) {
 		//invalid userRules object
-		rules.load.bind (rules).should.throw ();
-		rules.load.bind (rules, null).should.throw ();
-		rules.load.bind (rules, []).should.throw ();
+		rules.loadUsingDeprecatedConfigFormat.bind (rules).should.throw ();
+		rules.loadUsingDeprecatedConfigFormat.bind (rules, null).should.throw ();
+		rules.loadUsingDeprecatedConfigFormat.bind (rules, []).should.throw ();
 
 		//valid userRules object
-		rules.load.bind (rules, {}).should.not.throw ();
+		rules.loadUsingDeprecatedConfigFormat.bind (rules, {}).should.not.throw ();
 
 		//specified rule is neither pre-defined nor custom
-		rules.load.bind (rules, {'NON_EXISTANT_RULE_1': true}).should.throw ();
+		rules.loadUsingDeprecatedConfigFormat.bind (rules, {'NON_EXISTANT_RULE_1': true}).should.throw ();
 
-		rules.load.bind (rules, {}, 'blahblah.txt').should.throw ();	//giving a non-existent file for customRulesFilePath
+		rules.loadUsingDeprecatedConfigFormat.bind (rules, {}, 'blahblah.txt').should.throw ();	//giving a non-existent file for customRulesFilePath
 		
 		done ();
 	});
 
-	it ('should return a rule object after valid call to load () & get ()', function (done) {
+	it ('should return a rule object after valid call to loadUsingDeprecatedConfigFormat () & get ()', function (done) {
 		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true, 'lbrace': true };
-		rules.load (config, path.join (__dirname, '../extras/custom-rules-file.js'));
+		rules.loadUsingDeprecatedConfigFormat (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 		
 		var ret = rules.get ('mixedcase');
 		ret.should.be.type ('object');
@@ -89,7 +89,7 @@ describe ('Checking exported rules object', function () {
 			'NON_EXISTANT_RULE_2': false
 		};
 
-		rules.load (config, path.join (__dirname, '../extras/custom-rules-file.js'));
+		rules.loadUsingDeprecatedConfigFormat (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 
 		config.should.be.type ('object');
 		config.should.not.have.ownProperty ('camelcase');
