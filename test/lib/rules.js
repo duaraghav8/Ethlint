@@ -12,10 +12,21 @@ describe ('Checking exported rules object', function () {
 
 	it ('should be an object that exposes a set of functions', function (done) {
 		rules.should.be.type ('object');
+
 		rules.should.have.ownProperty ('loadUsingDeprecatedConfigFormat');
 		rules.loadUsingDeprecatedConfigFormat.should.be.type ('function');
+
 		rules.should.have.ownProperty ('get');
 		rules.get.should.be.type ('function');
+
+		rules.should.have.ownProperty ('reset');
+		rules.reset.should.be.type ('function');
+
+		rules.should.have.ownProperty ('load');
+		rules.load.should.be.type ('function');
+
+		rules.should.have.ownProperty ('getRuleSeverity');
+		rules.getRuleSeverity.should.be.type ('function');
 
 		done ();
 	});
@@ -80,7 +91,7 @@ describe ('Checking exported rules object', function () {
 		done ();
 	});
 
-	it ('rules set to false to be deleted, rest (pre-defined) should be expanded with rule meta info', function (done) {
+	it ('rules set to false to be deleted, rest (pre-defined) should be expanded with rule meta info in loadUsingDeprecatedConfigFormat()', function (done) {
 		var config = {
 			'mixedcase': true,
 			'camelcase': false,
@@ -125,6 +136,40 @@ describe ('Checking exported rules object', function () {
 		config.lbrace.type.should.equal ('custom-error');
 		config.lbrace.should.have.ownProperty ('id');
 		config.lbrace.id.should.be.type ('number');
+
+		done ();
+	});
+
+	it ('should handle invalid arguments passed to getRuleSeverity()', function (done) {
+		rules.getRuleSeverity.bind (rules).should.throw ();
+		rules.getRuleSeverity.bind (rules, undefined).should.throw ();
+		rules.getRuleSeverity.bind (rules, null).should.throw ();
+		rules.getRuleSeverity.bind (rules, {}).should.throw ();
+		rules.getRuleSeverity.bind (rules, 19.8927).should.throw ();
+		rules.getRuleSeverity.bind (rules, -1).should.throw ();
+		rules.getRuleSeverity.bind (rules, 3).should.throw ();
+		rules.getRuleSeverity.bind (rules, 19028).should.throw ();
+		rules.getRuleSeverity.bind (rules, 'arbitrary').should.throw ();
+		rules.getRuleSeverity.bind (rules, {a: true, b: 'c'}).should.throw ();
+		rules.getRuleSeverity.bind (rules, []).should.throw ();
+		rules.getRuleSeverity.bind (rules, [null]).should.throw ();
+
+		done ();
+	});
+
+	it ('should return severity integer when a valid config value is passed', function (done) {
+		rules.getRuleSeverity (0).should.equal (0);
+		rules.getRuleSeverity (1).should.equal (1);
+		rules.getRuleSeverity (2).should.equal (2);
+		rules.getRuleSeverity ('off').should.equal (0);
+		rules.getRuleSeverity ('warning').should.equal (1);
+		rules.getRuleSeverity ('error').should.equal (2);
+		rules.getRuleSeverity ([0]).should.equal (0);
+		rules.getRuleSeverity ([1]).should.equal (1);
+		rules.getRuleSeverity ([2]).should.equal (2);
+		rules.getRuleSeverity (['off']).should.equal (0);
+		rules.getRuleSeverity (['warning']).should.equal (1);
+		rules.getRuleSeverity (['error']).should.equal (2);
 
 		done ();
 	});
