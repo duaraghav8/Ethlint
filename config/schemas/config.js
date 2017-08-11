@@ -46,7 +46,8 @@ var Schema = {
 	properties: {
 
 		extends: {
-			type: 'string'
+			type: 'string',
+			minLength: 1
 		},
 
 		rules: {

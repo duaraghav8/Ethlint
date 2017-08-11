@@ -38,7 +38,7 @@ var Schema = {
 					properties: {
 						recommended: { type: 'boolean' },
 						type: { type: 'string', enum: ['error', 'warning'] },
-						description: { type: 'string' }
+						description: { type: 'string', minLength: 1 }
 					},
 					required: ['recommended', 'type', 'description']
 				},

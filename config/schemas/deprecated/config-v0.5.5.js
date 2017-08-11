@@ -20,7 +20,13 @@ var Schema = {
 	type: 'object',
 
 	properties: {
-		'custom-rules-filename': { type: 'string' },
+		'custom-rules-filename': {
+			oneOf: [
+				{ type: 'string', minLength: 1 },
+				{ type: 'null' }
+			]
+		},
+
 		rules: {
 			type: 'object',
 			patternProperties: {
