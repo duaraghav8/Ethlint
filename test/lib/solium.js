@@ -185,7 +185,7 @@ describe ('Checking Exported Solium API', function () {
 
 	it ('should not alter the configuration passed by user in any way', function (done) {
 		var userConfig = {
-			'custom-rules-file': null,
+			'custom-rules-filename': null,
 			rules: {
 				'mixedcase': true,
 				'camelcase': false
@@ -196,7 +196,7 @@ describe ('Checking Exported Solium API', function () {
 		Solium.lint (minimalSourceCode, userConfig);
 
 		userConfig.should.be.type ('object');
-		userConfig.should.have.ownProperty ('custom-rules-file', null);
+		userConfig.should.have.ownProperty ('custom-rules-filename', null);
 		userConfig.should.have.ownProperty ('rules');
 		userConfig.rules.should.be.type ('object');
 		userConfig.rules.should.have.ownProperty ('mixedcase', true);
