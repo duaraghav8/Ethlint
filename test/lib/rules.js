@@ -174,4 +174,94 @@ describe ('Checking exported rules object', function () {
 		done ();
 	});
 
+	it ('should load rules from the new config format using load() when both "extends" & "rules" are passed', function (done) {
+		var config = {
+			"extends": "solium:all",
+			"rules": {
+				"pragma-on-top": "off",
+				"no-with": "warning",
+				"deprecated-suicide": "error",
+				"variable-declarations": 0,
+				"imports-on-top": 1,
+				"array-declarations": 2,
+				"operator-whitespace": ["off", "double"],
+				"lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
+				"mixedcase": ["error"],
+				"camelcase": [0, 100, "hello", 9.283],
+				"uppercase": [1],
+				"double-quotes": [2, "double"]
+			},
+			"options": { "autofix": 0 }
+		};
+
+		var ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+
+		ruleDescriptions.should.not.have.ownProperty ('pragma-on-top');
+		ruleDescriptions.should.not.have.ownProperty ('variable-declarations');
+		ruleDescriptions.should.not.have.ownProperty ('operator-whitespace');
+		ruleDescriptions.should.not.have.ownProperty ('camelcase');
+
+		ruleDescriptions ['no-with'].type.should.equal ('warning');
+		ruleDescriptions ['imports-on-top'].type.should.equal ('warning');
+		ruleDescriptions ['lbrace'].type.should.equal ('warning');
+		ruleDescriptions ['uppercase'].type.should.equal ('warning');
+
+		ruleDescriptions ['deprecated-suicide'].type.should.equal ('error');
+		ruleDescriptions ['array-declarations'].type.should.equal ('error');
+		ruleDescriptions ['mixedcase'].type.should.equal ('error');
+		ruleDescriptions ['double-quotes'].type.should.equal ('error');
+
+		// We extend ALL solium core rules and eliminate a few by setting their severity to 0.
+		// The rest of the rules should all be available.
+		// The below count will keep changing with every change in the number of core rules that exist in solium.
+		Object.keys (ruleDescriptions).length.should.equal (13);
+
+		done ();
+	});
+
+	it ('should load rules from the new config format using load() when only "rules" is passed', function (done) {
+		var config = {
+			"rules": {
+				"pragma-on-top": "off",
+				"no-with": "warning",
+				"deprecated-suicide": "error",
+				"variable-declarations": 0,
+				"imports-on-top": 1,
+				"array-declarations": 2,
+				"operator-whitespace": ["off", "double"],
+				"lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
+				"mixedcase": ["error"],
+				"camelcase": [0, 100, "hello", 9.283],
+				"uppercase": [1],
+				"double-quotes": [2, "double"]
+			}
+		};
+
+		var ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+
+		ruleDescriptions.should.not.have.ownProperty ('pragma-on-top');
+		ruleDescriptions.should.not.have.ownProperty ('variable-declarations');
+		ruleDescriptions.should.not.have.ownProperty ('operator-whitespace');
+		ruleDescriptions.should.not.have.ownProperty ('camelcase');
+
+		ruleDescriptions ['no-with'].type.should.equal ('warning');
+		ruleDescriptions ['imports-on-top'].type.should.equal ('warning');
+		ruleDescriptions ['lbrace'].type.should.equal ('warning');
+		ruleDescriptions ['uppercase'].type.should.equal ('warning');
+
+		ruleDescriptions ['deprecated-suicide'].type.should.equal ('error');
+		ruleDescriptions ['array-declarations'].type.should.equal ('error');
+		ruleDescriptions ['mixedcase'].type.should.equal ('error');
+		ruleDescriptions ['double-quotes'].type.should.equal ('error');
+
+		// There should be exactly 8 properties - the rules described in "rules" with severity > 0.
+		Object.keys (ruleDescriptions).length.should.equal (8);
+
+		done ();
+	});
+
 });
