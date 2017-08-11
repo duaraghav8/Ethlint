@@ -6,7 +6,7 @@
 // A fully qualified object for this Schema is:
 /*
 {
-	"extends": "solium:recommended",
+	"extends": "solium:all",
 	"rules": {
 	 	"pragma-on-top": "off",
 		"no-with": "warning",
