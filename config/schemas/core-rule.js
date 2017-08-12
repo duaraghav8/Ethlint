@@ -1,5 +1,8 @@
 /**
  * @fileoverview Schema of the latest Solium core rule object.
+ * Since this schema must also validate the type of 'verify' to be a function,
+ * we add a special rule "shouldBeOfTypeFunction" and export the SchemaValidator too.
+ *
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
@@ -23,6 +26,17 @@
 	"verify": function (context) {}
 }
 */
+
+var Ajv = require ('ajv'),
+	SchemaValidator = new Ajv ({ allErrors: true });
+
+// If this constraint is set to true on any attribute, then that attribute MUST be of type function. If set to false, attr MUST NOT be a function.
+SchemaValidator.addKeyword ('shouldBeOfTypeFunction', {
+	validate: function (isSet, attr) {
+		return isSet === (typeof attr === 'function');
+	}
+});
+
 
 var Schema = {
 	type: 'object',
@@ -53,7 +67,9 @@ var Schema = {
 			required: ['docs', 'schema']
 		},
 
-		verify: true
+		verify: {
+			shouldBeOfTypeFunction: true
+		}
 
 	},
 
@@ -63,4 +79,4 @@ var Schema = {
 };
 
 
-module.exports = Schema;
+module.exports = { Schema: Schema, SchemaValidator: SchemaValidator };
