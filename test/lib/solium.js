@@ -169,12 +169,37 @@ describe ('Checking Exported Solium API', function () {
 		Solium.lint.bind (Solium, '', minimalConfig).should.throw ();
 		Solium.lint.bind (Solium, null, minimalConfig).should.throw ();
 		Solium.lint.bind (Solium, 100, minimalConfig).should.throw ();
+		Solium.lint.bind (Solium, {}, minimalConfig).should.throw ();
+		Solium.lint.bind (Solium, undefined, minimalConfig).should.throw ();
+		Solium.lint.bind (Solium, 10.8927, minimalConfig).should.throw ();
+		Solium.lint.bind (Solium, [], minimalConfig).should.throw ();
 
 		//config object validation
 		Solium.lint.bind (Solium, minimalSourceCode).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {}).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {rules: null}).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {rules: 'foo'}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, []).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, null).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, 19082).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, 'hoellla').should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, 0).should.throw ();
+
+		// config (v1.0.0) object validation
+		// These tests just ensure that Solium internally calls configInspector.isValid() on config.
+		// Extensive testing of validatio is done on isValid() (see test for config-inspector).
+		Solium.lint.bind (Solium, minimalSourceCode, {extends: ''}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {extends: 908}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {extends: {}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {extends: []}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {extends: 'hello', rules: {a: true}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {extends: null}).should.throw ();
+
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: []}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: 'koala bear'}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: 9018}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: -1}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: null}}).should.throw ();
 
 		//minimal valid arguments
 		Solium.lint.bind (Solium, minimalSourceCode, minimalConfig).should.not.throw ();
@@ -300,6 +325,58 @@ describe ('Checking Exported Solium API', function () {
 		//without any rules applied
 		var errorObjects = Solium.lint (minimalSourceCode, minimalConfig, true);
 		errorObjects.length.should.equal (0);
+	});
+
+	it ('should accept both deprecated and current config formats without any issue', function (done) {
+		var deprecated = {
+			'custom-rules-filename': null,
+			rules: {
+				'pragma-on-top': true,
+				'lbrace': false,
+				'mixedcase': true
+			}
+		};
+
+		var current1 = {
+			"extends": "solium:all",
+			"rules": {
+				"pragma-on-top": "off",
+				"no-with": "warning",
+				"deprecated-suicide": "error",
+				"variable-declarations": 0,
+				"imports-on-top": 1,
+				"array-declarations": 2,
+				"operator-whitespace": ["off", "double"],
+				"lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
+				"mixedcase": ["error"],
+				"camelcase": [0, 100, "hello", 9.283],
+				"uppercase": [1],
+				"double-quotes": [2, "double"]
+			},
+			"options": { "autofix": false }
+		};
+
+		var current2 = {
+			"extends": "solium:all"
+		};
+
+		var current3 = {
+			"rules": {
+				"deprecated-suicide": "error",
+				"variable-declarations": 0,
+				"imports-on-top": 1
+			}
+		};
+
+		var minimalSourceCode = wrappers.toFunction ('var foo = 100;');
+
+		Solium.lint.bind (Solium, minimalSourceCode, deprecated).should.not.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, current1).should.not.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, current2).should.not.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, current3).should.not.throw ();
+
+		Solium.reset ();
+		done ();
 	});
 
 });

@@ -191,7 +191,7 @@ describe ('Checking exported rules object', function () {
 				"uppercase": [1],
 				"double-quotes": [2, "double"]
 			},
-			"options": { "autofix": 0 }
+			"options": { "autofix": false }
 		};
 
 		var ruleDescriptions = rules.load (config);
