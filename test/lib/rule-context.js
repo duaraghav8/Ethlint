@@ -16,7 +16,8 @@ describe ('Testing RuleContext object', function () {
 		type: 'test-warning',
 		description: 'boo!',
 		id: 1,
-		custom: false
+		custom: false,
+		options: ['double', 2, { modifies: true }]
 	};
 	var sourceCode = 'contract Visual {\n\tfunction foobar () {}\n}';
 
@@ -44,6 +45,13 @@ describe ('Testing RuleContext object', function () {
 		rcObject.meta.should.be.type ('object');
 		_.isEqual (rcObject.meta, ruleDesc).should.equal (true);
 		Object.getOwnPropertyDescriptor (rcObject, 'meta').writable.should.equal (false);	//check for read-only
+
+		rcObject.should.have.ownProperty ('options');
+		rcObject.options.should.be.type ('object');
+		rcObject.options.constructor.name.should.equal ('Array');
+		rcObject.options [0].should.equal ('double');
+		rcObject.options [1].should.equal (2);
+		rcObject.options [2].modifies.should.equal (true);
 
 		done ();
 	});
