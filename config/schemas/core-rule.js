@@ -57,7 +57,7 @@ var Schema = {
 					required: ['recommended', 'type', 'description']
 				},
 
-				schema: { type: 'array' },
+				schema: { type: 'array', items: { type: 'object' } },
 
 				fixable: {
 					type: 'string', enum: ['code', 'whitespace']

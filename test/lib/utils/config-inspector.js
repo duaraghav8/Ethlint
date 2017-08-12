@@ -36,7 +36,11 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isValid ({ rules: {}, extends: 89.28 }).should.equal (false);
 		configInspector.isValid ({ extends: '' }).should.equal (false);
 		configInspector.isValid ({ extends: '', rules: {} }).should.equal (false);
+		configInspector.isValid ({ extends: [] }).should.equal (false);
 		configInspector.isValid ({ rules: {a: []} }).should.equal (false);
+
+		// This will be valid in future when extends is allowed to be array of strings.
+		configInspector.isValid ({ extends: ['/dev', '/payments'] }).should.equal (false);
 
 		// Deprecated
 		configInspector.isValid ({ 'custom-rules-filename': [] }).should.equal (false);
