@@ -346,12 +346,12 @@ describe ('Checking Exported Solium API', function () {
 				"variable-declarations": 0,
 				"imports-on-top": 1,
 				"array-declarations": 2,
-				"operator-whitespace": ["off", "double"],
-				"lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
+				"operator-whitespace": ["off"],
+				"lbrace": ["warning"],
 				"mixedcase": ["error"],
-				"camelcase": [0, 100, "hello", 9.283],
+				"camelcase": [0],
 				"uppercase": [1],
-				"double-quotes": [2, "double"]
+				"double-quotes": [2]
 			},
 			"options": { "autofix": false }
 		};

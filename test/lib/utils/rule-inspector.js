@@ -13,6 +13,9 @@ describe ('Test rule-inspector functions', function () {
 		ruleInspector.should.have.ownProperty ('isAValidRuleObject');
 		ruleInspector.isAValidRuleObject.should.be.type ('function');
 
+		ruleInspector.should.have.ownProperty ('areValidOptionsPassed');
+		ruleInspector.areValidOptionsPassed.should.be.type ('function');
+
 		done ();
 	});
 
@@ -266,6 +269,38 @@ describe ('Test rule-inspector functions', function () {
 
 		invalidConfigObjects.forEach (function (c) {
 			ruleInspector.isAValidRuleObject (c).should.equal (false);
+		});
+
+		done ();
+	});
+
+	var listItemsSchema = [
+		{type: 'string', minLength: 3},
+		{type: 'integer', minimum: 0, maximum: 10},
+		{type: 'object', properties: { name: {type: 'string', minLength: 1} }, additionalProperties: false}
+	];
+
+	it ('should correctly classify when a rule is provided a valid set of options', function (done) {
+		ruleInspector.areValidOptionsPassed (['hello', 5, {name: 'chuck norris'}], listItemsSchema).should.equal (true);
+
+		done ();
+	});
+
+	it ('should correctly classify when a rule is provided an invalid set of options', function (done) {
+		var invalidOptionLists = [
+			null, undefined, '', {}, 100, -9, 89.23, 0, function () {}, NaN,
+			['', 5, {name: 'chuck norris'}],
+			['hello', -189, {name: 'chuck norris'}],
+			['', 5, {name: ''}],
+			[],
+			['hello'],
+			['hell', 9],
+			[9, {name: 'chuck norris'}],
+			['sss', {name: 'chuck norris'}]
+		];
+
+		invalidOptionLists.forEach (function (ops) {
+			ruleInspector.areValidOptionsPassed (ops, listItemsSchema).should.equal (false);
 		});
 
 		done ();
