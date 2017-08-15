@@ -3,6 +3,8 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
+// 1 extra error produced is due to deprecation warning since this rule is now deprecated.
+
 'use strict';
 
 var Solium = require ('../../../../lib/solium'),
@@ -25,7 +27,7 @@ describe ('[RULE] double-quotes: Acceptances', function () {
 			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (0);
+		errors.length.should.equal (1);
 
 		Solium.reset ();
 		done ();
@@ -41,7 +43,7 @@ describe ('[RULE] double-quotes: Rejections', function () {
 			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (5);
+		errors.length.should.equal (6);
 
 		Solium.reset ();
 		done ();

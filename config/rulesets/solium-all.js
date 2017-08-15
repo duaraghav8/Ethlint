@@ -19,7 +19,6 @@ module.exports = {
 		'no-with': 'warning',
 		'no-empty-blocks': 'warning',
 		'no-unused-vars': 'error',
-		'double-quotes': 'error',
 		'blank-lines': 'warning',
 		'indentation': 'warning',
 		'overflow-indentation': 'warning',
@@ -30,7 +29,11 @@ module.exports = {
 		'conditionals-whitespace': 'error',
 		'operator-whitespace': 'error',
 		'deprecated-suicide': 'warning',
-		'pragma-on-top': 'warning'
+		'pragma-on-top': 'warning',
+		'quotes': 'error',
+
+		// Turn OFF all deprecated rules
+		'double-quotes': 'error',
 	}
 
 };
