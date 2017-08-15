@@ -1,0 +1,34 @@
+/**
+ * @fileoverview Ensure that all rule files present in the lib/rules/ directory have a corresponding entry in solium-all.
+ * @author Raghav Dua <duaraghav8@gmail.com>
+ */
+
+'use strict';
+
+var fs = require ('fs'), path = require ('path');
+var rsSoliumAll = require ('../../../config/rulesets/solium-all');
+var JS_EXT = '.js';
+
+describe ('Tests for solium-all.js ruleset', function () {
+
+	it ('should have a set of properties', function (done) {
+		rsSoliumAll.should.be.type ('object');
+		rsSoliumAll.should.have.ownProperty ('rules');
+		rsSoliumAll.rules.should.be.type ('object');
+
+		done ();
+	});
+
+	it ('should have an entry for every rule file in lib/rules directory', function (done) {
+		var listOfRuleFiles = fs.readdirSync (__dirname + '/../../../lib/rules/');
+
+		listOfRuleFiles.forEach (function (filename) {
+			if (path.extname (filename) === JS_EXT) {
+				rsSoliumAll.rules.should.have.ownProperty (filename.slice (0, -JS_EXT.length));
+			}
+		});
+
+		done ();
+	});
+
+});

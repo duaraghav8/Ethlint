@@ -22,7 +22,13 @@ module.exports = {
 		'double-quotes': 'error',
 		'blank-lines': 'warning',
 		'indentation': 'warning',
+		'overflow-indentation': 'warning',
 		'whitespace': 'warning',
+		'function-whitespace': 'error',
+		'semicolon-whitespace': 'error',
+		'comma-whitespace': 'error',
+		'conditionals-whitespace': 'error',
+		'operator-whitespace': 'error',
 		'deprecated-suicide': 'warning',
 		'pragma-on-top': 'warning'
 	}
