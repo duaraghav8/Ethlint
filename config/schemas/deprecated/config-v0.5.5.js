@@ -33,6 +33,13 @@ var Schema = {
 				'^.+$': { type: 'boolean' }
 			},
 			additionalProperties: false
+		},
+
+		options: {
+			type: 'object',
+			properties: {
+				autofix: { type: 'boolean' }
+			}
 		}
 	},
 
