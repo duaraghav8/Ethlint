@@ -33,7 +33,7 @@ module.exports = {
 		'quotes': 'error',
 
 		// Turn OFF all deprecated rules
-		'double-quotes': 'error',
+		'double-quotes': 'off'
 	}
 
 };
