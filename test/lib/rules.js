@@ -216,7 +216,7 @@ describe ('Checking exported rules object', function () {
 		// We extend ALL solium core rules and eliminate a few by setting their severity to 0.
 		// The rest of the rules should all be available.
 		// The below count will keep changing with every change in the number of core rules that exist in solium.
-		Object.keys (ruleDescriptions).length.should.equal (18);
+		Object.keys (ruleDescriptions).length.should.equal (19);
 
 		done ();
 	});
@@ -257,6 +257,20 @@ describe ('Checking exported rules object', function () {
 		ruleDescriptions ['array-declarations'].type.should.equal ('error');
 		ruleDescriptions ['mixedcase'].type.should.equal ('error');
 		ruleDescriptions ['double-quotes'].type.should.equal ('error');
+
+		// Check for existence of options
+		ruleDescriptions ['lbrace'].should.have.ownProperty ('options');
+		ruleDescriptions ['lbrace'].options.should.be.Array ();
+
+		ruleDescriptions ['double-quotes'].should.have.ownProperty ('options');
+		ruleDescriptions ['double-quotes'].options.should.be.Array ();
+
+		// Check for options contents
+		ruleDescriptions ['lbrace'].options.length.should.equal (3);
+		ruleDescriptions ['lbrace'].options [0].should.equal (1);
+
+		ruleDescriptions ['double-quotes'].options.length.should.equal (1);
+		ruleDescriptions ['double-quotes'].options [0].should.equal ('double');
 
 		// There should be exactly 8 properties - the rules described in "rules" with severity > 0.
 		Object.keys (ruleDescriptions).length.should.equal (8);
