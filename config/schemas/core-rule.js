@@ -15,12 +15,15 @@
 		"docs": {
 			"recommended": true,
 			"type": "error",
-			"description": "This is a rule"
+			"description": "This is a rule",
+			"replacedBy": ["new-rule"]
 		},
 
 		"schema": [],
 
-		"fixable": "code"
+		"fixable": "code",
+
+		"deprecated": true
 	},
 
 	"verify": function (context) {}
@@ -52,7 +55,8 @@ var Schema = {
 					properties: {
 						recommended: { type: 'boolean' },
 						type: { type: 'string', enum: ['error', 'warning'] },
-						description: { type: 'string', minLength: 1 }
+						description: { type: 'string', minLength: 1 },
+						replacedBy: { type: 'array', minItems: 1, items: { type: 'string' } }
 					},
 					required: ['recommended', 'type', 'description']
 				},
@@ -61,7 +65,9 @@ var Schema = {
 
 				fixable: {
 					type: 'string', enum: ['code', 'whitespace']
-				}
+				},
+
+				deprecated: { type: 'boolean' }
 
 			},
 			required: ['docs', 'schema']

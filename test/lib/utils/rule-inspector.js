@@ -28,10 +28,12 @@ describe ('Test rule-inspector functions', function () {
 				"docs": {
 					"recommended": true,
 					"type": "error",
-					"description": "This is a rule"
+					"description": "This is a rule",
+					"replacedBy": ["new-rule"]
 				},
 				"schema": [],
-				"fixable": "code"
+				"fixable": "code",
+				"deprecated": true
 			},
 			"verify": function (context) {}
 		});
@@ -62,6 +64,51 @@ describe ('Test rule-inspector functions', function () {
 					{ type: 'object', properties: {modifies: {type: 'boolean'}} },
 					{ type: 'integer', minimum: 0, maximum: 69 }
 				]
+			},
+			"verify": function (context) {}
+		});
+
+		// No deprecation
+		configObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule"
+				},
+				"schema": [],
+				"fixable": "code"
+			},
+			"verify": function (context) {}
+		});
+
+		// Only deprecation, no replacement
+		configObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule"
+				},
+				"schema": [],
+				"fixable": "code",
+				"deprecated": true
+			},
+			"verify": function (context) {}
+		});
+
+		// "replacedBy" attr without the "deprecated: true"
+		// In this case, "replacedBy" is redundant & will be ignored by solium, but its not invalid.
+		configObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule",
+					"replacedBy": ["new-rule"]
+				},
+				"schema": [],
+				"fixable": "code"
 			},
 			"verify": function (context) {}
 		});
@@ -263,6 +310,54 @@ describe ('Test rule-inspector functions', function () {
 				},
 				"schema": [],
 				"fixable": "code"
+			},
+			"verify": function (context) {}
+		});
+
+		// Invalid value for "deprecated"
+		invalidConfigObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule",
+					"replacedBy": ["new-rule"]
+				},
+				"schema": [],
+				"fixable": "code",
+				"deprecated": null
+			},
+			"verify": function (context) {}
+		});
+
+		// Invalid value for "replacedBy"
+		invalidConfigObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule",
+					"replacedBy": "new-rule"
+				},
+				"schema": [],
+				"fixable": "code",
+				"deprecated": true
+			},
+			"verify": function (context) {}
+		});
+
+		// Invalid value for "replacedBy"
+		invalidConfigObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule",
+					"replacedBy": []
+				},
+				"schema": [],
+				"fixable": "code",
+				"deprecated": true
 			},
 			"verify": function (context) {}
 		});
