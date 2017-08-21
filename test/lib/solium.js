@@ -187,7 +187,7 @@ describe ('Checking Exported Solium API', function () {
 
 		// config (v1.0.0) object validation
 		// These tests just ensure that Solium internally calls configInspector.isValid() on config.
-		// Extensive testing of validatio is done on isValid() (see test for config-inspector).
+		// Extensive testing of validation is done on isValid() (see test for config-inspector).
 		Solium.lint.bind (Solium, minimalSourceCode, {extends: ''}).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {extends: 908}).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {extends: {}}).should.throw ();
@@ -205,6 +205,34 @@ describe ('Checking Exported Solium API', function () {
 		Solium.lint.bind (Solium, minimalSourceCode, minimalConfig).should.not.throw ();
 		Solium.reset ();
 
+		done ();
+	});
+
+	it ('should return deprecation warning when using old config format & returnInternalIssues = true', function (done) {
+		var config = {
+			rules: {
+				lbrace: true
+			},
+			options: {
+				returnInternalIssues: true
+			}
+		};
+
+		var errors = Solium.lint ('contract Foo {}', config);
+
+		errors.should.be.array;
+		errors.length.should.equal (1);
+		errors [0].should.be.type ('object');
+		errors [0].should.have.ownProperty ('internal');
+		errors [0].should.have.ownProperty ('line');
+		errors [0].should.have.ownProperty ('column');
+		errors [0].should.have.ownProperty ('message');
+		errors [0].internal.should.equal (true);
+		errors [0].line.should.equal (-1);
+		errors [0].column.should.equal (-1);
+		errors [0].message.should.be.type ('string');
+
+		Solium.reset ();
 		done ();
 	});
 
