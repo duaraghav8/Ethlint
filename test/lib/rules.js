@@ -53,14 +53,12 @@ describe ('Checking exported rules object', function () {
 
 		//specified rule is neither pre-defined nor custom
 		rules.loadUsingDeprecatedConfigFormat.bind (rules, {'NON_EXISTANT_RULE_1': true}).should.throw ();
-
-		rules.loadUsingDeprecatedConfigFormat.bind (rules, {}, 'blahblah.txt').should.throw ();	//giving a non-existent file for customRulesFilePath
 		
 		done ();
 	});
 
 	it ('should return a rule object after valid call to loadUsingDeprecatedConfigFormat () & get ()', function (done) {
-		var config = { 'mixedcase': true, 'camelcase': false, 'CUSTOM_RULE': true, 'lbrace': true };
+		var config = { 'mixedcase': true, 'camelcase': false, 'lbrace': true };
 		rules.loadUsingDeprecatedConfigFormat (config, path.join (__dirname, '../extras/custom-rules-file.js'));
 		
 		var ret = rules.get ('mixedcase');
@@ -70,11 +68,6 @@ describe ('Checking exported rules object', function () {
 
 		ret = rules.get ('camelcase');
 		(typeof ret).should.equal ('undefined');
-
-		ret = rules.get ('CUSTOM_RULE');
-		ret.should.be.type ('object');
-		ret.should.have.ownProperty ('verify');
-		ret.verify.should.be.type ('function');
 
 		//overlapping rule - lbrace (custom) should overwrite lbrace (pre-defined)
 		ret = rules.get ('lbrace');
@@ -86,8 +79,18 @@ describe ('Checking exported rules object', function () {
 		ret = rules.get ('not-included');
 		(typeof ret).should.equal ('undefined');
 
-		rules.reset ();
+		/*
+		getting CUSTOM_RULE should throw since Solium v1 removes the use of "custom-rules-filename" attribute
+		ret = rules.get ('CUSTOM_RULE');
+		ret.should.be.type ('object');
+		ret.should.have.ownProperty ('verify');
+		ret.verify.should.be.type ('function');
+		*/
 
+		config = { 'CUSTOM_RULE': true };
+		rules.loadUsingDeprecatedConfigFormat.bind (rules, config, path.join (__dirname, '../extras/custom-rules-file.js')).should.throw ();
+
+		rules.reset ();
 		done ();
 	});
 
@@ -96,7 +99,6 @@ describe ('Checking exported rules object', function () {
 			'mixedcase': true,
 			'camelcase': false,
 			'lbrace': true,
-			'CUSTOM_RULE': true,	//not defined in config/solium.json, is a user-defined rule,
 			'NON_EXISTANT_RULE_2': false
 		};
 
@@ -119,21 +121,12 @@ describe ('Checking exported rules object', function () {
 		config.mixedcase.should.have.ownProperty ('id');
 		config.mixedcase.id.should.be.type ('number');
 
-		config.should.have.ownProperty ('CUSTOM_RULE');
-		config.CUSTOM_RULE.should.be.type ('object');
-		config.CUSTOM_RULE.should.have.ownProperty ('enabled', true);
-		config.CUSTOM_RULE.should.have.ownProperty ('custom', false);
-		config.CUSTOM_RULE.should.have.ownProperty ('type');
-		config.CUSTOM_RULE.type.should.equal ('custom-error');
-		config.CUSTOM_RULE.should.have.ownProperty ('id');
-		config.CUSTOM_RULE.id.should.be.type ('number');
-
 		config.should.have.ownProperty ('lbrace');
 		config.lbrace.should.be.type ('object');
 		config.lbrace.should.have.ownProperty ('enabled', true);
 		config.lbrace.should.have.ownProperty ('custom', false);
 		config.lbrace.should.have.ownProperty ('type');
-		config.lbrace.type.should.equal ('custom-error');
+		config.lbrace.type.should.equal ('error');
 		config.lbrace.should.have.ownProperty ('id');
 		config.lbrace.id.should.be.type ('number');
 

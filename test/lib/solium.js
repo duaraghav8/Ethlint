@@ -208,9 +208,11 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
-	it ('should return deprecation warning when using old config format & returnInternalIssues = true', function (done) {
+	it ('should return deprecation warnings when using old config format, "custom-rules-filename" is non-null & returnInternalIssues = true', function (done) {
 		var config = {
+			'custom-rules-filename': './test/extras/custom-rules-file',
 			rules: {
+				indentation: true,
 				lbrace: true
 			},
 			options: {
@@ -221,16 +223,19 @@ describe ('Checking Exported Solium API', function () {
 		var errors = Solium.lint ('contract Foo {}', config);
 
 		errors.should.be.array;
-		errors.length.should.equal (1);
-		errors [0].should.be.type ('object');
-		errors [0].should.have.ownProperty ('internal');
-		errors [0].should.have.ownProperty ('line');
-		errors [0].should.have.ownProperty ('column');
-		errors [0].should.have.ownProperty ('message');
-		errors [0].internal.should.equal (true);
-		errors [0].line.should.equal (-1);
-		errors [0].column.should.equal (-1);
-		errors [0].message.should.be.type ('string');
+		errors.length.should.equal (2);
+
+		errors.forEach (function (err) {
+			err.should.be.type ('object');
+			err.should.have.ownProperty ('internal');
+			err.should.have.ownProperty ('line');
+			err.should.have.ownProperty ('column');
+			err.should.have.ownProperty ('message');
+			err.internal.should.equal (true);
+			err.line.should.equal (-1);
+			err.column.should.equal (-1);
+			err.message.should.be.type ('string');
+		});
 
 		Solium.reset ();
 		done ();
