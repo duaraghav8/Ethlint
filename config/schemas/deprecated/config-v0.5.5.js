@@ -5,6 +5,8 @@
 
 'use strict';
 
+var optionsSchema = require ('../config').properties.options;
+
 // A fully qualified object for this Schema is:
 /*
 {
@@ -12,7 +14,8 @@
 	"rules": {
 		"deprecated-suicide": false,
 		"pragma-on-top": true
-	}
+	},
+	"options": { "autofix": true, "returnInternalIssues": true }
 }
 */
 
@@ -35,12 +38,7 @@ var Schema = {
 			additionalProperties: false
 		},
 
-		options: {
-			type: 'object',
-			properties: {
-				autofix: { type: 'boolean' }
-			}
-		}
+		options: optionsSchema
 	},
 
 	required: ['rules'],

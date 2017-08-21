@@ -21,7 +21,7 @@
 		"uppercase": [1],
 		"double-quotes": [2, "double"]
 	},
-	"options": { "autofix": 0 }
+	"options": { "autofix": true, "returnInternalIssues": true }
 }
 */
 
@@ -63,8 +63,10 @@ var Schema = {
 		options: {
 			type: 'object',
 			properties: {
-				autofix: { type: 'boolean' }
-			}
+				autofix: { type: 'boolean' },
+				returnInternalIssues: { type: 'boolean' }
+			},
+			additionalProperties: false
 		}
 
 	},

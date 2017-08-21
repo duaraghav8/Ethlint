@@ -3,7 +3,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-// 1 extra error produced is due to deprecation warning since this rule is now deprecated.
+// 1 extra error produced is due to deprecation warning since this rule is now deprecated & we asked for internal issues.
 
 'use strict';
 
@@ -17,7 +17,8 @@ var userConfig = {
   "custom-rules-filename": null,
   "rules": {
     "double-quotes": true
-  }
+  },
+  "options": { "returnInternalIssues": true }
 };
 
 describe ('[RULE] double-quotes: Acceptances', function () {
