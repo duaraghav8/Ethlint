@@ -10,9 +10,9 @@ var Solium = require ('../../../../lib/solium'),
 var toContract = require ('../../../utils/wrappers').toContract;
 
 var userConfigSingle = {
-  "rules": {
-    "quotes": [1, "single"]
-  }
+	"rules": {
+		"quotes": [1, "single"]
+	}
 };
 
 describe ('[RULE] quotes: Acceptances for single quote', function () {
@@ -46,9 +46,9 @@ describe ('[RULE] quotes: Rejections for single quote', function () {
 });
 
 var userConfigDouble = {
-  "rules": {
-    "quotes": ["error", "double"]
-  }
+	"rules": {
+		"quotes": ["error", "double"]
+	}
 };
 
 describe ('[RULE] quotes: Acceptances for double quote', function () {
@@ -79,4 +79,62 @@ describe ('[RULE] quotes: Rejections for double quote', function () {
 		done ();
 	});
 
+});
+
+describe ('[RULE] quotes: Fix when double quotes are mandatory', function () {
+	var config = {
+		"rules": {
+			"quotes": ["error", "double"]
+		}
+	};
+
+	it ('should fix single to double', function (done) {
+		var unfixedCode = fs.readFileSync (path.join (__dirname, 'single-full.sol'), 'utf8'),
+			fixedCode =  fs.readFileSync (path.join (__dirname, 'double-full.sol'), 'utf8');
+
+		var fixed = Solium.lintAndFix (unfixedCode, config);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixedCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (3);
+
+		Solium.reset ();
+		done ();
+	});
+});
+
+describe ('[RULE] quotes: Fix when single quotes are mandatory', function () {
+	var config = {
+		"rules": {
+			"quotes": ["error", "single"]
+		}
+	};
+
+	it ('should fix double to single', function (done) {
+		var unfixedCode = fs.readFileSync (path.join (__dirname, 'double-full.sol'), 'utf8'),
+			fixedCode =  fs.readFileSync (path.join (__dirname, 'single-full.sol'), 'utf8');
+
+		var fixed = Solium.lintAndFix (unfixedCode, config);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixedCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (3);
+
+		Solium.reset ();
+		done ();
+	});
 });
