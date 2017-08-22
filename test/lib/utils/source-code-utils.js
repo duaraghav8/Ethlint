@@ -23,7 +23,8 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.should.be.type ('object');
 		sourceCodeObject.should.be.instanceof (SourceCode);
 
-		sourceCodeObject.should.have.ownProperty ('text', sourceCodeText);
+		sourceCodeObject.should.have.ownProperty ('text');
+		sourceCodeObject.text.should.equal (sourceCodeText);
 
 		//functions inherited from astUtils
 		sourceCodeObject.should.have.property ('getLine');

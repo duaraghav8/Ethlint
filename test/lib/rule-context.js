@@ -65,7 +65,8 @@ describe ('Testing RuleContext object', function () {
 
 		scObject.should.be.type ('object');
 		scObject.constructor.name.should.equal ('SourceCode');
-		scObject.should.have.ownProperty ('text', sourceCode);
+		scObject.should.have.ownProperty ('text');
+		scObject.text.should.equal (sourceCode);
 
 		Solium.reset ();
 		done ();
@@ -96,14 +97,20 @@ describe ('Testing RuleContext object', function () {
 		var err = errorObjects [0];
 
 		err.should.be.type ('object');
-		err.should.have.ownProperty ('ruleName', 'foo');
-		err.should.have.ownProperty ('type', 'test-warning');
+		err.should.have.ownProperty ('ruleName');
+		err.ruleName.should.equal ('foo');
+		err.should.have.ownProperty ('type');
+		err.type.should.equal ('test-warning');
 		err.should.have.ownProperty ('node');
 		err.node.should.be.type ('object');
-		err.node.should.have.ownProperty ('type', 'TestNode');
-		err.should.have.ownProperty ('message', 'test run');
-		err.should.have.ownProperty ('line', 1);
-		err.should.have.ownProperty ('column', 0);
+		err.node.should.have.ownProperty ('type');
+		err.node.type.should.equal ('TestNode');
+		err.should.have.ownProperty ('message');
+		err.message.should.equal ('test run');
+		err.should.have.ownProperty ('line');
+		err.line.should.equal (1);
+		err.should.have.ownProperty ('column');
+		err.column.should.equal (0);
 
 		Solium.reset ();
 		done ();

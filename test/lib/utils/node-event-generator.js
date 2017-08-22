@@ -16,7 +16,8 @@ describe ('Testing EventGenerator instance for exposed functionality', function 
 		generator.should.be.type ('object');
 		generator.should.be.instanceof (EventGenerator);
 
-		generator.should.have.ownProperty ('emitter', Solium);
+		generator.should.have.ownProperty ('emitter');
+		generator.emitter.constructor.name.should.equal ('EventEmitter');
 
 		generator.should.have.property ('enterNode');
 		generator.enterNode.should.be.type ('function');
@@ -33,8 +34,10 @@ describe ('Testing EventGenerator instance for exposed functionality', function 
 
 		Solium.on ('TestNodeEnter', function (emitted) {
 			emitted.should.have.ownProperty ('node');
-			emitted.node.should.have.ownProperty ('type', 'TestNodeEnter');
-			emitted.should.have.ownProperty ('exit', false);
+			emitted.node.should.have.ownProperty ('type');
+			emitted.node.type.should.equal ('TestNodeEnter');
+			emitted.should.have.ownProperty ('exit');
+			emitted.exit.should.equal (false);
 
 			successCountDown--;
 			!successCountDown && (Solium.reset () || done ());
@@ -42,8 +45,10 @@ describe ('Testing EventGenerator instance for exposed functionality', function 
 
 		Solium.on ('TestNodeLeave', function (emitted) {
 			emitted.should.have.ownProperty ('node');
-			emitted.node.should.have.ownProperty ('type', 'TestNodeLeave');
-			emitted.should.have.ownProperty ('exit', true);
+			emitted.node.should.have.ownProperty ('type');
+			emitted.node.type.should.equal ('TestNodeLeave');
+			emitted.should.have.ownProperty ('exit');
+			emitted.exit.should.equal (true);
 
 			successCountDown--;
 			!successCountDown && (Solium.reset () || done ());

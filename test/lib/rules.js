@@ -112,8 +112,10 @@ describe ('Checking exported rules object', function () {
 
 		config.should.have.ownProperty ('mixedcase');
 		config.mixedcase.should.be.type ('object');
-		config.mixedcase.should.have.ownProperty ('enabled', true);
-		config.mixedcase.should.have.ownProperty ('custom', false);
+		config.mixedcase.should.have.ownProperty ('enabled');
+		config.mixedcase.enabled.should.equal (true);
+		config.mixedcase.should.have.ownProperty ('custom');
+		config.mixedcase.custom.should.equal (false);
 		config.mixedcase.should.have.ownProperty ('recommended');
 		config.mixedcase.recommended.should.be.type ('boolean');
 		config.mixedcase.should.have.ownProperty ('type');
@@ -123,8 +125,10 @@ describe ('Checking exported rules object', function () {
 
 		config.should.have.ownProperty ('lbrace');
 		config.lbrace.should.be.type ('object');
-		config.lbrace.should.have.ownProperty ('enabled', true);
-		config.lbrace.should.have.ownProperty ('custom', false);
+		config.lbrace.should.have.ownProperty ('enabled');
+		config.lbrace.enabled.should.equal (true);
+		config.lbrace.should.have.ownProperty ('custom');
+		config.lbrace.custom.should.equal (false);
 		config.lbrace.should.have.ownProperty ('type');
 		config.lbrace.type.should.equal ('error');
 		config.lbrace.should.have.ownProperty ('id');

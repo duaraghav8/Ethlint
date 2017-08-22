@@ -97,7 +97,8 @@ describe ('Testing astUtils Object', function () {
 		var parent = astUtils.getParent (node);
 
 		parent.should.be.type ('object');
-		parent.should.have.ownProperty ('type', 'TestParentNode');
+		parent.should.have.ownProperty ('type');
+		parent.type.should.equal ('TestParentNode');
 
 		done ();
 	});
