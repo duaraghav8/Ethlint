@@ -35,7 +35,8 @@ describe ('Checking Exported Solium API', function () {
 		sourceCode.should.be.type ('object');
 		sourceCode.constructor.name.should.equal ('SourceCode');
 
-		sourceCode.should.have.ownProperty ('text', '');
+		sourceCode.should.have.ownProperty ('text');
+		sourceCode.text.should.be.empty ();
 
 		sourceCode.should.have.property ('getLine');
 		sourceCode.getLine.should.be.type ('function');
@@ -228,12 +229,13 @@ describe ('Checking Exported Solium API', function () {
 		errors.forEach (function (err) {
 			err.should.be.type ('object');
 			err.should.have.ownProperty ('internal');
-			err.should.have.ownProperty ('line');
-			err.should.have.ownProperty ('column');
-			err.should.have.ownProperty ('message');
 			err.internal.should.equal (true);
+			err.should.have.ownProperty ('line');
 			err.line.should.equal (-1);
+			err.should.have.ownProperty ('column');
 			err.column.should.equal (-1);
+			err.should.have.ownProperty ('message');
+
 			err.message.should.be.type ('string');
 		});
 
@@ -254,11 +256,14 @@ describe ('Checking Exported Solium API', function () {
 		Solium.lint (minimalSourceCode, userConfig);
 
 		userConfig.should.be.type ('object');
-		userConfig.should.have.ownProperty ('custom-rules-filename', null);
+		userConfig.should.have.ownProperty ('custom-rules-filename');
+		(userConfig ['custom-rules-filename'] === null).should.equal (true);
 		userConfig.should.have.ownProperty ('rules');
 		userConfig.rules.should.be.type ('object');
-		userConfig.rules.should.have.ownProperty ('mixedcase', true);
-		userConfig.rules.should.have.ownProperty ('camelcase', false);
+		userConfig.rules.should.have.ownProperty ('mixedcase');
+		userConfig.rules.mixedcase.should.equal (true);
+		userConfig.rules.should.have.ownProperty ('camelcase');
+		userConfig.rules.camelcase.should.equal (false);
 		Object.keys (userConfig).length.should.equal (2);
 
 		Solium.reset ();
@@ -407,6 +412,118 @@ describe ('Checking Exported Solium API', function () {
 		Solium.lint.bind (Solium, minimalSourceCode, current1).should.not.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, current2).should.not.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, current3).should.not.throw ();
+
+		Solium.reset ();
+		done ();
+	});
+
+	// Testing entire fix mechanism
+	it ('should handle all valid inputs supplied to lintAndFix()', function (done) {
+		// Since lintAndFix() internally first goes through lint(), we need not test the things
+		// already tested in lint().
+		var fixResults = [], code = 'contract Foo {}';
+
+		var config = {
+			rules: {
+				lbrace: 'warning'
+			}
+		};
+
+		fixResults.push (Solium.lintAndFix (code, config));
+		fixResults.push (Solium.lintAndFix (Buffer (code), config));
+
+		fixResults.forEach (function (f) {
+			f.should.be.type ('object');
+			f.should.have.ownProperty ('originalSourceCode');
+			f.originalSourceCode.should.equal (code);
+			f.should.have.ownProperty ('fixedSourceCode');
+			f.fixedSourceCode.should.equal (code);
+			f.should.have.ownProperty ('fixesApplied');
+			f.fixesApplied.should.be.Array ();
+			f.fixesApplied.length.should.equal (0);
+			f.should.have.ownProperty ('errorMessages');
+			f.errorMessages.should.be.Array ();
+			f.errorMessages.length.should.equal (0);
+		});
+
+		// Should return fixed code now
+		code = 'contract Foo {string name = "Dua";}';
+		config.rules = {
+			quotes: ['error', 'single']
+		};
+
+		fixResults = Solium.lintAndFix (code, config);
+		var fixedCode = code.replace (/"/g, '\'');
+
+		fixResults.should.be.type ('object');
+		fixResults.should.have.ownProperty ('originalSourceCode');
+		fixResults.originalSourceCode.should.equal (code);
+		fixResults.should.have.ownProperty ('fixedSourceCode');
+		fixResults.fixedSourceCode.should.equal (fixedCode);
+
+		fixResults.should.have.ownProperty ('errorMessages');
+		fixResults.errorMessages.should.be.empty ();
+
+		fixResults.should.have.ownProperty ('fixesApplied');
+		fixResults.fixesApplied.should.be.Array ();
+		fixResults.fixesApplied.length.should.equal (1);
+		fixResults.fixesApplied [0].should.be.type ('object');
+		fixResults.fixesApplied [0].should.have.ownProperty ('fix');
+		fixResults.fixesApplied [0].fix.should.be.type ('object');
+		fixResults.fixesApplied [0].fix.should.have.ownProperty ('range');
+		fixResults.fixesApplied [0].fix.should.have.ownProperty ('text');
+		fixResults.fixesApplied [0].fix.text.should.equal ('\'Dua\'');
+		fixResults.fixesApplied [0].fix.range.should.be.Array ();
+		fixResults.fixesApplied [0].fix.range.length.should.equal (2);
+		fixResults.fixesApplied [0].fix.range [0].should.equal (28);
+		fixResults.fixesApplied [0].fix.range [1].should.equal (33);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should handle fix-related issues that arise in Solium.report()', function (done) {
+		var error = {
+			ruleName: 'sample',
+			type: 'warning',
+			message: 'sample message',
+			line: 10,
+			column: 17,
+			ruleMeta: {},	// Doesn't contain "fixable" property initially
+			fix: 10000000000,	// purposely set invalid value
+			node: {
+				type: 'Literal',
+				start: 1,
+				end: 10
+			}
+		};
+
+		// After reporting an error containing "fix" but no "ruleMeta.fixable" property,
+		// Solium should also report an internal error that the fix was ignored.
+		Solium.report (error);
+
+		var errors = Solium.lint ('contract Foo {}', {
+			rules: {}, options: { returnInternalIssues: true }
+		}, true);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (2);
+
+		// First item should be the internal error
+		errors [0].should.be.type ('object');
+		errors [0].should.have.ownProperty ('type');
+		errors [0].should.have.ownProperty ('internal');
+		errors [0].type.should.equal ('warning');
+		errors [0].internal.should.equal (true);
+
+		// Second item should be the error actually report()ed
+		errors [1].should.be.type ('object');
+		['ruleName', 'type', 'message'].forEach (function (key) {
+			errors [1] [key].should.equal (error [key]);
+		});
+
+		error.ruleMeta.fixable = 'space';
+		Solium.report.bind (Solium, error).should.throw ();
 
 		Solium.reset ();
 		done ();
