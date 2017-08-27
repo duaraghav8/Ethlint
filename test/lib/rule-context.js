@@ -13,16 +13,26 @@ describe ('Testing RuleContext object', function () {
 	var ruleDesc = {
 		enabled: true,
 		recommended: true,
-		type: 'test-warning',
+		type: 'warning',
 		description: 'boo!',
 		id: 1,
 		custom: false,
 		options: ['double', 2, { modifies: true }]
 	};
+
+	var meta = {
+		docs: {
+			recommended: true,
+			type: 'error',
+			description: 'Ensure that all strings use only 1 style - either double quotes or single quotes.'
+		},
+		schema: []
+	};
+
 	var sourceCode = 'contract Visual {\n\tfunction foobar () {}\n}';
 
 	it ('should create a RuleContext instance and expose an API when valid arguments are passed', function (done) {
-		var rcObject = new RuleContext ('foo', ruleDesc, {}, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, meta, Solium);
 
 		rcObject.should.be.type ('object');
 		rcObject.should.be.instanceOf (RuleContext);
@@ -60,7 +70,7 @@ describe ('Testing RuleContext object', function () {
 		var rcObject, scObject;
 
 		Solium.lint (sourceCode, { rules: {} });
-		rcObject = new RuleContext ('foo', ruleDesc, { fixable: 'code' }, Solium);
+		rcObject = new RuleContext ('foo', ruleDesc, meta, Solium);
 		scObject = rcObject.getSourceCode ();
 
 		scObject.should.be.type ('object');
@@ -72,8 +82,8 @@ describe ('Testing RuleContext object', function () {
 		done ();
 	});
 
-	it ('should handle invalid argument(s) passed to report ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleDesc, {}, Solium);
+	it ('should handle invalid argument(s) passed to report()', function (done) {
+		var rcObject = new RuleContext ('foo', ruleDesc, meta, Solium);
 
 		rcObject.report.bind (rcObject).should.throw ();
 		rcObject.report.bind (rcObject, null).should.throw ();
@@ -145,7 +155,7 @@ describe ('Testing RuleContext object', function () {
 	});
 
 	it ('should behave as expected upon calling report ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleDesc, { fixable: 'whitespace' }, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, meta, Solium);
 
 		rcObject.report ({
 			node: {type: 'TestNode', start: 0, end: 2},
@@ -160,7 +170,7 @@ describe ('Testing RuleContext object', function () {
 		err.should.have.ownProperty ('ruleName');
 		err.ruleName.should.equal ('foo');
 		err.should.have.ownProperty ('type');
-		err.type.should.equal ('test-warning');
+		err.type.should.equal ('warning');
 		err.should.have.ownProperty ('node');
 		err.node.should.be.type ('object');
 		err.node.should.have.ownProperty ('type');
@@ -177,9 +187,11 @@ describe ('Testing RuleContext object', function () {
 	});
 
 	it ('should behave as expected upon calling on ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleDesc, {}, Solium);
+		var rcObject = new RuleContext ('foo', ruleDesc, meta, Solium);
 
-		rcObject.on ('ContractStatement', function () {
+		rcObject.on ('ContractStatement', function (emitted) {
+			emitted.node.type.should.equal ('ContractStatement');
+
 			Solium.reset ();
 			done ();
 		});

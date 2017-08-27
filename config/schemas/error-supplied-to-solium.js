@@ -1,33 +1,14 @@
 /**
- * @fileoverview Schema of the error object supplied by a rule to rule-context via report() method.
- * NOTE: This is NOT the final error object supplied to solium & then to user.
- *
+ * @fileoverview Schema of the error object supplied rule-context to Solium via Solium.report() method.
+ * NOTE: This is still not the final error message object sent to user.
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
 'use strict';
 
-// A fully qualified object for this Schema is:
-/*
-{
-	"message": "Hello World",
-	"node": {
-		"type": "Literal",
-		"start": 0,
-		"end": 90
-	},
-	"location": {
-		"line": 3,
-		"column": 90
-	},
-	"fix": function (fixer) {
-		// ...
-	}
-}
-*/
-
 var Ajv = require ('ajv'),
 	astNode = require ('./ast-node'),
+	coreRule = require ('./core-rule').Schema,
 	SchemaValidator = new Ajv ({ allErrors: true });
 
 
@@ -45,6 +26,10 @@ var Schema = {
 		message: { type: 'string', minLength: 1 },
 		node: astNode,
 		fix: { shouldBeOfTypeFunction: true },
+		ruleName: { type: 'string', minLength: 1 },
+		ruleMeta: coreRule.properties.meta,
+		type: { type: 'string', enum: ['error', 'warning'] },
+
 		location: {
 			type: 'object',
 			properties: {
@@ -56,7 +41,7 @@ var Schema = {
 
 	},
 
-	required: ['message', 'node'],
+	required: ['message', 'node', 'ruleName', 'ruleMeta', 'type'],
 	additionalProperties: false
 
 };

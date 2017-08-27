@@ -11,6 +11,15 @@ var Solium = require ('../../lib/solium'),
 
 describe ('Checking Exported Solium API', function () {
 
+	var meta = {
+		docs: {
+			recommended: true,
+			type: 'error',
+			description: 'Ensure that all strings use only 1 style - either double quotes or single quotes.'
+		},
+		schema: []
+	};
+
 	it ('should be an instance of EventEmitter & expose a set of functions', function (done) {
 		Solium.should.be.type ('object');
 		Solium.should.be.instanceof (EventEmitter);
@@ -100,31 +109,51 @@ describe ('Checking Exported Solium API', function () {
 	});
 
 	it ('should handle invalid arguments when calling Solium.report()', function (done) {
-		var astValidationMessageRegExp = /AST/,
-			messageValidationRegExp = /error description/;
-		
-		//basic validation
-		Solium.report.bind (Solium, null).should.throw ('Invalid error object');
-		Solium.report.bind (Solium).should.throw ('Invalid error object');
+		Solium.report.bind (Solium, null).should.throw ();
+		Solium.report.bind (Solium).should.throw ();
 
-		//isASTNode validation
-		Solium.report.bind (Solium, {node: null}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (Solium, {node: undefined}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (Solium, {node: 100}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (Solium, {node: {}}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (Solium, {node: {type: 100}}).should.throw (astValidationMessageRegExp);
+		Solium.report.bind (Solium, {node: null}).should.throw ();
+		Solium.report.bind (Solium, {node: undefined}).should.throw ();
+		Solium.report.bind (Solium, {node: 100}).should.throw ();
+		Solium.report.bind (Solium, {node: {}}).should.throw ();
+		Solium.report.bind (Solium, {node: {type: 100}}).should.throw ();
 
-		//message validation
 		var n = { type: 'Type', start: 0, end: 89 };
-		Solium.report.bind (Solium, {node: n}).should.throw (messageValidationRegExp);
-		Solium.report.bind (Solium, {node: n, message: ''}).should.throw (messageValidationRegExp);
-		Solium.report.bind (Solium, {node: n, message: null}).should.throw (messageValidationRegExp);
-		Solium.report.bind (Solium, {node: n, message: 100}).should.throw (messageValidationRegExp);
+
+		Solium.report.bind (Solium, {node: n}).should.throw ();
+		Solium.report.bind (Solium, {node: n, message: ''}).should.throw ();
+		Solium.report.bind (Solium, {node: n, message: null}).should.throw ();
+		Solium.report.bind (Solium, {node: n, message: 100}).should.throw ();
+
+		Solium.report.bind (Solium, {node: n, message: 'helo', ruleMeta: {}}).should.throw ();
+		Solium.report.bind (Solium, {node: n, message: 'helo', ruleMeta: null}).should.throw ();
+		Solium.report.bind (Solium, {
+			node: n, message: 'helo', ruleMeta: [], ruleName: 'hola', type: 'warning'
+		}).should.throw ();
+		Solium.report.bind (Solium, {
+			node: n, message: 'helo', ruleMeta: meta, type: 'blahblah', ruleName: 'hola'
+		}).should.throw ();
+		Solium.report.bind (Solium, {
+			node: n, message: 'helo', ruleMeta: meta, type: 1892, ruleName: 'hola'
+		}).should.throw ();
+
+		Solium.report.bind (Solium, {
+			node: n, message: 'helo', ruleMeta: meta, type: 'error', ruleName: ''
+		}).should.throw ();
+		Solium.report.bind (Solium, {
+			node: n, message: 'helo', ruleMeta: meta, type: 'error', ruleName: {}
+		}).should.throw ();
 
 		//should not throw error with minimal valid object
-		Solium.report.bind (Solium, {node: n, message: 'H', ruleMeta: {}}).should.not.throw ();
-		Solium.reset ();	//clear everything
+		Solium.report.bind (Solium, {
+			node: n,
+			message: 'H',
+			ruleMeta: meta,
+			type: 'error',
+			ruleName: 'lola'
+		}).should.not.throw ();
 
+		Solium.reset ();
 		done ();
 	});
 
@@ -139,7 +168,7 @@ describe ('Checking Exported Solium API', function () {
 			},
 			location: {	line: 1, column: 2 },
 			message: 'boo!',
-			ruleMeta: {}
+			ruleMeta: meta
 		};
 		var minmalConfig = { rules: {} };
 
@@ -488,10 +517,12 @@ describe ('Checking Exported Solium API', function () {
 			ruleName: 'sample',
 			type: 'warning',
 			message: 'sample message',
-			line: 10,
-			column: 17,
-			ruleMeta: {},	// Doesn't contain "fixable" property initially
-			fix: 10000000000,	// purposely set invalid value
+			location: {
+				line: 10,
+				column: 17
+			},
+			ruleMeta: meta,	// Doesn't contain "fixable" property initially
+			fix: function (fixer) { return []; },
 			node: {
 				type: 'Literal',
 				start: 1,
@@ -525,6 +556,13 @@ describe ('Checking Exported Solium API', function () {
 
 		error.ruleMeta.fixable = 'space';
 		Solium.report.bind (Solium, error).should.throw ();
+
+		error.ruleMeta.fixable = 'whitespace';
+		error.fix = 10902.897;	// invalid value for "fix"
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return []; }
+		Solium.report.bind (Solium, error).should.not.throw ();
 
 		Solium.reset ();
 		done ();
