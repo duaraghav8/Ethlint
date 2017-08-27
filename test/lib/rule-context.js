@@ -81,6 +81,66 @@ describe ('Testing RuleContext object', function () {
 		rcObject.report.bind (rcObject, 'foo').should.throw ();
 		rcObject.report.bind (rcObject, []).should.throw ();
 
+		var sampleNode = { type: 'Literal', start: 0, end: 10 };
+
+		rcObject.report.bind (rcObject, {}).should.throw ();
+		rcObject.report.bind (rcObject, {message: 91072}).should.throw ();
+		rcObject.report.bind (rcObject, {message: 'hello', node: true}).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, randomAttr: {}}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, location: {randomAttr: 1908}}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, location: {line: 90.1897}}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, location: {column: null}}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, location: {line: 0}}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, location: {column: -1}}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, location: NaN}
+		).should.throw ();
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode, fix: 'this is a fix!!'}
+		).should.throw ();
+
+		// A minimal valid object should not throw
+		rcObject.report.bind (
+			rcObject,
+			{message: 'hello', node: sampleNode}
+		).should.not.throw ();
+
+		// A maximal valid object should not throw
+		rcObject.report.bind (
+			rcObject,
+			{
+				message: 'hello',
+				node: sampleNode,
+				location: {
+					line: 7, column: 56
+				},
+				fix: function (fixer) {
+					return null;
+				}
+			}
+		).should.not.throw ();
+
+		Solium.reset (); // important here because the above 2 report()s add error messages to Solium that we need to remove.
 		done ();
 	});
 
