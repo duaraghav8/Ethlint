@@ -87,13 +87,18 @@ describe ('Testing astUtils Object', function () {
 		ian (100).should.equal (false);
 		ian ({}).should.equal (false);
 
-		ian ({type: 'TestNode'}).should.equal (true);
+		ian ({type: 'TestNode', start: 0, end: 10}).should.equal (true);
 
 		done ();
 	});
 
 	it ('should return node.parent when a valid node is passed to getParent ()', function (done) {
-		var node = { type: 'TestNode', parent: {type: 'TestParentNode'} };
+		var node = {
+			type: 'TestNode',
+			start: 0, end: 190,
+			parent: {type: 'TestParentNode', start: 21, end: 981}
+		};
+
 		var parent = astUtils.getParent (node);
 
 		parent.should.be.type ('object');

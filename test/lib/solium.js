@@ -99,7 +99,7 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
-	it ('should handle invalid arguments when calling Solium.report ()', function (done) {
+	it ('should handle invalid arguments when calling Solium.report()', function (done) {
 		var astValidationMessageRegExp = /AST/,
 			messageValidationRegExp = /error description/;
 		
@@ -111,17 +111,18 @@ describe ('Checking Exported Solium API', function () {
 		Solium.report.bind (Solium, {node: null}).should.throw (astValidationMessageRegExp);
 		Solium.report.bind (Solium, {node: undefined}).should.throw (astValidationMessageRegExp);
 		Solium.report.bind (Solium, {node: 100}).should.throw (astValidationMessageRegExp);
-		Solium.report.bind (Solium, {node:{}}).should.throw (astValidationMessageRegExp);
+		Solium.report.bind (Solium, {node: {}}).should.throw (astValidationMessageRegExp);
 		Solium.report.bind (Solium, {node: {type: 100}}).should.throw (astValidationMessageRegExp);
 
 		//message validation
-		Solium.report.bind (Solium, {node: {type: 'Type'}}).should.throw (messageValidationRegExp);
-		Solium.report.bind (Solium, {node: {type: 'Type'}, message: ''}).should.throw (messageValidationRegExp);
-		Solium.report.bind (Solium, {node: {type: 'Type'}, message: null}).should.throw (messageValidationRegExp);
-		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 100}).should.throw (messageValidationRegExp);
+		var n = { type: 'Type', start: 0, end: 89 };
+		Solium.report.bind (Solium, {node: n}).should.throw (messageValidationRegExp);
+		Solium.report.bind (Solium, {node: n, message: ''}).should.throw (messageValidationRegExp);
+		Solium.report.bind (Solium, {node: n, message: null}).should.throw (messageValidationRegExp);
+		Solium.report.bind (Solium, {node: n, message: 100}).should.throw (messageValidationRegExp);
 
 		//should not throw error with minimal valid object
-		Solium.report.bind (Solium, {node: {type: 'Type'}, message: 'H', ruleMeta: {}}).should.not.throw ();
+		Solium.report.bind (Solium, {node: n, message: 'H', ruleMeta: {}}).should.not.throw ();
 		Solium.reset ();	//clear everything
 
 		done ();
