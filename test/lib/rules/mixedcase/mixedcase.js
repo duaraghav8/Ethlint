@@ -29,7 +29,9 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 			'function _hE () {}',
 			'function hello123World () {}',
 			'function _h123 () {}',
-			'function hello_ () {}'
+			'function hello_ () {}',
+			'function initialize (Controller _controller) external onlyControllerCaller returns(bool) {}',
+			'function initialize (Controller myController) returns(bool) {}'
 		];
 		var errors;
 
@@ -68,6 +70,14 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [8], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [9], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [10], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -85,7 +95,9 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 			'modifier _hE () {}',
 			'modifier hello123World () {}',
 			'modifier _h123 () {}',
-			'modifier hello_ () {}'
+			'modifier hello_ () {}',
+			'modifier initialize (Controller _controller) external onlyControllerCaller {}',
+			'modifier initialize (Controller myController) {}'
 		];
 		var errors;
 
@@ -124,6 +136,14 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		errors.length.should.equal (0);
 
 		errors = Solium.lint (code [8], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [9], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		errors = Solium.lint (code [10], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
@@ -269,7 +289,9 @@ describe ('[RULE] mixedcase: Rejections', function () {
 			'function __h() {}',
 			'function Hello$World () {}',
 			'function $helloWorld () {}',
-			'function __ () {}'
+			'function __ () {}',
+			'function initialize(Controller $helloWorld) returns(bool) {}',
+			'function initialize(Controller BabysDayOut) {}'
 		];
 		var errors;
 
@@ -308,6 +330,14 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [8], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		errors = Solium.lint (code [9], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		errors = Solium.lint (code [10], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
@@ -325,7 +355,9 @@ describe ('[RULE] mixedcase: Rejections', function () {
 			'modifier __h() {}',
 			'modifier Hello$World () {}',
 			'modifier $helloWorld () {}',
-			'modifier __ () {}'
+			'modifier __ () {}',
+			'modifier initialize (Controller $controller) external onlyControllerCaller {}',
+			'modifier initialize (Controller MyController) {}'
 		];
 		var errors;
 
@@ -364,6 +396,14 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		errors.length.should.equal (1);
 
 		errors = Solium.lint (code [8], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		errors = Solium.lint (code [9], userConfig);
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+
+		errors = Solium.lint (code [10], userConfig);
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
 
