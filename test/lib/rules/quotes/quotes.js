@@ -108,6 +108,44 @@ describe ('[RULE] quotes: Fix when double quotes are mandatory', function () {
 		Solium.reset ();
 		done ();
 	});
+
+	it ('should escape any unescaped double quotes in the text', function (done) {
+		var unfixedCode = toContract ('string x = \'he\\\'"\\"llo w\\\\"or\\\\\\"l"d\';'),
+			fixedCode = toContract ('string x = \"he\\\'\\"\\"llo w\\\\\\"or\\\\\\"l\\"d\";');
+
+		var fixed = Solium.lintAndFix (unfixedCode, config);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixedCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (1);
+
+
+		unfixedCode = toContract ('string x = \'\';');
+		fixedCode = toContract ('string x = \"\";');
+		fixed = Solium.lintAndFix (unfixedCode, config);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixedCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 describe ('[RULE] quotes: Fix when single quotes are mandatory', function () {
@@ -133,6 +171,43 @@ describe ('[RULE] quotes: Fix when single quotes are mandatory', function () {
 		fixed.errorMessages.length.should.equal (0);
 		fixed.fixesApplied.should.be.Array ();
 		fixed.fixesApplied.length.should.equal (3);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should escape any unescaped single quotes in the text', function (done) {
+		var unfixedCode = toContract ('string y = "he\\"\'\\\'llo w\\\\\'or\\\\\\\'l\'d";'),
+			fixedCode = toContract ('string y = \'he\\"\\\'\\\'llo w\\\\\\\'or\\\\\\\'l\\\'d\';');
+
+		var fixed = Solium.lintAndFix (unfixedCode, config);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixedCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (1);
+
+
+		unfixedCode = toContract ('string x = \"\";');
+		fixedCode = toContract ('string x = \'\';');
+		fixed = Solium.lintAndFix (unfixedCode, config);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixedCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (1);
 
 		Solium.reset ();
 		done ();
