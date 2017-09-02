@@ -1,6 +1,6 @@
 /**
  * @fileoverview Schema of the latest Solium core rule object.
- * Since this schema must also validate the type of 'verify' to be a function,
+ * Since this schema must also validate the type of 'create' to be a function,
  * we add a special rule "shouldBeOfTypeFunction" and export the SchemaValidator too.
  *
  * @author Raghav Dua <duaraghav8@gmail.com>
@@ -26,7 +26,7 @@
 		"deprecated": true
 	},
 
-	"verify": function (context) {}
+	"create": function (context) {}
 }
 */
 
@@ -73,13 +73,13 @@ var Schema = {
 			required: ['docs', 'schema']
 		},
 
-		verify: {
+		create: {
 			shouldBeOfTypeFunction: true
 		}
 
 	},
 
-	required: ['meta', 'verify'],
+	required: ['meta', 'create'],
 
 	additionalProperties: false
 };
