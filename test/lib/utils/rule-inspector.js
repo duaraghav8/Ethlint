@@ -10,8 +10,13 @@ var ruleInspector = require ('../../../lib/utils/rule-inspector');
 describe ('Test rule-inspector functions', function () {
 
 	it ('should expose a set of functions', function (done) {
+		ruleInspector.should.have.size (3);
+
 		ruleInspector.should.have.ownProperty ('isAValidRuleObject');
 		ruleInspector.isAValidRuleObject.should.be.type ('function');
+
+		ruleInspector.should.have.ownProperty ('isAValidRuleResponseObject');
+		ruleInspector.isAValidRuleResponseObject.should.be.type ('function');
 
 		ruleInspector.should.have.ownProperty ('areValidOptionsPassed');
 		ruleInspector.areValidOptionsPassed.should.be.type ('function');
@@ -121,7 +126,18 @@ describe ('Test rule-inspector functions', function () {
 	});
 
 	it ('should correctly classify all invalid rule objects', function (done) {
-		var invalidConfigObjects = [, null, undefined, 0, '', 'harry potter', -190, 8927, 88.2891, [], [{}], [0], {}, function () {}];
+		var invalidConfigObjects = [, null,
+			undefined, 0, '', 'harry potter', -190, 8927, 88.2891, [], [{}], [0], {}, function () {}];
+
+		/**
+		 * First rule out all the obviously invalid args.
+		 * Then check for subtle invalidities.
+		 */
+		invalidConfigObjects.forEach (function (c) {
+			ruleInspector.isAValidRuleObject (c).should.equal (false);
+		});
+
+		invalidConfigObjects = [];
 
 		// No create attr
 		invalidConfigObjects.push ({
@@ -199,7 +215,7 @@ describe ('Test rule-inspector functions', function () {
 					"type": "error",
 					"description": "This is a rule"
 				},
-				"schema": [1, "think again"],
+				"schema": [{"type": "object"}, "think again"],
 				"fixable": "code"
 			},
 			"create": function (context) {}
@@ -362,8 +378,77 @@ describe ('Test rule-inspector functions', function () {
 			"create": function (context) {}
 		});
 
-		invalidConfigObjects.forEach (function (c) {
+		invalidConfigObjects.forEach (function (c, i) {
 			ruleInspector.isAValidRuleObject (c).should.equal (false);
+			// Because rule-inspector directly exposes an AJV object compiled with the schema as
+			// "isAValidRuleObject", we can even access other properties of this AJV object like "errors".
+			ruleInspector.isAValidRuleObject.should.have.ownProperty ('errors');
+			ruleInspector.isAValidRuleObject.errors.should.be.Array ();
+
+			// Because each invalid object above must have exactly 1 invalid piece of info
+			// to test that specific validation in isolation.
+			ruleInspector.isAValidRuleObject.errors.should.have.size (1);
+		});
+
+		done ();
+	});
+
+	it ('should correctly classify all valid rule response objects', function (done) {
+		var response = {};
+		ruleInspector.isAValidRuleResponseObject (response).should.equal (true);
+
+		response = {
+			Literal: function (context) {}
+		};
+		ruleInspector.isAValidRuleResponseObject (response).should.equal (true);
+
+		// Keys that aren't actually node names are still valid. The emitter would simply never emit anything for this node,
+		// so it will just be ignored.
+		response = {
+			NotAnActualNodeName: function (context) {}
+		};
+		ruleInspector.isAValidRuleResponseObject (response).should.equal (true);
+
+		response = {
+			Program: function (context) {},
+			ContractStatement: function (context) {},
+			ArrayExpression: function (context) {}
+		};
+		ruleInspector.isAValidRuleResponseObject (response).should.equal (true);
+
+		done ();
+	});
+
+	it ('should correctly classify all invalid rule response objects', function (done) {
+		var invalidResponses = [, null,
+			undefined, 0, '', 'harry potter', -190, 8927, 88.2891, [], [{}], [0], function () {}];
+
+		invalidResponses.push ({
+			'': function (ctx) {}
+		});
+
+		invalidResponses.push ({
+			Literal: 'Hello world'
+		});
+
+		invalidResponses.push ({
+			Literal: undefined
+		});
+
+		invalidResponses.push ({
+			Literal: null
+		});
+
+		invalidResponses.push ({
+			NodaA: function (c) {},
+			NodaB: function (c) {},
+			Literal: null
+		});
+
+		invalidResponses.forEach (function (res) {
+			ruleInspector.isAValidRuleResponseObject (res).should.equal (false);
+			ruleInspector.isAValidRuleResponseObject.should.have.ownProperty ('errors');
+			ruleInspector.isAValidRuleResponseObject.errors.should.be.Array ();
 		});
 
 		done ();
@@ -377,7 +462,6 @@ describe ('Test rule-inspector functions', function () {
 
 	it ('should correctly classify when a rule is provided a valid set of options', function (done) {
 		ruleInspector.areValidOptionsPassed (['hello', 5, {name: 'chuck norris'}], listItemsSchema).should.equal (true);
-
 		done ();
 	});
 
