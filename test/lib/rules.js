@@ -63,8 +63,8 @@ describe ('Checking exported rules object', function () {
 		
 		var ret = rules.get ('mixedcase');
 		ret.should.be.type ('object');
-		ret.should.have.ownProperty ('verify');
-		ret.verify.should.be.type ('function');
+		ret.should.have.ownProperty ('create');
+		ret.create.should.be.type ('function');
 
 		ret = rules.get ('camelcase');
 		(typeof ret).should.equal ('undefined');
@@ -72,20 +72,12 @@ describe ('Checking exported rules object', function () {
 		//overlapping rule - lbrace (custom) should overwrite lbrace (pre-defined)
 		ret = rules.get ('lbrace');
 		ret.should.be.type ('object');
-		ret.should.have.ownProperty ('verify');
-		ret.verify.should.be.type ('function');
+		ret.should.have.ownProperty ('create');
+		ret.create.should.be.type ('function');
 
 		//rule definition exists in the file but shouldn't be included in rules because we don't enable it
 		ret = rules.get ('not-included');
 		(typeof ret).should.equal ('undefined');
-
-		/*
-		getting CUSTOM_RULE should throw since Solium v1 removes the use of "custom-rules-filename" attribute
-		ret = rules.get ('CUSTOM_RULE');
-		ret.should.be.type ('object');
-		ret.should.have.ownProperty ('verify');
-		ret.verify.should.be.type ('function');
-		*/
 
 		config = { 'CUSTOM_RULE': true };
 		rules.loadUsingDeprecatedConfigFormat.bind (rules, config, path.join (__dirname, '../extras/custom-rules-file.js')).should.throw ();
@@ -268,6 +260,18 @@ describe ('Checking exported rules object', function () {
 
 		ruleDescriptions ['double-quotes'].options.length.should.equal (1);
 		ruleDescriptions ['double-quotes'].options [0].should.equal ('double');
+
+		// Also ensure that these rules' definitions are loaded as expected
+		Object.keys (ruleDescriptions).forEach (function (name) {
+			var ruleDefinition = rules.get (name);
+
+			ruleDefinition.should.be.type ('object');
+			ruleDefinition.should.have.size (2);
+			ruleDefinition.should.have.ownProperty ('meta');
+			ruleDefinition.should.have.ownProperty ('create');
+			ruleDefinition.meta.should.be.type ('object');
+			ruleDefinition.create.should.be.type ('function');
+		});
 
 		// There should be exactly 8 properties - the rules described in "rules" with severity > 0.
 		Object.keys (ruleDescriptions).length.should.equal (8);

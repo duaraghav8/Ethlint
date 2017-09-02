@@ -35,7 +35,7 @@ describe ('Test rule-inspector functions', function () {
 				"fixable": "code",
 				"deprecated": true
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No fixable
@@ -48,7 +48,7 @@ describe ('Test rule-inspector functions', function () {
 				},
 				"schema": []
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Schemas for passed options
@@ -65,7 +65,7 @@ describe ('Test rule-inspector functions', function () {
 					{ type: 'integer', minimum: 0, maximum: 69 }
 				]
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No deprecation
@@ -79,7 +79,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Only deprecation, no replacement
@@ -94,7 +94,7 @@ describe ('Test rule-inspector functions', function () {
 				"fixable": "code",
 				"deprecated": true
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// "replacedBy" attr without the "deprecated: true"
@@ -110,7 +110,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 		
 		configObjects.forEach (function (c) {
@@ -123,7 +123,7 @@ describe ('Test rule-inspector functions', function () {
 	it ('should correctly classify all invalid rule objects', function (done) {
 		var invalidConfigObjects = [, null, undefined, 0, '', 'harry potter', -190, 8927, 88.2891, [], [{}], [0], {}, function () {}];
 
-		// No verify attr
+		// No create attr
 		invalidConfigObjects.push ({
 			"meta": {
 				"docs": {
@@ -138,10 +138,10 @@ describe ('Test rule-inspector functions', function () {
 
 		// No meta attr
 		invalidConfigObjects.push ({
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
-		// Invalid value for verify
+		// Invalid value for create
 		invalidConfigObjects.push ({
 			"meta": {
 				"docs": {
@@ -152,13 +152,13 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": "jon snow dies"
+			"create": "jon snow dies"
 		});
 
 		// Invalid value for meta
 		invalidConfigObjects.push ({
 			"meta": [10, {}, null],
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No meta.docs
@@ -166,7 +166,7 @@ describe ('Test rule-inspector functions', function () {
 			"meta": {
 				"schema": []
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No meta.schema
@@ -178,7 +178,7 @@ describe ('Test rule-inspector functions', function () {
 					"description": "This is a rule"
 				}
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid meta.docs
@@ -188,7 +188,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid meta.schema
@@ -202,7 +202,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [1, "think again"],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid meta.fixable
@@ -216,7 +216,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "somerandomnonsense"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No meta.docs.recommended
@@ -229,7 +229,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No meta.docs.type
@@ -242,7 +242,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// No meta.docs.description
@@ -255,7 +255,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid meta.docs.recommended
@@ -269,7 +269,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid meta.docs.type
@@ -283,7 +283,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid meta.docs.description
@@ -297,7 +297,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Empty meta.docs.description
@@ -311,7 +311,7 @@ describe ('Test rule-inspector functions', function () {
 				"schema": [],
 				"fixable": "code"
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid value for "deprecated"
@@ -327,7 +327,7 @@ describe ('Test rule-inspector functions', function () {
 				"fixable": "code",
 				"deprecated": null
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid value for "replacedBy"
@@ -343,7 +343,7 @@ describe ('Test rule-inspector functions', function () {
 				"fixable": "code",
 				"deprecated": true
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		// Invalid value for "replacedBy"
@@ -359,7 +359,7 @@ describe ('Test rule-inspector functions', function () {
 				"fixable": "code",
 				"deprecated": true
 			},
-			"verify": function (context) {}
+			"create": function (context) {}
 		});
 
 		invalidConfigObjects.forEach (function (c) {

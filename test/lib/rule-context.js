@@ -36,12 +36,10 @@ describe ('Testing RuleContext object', function () {
 
 		rcObject.should.be.type ('object');
 		rcObject.should.be.instanceOf (RuleContext);
+		rcObject.should.have.size (3);	// name & meta are readable props, so not counted as ownProperty of object
 
 		rcObject.should.have.ownProperty ('getSourceCode');
 		rcObject.getSourceCode.should.be.type ('function');
-
-		rcObject.should.have.ownProperty ('on');
-		rcObject.on.should.be.type ('function');
 
 		rcObject.should.have.ownProperty ('report');
 		rcObject.report.should.be.type ('function');
@@ -184,19 +182,6 @@ describe ('Testing RuleContext object', function () {
 
 		Solium.reset ();
 		done ();
-	});
-
-	it ('should behave as expected upon calling on ()', function (done) {
-		var rcObject = new RuleContext ('foo', ruleDesc, meta, Solium);
-
-		rcObject.on ('ContractStatement', function (emitted) {
-			emitted.node.type.should.equal ('ContractStatement');
-
-			Solium.reset ();
-			done ();
-		});
-
-		Solium.lint (sourceCode, { rules: {} }, true);
 	});
 
 });
