@@ -15,7 +15,10 @@
     "Solidity",
     "Abstract-Syntax-Tree",
     "Ethereum",
-    "Smart-Contracts"
+    "Smart-Contracts",
+    "Solium",
+    "Blockchain",
+    "Code-quality"
   ],
   "repository": {
     "type": "git",
