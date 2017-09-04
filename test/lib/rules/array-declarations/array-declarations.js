@@ -5,8 +5,9 @@
 
 'use strict';
 
-var Solium = require ('../../../../lib/solium');
-var wrappers = require ('../../../utils/wrappers');
+var fs = require ('fs'), path = require ('path'),
+	Solium = require ('../../../../lib/solium'), wrappers = require ('../../../utils/wrappers');
+
 var toContract = wrappers.toContract;
 var userConfig = {
   "custom-rules-filename": null,
@@ -49,19 +50,21 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
+		errors [0].message.should.equal (
+			'There should be no whitespace between opening & closing square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
 	});
 
-	it ('should reject "uint[	] x;" (\\t)', function (done) {
-		var code = 'uint[	] x;',
+	it ('should reject "uint[\t] x;" (\\t)', function (done) {
+		var code = 'uint[\t] x;',
 			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
+		errors [0].message.should.equal (
+			'There should be no whitespace between opening & closing square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
@@ -73,7 +76,8 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
+		errors [0].message.should.equal (
+			'There should be no whitespace between opening & closing square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
@@ -85,11 +89,40 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between square brackets. Use [] instead.');
+		errors [0].message.should.equal (
+			'There should be no whitespace between opening & closing square brackets. Use [] instead.');
 
 		Solium.reset ();
 		done ();
 	});
+
+	it ('should reject "a.b.c.d[\t \n ] x = [1,2,3,\'4\'];" (after member access)', function (done) {
+		var code = 'a.b.c.d[\t \n ] x = [1,2,3,\'4\'];',
+			errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal (
+			'There should be no whitespace between opening & closing square brackets. Use [] instead.');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject "mapping (uint => string)[  ] x = [1,2,3,\'4\'];" (mapping)', function (done) {
+		var code = 'mapping (uint => string)[  ] x = [1,2,3,\'4\'];',
+			errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal (
+			'There should be no whitespace between opening & closing square brackets. Use [] instead.');
+
+		Solium.reset ();
+		done ();
+	});
+
+
 
 	it ('should reject "uint [] x;" (space between literal and opening brackets', function (done) {
 		var code = 'uint [] x;',
@@ -97,7 +130,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between literal uint and \'[]\'');
+		errors [0].message.should.equal ('There should be no whitespace between "uint" and the opening square bracket.');
 
 		Solium.reset ();
 		done ();
@@ -109,7 +142,7 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between literal string and \'[]\'');
+		errors [0].message.should.equal ('There should be no whitespace between "string" and the opening square bracket.');
 
 		Solium.reset ();
 		done ();
@@ -121,11 +154,38 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('There should be no whitespace between literal bytes32 and \'[]\'');
+		errors [0].message.should.equal ('There should be no whitespace between "bytes32" and the opening square bracket.');
 
 		Solium.reset ();
 		done ();
 	});
+
+	it ('should reject "a.b.c.d\t \t  [] doo = [];" (arry dec. after member access)', function (done) {
+		var code = 'a.b.c.d\t \t  [] doo = [];',
+			errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal ('There should be no whitespace between "a.b.c.d" and the opening square bracket.');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject "mapping (uint => string)\n  [] m;" (mapping array dec)', function (done) {
+		var code = 'mapping (uint => string)\n  [] m;',
+			errors = Solium.lint (toContract(code), userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (1);
+		errors [0].message.should.equal (
+			'There should be no whitespace between "mapping (uint => string)" and the opening square bracket.');
+
+		Solium.reset ();
+		done ();
+	});
+
+
 
 	it ('should reject "uint  [  ] x;"', function (done) {
 		var code = 'uint  [  ] x;',
@@ -133,6 +193,75 @@ describe ('[RULE] array-declarations: Rejections', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (2);
+		errors [1].message.should.equal ('There should be no whitespace between opening & closing square brackets. Use [] instead.');
+		errors [0].message.should.equal ('There should be no whitespace between "uint" and the opening square bracket.');
+
+		Solium.reset ();
+		done ();
+	});
+
+});
+
+describe ('[RULE] array-declarations: Fixes', function () {
+
+	it ('should fix Whitespace between Literal & opening bracket', function (done) {
+		var unfixed = fs.readFileSync (path.join (__dirname, './unfixed/ws-btw-lit-op.sol'), 'utf8'),
+			fixed = fs.readFileSync (path.join (__dirname, './fixed/ws-btw-op-clos.sol'), 'utf8');
+
+		var fixed = Solium.lintAndFix (unfixed, userConfig);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixed.fixedSourceCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (6);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should fix Whitespace between opening & closing brackets', function (done) {
+		var unfixed = fs.readFileSync (path.join (__dirname, './unfixed/ws-btw-op-clos.sol'), 'utf8'),
+			fixed = fs.readFileSync (path.join (__dirname, './fixed/ws-btw-op-clos.sol'), 'utf8');
+
+		var fixed = Solium.lintAndFix (unfixed, userConfig);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixed.fixedSourceCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (5);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should handle and fix a mix of the errors', function (done) {
+		var unfixed = fs.readFileSync (path.join (__dirname, './unfixed/mixed.sol'), 'utf8'),
+			fixed = fs.readFileSync (path.join (__dirname, './fixed/ws-btw-op-clos.sol'), 'utf8');
+
+		var fixed = Solium.lintAndFix (unfixed, userConfig);
+
+		fixed.should.be.type ('object');
+		fixed.should.have.ownProperty ('fixedSourceCode');
+		fixed.should.have.ownProperty ('errorMessages');
+		fixed.should.have.ownProperty ('fixesApplied');
+
+		fixed.fixedSourceCode.should.equal (fixed.fixedSourceCode);
+		fixed.errorMessages.should.be.Array ();
+		fixed.errorMessages.length.should.equal (0);
+		fixed.fixesApplied.should.be.Array ();
+		fixed.fixesApplied.length.should.equal (10);
 
 		Solium.reset ();
 		done ();
