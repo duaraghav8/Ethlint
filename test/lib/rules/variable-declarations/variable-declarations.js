@@ -11,7 +11,7 @@ var toFunction = wrappers.toFunction, toContract = wrappers.toContract;
 
 var userConfig = {
 	"custom-rules-filename": null,
-		"rules": {
+	"rules": {
 		"variable-declarations": true
 	}
 };
