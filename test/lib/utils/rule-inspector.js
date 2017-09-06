@@ -378,6 +378,38 @@ describe ('Test rule-inspector functions', function () {
 			"create": function (context) {}
 		});
 
+		// Invalid value for "replacedBy"
+		invalidConfigObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule",
+					"replacedBy": [""]
+				},
+				"schema": [],
+				"fixable": "code",
+				"deprecated": true
+			},
+			"create": function (context) {}
+		});
+
+		// Invalid value for "replacedBy"
+		invalidConfigObjects.push ({
+			"meta": {
+				"docs": {
+					"recommended": true,
+					"type": "error",
+					"description": "This is a rule",
+					"replacedBy": null
+				},
+				"schema": [],
+				"fixable": "code",
+				"deprecated": true
+			},
+			"create": function (context) {}
+		});
+
 		invalidConfigObjects.forEach (function (c, i) {
 			ruleInspector.isAValidRuleObject (c).should.equal (false);
 			// Because rule-inspector directly exposes an AJV object compiled with the schema as

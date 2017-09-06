@@ -56,7 +56,12 @@ var Schema = {
 						recommended: { type: 'boolean' },
 						type: { type: 'string', enum: ['error', 'warning'] },
 						description: { type: 'string', minLength: 1 },
-						replacedBy: { type: 'array', minItems: 1, items: { type: 'string' } }
+
+						replacedBy: {
+							type: 'array',
+							minItems: 1,
+							items: { type: 'string', minLength: 1 }
+						}
 					},
 					required: ['recommended', 'type', 'description']
 				},
