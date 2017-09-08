@@ -21,7 +21,7 @@ module.exports = {
 		'no-unused-vars': 'error',
 		'blank-lines': 'warning',
 		'indentation': 'warning',
-		'overflow-indentation': 'warning',
+		'arg-overflow': 'warning',
 		'whitespace': 'warning',
 		'function-whitespace': 'error',
 		'semicolon-whitespace': 'error',

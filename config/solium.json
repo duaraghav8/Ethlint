@@ -134,7 +134,7 @@
 			"description": "Ensure consistent indentation of 4 spaces per level"
 		},
 
-		"overflow-indentation": {
+		"arg-overflow": {
 			"enabled": true,
 			"recommended": false,
 			"type": "warning",

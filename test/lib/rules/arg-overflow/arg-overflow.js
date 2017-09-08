@@ -12,11 +12,11 @@ var toContract = wrappers.toContract, toFunction = wrappers.toFunction;
 var userConfig = {
 	"custom-rules-filename": null,
 	"rules": {
-		"overflow-indentation": true,
+		"arg-overflow": true
 	}
 };
 
-describe ('[RULE] indentation overflow: Rejections', function () {
+describe ('[RULE] argument overflow: Rejections', function () {
 
 	it ('should enforce the rule that excess element lists must go on individual lines', function (done) {
 		var code = toContract ('function ArgumentOverflow(int one, int two, int three, int four) {}'),
@@ -57,7 +57,7 @@ describe ('[RULE] indentation overflow: Rejections', function () {
 
 });
 
-describe ('[RULE] indentation overflow: Acceptances', function () {
+describe ('[RULE] argument overflow: Acceptances', function () {
 
 	it ('should accept <= 3 arguments on single line', function (done) {
 		var code = toContract ('function ArgumentOverflow(int one, int two, int three) {}'),
@@ -119,12 +119,12 @@ describe ('[RULE] indentation overflow: Acceptances', function () {
 
 });
 
-describe ('[RULE] indentation overflow: Handling options', function () {
+describe ('[RULE] argument overflow: Handling options', function () {
 
 	it ('should accept <= N arguments in same line, N supplied through config', function (done) {
 		var userConfig = {
 			"rules": {
-				"overflow-indentation": [1, 4]
+				"arg-overflow": [1, 4]
 			}
 		};
 
@@ -178,7 +178,7 @@ describe ('[RULE] indentation overflow: Handling options', function () {
 	it ('should reject > N arguments in same line, N supplied through config', function (done) {
 		var userConfig = {
 			"rules": {
-				"overflow-indentation": [1, 4]
+				"arg-overflow": [1, 4]
 			}
 		};
 
@@ -213,45 +213,45 @@ describe ('[RULE] indentation overflow: Handling options', function () {
 	it ('should reject invalid option values', function (done) {
 		var config = {
 			"rules": {
-				"overflow-indentation": [1, 0]
+				"arg-overflow": [1, 0]
 			}
 		};
 		var code = toContract ('struct A { uint i; }');
 
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = null;
+		config.rules ['arg-overflow'] [1] = null;
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = [];
+		config.rules ['arg-overflow'] [1] = [];
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = {};
+		config.rules ['arg-overflow'] [1] = {};
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = 9.2;
+		config.rules ['arg-overflow'] [1] = 9.2;
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = -1;
+		config.rules ['arg-overflow'] [1] = -1;
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = [2];
+		config.rules ['arg-overflow'] [1] = [2];
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = 4.01;
+		config.rules ['arg-overflow'] [1] = 4.01;
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
-		config.rules ['overflow-indentation'] [1] = 'winniethepooh';
+		config.rules ['arg-overflow'] [1] = 'winniethepooh';
 		Solium.lint.bind (
-			Solium, code, config).should.throw ('Invalid options were passed to rule "overflow-indentation".');
+			Solium, code, config).should.throw ('Invalid options were passed to rule "arg-overflow".');
 
 		Solium.reset ();
 		done ();
