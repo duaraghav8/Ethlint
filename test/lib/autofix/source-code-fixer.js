@@ -229,4 +229,15 @@ describe ('Test the source-code-fixer API', function () {
 		done ();
 	});
 
+	it ('should throw when a fix reported by a rule contains overlapping fixer objects', function (done) {
+		// This is different from the overlapping being tested above. Here, we want to ensure that
+		// if rule ABC reports a fix inside an error object, and if that fix is an array of fixer packets,
+		// those packets must not have overlapping ranges.
+		scf.applyFixes.bind (scf,
+			[{range: [2, 5], text: ''}, {range: [4, 8], text: '%%%'}], 'abcdefghijk'
+		).should.throw ();
+
+		done ();
+	});
+
 });

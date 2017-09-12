@@ -522,7 +522,9 @@ describe ('Checking Exported Solium API', function () {
 				column: 17
 			},
 			ruleMeta: meta,	// Doesn't contain "fixable" property initially
-			fix: function (fixer) { return []; },
+			fix: function (fixer) {
+				return { text: '', range: [0, 0] };
+			},
 			node: {
 				type: 'Literal',
 				start: 1,
@@ -554,14 +556,89 @@ describe ('Checking Exported Solium API', function () {
 			errors [1] [key].should.equal (error [key]);
 		});
 
-		error.ruleMeta.fixable = 'space';
+		error.ruleMeta.fixable = 'space';	// valid values for "fixable" are 'whitespace' or 'code'
 		Solium.report.bind (Solium, error).should.throw ();
 
 		error.ruleMeta.fixable = 'whitespace';
 		error.fix = 10902.897;	// invalid value for "fix"
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return []; }
+		error.fix = function (f) { return []; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return null; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) {}
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return 1908.287; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {}; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return 'hello world'; }
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return true; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return false; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return function(){}; };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return [[]] };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return [{}] };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return [907] };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return ['humpty dumpty'] };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: ''} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: 19082, range: [0, 0]} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: [-1, 0]} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: null} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: 'foobar'} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: [27, 25.7]} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: [27]} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: [27, 29, 33]} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+		error.fix = function (f) { return {text: '', range: [27, 29], randomAttribute: true} };
+		Solium.report.bind (Solium, error).should.throw ();
+
+
+
+		error.fix = function (f) {
+			return [{text: '', range: [0, 10]}, {text: 'aighjbhsjga', range: [900, 6754]}];
+		};
+		Solium.report.bind (Solium, error).should.not.throw ();
+
+		error.fix = function (f) {
+			return {text: '    ', range: [90, 100]};
+		};
 		Solium.report.bind (Solium, error).should.not.throw ();
 
 		Solium.reset ();

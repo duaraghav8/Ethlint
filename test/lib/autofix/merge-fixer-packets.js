@@ -77,12 +77,14 @@ describe ('check exposed API', function () {
 		done ();
 	});
 
-	it ('should handle all invalid inputs', function (done) {
-		// Since merge-fixer-packets is a module called internally, a majority of invalid inputs
-		// will simply never be supplied to it. Therefore we need not test it for all the fuzzy values.
-		mfp.bind (mfp, [], 'abc').should.throw ();
-		mfp.bind (mfp,
-			[{range: [2, 5], text: ''}, {range: [4, 8], text: '%%%'}], 'abcdefghijk').should.throw ();
+	it ('should handle all logically invalid inputs', function (done) {
+		// Since merge-fixer-packets is a module called internally, it is guaranteed to receive a
+		// valid fixer packet or array of packets. Therefore we need not test it for all the fuzzy values.
+		
+		// overlapping ranges
+		mfp.bind (
+			mfp, [{range: [2, 5], text: ''}, {range: [4, 8], text: '%%%'}], 'abcdefghijk'
+		).should.throw ();
 
 		done ();
 	});
