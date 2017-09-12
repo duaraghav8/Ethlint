@@ -2,8 +2,7 @@
     "extends": "solium:all",
     "rules": {
         "quotes": ["error", "double"],
-        "indentation": ["error", "space", 4],
-        "overflow-indentation": ["error", "space", 4],
-        "blank-lines": ["warning", 2]
+        "indentation": ["error", 4],
+        "arg-overflow": ["warning", 3]
     }
 }
