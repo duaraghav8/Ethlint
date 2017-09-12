@@ -9,20 +9,51 @@ var Solium = require ('../../../../lib/solium');
 var toFunction = require ('../../../utils/wrappers').toFunction;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "no-with": true
-  }
+	"custom-rules-filename": null,
+	"rules": {
+		"no-with": true
+	},
+	"options": {
+		"returnInternalIssues": true
+	}
 };
 
-describe ('[RULE] no-with: Rejections', function () {
+describe ('[RULE] no-with: Rejection', function () {
 
-	it ('should disallow the use of "with" statement(s)', function (done) {
-		var code = toFunction (''), //toFunction ('with (myOwnObject) { /*definition*/ } with (myOwnObject2) { /*definition*/ }'),
-			errors = Solium.lint (code, userConfig);
+	it ('should produce deprecation warning if this rule is enabled', function (done) {
+		var code = toFunction (''), errors = Solium.lint (code, userConfig);
 
-		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (/*2*/0);
+		errors.should.be.Array ();
+		errors.should.be.size (2);
+
+		errors [0].type.should.equal ('warning');
+		errors [0].internal.should.equal (true);
+		errors [0].message.startsWith (
+			'[DEPRECATED] You are using a deprecated soliumrc configuration format.'
+		).should.equal (true);
+
+		errors [1].type.should.equal ('warning');
+		errors [1].internal.should.equal (true);
+		errors [1].message.should.equal ('[DEPRECATED] Rule "no-with" is deprecated.');
+
+		// Only rule deprecation warning with the new config
+		var newConfig = {
+			"rules": {
+				"no-with": "error"
+			},
+			"options": {
+				"returnInternalIssues": true
+			}
+		};
+
+		errors = Solium.lint (code, newConfig);
+
+		errors.should.be.Array ();
+		errors.should.be.size (1);
+
+		errors [0].type.should.equal ('warning');
+		errors [0].internal.should.equal (true);
+		errors [0].message.should.equal ('[DEPRECATED] Rule "no-with" is deprecated.');
 
 		Solium.reset ();
 		done ();
