@@ -16,7 +16,6 @@ module.exports = {
 		'mixedcase': 'warning',
 		'camelcase': 'warning',
 		'uppercase': 'warning',
-		'no-with': 'warning',
 		'no-empty-blocks': 'warning',
 		'no-unused-vars': 'error',
 		'blank-lines': 'warning',
@@ -33,7 +32,8 @@ module.exports = {
 		'quotes': 'error',
 
 		// Turn OFF all deprecated rules
-		'double-quotes': 'off'
+		'double-quotes': 'off',
+		'no-with': 'off'
 	}
 
 };
