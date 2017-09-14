@@ -11,14 +11,17 @@
     "lint": "eslint ."
   },
   "keywords": [
-    "Lint",
-    "Solidity",
-    "Abstract-Syntax-Tree",
-    "Ethereum",
-    "Smart-Contracts",
-    "Solium",
-    "Blockchain",
-    "Code-quality"
+    "lint",
+    "static-analysis",
+    "solidity",
+    "abstract-syntax-tree",
+    "ethereum",
+    "smart-contracts",
+    "solium",
+    "blockchain",
+    "code-quality",
+    "dapp",
+    "developer-tools"
   ],
   "repository": {
     "type": "git",
