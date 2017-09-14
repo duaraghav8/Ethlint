@@ -6,6 +6,9 @@
 // A fully qualified object for this Schema is:
 /*
 {
+	"plugins": [
+		"satoshi"
+	],
 	"extends": "solium:all",
 	"rules": {
 	 	"pragma-on-top": "off",
@@ -44,6 +47,13 @@ var Schema = {
 	],
 
 	properties: {
+
+		plugins: {
+			type: 'array',
+			items: {
+				type: 'string', minLength: 1
+			}
+		},
 
 		extends: {
 			type: 'string',

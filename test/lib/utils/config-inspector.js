@@ -46,6 +46,23 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isValid ({ rules: {}, options: {randomAttr: true} }).should.equal (false);
 		configInspector.isValid ({ rules: {}, randomAttr: {} }).should.equal (false);
 		configInspector.isValid ({ rules: {}, options: {returnInternalIssues: 'hello'} }).should.equal (false);
+		configInspector.isValid ({ plugins: ['standard'] }).should.equal (false);
+		configInspector.isValid ({ plugins: [''], rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: null, rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: 19072, rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: 19.2873, rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: {}, rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: {a: 'b'}, rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: 'myplugin', rules: {} }).should.equal (false);
+		configInspector.isValid ({ plugins: [''], extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: null, extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: 19072, extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: 19.2873, extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: {}, extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: {a: 'b'}, extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: 'myplugin', extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ extends: 'ab', plugins: ['xy', {}] }).should.equal (false);
+		configInspector.isValid ({ extends: 'ab', plugins: ['xy', 1090] }).should.equal (false);
 
 		// This will be valid in future when extends is allowed to be array of strings.
 		configInspector.isValid ({ extends: ['/dev', '/payments'] }).should.equal (false);
@@ -88,6 +105,15 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isValid ({ rules: {}, options: {returnInternalIssues: true} }).should.equal (true);
 		configInspector.isValid ({ rules: {}, options: {autofix: false, returnInternalIssues: true} }).should.equal (true);
 		configInspector.isValid ({ rules: {a: 1}, options: {autofix: false, returnInternalIssues: true} }).should.equal (true);
+
+		configInspector.isValid ({ extends: 'ab', plugins: [] }).should.equal (true);
+		configInspector.isValid ({ extends: 'ab', plugins: ['x'] }).should.equal (true);
+		configInspector.isValid ({ extends: 'ab', plugins: ['xy', 'a-c_d'] }).should.equal (true);
+		configInspector.isValid ({ extends: 'ab', plugins: ['x'], options: {} }).should.equal (true);
+		configInspector.isValid ({ rules: {}, plugins: [] }).should.equal (true);
+		configInspector.isValid ({ rules: {}, plugins: ['x'] }).should.equal (true);
+		configInspector.isValid ({ rules: {}, plugins: ['xy', 'a-c_d'] }).should.equal (true);
+		configInspector.isValid ({ rules: {}, plugins: ['x'], options: {} }).should.equal (true);
 
 		// Deprecated
 		configInspector.isValid ({ rules: {a: true} }).should.equal (true);
