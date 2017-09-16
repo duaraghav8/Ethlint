@@ -1,5 +1,6 @@
 /**
  * @fileoverview Tests for lib/rules.js
+ * NOTE: We need not test invalid config objects here, they're ruled out by config-inspector in solium.js itself.
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
@@ -12,6 +13,7 @@ describe ('Checking exported rules object', function () {
 
 	it ('should be an object that exposes a set of functions', function (done) {
 		rules.should.be.type ('object');
+		rules.should.be.size (5);
 
 		rules.should.have.ownProperty ('loadUsingDeprecatedConfigFormat');
 		rules.loadUsingDeprecatedConfigFormat.should.be.type ('function');
@@ -36,6 +38,10 @@ describe ('Checking exported rules object', function () {
 		rules.get.bind (rules, null).should.throw ();
 		rules.get.bind (rules, 100).should.throw ();
 		rules.get.bind (rules, '').should.throw ();
+		rules.get.bind (rules, []).should.throw ();
+		rules.get.bind (rules, {}).should.throw ();
+		rules.get.bind (rules, 89.18).should.throw ();
+		rules.get.bind (rules, function(){}).should.throw ();
 
 		rules.get.bind (rules, 'foobar').should.not.throw ();
 
@@ -166,6 +172,7 @@ describe ('Checking exported rules object', function () {
 	it ('should load rules from the new config format using load() when both "extends" & "rules" are passed', function (done) {
 		var config = {
 			"extends": "solium:all",
+			"plugins": [],
 			"rules": {
 				"pragma-on-top": "off",
 				"no-with": "warning",
@@ -275,6 +282,144 @@ describe ('Checking exported rules object', function () {
 
 		// There should be exactly 8 properties - the rules described in "rules" with severity > 0.
 		Object.keys (ruleDescriptions).length.should.equal (8);
+
+		done ();
+	});
+
+	it ('should load rules from specified plugin(s) if they are installed', function (done) {
+		var config = {
+			"extends": "solium:all",
+			"plugins": ["test"],
+			"rules": {
+				"quotes": 1,
+				"test/foo": 1,
+				"test/bar": ["error"]
+			}
+		};
+
+		var ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+		ruleDescriptions.should.have.ownProperty ('test/foo');
+		ruleDescriptions ['test/foo'].type.should.equal ('warning');
+		ruleDescriptions.should.have.ownProperty ('test/bar');
+		ruleDescriptions ['test/bar'].type.should.equal ('error');
+
+		['test/foo', 'test/bar'].forEach (function (name) {
+			var ruleDefinition = rules.get (name);
+
+			ruleDefinition.should.be.type ('object');
+			ruleDefinition.should.have.size (2);
+			ruleDefinition.should.have.ownProperty ('meta');
+			ruleDefinition.should.have.ownProperty ('create');
+			ruleDefinition.meta.should.be.type ('object');
+			ruleDefinition.create.should.be.type ('function');
+		});
+
+
+		delete config.extends;
+		config.rules ['test/foo'] = [2];
+		ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+		ruleDescriptions.should.have.ownProperty ('test/foo');
+		ruleDescriptions ['test/foo'].type.should.equal ('error');
+		ruleDescriptions.should.have.ownProperty ('test/bar');
+		ruleDescriptions ['test/bar'].type.should.equal ('error');
+
+		['test/foo', 'test/bar'].forEach (function (name) {
+			var ruleDefinition = rules.get (name);
+
+			ruleDefinition.should.be.type ('object');
+			ruleDefinition.should.have.size (2);
+			ruleDefinition.should.have.ownProperty ('meta');
+			ruleDefinition.should.have.ownProperty ('create');
+			ruleDefinition.meta.should.be.type ('object');
+			ruleDefinition.create.should.be.type ('function');
+		});
+
+
+		delete config.rules.quotes;
+		config.rules ['test/foo'] = [1];
+		ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+		ruleDescriptions.should.have.ownProperty ('test/foo');
+		ruleDescriptions ['test/foo'].type.should.equal ('warning');
+		ruleDescriptions.should.have.ownProperty ('test/bar');
+		ruleDescriptions ['test/bar'].type.should.equal ('error');
+
+		['test/foo', 'test/bar'].forEach (function (name) {
+			var ruleDefinition = rules.get (name);
+
+			ruleDefinition.should.be.type ('object');
+			ruleDefinition.should.have.size (2);
+			ruleDefinition.should.have.ownProperty ('meta');
+			ruleDefinition.should.have.ownProperty ('create');
+			ruleDefinition.meta.should.be.type ('object');
+			ruleDefinition.create.should.be.type ('function');
+		});
+
+
+		delete config.rules;
+		config.extends = 'solium:all';
+		config.rules = { 'test/foo': 'error', 'test/bar': 1 };
+		ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+		ruleDescriptions.should.have.ownProperty ('test/foo');
+		ruleDescriptions ['test/foo'].type.should.equal ('error');
+		ruleDescriptions.should.have.ownProperty ('test/bar');
+		ruleDescriptions ['test/bar'].type.should.equal ('warning');
+
+		['test/foo', 'test/bar'].forEach (function (name) {
+			var ruleDefinition = rules.get (name);
+
+			ruleDefinition.should.be.type ('object');
+			ruleDefinition.should.have.size (2);
+			ruleDefinition.should.have.ownProperty ('meta');
+			ruleDefinition.should.have.ownProperty ('create');
+			ruleDefinition.meta.should.be.type ('object');
+			ruleDefinition.create.should.be.type ('function');
+		});
+
+
+		delete config.rules;
+		ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
+		ruleDescriptions.should.not.have.ownProperty ('test/foo');
+		ruleDescriptions.should.not.have.ownProperty ('test/bar');
+
+		['test/foo', 'test/bar'].forEach (function (name) {
+			(rules.get (name) === undefined).should.be.true ();
+		});
+
+
+		done ();
+	});
+
+	it ('should handle when a specified plugin is not installed', function (done) {
+		var config = {
+			"extends": "solium:all",
+			"plugins": ["16%^54#$^%3"]
+		};
+
+		rules.load.bind (rules, config).should.throw ();
+
+		config.plugins = 'test';
+		config.rules = {
+			"test/somerandomrule": 1
+		};
+
+		rules.load.bind (rules, config).should.throw ();
+
+		config = {
+			"extends": "solium:all",
+			"plugins": ["test-invalid-schema"]
+		};
+
+		rules.load.bind (rules, config).should.throw ();
 
 		done ();
 	});

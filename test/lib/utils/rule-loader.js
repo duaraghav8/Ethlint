@@ -81,4 +81,19 @@ describe ('Test rule-loader functions', function () {
 		done ();
 	});
 
+	it ('should load rules from plugins if they\'re installed', function (done) {
+		ruleLoader.load.bind (ruleLoader, ['non-existent-plugin/foo']).should.throw ();
+
+		var result = ruleLoader.load (['test/foo', 'test/bar', 'test/baz']);
+
+		result.should.be.type ('object');
+		result.should.be.size (3);
+
+		result ['test/foo'].should.be.type ('object');
+		result ['test/bar'].should.be.type ('object');
+		(result ['test/baz'] === undefined).should.be.true ();
+
+		done ();
+	});
+
 });

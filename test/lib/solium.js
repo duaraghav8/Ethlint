@@ -192,6 +192,25 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
+	it ('should accept valid plugin rules', function (done) {
+		var config = {
+			"plugins": ["test"],
+			"rules": {
+				"test/foo": 1,
+				"test/bar": 2
+			}
+		};
+
+		var minimalSourceCode = wrappers.toFunction ('var foo = 100;');
+		var errors = Solium.lint (minimalSourceCode, config);	// should not throw
+		errors.should.be.Array ();
+		errors.should.be.size (0);
+
+
+		Solium.reset ();
+		done ();
+	});
+
 	it ('should handle all invalid arguments for Solium.lint ()', function (done) {
 		var minimalConfig = { rules: {} },
 			minimalSourceCode = wrappers.toFunction ('var foo = 100;');
@@ -231,8 +250,9 @@ describe ('Checking Exported Solium API', function () {
 		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: 9018}}).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: -1}}).should.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, {rules: {a: null}}).should.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, {plugins: ['1*&&67%``'], rules: {}}).should.throw ();
 
-		//minimal valid arguments
+		// Minimal valid arguments
 		Solium.lint.bind (Solium, minimalSourceCode, minimalConfig).should.not.throw ();
 		Solium.reset ();
 
@@ -407,6 +427,7 @@ describe ('Checking Exported Solium API', function () {
 
 		var current1 = {
 			"extends": "solium:all",
+			"plugins": [],
 			"rules": {
 				"pragma-on-top": "off",
 				"no-with": "warning",
@@ -436,12 +457,37 @@ describe ('Checking Exported Solium API', function () {
 			}
 		};
 
+		var current4 = {
+			"extends": "solium:all",
+			"plugins": ["test"]
+		};
+
+		var current5 = {
+			"plugins": ["test"],
+			"rules": {
+				"test/foo": "warning",
+				"test/bar": [2]
+			}
+		};
+
+		// Temporary. This config should actually not be accepted since we're using a plugin without declaring it.
+		// In future, the declaration inside "plugins" will ensure that the plugin is installed (and if not, it will
+		// be installed automatically).
+		var current6 = {
+			"rules": {
+				"test/foo": "error"
+			}
+		};
+
 		var minimalSourceCode = wrappers.toFunction ('var foo = 100;');
 
 		Solium.lint.bind (Solium, minimalSourceCode, deprecated).should.not.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, current1).should.not.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, current2).should.not.throw ();
 		Solium.lint.bind (Solium, minimalSourceCode, current3).should.not.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, current4).should.not.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, current5).should.not.throw ();
+		Solium.lint.bind (Solium, minimalSourceCode, current6).should.not.throw ();
 
 		Solium.reset ();
 		done ();
@@ -454,8 +500,10 @@ describe ('Checking Exported Solium API', function () {
 		var fixResults = [], code = 'contract Foo {}';
 
 		var config = {
-			rules: {
-				lbrace: 'warning'
+			"plugins": ["test"],
+			"rules": {
+				"lbrace": "warning",
+				"test/foo": "error"
 			}
 		};
 
