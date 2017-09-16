@@ -22,7 +22,8 @@
 		"mixedcase": ["error"],
 		"camelcase": [0, 100, "hello", 9.283],
 		"uppercase": [1],
-		"double-quotes": [2, "double"]
+		"double-quotes": [2, "double"],
+		"satoshi/nakamoto": "error"
 	},
 	"options": { "autofix": true, "returnInternalIssues": true }
 }
