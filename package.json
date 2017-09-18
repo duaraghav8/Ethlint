@@ -46,7 +46,6 @@
     "mocha": "^3.4.2",
     "should": "^11.0.0",
     "solium-plugin-test": "^0.1.5",
-    "solium-plugin-test-invalid-schema": "0.0.0",
-    "supertest": "^2.0.0"
+    "solium-plugin-test-invalid-schema": "0.0.0"
   }
 }
