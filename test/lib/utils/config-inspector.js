@@ -10,11 +10,16 @@ var configInspector = require('../../../lib/utils/config-inspector');
 describe ('Test config-inspector functions', function () {
 
 	it ('should have a set of functions exposed as API', function (done) {
+		configInspector.should.be.size (3);
+
 		configInspector.should.have.ownProperty ('isValid');
 		configInspector.isValid.should.be.type ('function');
 
 		configInspector.should.have.ownProperty ('isFormatDeprecated');
 		configInspector.isFormatDeprecated.should.be.type ('function');
+
+		configInspector.should.have.ownProperty ('isAValidSharableConfig');
+		configInspector.isAValidSharableConfig.should.be.type ('function');
 
 		done ();
 	});
@@ -153,6 +158,44 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isFormatDeprecated ({ rules: { abc: 'off', bcd: 'warning', cde: 'error' } }).should.equal (false);
 		configInspector.isFormatDeprecated ({ rules: { abc: 2, bcd: ['error', 100] } }).should.equal (false);
 		configInspector.isFormatDeprecated ({ rules: { abc: 2, bcd: ['error', 100] }, extends: 'jellyfish' }).should.equal (false);
+
+		done ();
+	});
+
+	// No need for extensive testing of "rules" attribute since its schema is imported from config,
+	// which is extensively tested.
+	it ('isAValidSharableConfig() should correctly classify a valid sharable config', function (done) {
+		configInspector.isAValidSharableConfig ({rules: {}}).should.equal (true);
+		configInspector.isAValidSharableConfig ({rules: {quotes: [1]}}).should.equal (true);
+		configInspector.isAValidSharableConfig ({rules: {quotes: [1]}}).should.equal (true);
+		configInspector.isAValidSharableConfig ({rules: {quotes: 1}}).should.equal (true);
+		configInspector.isAValidSharableConfig ({rules: {quotes: "error"}}).should.equal (true);
+
+		done ();
+	});
+
+	it ('isAValidSharableConfig() should correctly classify an invalid sharable config', function (done) {
+		configInspector.isAValidSharableConfig (null).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig ().should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig (19072).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig ([]).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig (function(){}).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig ('hello world').should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig (189.2783).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig ({}).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
+		configInspector.isAValidSharableConfig ({
+			rules: {},
+			extraUnwantedAttribute: [1,2,3]
+		}).should.equal (false);
+		configInspector.isAValidSharableConfig.errors.should.have.size (1);
 
 		done ();
 	});
