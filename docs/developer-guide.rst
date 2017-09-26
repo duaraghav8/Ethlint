@@ -63,3 +63,12 @@ API Reference
 *************
 
 apiii
+
+
+.. index:: building-doc
+
+**********************************
+Contributing to this documentation
+**********************************
+
+docss
