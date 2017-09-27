@@ -6,7 +6,7 @@ Solium was authored by `Raghav Dua <https://github.com/duaraghav8>`_ in 2016.
 
 It borrows ideas from `ESLint <https://eslint.org/>`_, `Solidity Parser <https://github.com/ConsenSys/solidity-parser>`_ and other such ambitious projects.
 
-The linter was initially designed to strictly follow Solidity's official Style Guide, but has since evolved into a completely customizable tool.
+The linter was initially designed to strictly follow Solidity's official `Style Guide <http://solidity.readthedocs.io/en/latest/style-guide.html>`_, but has since evolved into a completely customizable tool.
 
 
 Community

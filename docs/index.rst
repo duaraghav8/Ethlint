@@ -24,9 +24,8 @@ Contents
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
 
    user-guide.rst
    developer-guide.rst
-   contributors.rst
+   contributing.rst
    about.rst
