@@ -1,3 +1,6 @@
+Solium `v1` will soon be released in Beta. Its documentation is currently a work in progress and can be viewed at [readthedocs](http://solium.readthedocs.io/en/docs/). If you have any feedback on the docs, do leave your comments in issues or our Gitter channel!
+___
+
 ![solium](https://cloud.githubusercontent.com/assets/12758282/18283522/4b206522-7483-11e6-9bcd-2a70ebc8cfdb.png)
 
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/Solium-linter/Lobby)
