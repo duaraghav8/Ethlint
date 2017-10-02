@@ -19,7 +19,6 @@ Installation & Setting up the Development Enviroment
 
 instal
 
-
 .. index:: writing-core-rule
 
 *******************

@@ -167,7 +167,42 @@ Note that you **didn't have to specify the prefix of the sharable config**. Whet
 Plugins
 *******
 
-Pluginss
+Plugins allow Third party developers to write their own rules and re-distribute them via NPM. Every solium plugin module has the prefix ``solium-plugin-``. Plugin developers are encouraged to include the tags ``solium`` and ``soliumplugin`` in their modules for easy discoverability.
+
+Once you install a plugin, you can choose which of its rules solium should apply on your contracts. Plugin rules too can contain fixes if the developer supplies them. There's no special way of applying these fixes. Simply lint with the ``--fix`` option and fixes for both core rules and pugin rules will be applied to your code.
+
+Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
+
+- Install the plugin using ``npm install -g solium-plugin-consensys``
+- Add the plugin's entry into your ``soliumrc.json``:
+
+.. code-block:: javascript
+
+	{
+		"extends": "solium:all",
+		"plugins": ["consensys"]
+	}
+
+.. note::
+	Just like in sharable configs, don't specify the plugin prefix. Simply specify the plugin name. So if a plugin exists on NPM by the name of ``solium-plugin-foo-bar``, you need only specify ``"plugins": ["foo-bar"]``.
+
+- In the ``rules`` object, specify which rules from this plugin you wish to apply by adding a key ``"<PLUGIN NAME>/<RULE NAME>": "<SEVERITY>"``.
+
+.. code-block:: javascript
+
+	{
+		"extends": "solium:all",
+		"plugins": ["consensys"],
+		"rules": {
+			"consensys/race-conditions": "error",
+			"consensys/foobar": [1, true, "Hello world"]
+		}
+	}
+
+- You're now set to use 2 rules from Consensys' plugin! Try running the linter using ``solium -d contracts/``.
+
+.. note::
+	Just like in sharable configs, solium internally ``require()`` s the plugin module. So as long as require() is able to find a module named ``solium-plugin-consensys``, it doesn't matter whether you install your plugin globally or locally and link it.
 
 
 .. index:: core-rules
@@ -176,7 +211,12 @@ Pluginss
 Core Rules
 **********
 
-rulzzz
+Below is the list of core rules supplied by Solium. All are enabled by default (if you inherit ``solium:all`` in your soliumrc) except for the deprecated ones.
+Enabling a deprecated rule will display a warning message.
+
+***************************************************************TODO**********************
+***************************************************************TODO**********************
+***************************************************************TODO**********************
 
 
 .. index:: migration-guide
@@ -185,7 +225,119 @@ rulzzz
 Migrating to v1.0.0
 *******************
 
-migraate
+If you're currently using Solium ``v0`` and wish to migrate to ``v1``, then this section is for you.
+
+- Plugin system is removed
+- rules were deprecated
+- soliumrc.json format is changed
+- rule implementation format has changed
+- solium API has some new options but no breaking changes
+
+Custom Rule injection is now deprecated
+=======================================
+
+v0 allows you to inject custom rule implementations using the ``custom-rules-filename`` attribute in your ``soliumrc.json``. This feature is now deprecated. If you specify a file, the linter would simply throw a warning informing you that the custom rules supplied will not be applied while linting.
+
+Custom rule injection has now been replaced by Solium `Plugins`_.
+
+
+Deprecated rules
+================
+
+Several rules have been deprecated:
+
+- ``double-quotes`` has been replaced by ``quotes``.
+- ``no-with``
+
+
+soliumrc.json has a new format
+==============================
+
+A fully fledged example of v1's ``soliumrc.json`` is:
+
+.. code-block:: javascript
+
+	{
+		"extends": "solium:all",
+		"plugins": ["consensys"],
+		"rules": {
+			"consensys/race-conditions": "error",
+			"consensys/foobar": [1, true, "Hello world"]
+		}
+	}
+
+To learn about the new format, please see `Configuring the Linter`_.
+
+Note that v1 still accepts the old soliumrc format but throws a format deprecation warning.
+
+
+Rule implementation has a new format
+====================================
+
+.. note::
+	Unless you're developing rules (whether core or plugins) for Solium, you can skip this part.
+
+The new format of a rule implementation is:
+
+.. code-block:: javascript
+
+	module.exports = {
+		meta: {
+			docs: {
+				recommended: true,
+				type: 'warning',
+				description: 'This is a rule'
+			},
+			schema: [],
+			fixable: 'code'
+		},
+
+		create(context) {
+			function lintIfStatement(emitted) {
+				context.report({
+					node: ..,
+					fix(fixer) {
+						// magic
+					}
+				});
+			}
+
+			return {
+				IfStatement: lintIfStatement
+			};
+		}
+	};
+
+See an example `on github <https://github.com/duaraghav8/Solium/blob/fafce50e3930011ffd2c8113a2ea1c97c5150d75/lib/rules/deprecated-suicide.js>`_.
+
+Learn how to develop a Solium rule on the Developer Guide.
+
+
+Additions in Solium API
+=======================
+
+There has been additions in the Solium API. However, there are no breaking changes.
+
+- When using the ``lint(sourceCode, config)`` method (where ``config`` is your soliumrc configuration), you can now pass an ``options`` object inside ``config`` to modify Linter behavior. You can specify the ``returnInternalIssues`` option whose value is Boolean. If ``true``, solium returns internal issues (like deprecation warnings) in the error list. If ``false``, the method behaves exactly like in ``v0``, and doesn't spit out any warnings (even if, for eg, you're using deprecated rules).
+
+.. code-block:: javascript
+
+	const mySourceCode = '...',;
+	const config = {
+		extends: "solium:all",
+		rules: {
+			"double-quotes": "error"
+		},
+		options: {
+			returnInternalIssues: true
+		}
+	};
+
+	const errors = Solium.lint(mySourceCode, config);
+	// Now errors list contains a deprecated rule warning since "double-quotes" is deprecated.
+	// If returnInternalIssues were false, we wouldn't receive this warning.
+
+- The API now exposes another method ``lintAndFix()``. Guess what it does? Please refer to the developer guide on how to use this method to retrieve lint errors as well as the fixed solidity code along with a list of fixes applied.
 
 
 .. index:: roadmap
