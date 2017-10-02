@@ -29,12 +29,15 @@ Architecture will be explained in more detail in future.
 Installation & Setting up the Development Enviroment
 ****************************************************
 
-Install Solium v1 as a local module using ``npm install --save solium@v1``. You can now use Solium like:
+Make sure you have Node.js and NPM installed on your system.
+Install Solium v1 as a local module using ``npm install --save solium@v1``.
+
+You can now use Solium like:
 
 .. code-block:: javascript
 
 	const Solium = require('solium'),
-		sourceCode = 'contract fOO_bar { function HELLO_WORLD () {} }';
+		sourceCode = 'contract fOO_bar { string hola = \'hello\'; }';
 
 	const errors = Solium.lint(sourceCode, {
 		"extends": "solium:all",
@@ -51,7 +54,7 @@ Install Solium v1 as a local module using ``npm install --save solium@v1``. You 
 
 - Source Code can be either a string or a buffer object
 - ``lint()`` takes in the source code, followed by the soliumrc configuration object.
-- ``returnInternalIssues`` option tells solium to return internal issues (like rule deprecation) in addition to the lint issues. If this option is ``false``, Solium only returns lint issues.
+- ``returnInternalIssues`` option tells solium to return internal issues (like rule deprecation) in addition to the lint issues. If this option is ``false``, Solium only returns lint issues. It is recommended that you set it to ``true``, otherwise you're missing out on a lot ;-)
 - ``lint()`` returns an array of error objects. The function's output looks something like:
 
 .. code-block:: javascript
@@ -74,6 +77,61 @@ Install Solium v1 as a local module using ``npm install --save solium@v1``. You 
 			fix: { range: [Array], text: '"hello"' }
 		}
 	]
+
+- You can use the ``lintAndFix()`` function as demonstrated in the following example:
+
+.. code-block:: javascript
+
+	const Solium = require('solium'),
+		sourceCode = 'contract fOO_bar { string hola = \'hello\'; }';
+
+	const result = Solium.lintAndFix(sourceCode, {
+		"extends": "solium:all",
+		"rules": {
+			"quotes": ["error", "double"],
+			"double-quotes": [2],	// returns a rule deprecation warning
+			"pragma-on-top": 1
+		},
+
+		"options": { "returnInternalIssues": true }
+	});
+
+	console.log(result);
+
+The output of ``lintAndFix()`` look like:
+
+.. code-block:: javascript
+
+	{
+		originalSourceCode: 'pragma solidity ^0.4.0;\n\n\nimport "./hello.sol";\n\ncontract Foo {\n\tstring hola = \'hello\';\n}\n',
+		fixesApplied:[
+			{ 
+				ruleName: 'quotes',
+				type: 'error',
+				node: [Object],
+				message: '\'hello\': String Literals must be quoted with double quotes only.',
+				line: 7,
+				column: 15,
+				fix: [Object]
+			}
+		],
+		fixedSourceCode: 'pragma solidity ^0.4.0;\n\n\nimport "./hello.sol";\n\ncontract Foo {\n\tstring hola = "hello";\n}\n',
+		errorMessages: [
+			{
+				type: 'warning',
+				message: '[DEPRECATED] Rule "double-quotes" is deprecated. Please use "quotes" instead.',
+				internal: true,
+				line: -1,
+				column: -1 },
+				{ ruleName: 'double-quotes',
+				type: 'warning',
+				node: [Object],
+				message: '\'hello\': String Literals must be quoted with "double quotes" only.',
+				line: 7,
+				column: 15
+			}
+		]
+	}
 
 
 .. index:: writing-core-rule
