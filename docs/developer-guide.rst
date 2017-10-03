@@ -194,7 +194,7 @@ Your rule should expose an object that contains 2 attributes - ``meta`` object w
 - Contains ``docs`` object used to describe the rule.
 - The ``schema`` object is used to describe the schema of options the user can pass to this rule via soliumrc config (see `AJV <https://github.com/epoberezkin/ajv>`_). This ensure that a valid set of options are passed to your rule. You can see the schema of `quotes <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L37>`_ rule to understand how to write the schema for your rule.
 - The ``fixable`` attribute can have value as either ``code`` or ``whitespace``. Set this attribute if your rule also contains fixes for the issues you report. Use ``whitespace`` if your rule only add/removes whitespace from the code. Else use ``code``.
-- When a rule needs to be deprecated, we can add ``deprecated: true`` inside meta. We can add ``replacedBy: ["RULE NAME"]`` inside meta.docs if this rule is to be replaced by a new rule (see `example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/double-quotes.js#L32-L36>`_).
+- When a rule needs to be deprecated, we can add ``deprecated: true`` inside meta. We can add ``replacedBy: ["RULE NAME"]`` inside meta.docs if this rule is to be replaced by a new rule (see `deprecated example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/double-quotes.js#L32-L36>`_).
 
 .. note::
 	``replacedBy`` doesn't force the linter to apply the new rule. Instead, it only throws a warning to the user, notifying them that they're using a deprecated rule and should consider moving to the new rule(s) specified inside ``replacedBy`` array. Try adding ``double-quotes: "error"`` inside ``rules`` inside your soliumrc.json and running the linter.
@@ -206,6 +206,62 @@ create() must return an object whose Key is an AST node type, and value is the f
 
 .. note::
 	To know which node type you need to capture, install `solparse <https://github.com/duaraghav8/solparse>`_, parse some sample code into AST, then examine the particular node of interest for its `type` field. Specify that type as your return object key.
+
+The create() function receives a ``context`` object, which allows you to access the solidity code to be linted and many other things to help your rule work its magic.
+
+- ``context.options`` - ``undefined`` if user doesn't supply any options to your rule through soliumrc. An Array of options otherwise. Solium ensures that the options passed inside the array are fully compliant with the ``schema`` you define for each of them in ``meta``. So if a user specifies ``foo-bar: ['error', 'hello', 110, {a: [99]}]``, then ``foo-bar`` rule's ``context.options`` contains the array ``['hello', 110, {a: [99]}]`` (all but the first item, because the first is the severity of the rule). See `options example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L47>`_.
+- ``context.getSourceCode()`` - returns a SourceCode object that gives you access to the solidity code and several functions to operate on it and AST nodes.
+
+The functions exposed by SourceCode object are as follows:
+
+``getText (node)`` - get source code for the specified node. If no arguments given, it returns the complete source code
+
+``getTextOnLine (lineNumber)`` - get the complete text on the specified line number (lineNumber is an Integer)
+
+``getLine (node)`` - get the line number on which the specified node's code starts
+
+``getEndingLine (node)`` - get the line number on which the specified node's code ends
+
+``getColumn (node)`` - get column no. of the first character of the specified node's code
+
+``getEndingColumn (node)`` - get column no. of the last character of the specified node's code
+
+``getParent (node)`` - get the parent node of the specified node
+
+``getNextChar (node)`` - get 1 character after the code of specified node
+
+``getPrevChar (node)`` - get 1 character before the code of specified node
+
+``getNextChars (node, charCount)`` - get charCount no. of characters after the code of specified node
+
+``getPrevChars (node, charCount)`` - get charCount no. of characters befre the code of specified node
+
+``isASTNode (arg)`` - Returns true if the given argument is a valid (Spider-Monkey compliant) AST Node
+
+``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
+
+
+As mentioned earlier, ``create()`` returns an object. The function specified as the value for a key is responsible for operating over that AST node, so it gets passed an ``emitted`` object. This object's preoprties are as follows:
+
+- ``emitted.exit`` - Solium passes an AST node to a rule twice - once when it enters the node during its Depth-first traversal and second when its leaving it. exit property, if true, means Solium is leaving the node. So if you only want your rule to execute once over a node, you can specify ``if(emitted.exit) { return; }``.
+
+.. note::
+	A common use case for ``exit`` is when you want your rule to access the whole contract's AST Node (type ``Program``) at the end, ie, when all other rules are done reporting their rules. Then you could specify ``if(!emitted.exit) { return; }``.
+
+- ``emitted.node`` - is the AST Node object of type specified as the key in your return object. So if, for eg, your create() returns ``{ ForStatement: inspectForLoop }``, then you can access the AST Node representing the ``for`` loop in solidity like:
+
+.. code-block:: javascript
+
+	create(context) {
+		function inspectForLoop(emitted) {
+			const {node} = emitted;
+			console.log (node.type);	// prints "ForStatement" and the node has appropriate properties of 'for' statement
+		}
+
+		return {ForStatement: inspectForLoop};
+	}
+
+See `emitted node example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L55>`_
 
 
 .. index:: develop-sharable-config
