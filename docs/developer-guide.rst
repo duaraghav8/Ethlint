@@ -30,7 +30,7 @@ Installation & Setting up the Development Enviroment
 ****************************************************
 
 Make sure you have Node.js and NPM installed on your system.
-Install Solium v1 as a local module using ``npm install --save solium@v1``.
+Install Solium v1 as a local module using ``npm install --save solium@v1``. The ``@v1`` tag is necessary till the time v1 is in Beta (until then, ``latest`` points to ``v0.5.5``).
 
 You can now use Solium like:
 
@@ -134,13 +134,78 @@ The output of ``lintAndFix()`` look like:
 	}
 
 
+.. note::
+	The input supplied to ``lint()`` and ``lintAndFix()`` is the same. Its the output format that differs.
+
+
 .. index:: writing-core-rule
 
 *******************
 Writing a Core Rule
 *******************
 
-coreeee
+To write a core rule for Solium, please start by raising an issue on `github <https://github.com/duaraghav8/Solium>`_ describing you proposal. You can check out some of the rules in the roadmap in our `Rules Wishlist <https://github.com/duaraghav8/Solium/issues/44>`_.
+
+Say you want to develop a new rule ``foo-bar``. Here's how you'd go about it:
+
+Create...
+=========
+
+\.\.\.a file ``foo-bar.js`` inside `lib/rules <https://github.com/duaraghav8/Solium/tree/master/lib/rules>`_. This is the main implementation of your rule. Use the below template to implement your core rule:
+
+.. code-block:: javascript
+
+	module.exports = {
+		meta: {
+			docs: {
+				recommended: true,
+				type: 'warning',	// either 'warning' or 'error'
+				description: 'This is my foobar rule'
+			},
+			schema: [],
+			fixable: 'code'
+		},
+
+		create(context) {
+			function lintIfStatement(emitted) {
+				const node = emitted.node;
+
+				if(emitted.exit) { return; }
+
+				context.report({
+					node,
+					fix(fixer) {
+						// magic
+					},
+					message: 'Oh snap! A lint error:('
+				});
+			}
+
+			return {
+				IfStatement: lintIfStatement
+			};
+		}
+	};
+
+Your rule should expose an object that contains 2 attributes - ``meta`` object which describes the rule and ``create()`` function that actually peroforms linting over the given solidity code.
+
+``meta``
+
+- Contains ``docs`` object used to describe the rule.
+- The ``schema`` object is used to describe the schema of options the user can pass to this rule via soliumrc config (see `AJV <https://github.com/epoberezkin/ajv>`_). This ensure that a valid set of options are passed to your rule. You can see the schema of `quotes <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L37>`_ rule to understand how to write the schema for your rule.
+- The ``fixable`` attribute can have value as either ``code`` or ``whitespace``. Set this attribute if your rule also contains fixes for the issues you report. Use ``whitespace`` if your rule only add/removes whitespace from the code. Else use ``code``.
+- When a rule needs to be deprecated, we can add ``deprecated: true`` inside meta. We can add ``replacedBy: ["RULE NAME"]`` inside meta.docs if this rule is to be replaced by a new rule (see `example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/double-quotes.js#L32-L36>`_).
+
+.. note::
+	``replacedBy`` doesn't force the linter to apply the new rule. Instead, it only throws a warning to the user, notifying them that they're using a deprecated rule and should consider moving to the new rule(s) specified inside ``replacedBy`` array. Try adding ``double-quotes: "error"`` inside ``rules`` inside your soliumrc.json and running the linter.
+
+``create()``
+
+This function is responsible for actual processing of the contract code, determining whether something is wrong or not, reporting an issue and suggesting fixes.
+create() must return an object whose Key is an AST node type, and value is the function to execute on that node. So, for example, ``IfStatement`` is the type of the AST node representing an `if` clause and block in solidity.
+
+.. note::
+	To know which node type you need to capture, install `solparse <https://github.com/duaraghav8/solparse>`_, parse some sample code into AST, then examine the particular node of interest for its `type` field. Specify that type as your return object key.
 
 
 .. index:: develop-sharable-config
