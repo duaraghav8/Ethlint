@@ -187,7 +187,7 @@ Create...
 		}
 	};
 
-Your rule should expose an object that contains 2 attributes - ``meta`` object which describes the rule and ``create()`` function that actually peroforms linting over the given solidity code.
+Your rule should expose an object that contains 2 attributes - ``meta`` object which describes the rule and ``create()`` function that actually lints over the given solidity code.
 
 ``meta``
 
@@ -202,10 +202,10 @@ Your rule should expose an object that contains 2 attributes - ``meta`` object w
 ``create()``
 
 This function is responsible for actual processing of the contract code, determining whether something is wrong or not, reporting an issue and suggesting fixes.
-create() must return an object whose Key is an AST node type, and value is the function to execute on that node. So, for example, ``IfStatement`` is the type of the AST node representing an `if` clause and block in solidity.
+create() must return an object whose Key is an AST node type, and value is the function to execute on that node. So, for example, ``IfStatement`` is the type of the AST node representing an ``if`` clause and block in solidity.
 
 .. note::
-	To know which node type you need to capture, install `solparse <https://github.com/duaraghav8/solparse>`_, parse some sample code into AST, then examine the particular node of interest for its `type` field. Specify that type as your return object key.
+	To know which node type you need to capture, install `solparse <https://github.com/duaraghav8/solparse>`_, parse some sample code into AST, then examine the particular node of interest for its ``type`` field. Specify that type as your return object key. You can see `any rule implementation <https://github.com/duaraghav8/Solium/tree/master/lib/rules>`_ to understand what create()'s return object looks like.
 
 The create() function receives a ``context`` object, which allows you to access the solidity code to be linted and many other things to help your rule work its magic.
 
@@ -240,8 +240,56 @@ The functions exposed by SourceCode object are as follows:
 
 ``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
 
+- ``context.report()`` - Lastly, the context object provides you with a clean interface to report lint issues:
 
-As mentioned earlier, ``create()`` returns an object. The function specified as the value for a key is responsible for operating over that AST node, so it gets passed an ``emitted`` object. This object's preoprties are as follows:
+.. code-block:: javascript
+
+	context.report({
+		node,	// the AST node retrieved through emitted.node (see below)
+		fix(fixer) {	// [OPTIONAL]
+			return [fixer.replaceText(node, "hello world!!")];
+		},
+		message: 'Lint issue raised yayy!',
+		location: {	// [OPTIONAL]
+			line: 9,	// [OPTIONAL]
+			column: 20	// [OPTIONAL]
+		}
+	});
+
+See `report with fix example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L67-L73>`_ and `report with location example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L67-L73>`_.
+
+.. note::
+	If you're supplying the ``fix()`` function, make sure you specify the ``fixable`` attribute in ``meta``.
+
+Your ``fix()`` function will receive a ``fixer`` object that exposes several functions so you can tell Solium **how** to fix the raised lint issue. Every fixer function you call returns a fixer packet. Solium understands how to work with this packet. Your fix function must return either a single fixer packet or an array of fixer packets.
+
+.. warning::
+	Multiple fixer packets inside the array must not overlap, else Solium throws an error. For eg- the first packet tries to remove the first 10 characters from the solidity code, whereas another packet tries to replace them by, say, "hello world". This results in an overlap and hence the complete fix is not valid. However, if the replacement begins at the 11th character, then there is no conflict and so your fix is valid!
+
+Below is the list of functions exposed by the ``fixer`` object:
+
+``insertTextAfter (node, text)`` - inserts text after the given node
+
+``insertTextAfterRange (range, text)`` - inserts text after the given range
+
+``insertTextBefore(node, text)`` - inserts text before the given node
+
+``insertTextBeforeRange(range, text)`` - inserts text before the given range
+
+``remove (node)`` - removes the given node
+
+``removeRange(range)`` - removes text in the given range
+
+``replaceText(node, text)`` - replaces the text in the given node
+
+``replaceTextRange(range, text)`` - replaces the text in the given range
+
+Where ``range`` is an array of 2 integers, like ``[12, 19]``, ``node`` is a valid AST node retrieved from ``emitted.node`` (see below) and ``text`` is a valid string.
+
+
+``emitted``
+
+As mentioned earlier, ``create()`` should return an object. The function specified as the value for a key is responsible for operating over that AST node, so it gets passed an ``emitted`` object. This object's properties are as follows:
 
 - ``emitted.exit`` - Solium passes an AST node to a rule twice - once when it enters the node during its Depth-first traversal and second when its leaving it. exit property, if true, means Solium is leaving the node. So if you only want your rule to execute once over a node, you can specify ``if(emitted.exit) { return; }``.
 
@@ -262,6 +310,12 @@ As mentioned earlier, ``create()`` returns an object. The function specified as 
 	}
 
 See `emitted node example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L55>`_
+
+You now have all the required knowledge to develop your core rule ``lib/rules/foo-bar.js``. Its now time for writing tests.
+
+
+Testing your Core rule
+======================
 
 
 .. index:: develop-sharable-config
