@@ -137,6 +137,12 @@ The output of ``lintAndFix()`` look like:
 .. note::
 	The input supplied to ``lint()`` and ``lintAndFix()`` is the same. Its the output format that differs.
 
+To work with Solium:
+- clone the repository to your local machine using, for eg, ``git clone git@github.com:duaraghav8/Solium.git``.
+- Move into its directory using ``cd Solium``.
+- Install all dependencies **and** dev dependencies using ``npm install``.
+- To ensure that everything works fine, run ``npm test``. If you've cloned the ``master`` branch, there should be no test failures. If there are, please raise an issue or start a chat on our `Gitter channel <https://gitter.im/Solium-linter/Lobby#>`_.
+
 
 .. index:: writing-core-rule
 
@@ -146,12 +152,15 @@ Writing a Core Rule
 
 To write a core rule for Solium, please start by raising an issue on `github <https://github.com/duaraghav8/Solium>`_ describing you proposal. You can check out some of the rules in the roadmap in our `Rules Wishlist <https://github.com/duaraghav8/Solium/issues/44>`_.
 
+.. note::
+	Solium is currently written entirely in ES5. We plan to `move to ES6 <https://github.com/duaraghav8/Solium/issues/76>`_ but for now, please write all the JS code you'd be contributing to solium core in ES5.
+
 Say you want to develop a new rule ``foo-bar``. Here's how you'd go about it:
 
-Create...
-=========
+Creating a core rule
+====================
 
-\.\.\.a file ``foo-bar.js`` inside `lib/rules <https://github.com/duaraghav8/Solium/tree/master/lib/rules>`_. This is the main implementation of your rule. Use the below template to implement your core rule:
+Create a file ``foo-bar.js`` inside `lib/rules <https://github.com/duaraghav8/Solium/tree/master/lib/rules>`_. This is the main implementation of your rule. Use the below template to implement your core rule:
 
 .. code-block:: javascript
 
@@ -166,15 +175,15 @@ Create...
 			fixable: 'code'
 		},
 
-		create(context) {
+		create: function (context) {
 			function lintIfStatement(emitted) {
-				const node = emitted.node;
+				var node = emitted.node;
 
-				if(emitted.exit) { return; }
+				if (emitted.exit) { return; }
 
 				context.report({
-					node,
-					fix(fixer) {
+					node: node
+					fix: function(fixer) {
 						// magic
 					},
 					message: 'Oh snap! A lint error:('
@@ -311,11 +320,65 @@ As mentioned earlier, ``create()`` should return an object. The function specifi
 
 See `emitted node example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L55>`_
 
-You now have all the required knowledge to develop your core rule ``lib/rules/foo-bar.js``. Its now time for writing tests.
+You now have all the required knowledge to develop your core rule ``lib/rules/foo-bar.js``. Its now time to write tests.
 
 
 Testing your Core rule
 ======================
+
+- Inside the ``test/lib/rules``, creating a new diretcory ``foo-bar`` and a file inside this directory ``foo-bar.js`` (see `test examples <https://github.com/duaraghav8/Solium/tree/master/test/lib/rules>`_).
+- Now paste the below template in ``test/lib/rules/foo-bar/foo-bar.js``:
+
+.. code-block:: javascript
+
+	/**
+	 * @fileoverview Description of the rule
+	 * @author YOUR NAME <your@email>
+	 */
+
+	'use strict';
+
+	var Solium = require('../../../../lib/solium'),
+		wrappers = require('../../../utils/wrappers');
+	var toContract = wrappers.toContract, toFunction = wrappers.toFunction;
+
+	// Solium should only lint using your rule so only issues flagged by your rule are reported
+	// so you can easily test it. Replace foo-bar with your rule name.
+	var config = {
+		"rules": {
+			"foo-bar": "error"	// alternatively - ["error" OR "warning", options acc. to meta.schema of rule]
+		}
+	};
+
+	describe('[RULE] foo-bar: Rejections', function () {
+		it('should reject some stuff', function(done) {
+			var code = 'contract Blah { function bleh() {} }',
+				errors = Solium.lint(code, config);
+
+			// YOUR TESTS GO HERE. For eg:
+			errors.should.be.size(2);	// If you're expecting your rule to flag 2 lint issues on the given code.
+
+			Solium.reset();
+			done();
+		});
+	});
+
+	describe('[RULE] foo-bar: Acceptances', function () {
+		it('should accept some stuff', function(done) {
+			// YOUR LINTING & TESTS GO HERE. For eg:
+
+			Solium.reset();
+			done();
+		});
+	});
+
+You're now ready to write your tests (see `shouldjs documentation <https://shouldjs.github.io/>`_).
+
+After writing your tests, add an entry for your rule ``foo-bar`` in `solium json <https://github.com/duaraghav8/Solium/blob/master/config/solium.json>`_.
+
+Finally, add an entry for your rule in `solium all <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-all.js>`_ ruleset: ``foo-bar: <SEVERITY>`` where severity should be how your rule should be treated by default (as an error or warning). Severity should be same as what you specified in your rule's ``meta.docs.type``.
+
+Now run ``npm test`` and resolve any failures. Once everything passes, you're ready to make a Pull Request :D
 
 
 .. index:: develop-sharable-config
