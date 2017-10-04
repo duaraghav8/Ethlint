@@ -33,6 +33,9 @@ Once v1 is out of Beta, the above instruction will be removed and you will simpl
 
 Verify that all is working fine using ``solium --version``.
 
+.. note::
+	If you're using vim with syntastic, and prefer to use a locally installed version of Solium (rather than a global version), you can install `syntastic local solium <https://github.com/sohkai/syntastic-local-solium.vim>`_ to automatically load the local version in packages that have installed their own.
+
 
 .. index:: usage
 

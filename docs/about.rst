@@ -28,3 +28,4 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Alex Step <https://github.com/alexstep>`_
 - `Travis Jacobs <https://github.com/travs>`_
 - `Remco Bloemen <https://github.com/Recmo>`_
+- `Brett Sun <https://github.com/sohkai>`_

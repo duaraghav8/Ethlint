@@ -15,6 +15,7 @@ External Resources
 - `Sublime Solium Gutter <https://github.com/sey/sublime-solium-gutter>`_ by `Florian Sey <https://github.com/sey>`_
 - `Sublime Solium Linter <https://github.com/alexstep/SublimeLinter-contrib-solium>`_ by `Alex Step <https://github.com/alexstep>`_
 - `Atom Solium Linter <https://github.com/travs/linter-solium>`_ by `Travis Jacobs <https://github.com/travs>`_
+- `Syntastic local solium <https://github.com/sohkai/syntastic-local-solium.vim>`_ by `Brett Sun <https://github.com/sohkai>`_.
 
 
 Contents
