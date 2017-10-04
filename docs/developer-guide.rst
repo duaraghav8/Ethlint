@@ -387,7 +387,72 @@ Now run ``npm test`` and resolve any failures. Once everything passes, you're re
 Developing a Sharable Config
 ****************************
 
-sharab
+The purpose of a sharable config is for an organisation to just pick up a solidity style spec to work with and focus on the coding part instead of getting into a tabs vs. spaces debate. You install the SC and specify its name without prefix as value of the ``extends`` key in your soliumrc config. Something like:
+
+.. code-block:: javascript
+
+	{
+		"extends": "foobar"
+	}
+
+(See full documentation in User Guide)
+
+Sharable configs are distributed as modules via NPM. You are encouraged to include ``solium``, ``solidity`` and ``soliumconfig`` tags in your ``package.json``. Say, you want to call your config ``foobar``. Then your module's name must be ``solium-config-foobar``. The prefix is mandatory for solium to recognise the module as a sharable config.
+
+.. note::
+	For reasons discussed on our `blog <https://medium.com/solium/reserving-a-few-npm-names-for-solium-configs-plugins-c6a51f59074d>`_, we have reserved a few NPM module names. If you find your organisation's name in the list in the blog, please follow the instructions at the bottom of the blog to claim your module.
+
+Start by creating a directory to contain your module
+
+- ``mkdir solium-config-foobar``
+- ``cd solium-config-foobar``
+- ``npm init`` Fill in the appropriate details and don't forget to add the tags mentioned above!
+- Create your ``index.js`` file (or whichever you specified as your entry point file). This file must expose an object like below:
+
+.. code-block:: javascript
+
+	module.exports = {
+		rules: {
+			quotes: ["error", "double"],
+			indentation: ["warning", 4],
+			"pragma-on-top": 1,
+			...
+		}
+	};
+
+- Specify the ``peerDependencies`` attribute in your ``package.json`` like:
+
+.. code-block:: javascript
+
+	{
+		...
+		"peerDependencies": {
+			"solium": "^1.0.0"
+		}
+	}
+
+Read about `Peer Dependencies on NPM <https://nodejs.org/en/blog/npm/peer-dependencies/>`_.
+You're now ready to test your config.
+
+Testing your Sharable Config
+============================
+
+Solium internally simply ``require()``s the config you extends from in your soliumrc. So as long as require() can resolve the name ``solium-config-foobar``, it doesn't care where the config is installed.
+
+The simplest way to test is to first link your config and make it globally available. Traverse to your config directory and run ``npm link``. You can verify that your config is globally available by going to any random directory, opening a node REPL and running ``require('solium-config-foobar')``.
+
+Next, go to your dapp directory that contains the ``.soliumrc.json`` file. Open this file and set ``"extends": "foobar"`` (**only the config name, not the prefix**). You can omit the entire ``rules`` object.
+
+Now run ``solium -d contracts/``. The linter should behave according to the severities & rule options provided by you.
+
+That's it! You're now ready to ``npm publish`` your Sharable Config.
+
+
+.. note::
+	It is a good practice to specify **all** the rules in your sharable config. This ensures that you decided how each rule is to be treated and that you didn't forget about any of them. If you wish to turn a rule off, simply specify its value as ``off`` or ``0``. See list of all rules on User Guide. See example configuration `solium all ruleset <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-all.js>`_.
+
+.. note::
+	It is good practice to turn off all the deprecated rules. See the Rule List in User Guide to know which rules are now deprecated.
 
 
 .. index:: develop-plugin
