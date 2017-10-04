@@ -23,7 +23,7 @@ The frontend of the app is a CLI that a user uses to interact with the Solium mo
 Architecture will be explained in more detail in future.
 
 
-.. index:: dev-env
+.. index:: installing and setting up the development environment
 
 ****************************************************
 Installation & Setting up the Development Enviroment
@@ -144,7 +144,7 @@ To work with Solium:
 - To ensure that everything works fine, run ``npm test``. If you've cloned the ``master`` branch, there should be no test failures. If there are, please raise an issue or start a chat on our `Gitter channel <https://gitter.im/Solium-linter/Lobby#>`_.
 
 
-.. index:: writing-core-rule
+.. index:: writing core rule
 
 *******************
 Writing a Core Rule
@@ -381,7 +381,7 @@ Finally, add an entry for your rule in `solium all <https://github.com/duaraghav
 Now run ``npm test`` and resolve any failures. Once everything passes, you're ready to make a Pull Request :D
 
 
-.. index:: develop-sharable-config
+.. index:: developing sharable config
 
 ****************************
 Developing a Sharable Config
@@ -400,7 +400,7 @@ The purpose of a sharable config is for an organisation to just pick up a solidi
 Sharable configs are distributed as modules via NPM. You are encouraged to include ``solium``, ``solidity`` and ``soliumconfig`` tags in your ``package.json``. Say, you want to call your config ``foobar``. Then your module's name must be ``solium-config-foobar``. The prefix is mandatory for solium to recognise the module as a sharable config.
 
 .. note::
-	For reasons discussed on our `blog <https://medium.com/solium/reserving-a-few-npm-names-for-solium-configs-plugins-c6a51f59074d>`_, we have reserved a few NPM module names. If you find your organisation's name in the list in the blog, please follow the instructions at the bottom of the blog to claim your module.
+	For reasons discussed on our `blog <https://medium.com/solium/reserving-a-few-npm-names-for-solium-configs-plugins-c6a51f59074d>`_, we have reserved a few NPM solium config module names. If you find your organisation's name in the list in the blog, please follow the instructions at the bottom of the blog to claim your module.
 
 Start by creating a directory to contain your module
 
@@ -455,37 +455,69 @@ That's it! You're now ready to ``npm publish`` your Sharable Config.
 	It is good practice to turn off all the deprecated rules. See the Rule List in User Guide to know which rules are now deprecated.
 
 
-.. index:: develop-plugin
+.. index:: developing solium plugin
 
 *******************
 Developing a Plugin
 *******************
 
-dev plugin
+Plugins allow third party developers to write rule implementations that work with solium and re-distribute them for use.
+Plugins too are distributed via NPM, have the prefix ``solium-plugin-`` and should, as a best practice, have the tags ``solium``, ``solidity`` and ``soliumplugin``.
+
+.. note::
+	For reasons discussed on our `blog <https://medium.com/solium/reserving-a-few-npm-names-for-solium-configs-plugins-c6a51f59074d>`_, we have reserved a few NPM solium plugin module names. If you find your organisation's name in the list in the blog, please follow the instructions at the bottom of the blog to claim your module.
+
+Start by creating a directory to contain your plugin (lets call the plugin ``baz``)
+
+- ``mkdir solium-plugin-baz``
+- ``cd solium-plugin-foobar``
+- ``npm init`` Fill in the appropriate details and don't forget to add the tags mentioned above
+- Create your ``index.js`` file (or whichever you specified as your entry point file). This file must expose an object like below:
+
+.. code-block:: javascript
+
+	module.exports = {
+		meta: {
+			description: 'Plugin description'
+		},
+		rules: {
+			foo: {
+				meta: {
+					docs: {
+						recommended: true,
+						type: 'warning',
+						description: 'Rule description'
+					},
+					schema: []
+				},
+				create: function (context) {
+					function inspectProgram (emitted) {
+						if (emitted.exit) { return; }
+						context.report ({
+							node: emitted.node,
+							message: 'The rule sample/foo reported an error successfully.'
+						});
+					}
+					return {
+						Program: inspectProgram
+					};
+				}
+			}
+		}
+	};
 
 
-.. index:: plugins
+Notice that every rule you define inside the ``rules`` object has the exact **same schema as the core rule** described above. So if you know how to implement a core rule, you need not learn anything new to implement a plugin rule.
 
-*******
-Plugins
-*******
+Testing your Plugin
+===================
 
-Pluginss
+TODO
 
-
-.. index:: api-reference
-
-*************
-API Reference
-*************
-
-apiii
-
-
-.. index:: building-doc
+.. index:: building documentation
 
 **********************************
 Contributing to this documentation
 **********************************
 
-docss
+TODO
