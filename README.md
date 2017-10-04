@@ -158,5 +158,7 @@ npm test
 ## External Resources
 [Travis](https://github.com/travs) has released [Solium for Atom](https://atom.io/packages/linter-solium)
 
+If you're using vim with syntastic, and prefer to use a locally installed version of Solium (rather than a global version), you can install [syntastic-local-solium](https://github.com/sohkai/syntastic-local-solium.vim) to automatically load the local version in packages that have installed their own.
+
 # License
 ## MIT
