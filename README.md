@@ -1,4 +1,4 @@
-Solium `v1` will soon be released in Beta. Its documentation is currently a work in progress and can be viewed at [readthedocs](http://solium.readthedocs.io/en/docs/). If you have any feedback on the docs, do leave your comments in issues or our Gitter channel!
+:fire::fire:Solium `v1` will soon be released in Beta. Its documentation is now live at [readthedocs](http://solium.readthedocs.io/). If you have any feedback on the docs, do leave your comments in issues or our Gitter channel!:fire::fire:
 ___
 
 ![solium](https://cloud.githubusercontent.com/assets/12758282/18283522/4b206522-7483-11e6-9bcd-2a70ebc8cfdb.png)
@@ -129,9 +129,6 @@ errorObjects.forEach ((err) => {
 ```
 
 For a list of all available rules, see [solium.json](https://github.com/duaraghav8/Solium/blob/master/config/solium.json).
-
-# Contributing
-Please see the [Developer Guide](https://github.com/duaraghav8/Solium/blob/master/docs/DEVELOPER.md) to understand how to contribute rules to this repository.
 
 ## Setup
 
