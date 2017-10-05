@@ -470,8 +470,21 @@ Plugins too are distributed via NPM, have the prefix ``solium-plugin-`` and shou
 Start by creating a directory to contain your plugin (lets call the plugin ``baz``)
 
 - ``mkdir solium-plugin-baz``
-- ``cd solium-plugin-foobar``
+- ``cd solium-plugin-baz``
 - ``npm init`` Fill in the appropriate details and don't forget to add the tags mentioned above
+- Specify the ``peerDependencies`` attribute in your ``package.json`` like:
+
+.. code-block:: javascript
+
+	{
+		...
+		"peerDependencies": {
+			"solium": "^1.0.0"
+		}
+	}
+
+Read about `Peer Dependencies on NPM <https://nodejs.org/en/blog/npm/peer-dependencies/>`_.
+
 - Create your ``index.js`` file (or whichever you specified as your entry point file). This file must expose an object like below:
 
 .. code-block:: javascript
@@ -495,7 +508,7 @@ Start by creating a directory to contain your plugin (lets call the plugin ``baz
 						if (emitted.exit) { return; }
 						context.report ({
 							node: emitted.node,
-							message: 'The rule sample/foo reported an error successfully.'
+							message: 'The rule baz/foo reported an error successfully.'
 						});
 					}
 					return {
@@ -512,12 +525,81 @@ Notice that every rule you define inside the ``rules`` object has the exact **sa
 Testing your Plugin
 ===================
 
-TODO
+Inside your main plugin directory itself:
+
+- Make sure Solium v1 is installed globally in your system
+- Run ``npm install --save-dev mocha chai should`` to install the devDependencies for testing purposes.
+- In your ``package.json``, add the following key:
+
+.. code-block:: javascript
+
+	"scripts": {
+		"test": "mocha --require should --reporter spec --recursive"
+	},
+
+- Run ``npm link`` to make this plugin globally available. (You can confirm that it worked by going to any random directory in your system, firing up Nodejs REPL and run ``require('solium-plugin-baz')``).
+- Write your tests inside the ``test/`` directory following the below pattern:
+
+.. code-block:: javascript
+
+	var Solium = require ('solium');
+	/**
+	 * If you require any other modules like lodash, install them.
+	 * If the module is only being used in your tests, then it should go in your dev dependencies.
+	 * If being used by any of your rules, then it must go into dependencies.
+	 */
+	var config = {
+		plugins: ['baz'],
+		rules: {
+			'baz/foo': 'warning'
+		},
+		// This returns internal warnings, like deprecation notices
+		options: {
+			returnInternalIssues: true
+		}
+	};
+	describe ('Rule foo: Acceptances', function () {
+		it ('should accept some stuff and reject other stuff', function (done) {
+			var code = 'contract BlueBerry { function foo () {} }';
+			var errors = Solium.lint (code, config);
+			// If your rules also contain fix()es you'd like to test, use:
+			// var errors = Solium.lintAndFix (code, config);
+			console.log ('Errors:\n', errors);
+			// Now you can test the error objects returned by Solium.
+			// Each item in errors array represents a lint error produced by the plugin's rules foo & bar
+			errors.should.be.Array ();
+			errors.should.have.size (2);
+			// Add further tests to examine the error objects
+			// Once your tests have finished, call below functions to safely exit
+			Solium.reset ();
+			done ();
+		});
+	});
+
+Notice that the **schema of plugin rule tests is the same as that of core rule tests**.
+
+- Now run the tests using ``npm test`` and resolve any failures that occur.
+- As another (optional) test, you can also go to your DApp directory and add your plugin's entry in ``soliumrc.json`` to see if its working properly:
+
+.. code-block:: javascript
+
+	{
+		"plugins": ["baz"],
+		"rules": {
+			"baz/foo": "error"
+		}
+	}
+
+And run the linter.
+
+Once all tests pass, you can remove the global link of your plugin using ``npm unlink`` inside your plugin directory and then ``npm publish`` it!
+
+See a `sample plugin for solium <https://github.com/duaraghav8/solium-plugin-sample>`_.
 
 .. index:: building documentation
 
-**********************************
-Contributing to this documentation
-**********************************
+******************************
+Building to this documentation
+******************************
 
 TODO
