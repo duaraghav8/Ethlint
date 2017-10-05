@@ -65,7 +65,7 @@ Use ``solium --help`` for more information on usage.
 After linting over your code, Solium produces either warnings, errors or both. The app exits with a non-zero code ONLY if 1 or more errors were found.
 So if all you got was warnings, solium exits with code ``0``.
 
-Whether an issue should be flagged as an error or warning by its rule is configurable through ``soliumrc.json``.
+Whether an issue should be flagged as an error or warning by its rule is configurable through ``.soliumrc.json``.
 
 
 .. index:: configuring the linter
@@ -135,7 +135,7 @@ Sharable Configs are installed via NPM. All solium SCs will have a prefix ``soli
 Suppose `Consensys <https://github.com/ConsenSys/smart-contract-best-practices>`_ releases their own sharable config called ``solium-config-consensys``. Here's how you'd go about using it, assuming you already have solium globally installed:
 
 - Run ``npm install -g solium-config-consensys``
-- Now, in your ``soliumrc.json``, set the value of ``extends`` key to ``consensys`` and remove the ``rules`` key altogether. Your config file should now look something like:
+- Now, in your ``.soliumrc.json``, set the value of ``extends`` key to ``consensys`` and remove the ``rules`` key altogether. Your config file should now look something like:
 
 .. code-block:: javascript
 
@@ -158,7 +158,7 @@ Suppose `Consensys <https://github.com/ConsenSys/smart-contract-best-practices>`
 
 That's it! Now you can run ``solium -d contracts/`` to see the difference.
 
-Note that you **didn't have to specify the prefix of the sharable config**. Whether you're specifying a config or a plugin name, you should omit their prefixes (``solium-config-`` for configs & ``solium-plugin-`` for plugins). So if you have installed a config ``solium-config-foo-bar``, you should have ``"extends": "foo-bar"`` in your ``soliumrc.json``. Solium will resolve the actual npm module name for you.
+Note that you **didn't have to specify the prefix of the sharable config**. Whether you're specifying a config or a plugin name, you should omit their prefixes (``solium-config-`` for configs & ``solium-plugin-`` for plugins). So if you have installed a config ``solium-config-foo-bar``, you should have ``"extends": "foo-bar"`` in your ``.soliumrc.json``. Solium will resolve the actual npm module name for you.
 
 .. note::
 	Internally, Solium simply ``require()`` s the config module. So as long as require() is able to find a module named ``solium-config-consensys``, it doesn't matter whether you install your config globally or locally and link it.
@@ -180,7 +180,7 @@ Once you install a plugin, you can choose which of its rules solium should apply
 Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 
 - Install the plugin using ``npm install -g solium-plugin-consensys``
-- Add the plugin's entry into your ``soliumrc.json``:
+- Add the plugin's entry into your ``.soliumrc.json``:
 
 .. code-block:: javascript
 
@@ -287,10 +287,63 @@ If you're currently using Solium ``v0`` and wish to migrate to ``v1``, then this
 .. note::
 	If you simply upgrade to Solium v1 right now and lint your project with v0's configuration files, it will work fine (but will give you a deprecation warning) since v1 has been built in a backward-compatible manner. The only 2 exception to this are the discontinuation of ``custom-rules-filename`` attribute and ``--sync`` option - these features provided negligible benefit.
 
+What you need to do
+===================
+Let's say your current ``.soliumrc.json`` looks like this:
+
+.. code-block:: javascript
+
+    {
+      "custom-rules-filename": null,
+      "rules": {
+        "imports-on-top": false,
+        "variable-declarations": false,
+        "array-declarations": true,
+        "operator-whitespace": true,
+        "lbrace": true,
+        "mixedcase": true,
+        "camelcase": true,
+        "uppercase": true,
+        "no-empty-blocks": true,
+        "no-unused-vars": true,
+        "quotes": true,
+        "indentation": true,
+        "whitespace": true,
+        "deprecated-suicide": true,
+        "pragma-on-top": true
+      }
+    }
+
+Please change it to this:
+
+.. code-block:: javascript
+
+    {
+      "extends": "solium:all"
+      "rules": {
+        "imports-on-top": 0,
+        "variable-declarations": 0,
+        "indentation": [2, 4],
+        "quotes": [2, "double"]
+      }
+    }
+
+You:
+
+- Only had to specify those rules separately whose behaviour you need to change. Set a rule to ``0`` or ``off`` to turn it off.
+- Set up the indentation rule to enforce 4 spaces (replace ``4`` with any other integer or ``tab``).
+- Instructed Solium to enforce double quotes for strings (change that to ``single`` if you so desire).
+- Instructed Solium to import all other non-deprecated rules and enable them by default.
+
+.. note::
+	Alternatively, you can back up your current ``.soliumrc.json`` and ``.soliumignore`` (if you made changes to it), then run ``solium init`` (after installing v1). You can then make changes to the new ``.soliumrc.json``.
+
+A complete list of changes made in ``v1`` are documented below.
+
 Custom Rule injection is now deprecated
 =======================================
 
-v0 allows you to inject custom rule implementations using the ``custom-rules-filename`` attribute in your ``soliumrc.json``. This feature is now deprecated. If you specify a file, the linter would simply throw a warning informing you that the custom rules supplied will not be applied while linting.
+v0 allows you to inject custom rule implementations using the ``custom-rules-filename`` attribute in your ``.soliumrc.json``. This feature is now deprecated. If you specify a file, the linter would simply throw a warning informing you that the custom rules supplied will not be applied while linting.
 
 Custom rule injection has now been replaced by Solium `Plugins`_.
 
@@ -298,16 +351,16 @@ Custom rule injection has now been replaced by Solium `Plugins`_.
 Deprecated rules
 ================
 
-Several rules have been deprecated:
+Following rules have been deprecated:
 
 - ``double-quotes`` has been replaced by ``quotes``.
 - ``no-with``
 
 
-soliumrc.json has a new format
-==============================
+soliumrc configuration has a new format
+=======================================
 
-A fully fledged example of v1's ``soliumrc.json`` is:
+A fully fledged example of v1's ``.soliumrc.json`` is:
 
 .. code-block:: javascript
 
@@ -398,7 +451,7 @@ There have been additions in the Solium API. However, there are no breaking chan
 --sync has been removed
 =======================
 
-v0's CLI allowed the ``--sync`` flag so a user could sync their ``soliumrc.json`` with the newly added rules after updating solium. sync was not a great design choice and so we've removed it. v1 is designed in a way such that core developers can keep adding more rules to solium and a user doesn't need to do anything apart from installing an update in order to use that rule. It gets applied automatically.
+v0's CLI allowed the ``--sync`` flag so a user could sync their ``.soliumrc.json`` with the newly added rules after updating solium. sync was not a great design choice and so we've removed it. v1 is designed in a way such that core developers can keep adding more rules to solium and a user doesn't need to do anything apart from installing an update in order to use that rule. It gets applied automatically.
 
 .. index:: roadmap
 

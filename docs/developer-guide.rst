@@ -206,7 +206,7 @@ Your rule should expose an object that contains 2 attributes - ``meta`` object w
 - When a rule needs to be deprecated, we can add ``deprecated: true`` inside meta. We can add ``replacedBy: ["RULE NAME"]`` inside meta.docs if this rule is to be replaced by a new rule (see `deprecated example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/double-quotes.js#L32-L36>`_).
 
 .. note::
-	``replacedBy`` doesn't force the linter to apply the new rule. Instead, it only throws a warning to the user, notifying them that they're using a deprecated rule and should consider moving to the new rule(s) specified inside ``replacedBy`` array. Try adding ``double-quotes: "error"`` inside ``rules`` inside your soliumrc.json and running the linter.
+	``replacedBy`` doesn't force the linter to apply the new rule. Instead, it only throws a warning to the user, notifying them that they're using a deprecated rule and should consider moving to the new rule(s) specified inside ``replacedBy`` array. Try adding ``double-quotes: "error"`` inside ``rules`` inside your ``.soliumrc.json`` and running the linter.
 
 ``create()``
 
@@ -579,7 +579,7 @@ Inside your main plugin directory itself:
 Notice that the **schema of plugin rule tests is the same as that of core rule tests**.
 
 - Now run the tests using ``npm test`` and resolve any failures that occur.
-- As another (optional) test, you can also go to your DApp directory and add your plugin's entry in ``soliumrc.json`` to see if its working properly:
+- As another (optional) test, you can also go to your DApp directory and add your plugin's entry in ``.soliumrc.json`` to see if its working properly:
 
 .. code-block:: javascript
 
