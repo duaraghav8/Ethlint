@@ -28,5 +28,6 @@ Contents
 
    user-guide.rst
    developer-guide.rst
+   known-issues.rst
    contributing.rst
    about.rst

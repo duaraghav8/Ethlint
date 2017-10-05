@@ -284,11 +284,8 @@ Migrating to v1.0.0
 
 If you're currently using Solium ``v0`` and wish to migrate to ``v1``, then this section is for you.
 
-- Plugin system is removed
-- rules were deprecated
-- soliumrc.json format is changed
-- rule implementation format has changed
-- solium API has some new options but no breaking changes
+.. note::
+	If you simply upgrade to Solium v1 right now and lint your project with v0's configuration files, it will work fine (but will give you a deprecation warning) since v1 has been built in a backward-compatible manner. The only 2 exception to this are the discontinuation of ``custom-rules-filename`` attribute and ``--sync`` option - these features provided negligible benefit.
 
 Custom Rule injection is now deprecated
 =======================================
@@ -316,10 +313,11 @@ A fully fledged example of v1's ``soliumrc.json`` is:
 
 	{
 		"extends": "solium:all",
-		"plugins": ["consensys"],
+		"plugins": ["consensys", "foobar"],
 		"rules": {
 			"consensys/race-conditions": "error",
-			"consensys/foobar": [1, true, "Hello world"]
+			"consensys/foobar": [1, true, "Hello world"],
+			"foobar/baz": 1
 		}
 	}
 
@@ -373,7 +371,7 @@ Learn how to develop a Solium rule on the Developer Guide.
 Additions in Solium API
 =======================
 
-There has been additions in the Solium API. However, there are no breaking changes.
+There have been additions in the Solium API. However, there are no breaking changes.
 
 - When using the ``lint(sourceCode, config)`` method (where ``config`` is your soliumrc configuration), you can now pass an ``options`` object inside ``config`` to modify Linter behavior. You can specify the ``returnInternalIssues`` option whose value is Boolean. If ``true``, solium returns internal issues (like deprecation warnings) in the error list. If ``false``, the method behaves exactly like in ``v0``, and doesn't spit out any warnings (even if, for eg, you're using deprecated rules).
 
