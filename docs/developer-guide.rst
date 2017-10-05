@@ -602,4 +602,16 @@ See a `sample plugin for solium <https://github.com/duaraghav8/solium-plugin-sam
 Building to this documentation
 ******************************
 
-TODO
+This documentation is built with `Sphinx <http://www.sphinx-doc.org/en/stable/>`_ and written in `RST <http://docutils.sourceforge.net/rst.html>`_.
+
+- To make changes in it, start by cloning Solium to your workstation with ``git clone``.
+- ``cd`` into the ``docs/`` directory. This dir is responsible for containing all rst files, sphinx confguration and builds.
+- Make sure you have all Sphinx dependencies installed (see `getting started with readthedocs <http://docs.readthedocs.io/en/latest/getting_started.html>`_).
+
+.. note::
+	This documentation builds successfully with Sphinx ``v1.5`` but fails with ``v1.6``. Although we haven't yet fully investigated whether its a problem with our docs or Sphinx, we recommend you to install ``v1.5`` in order to see the changes you've made.
+
+- Make the changes to the docs as you see fit, then run ``make html`` while still inside ``docs/``. If there were no RST errors, the docs should build successfully.
+- Open up ``docs/_build/html/index.html`` in your favourite browser to see the changed.
+- Once you're satisfied, you can commit the changes you made in the RST docs and send a PR.
+
