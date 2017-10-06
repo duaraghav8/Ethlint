@@ -1,7 +1,7 @@
 # Solium v1 is now in Beta!
 v1 comes packed with automatic code formatting, sharable configs, plugin system, bug fixes, pretty printing and a lot more!
 
-To install v1, run `npm install -g solium@v1` and access the complete documentation [here](http://solium.readthedocs.io/).
+To install v1, run `npm install -g solium@v1-beta` and access the complete documentation [here](http://solium.readthedocs.io/).
 If you'd like to use the `latest` (stable) version instead, please see below.
 ___
 

@@ -8,7 +8,7 @@ User Guide
 Quickstart
 **********
 
-- ``npm install -g solium@v1``
+- ``npm install -g solium@v1-beta``
 - ``cd myDapp``
 - ``solium init``
 - ``solium -d contracts/`` or ``solium -d .`` or ``solium -f myContract.sol``
@@ -27,7 +27,7 @@ Installation
 
 Since this documentation is for Solium ``v1`` (currently in Beta), we're going to neglect ``v0``.
 
-Use ``npm install -g solium@v1``.
+Use ``npm install -g solium@v1-beta``.
 
 Once v1 is out of Beta, the above instruction will be removed and you will simply be able to use ``npm install -g solium`` to install it. Currently, this command would install the ``latest`` stable package that is ``v0.5.5``.
 

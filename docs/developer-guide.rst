@@ -30,7 +30,7 @@ Installation & Setting up the Development Enviroment
 ****************************************************
 
 Make sure you have Node.js and NPM installed on your system.
-Install Solium v1 as a local module using ``npm install --save solium@v1``. The ``@v1`` tag is necessary till the time v1 is in Beta (until then, ``latest`` points to ``v0.5.5``).
+Install Solium v1 as a local module using ``npm install --save solium@v1-beta``. The ``@v1-beta`` tag is necessary till the time v1 is in Beta (until then, ``latest`` points to ``v0.5.5``).
 
 You can now use Solium like:
 
