@@ -1,4 +1,8 @@
-:fire::fire:Solium `v1` will soon be released in Beta. Its documentation is now live at [readthedocs](http://solium.readthedocs.io/). If you have any feedback on the docs, do leave your comments in issues or our Gitter channel!:fire::fire:
+# Solium v1 is now in Beta!
+v1 comes packed with automatic code formatting, sharable configs, plugin system, bug fixes, pretty printing and a lot more!
+
+To install v1, run `npm install -g solium@v1` and access the complete documentation [here](http://solium.readthedocs.io/).
+If you'd like to use the `latest` (stable) version instead, please see below.
 ___
 
 ![solium](https://cloud.githubusercontent.com/assets/12758282/18283522/4b206522-7483-11e6-9bcd-2a70ebc8cfdb.png)
