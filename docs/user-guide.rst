@@ -330,7 +330,7 @@ Please change it to this:
 
 You:
 
-- Only had to specify those rules separately whose behaviour you need to change. Set a rule to ``0`` or ``off`` to turn it off. Other values can be `1`/`warning` or `2`/`error`.
+- Only had to specify those rules separately whose behaviour you need to change. Set a rule to ``0`` or ``off`` to turn it off. Other values can be ``1``/``warning`` or ``2``/``error``.
 - Set up the indentation rule to enforce 4 spaces (replace ``4`` with any other integer or ``tab``).
 - Instructed Solium to enforce double quotes for strings (change that to ``single`` if you so desire).
 - Instructed Solium to import all other non-deprecated rules and enable them by default.
