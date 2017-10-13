@@ -7,7 +7,7 @@
     "solium": "./bin/solium.js"
   },
   "scripts": {
-    "test": "mocha --require should --reporter spec --recursive",
+    "test": "nyc --reporter=text --reporter=html mocha --require should --reporter spec --recursive",
     "lint": "eslint ."
   },
   "keywords": [
@@ -44,6 +44,7 @@
     "chai": "^3.5.0",
     "eslint": "^3.12.2",
     "mocha": "^3.4.2",
+    "nyc": "^11.2.1",
     "should": "^11.0.0",
     "solium-config-test": "0.0.1",
     "solium-config-test-invalid-schema": "0.0.0",
