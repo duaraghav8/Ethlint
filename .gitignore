@@ -2,3 +2,5 @@ node_modules/
 npm-debug.log
 .DS_Store
 docs/_build
+coverage/
+.nyc_output/
