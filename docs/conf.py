@@ -154,3 +154,7 @@ texinfo_documents = [
 
 
 
+# -- Custom Options ------------------------------------------------------
+
+# https://github.com/rtfd/readthedocs.org/issues/1776
+html_static_path = []

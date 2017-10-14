@@ -29,3 +29,4 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Travis Jacobs <https://github.com/travs>`_
 - `Remco Bloemen <https://github.com/Recmo>`_
 - `Brett Sun <https://github.com/sohkai>`_
+- `Franco Victorio <https://github.com/fvictorio>`_

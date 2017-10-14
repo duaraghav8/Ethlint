@@ -223,31 +223,31 @@ The create() function receives a ``context`` object, which allows you to access 
 
 The functions exposed by SourceCode object are as follows:
 
-``getText (node)`` - get source code for the specified node. If no arguments given, it returns the complete source code
+1. ``getText (node)`` - get source code for the specified node. If no arguments given, it returns the complete source code
 
-``getTextOnLine (lineNumber)`` - get the complete text on the specified line number (lineNumber is an Integer)
+2. ``getTextOnLine (lineNumber)`` - get the complete text on the specified line number (lineNumber is an Integer)
 
-``getLine (node)`` - get the line number on which the specified node's code starts
+3. ``getLine (node)`` - get the line number on which the specified node's code starts
 
-``getEndingLine (node)`` - get the line number on which the specified node's code ends
+4. ``getEndingLine (node)`` - get the line number on which the specified node's code ends
 
-``getColumn (node)`` - get column no. of the first character of the specified node's code
+5. ``getColumn (node)`` - get column no. of the first character of the specified node's code
 
-``getEndingColumn (node)`` - get column no. of the last character of the specified node's code
+6. ``getEndingColumn (node)`` - get column no. of the last character of the specified node's code
 
-``getParent (node)`` - get the parent node of the specified node
+7. ``getParent (node)`` - get the parent node of the specified node
 
-``getNextChar (node)`` - get 1 character after the code of specified node
+8. ``getNextChar (node)`` - get 1 character after the code of specified node
 
-``getPrevChar (node)`` - get 1 character before the code of specified node
+9. ``getPrevChar (node)`` - get 1 character before the code of specified node
 
-``getNextChars (node, charCount)`` - get charCount no. of characters after the code of specified node
+10. ``getNextChars (node, charCount)`` - get charCount no. of characters after the code of specified node
 
-``getPrevChars (node, charCount)`` - get charCount no. of characters befre the code of specified node
+11. ``getPrevChars (node, charCount)`` - get charCount no. of characters befre the code of specified node
 
-``isASTNode (arg)`` - Returns true if the given argument is a valid (Spider-Monkey compliant) AST Node
+12. ``isASTNode (arg)`` - Returns true if the given argument is a valid (Spider-Monkey compliant) AST Node
 
-``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
+13. ``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
 
 - ``context.report()`` - Lastly, the context object provides you with a clean interface to report lint issues:
 
@@ -277,21 +277,21 @@ Your ``fix()`` function will receive a ``fixer`` object that exposes several fun
 
 Below is the list of functions exposed by the ``fixer`` object:
 
-``insertTextAfter (node, text)`` - inserts text after the given node
+1. ``insertTextAfter (node, text)`` - inserts text after the given node
 
-``insertTextAfterRange (range, text)`` - inserts text after the given range
+2. ``insertTextAfterRange (range, text)`` - inserts text after the given range
 
-``insertTextBefore(node, text)`` - inserts text before the given node
+3. ``insertTextBefore(node, text)`` - inserts text before the given node
 
-``insertTextBeforeRange(range, text)`` - inserts text before the given range
+4. ``insertTextBeforeRange(range, text)`` - inserts text before the given range
 
-``remove (node)`` - removes the given node
+5. ``remove (node)`` - removes the given node
 
-``removeRange(range)`` - removes text in the given range
+6. ``removeRange(range)`` - removes text in the given range
 
-``replaceText(node, text)`` - replaces the text in the given node
+7. ``replaceText(node, text)`` - replaces the text in the given node
 
-``replaceTextRange(range, text)`` - replaces the text in the given range
+8. ``replaceTextRange(range, text)`` - replaces the text in the given range
 
 Where ``range`` is an array of 2 integers, like ``[12, 19]``, ``node`` is a valid AST node retrieved from ``emitted.node`` (see below) and ``text`` is a valid string.
 
@@ -379,6 +379,9 @@ After writing your tests, add an entry for your rule ``foo-bar`` in `solium json
 Finally, add an entry for your rule in `solium all <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-all.js>`_ ruleset: ``foo-bar: <SEVERITY>`` where severity should be how your rule should be treated by default (as an error or warning). Severity should be same as what you specified in your rule's ``meta.docs.type``.
 
 Now run ``npm test`` and resolve any failures. Once everything passes, you're ready to make a Pull Request :D
+
+.. note::
+	Running ``npm test`` also prints coverage stats at the bottom of the CLI output. It creates the ``coverage`` directory whose ``index.html`` can be opened in any browser to view the same.
 
 
 .. index:: developing sharable config
