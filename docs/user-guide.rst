@@ -10,7 +10,7 @@ Quickstart
 
 - ``npm install -g solium@v1-beta``
 - ``cd myDapp``
-- ``solium init``
+- ``solium --init``
 - ``solium -d contracts/`` or ``solium -d .`` or ``solium -f myContract.sol``
 
 Fix stuff
