@@ -224,16 +224,16 @@ Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 	Just like in sharable configs, solium internally ``require()`` s the plugin module. So as long as require() is able to find a module named ``solium-plugin-consensys``, it doesn't matter whether you install your plugin globally or locally and link it.
 
 
-.. index:: core-rules
+.. index:: list of core rules
 
-**********
-Core Rules
-**********
+******************
+List of Core Rules
+******************
 
-Below is the list of core rules supplied by Solium. All are enabled by default (if you inherit ``solium:all`` in your soliumrc) except for the deprecated ones.
-Enabling a deprecated rule will display a warning message.
+Below is the list of core rules supplied by Solium. All are enabled by default (if you inherit ``solium:all`` in your soliumrc) **except for the deprecated ones**.
+Enabling a deprecated rule will display a warning message on the CLI.
 
-These rules may or may not contain fixes. Their fixes will be applied on the code if you use the ``-fix`` flag in your lint command. Some rules even take options that can modify their behavior.
+These rules may or may not contain fixes. Their fixes will be applied on the code if you use the ``--fix`` flag in your lint command. Some rules even take options that can modify their behavior.
 
 For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What indentation is enforced is configurable.
 
@@ -289,7 +289,7 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-----------------+-------+
 
 
-.. index:: migration-guide
+.. index:: migration guide
 
 *******************
 Migrating to v1.0.0
