@@ -150,7 +150,7 @@ To work with Solium:
 Writing a Core Rule
 *******************
 
-To write a core rule for Solium, please start by raising an issue on `github <https://github.com/duaraghav8/Solium>`_ describing you proposal. You can check out some of the rules in the roadmap in our `Rules Wishlist <https://github.com/duaraghav8/Solium/issues/44>`_.
+To write a core rule for Solium, please start by raising an issue on `github <https://github.com/duaraghav8/Solium>`_ describing your proposal. You can check out some of the rules in the roadmap in our `Rules Wishlist <https://github.com/duaraghav8/Solium/issues/44>`_.
 
 .. note::
 	Solium is currently written entirely in ES5. We plan to `move to ES6 <https://github.com/duaraghav8/Solium/issues/76>`_ but for now, please write all the JS code you'd be contributing to solium core in ES5.

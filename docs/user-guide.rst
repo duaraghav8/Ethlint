@@ -117,6 +117,19 @@ This doesn't fix all your problems (nothing fixes all your problems) but all lin
 	It is therefore recommended that you use this feature after ensuring that your original files are easily recoverable (recovering can be as simple as ``git checkout``).
 	You have been warned.
 
+.. note::
+	It is not guaranteed that all the fixes will be applied to your contract code. Below is a brief explanation of why it is so. Skip to the next section if you don't wish to know the details, they're not necessary as long as you accept the idea.
+
+How the autofix mechanism works is:
+
+- All rule implementations (either core or plugin) supply their fixes via the ``fix()`` method
+- All rules are executed on your solidity code and their provided fixes registered
+- The supplied fixes are then sorted. Starting from the 1st line & 1st character, the fix that wishes to manipulate code earlier gets applied earlier. So if fix ``A`` wants to start make changes from Line 1, Char 7 to Line 1 Char 15 and fix ``B`` starts at Line 2 Char 19, the order of fixes applied is ``A`` -> ``B``.
+- In case of overlapping fixes, the **one that comes later is discarded**. If fix ``C`` wishes to make changes starting at Line 1 Char 9, it will result in a conflict with fix ``A`` in the previous point. In this case, ``A`` gets applied but ``C`` doesn't. So even though we have a total of 3 fixes, only 2 get applied.
+
+.. note::
+	In case of the ``A``, ``B``, ``C`` example, its easy to conclude that if you run the linter with autofixing twice, you will have applied all 3 fixes. The first run applies ``A`` and ``B``, whilst the second run will apply ``C`` as well, because this time there is no ``A`` to conflict with.
+
 
 .. index:: sharable configs
 
