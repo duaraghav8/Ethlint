@@ -602,7 +602,7 @@ See a `sample plugin for solium <https://github.com/duaraghav8/solium-plugin-sam
 .. index:: building documentation
 
 ******************************
-Building to this documentation
+Building this documentation
 ******************************
 
 This documentation is built with `Sphinx <http://www.sphinx-doc.org/en/stable/>`_ and written in `RST <http://docutils.sourceforge.net/rst.html>`_.

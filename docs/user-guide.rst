@@ -416,7 +416,7 @@ The new format of a rule implementation is:
 		create(context) {
 			function lintIfStatement(emitted) {
 				context.report({
-					node: ..,
+					node: emitted.node,
 					fix(fixer) {
 						// magic
 					}
