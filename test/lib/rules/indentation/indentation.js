@@ -145,8 +145,64 @@ describe ('[RULE] indentation: Acceptances', function () {
     Solium.reset ();
     done ();
   })
-});
 
+  it('should accept a file with a struct in one line', function (done) {
+    var userConfig = {
+      "rules": {
+        "indentation": "error"
+      }
+    };
+
+    var file = 'one-line-struct.sol';
+    var code = fs.readFileSync(path.join(acceptDir, file), 'utf8');
+
+    var errors = Solium.lint (code, userConfig);
+
+    errors.constructor.name.should.equal ('Array');
+    errors.length.should.equal (0);
+
+    Solium.reset ();
+    done ();
+  })
+
+  it('should accept a file with an array in one line', function (done) {
+    var userConfig = {
+      "rules": {
+        "indentation": "error"
+      }
+    };
+
+    var file = 'one-line-array.sol';
+    var code = fs.readFileSync(path.join(acceptDir, file), 'utf8');
+
+    var errors = Solium.lint (code, userConfig);
+
+    errors.constructor.name.should.equal ('Array');
+    errors.length.should.equal (0);
+
+    Solium.reset ();
+    done ();
+  })
+
+  it('should accept a file with a function call in one line', function (done) {
+    var userConfig = {
+      "rules": {
+        "indentation": "error"
+      }
+    };
+
+    var file = 'one-line-function-call.sol';
+    var code = fs.readFileSync(path.join(acceptDir, file), 'utf8');
+
+    var errors = Solium.lint (code, userConfig);
+
+    errors.constructor.name.should.equal ('Array');
+    errors.length.should.equal (0);
+
+    Solium.reset ();
+    done ();
+  })
+});
 
 describe ('[RULE] indentation: Rejections', function () {
   it('should reject an invalid file under the default options', function (done) {
@@ -328,6 +384,25 @@ describe ('[RULE] indentation: Rejections', function () {
     };
 
     var file = 'chars-before-top-level.sol';
+    var code = fs.readFileSync(path.join(rejectDir, file), 'utf8');
+
+    var errors = Solium.lint (code, userConfig);
+
+    errors.constructor.name.should.equal ('Array');
+    errors.length.should.equal (1);
+
+    Solium.reset ();
+    done ();
+  });
+
+  it('should reject chars before top level declaration', function (done) {
+    var userConfig = {
+      "rules": {
+        "indentation": "error"
+      }
+    };
+
+    var file = 'indented-top-level-closing-brace.sol';
     var code = fs.readFileSync(path.join(rejectDir, file), 'utf8');
 
     var errors = Solium.lint (code, userConfig);
