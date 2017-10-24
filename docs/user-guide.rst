@@ -130,6 +130,10 @@ How the autofix mechanism works is:
 .. note::
 	In case of the ``A``, ``B``, ``C`` example, its easy to conclude that if you run the linter with autofixing twice, you will have applied all 3 fixes. The first run applies ``A`` and ``B``, whilst the second run will apply ``C`` as well, because this time there is no ``A`` to conflict with.
 
+.. note::
+	Fixes for all possible errors have not been implemented yet. Whichever rules have the fix mechanism (for eg- the ``quotes`` rule does) will apply it. More fixes will be added in future, you can see the list of rules below to know which rules are currently able to apply fixes.
+	So if you see a warning/error despite using ``--fix``, its because that issue wasn't resolved by the autofix mechanism (either because the fix doesn't exist at the moment or due to a conflict).
+
 
 .. index:: sharable configs
 
