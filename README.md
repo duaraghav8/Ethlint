@@ -1,5 +1,7 @@
 # Solium v1 is now in Beta!
-v1 comes packed with automatic code formatting, sharable configs, plugin system, bug fixes, pretty printing and a lot more!
+**While Solium was originally written to enforce strict compliance with Solidity's Style Guide, it has now been revamped to be more than just a tool for pretty code. v1 is built keeping style, security, modularity and flexibility in mind.**
+
+It comes packed with automatic code formatting, sharable configurations, a plugin system and a lot more!
 
 To install v1, run `npm install -g solium@v1-beta` and access the complete documentation [here](http://solium.readthedocs.io/).
 If you'd like to use the `latest` (stable) version instead, please see below.
