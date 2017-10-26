@@ -336,7 +336,7 @@ Please change it to this:
 .. code-block:: javascript
 
     {
-      "extends": "solium:all"
+      "extends": "solium:all",
       "rules": {
         "imports-on-top": 0,
         "variable-declarations": 0,
