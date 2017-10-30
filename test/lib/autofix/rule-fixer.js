@@ -8,8 +8,9 @@
 var rf = require ('../../../lib/autofix/rule-fixer');
 var RuleFixer, sampleRange = [5, 19];
 
+// gets updated when a function is added/deleted in rulefixer API
 var listOfFunctions = [
-	'insertTextAfter', 'insertTextBefore', 'remove', 'replaceText',
+	'insertTextAfter', 'insertTextBefore', 'insertTextAt', 'remove', 'replaceText',
 	'insertTextAfterRange', 'insertTextBeforeRange', 'removeRange', 'replaceChar', 'replaceTextRange'
 ];
 
@@ -28,7 +29,7 @@ describe ('Test the rule-fixer API', function () {
 
 		RuleFixer.should.be.type ('object');
 		RuleFixer.constructor.name.should.equal ('RuleFixer');
-		Object.keys (RuleFixer).length.should.equal (9);	// gets changed every time a function is added/deleted
+		Object.keys (RuleFixer).length.should.equal (10);	// gets changed every time a function is added/deleted
 
 		// Check methods exposed
 		listOfFunctions.forEach (function (fName) {
@@ -41,6 +42,9 @@ describe ('Test the rule-fixer API', function () {
 
 	it ('should handle all valid inputs for all the functions', function (done) {
 		var result, sampleText = 'hello';
+
+		// since RuleFixer.insertTextAt() is internally called by a lot of API functions,
+		// it gets tested with them. So no need to explicitly test it here.
 
 		result = RuleFixer.insertTextAfter (node, sampleText);
 		result.should.be.type ('object');

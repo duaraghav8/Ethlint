@@ -302,7 +302,9 @@ Below is the list of functions exposed by the ``fixer`` object:
 
 8. ``replaceTextRange(range, text)`` - replaces the text in the given range
 
-Where ``range`` is an array of 2 integers, like ``[12, 19]``, ``node`` is a valid AST node retrieved from ``emitted.node`` (see below) and ``text`` is a valid string.
+9. ``insertTextAt(index, text)`` - inserts text at the given position in the source code
+
+Where ``range`` is an array of 2 unsigned integers, like ``[12, 19]``, ``node`` is a valid AST node retrieved from ``emitted.node`` (see below), ``text`` is a valid string and ``index`` is an unsigned integer like ``69``.
 
 
 ``emitted``
