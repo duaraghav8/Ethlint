@@ -541,7 +541,7 @@ Testing your Plugin
 
 Inside your main plugin directory itself:
 
-- Make sure Solium v1 is installed globally in your system
+- Install solium v1 as a dev dependency using ``npm install --save-dev solium@v1-beta`` (``@v1-beta`` will be removed once v1 gets promoted to ``latest``).
 - Run ``npm install --save-dev mocha chai should`` to install the devDependencies for testing purposes.
 - In your ``package.json``, add the following key:
 

@@ -21,7 +21,8 @@
     "blockchain",
     "code-quality",
     "dapp",
-    "developer-tools"
+    "developer-tools",
+    "security"
   ],
   "repository": {
     "type": "git",
