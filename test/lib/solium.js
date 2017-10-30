@@ -614,9 +614,6 @@ describe ('Checking Exported Solium API', function () {
 		error.fix = function (f) { return []; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return null; };
-		Solium.report.bind (Solium, error).should.throw ();
-
 		error.fix = function (f) {}
 		Solium.report.bind (Solium, error).should.throw ();
 
@@ -677,6 +674,11 @@ describe ('Checking Exported Solium API', function () {
 		error.fix = function (f) { return {text: '', range: [27, 29], randomAttribute: true} };
 		Solium.report.bind (Solium, error).should.throw ();
 
+
+		// When a rule's fix() doesn't want to apply any fixes (maybe under some conditions),
+		// it can return null. This should not throw and simply delete the fix (treat it like it didn't exist).
+		error.fix = function (f) { return null; };
+		Solium.report.bind (Solium, error).should.not.throw ();
 
 
 		error.fix = function (f) {

@@ -256,7 +256,11 @@ The functions exposed by SourceCode object are as follows:
 	context.report({
 		node,	// the AST node retrieved through emitted.node (see below)
 		fix(fixer) {	// [OPTIONAL]
-			return [fixer.replaceText(node, "hello world!!")];
+			if (wantToApplyFix) {
+				return [fixer.replaceText(node, "hello world!!")];
+			}
+
+			return null;			
 		},
 		message: 'Lint issue raised yayy!',
 		location: {	// [OPTIONAL]
@@ -270,7 +274,12 @@ See `report with fix example <https://github.com/duaraghav8/Solium/blob/master/l
 .. note::
 	If you're supplying the ``fix()`` function, make sure you specify the ``fixable`` attribute in ``meta``.
 
-Your ``fix()`` function will receive a ``fixer`` object that exposes several functions so you can tell Solium **how** to fix the raised lint issue. Every fixer function you call returns a fixer packet. Solium understands how to work with this packet. Your fix function must return either a single fixer packet or an array of fixer packets.
+Your ``fix()`` function will receive a ``fixer`` object that exposes several functions so you can tell Solium **how** to fix the raised lint issue. Every fixer function you call returns a fixer packet. Solium understands how to work with this packet. Your fix function must return either a single fixer packet, an array of fixer packets or ``null``.
+
+.. note::
+	Returning a ``null`` results in the particlar fix function being ignored. This is convenient when, under certain conditions, you don't want to apply any fixes.
+	This means that ``fix(fixer) { return null; }`` is equivalent to not supplying a ``fix()`` function in the error object at all.
+	See the ``context.report()`` example above.
 
 .. warning::
 	Multiple fixer packets inside the array must not overlap, else Solium throws an error. For eg- the first packet tries to remove the first 10 characters from the solidity code, whereas another packet tries to replace them by, say, "hello world". This results in an overlap and hence the complete fix is not valid. However, if the replacement begins at the 11th character, then there is no conflict and so your fix is valid!
