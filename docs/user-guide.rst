@@ -87,6 +87,7 @@ The ``.soliumrc.json`` created in the initialisation phase contains some default
 
 	{
 		"extends": "BASE RULESET",
+		"plugins": ["security"],
 		"rules": {
 			"RULE NAME": ["SEVERITY", "PARAMETERS"],
 			"RULE NAME": "ONLY SEVERITY"
@@ -192,7 +193,7 @@ Plugins
 
 Plugins allow Third party developers to write their own rules and re-distribute them via NPM. Every solium plugin module has the prefix ``solium-plugin-``. Plugin developers are encouraged to include the tags ``solium`` and ``soliumplugin`` in their modules for easy discoverability.
 
-Once you install a plugin, you can choose which of its rules solium should apply on your contracts. Plugin rules too can contain fixes if the developer supplies them. There's no special way of applying these fixes. Simply lint with the ``--fix`` option and fixes for both core rules and pugin rules will be applied to your code.
+Once you install a plugin, you can specify it inside ``plugins`` array and configure its rules inside ``rules`` exactly like how you configure solium's core rules. Plugin rules too can contain fixes if the developer supplies them. There's no special way of applying these fixes. Simply lint with the ``--fix`` option and fixes for both core rules and pugin rules will be applied to your code.
 
 Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 
@@ -209,7 +210,7 @@ Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 .. note::
 	Just like in sharable configs, don't specify the plugin prefix. Simply specify the plugin name. So if a plugin exists on NPM by the name of ``solium-plugin-foo-bar``, you need only specify ``"plugins": ["foo-bar"]``.
 
-- In the ``rules`` object, specify which rules from this plugin you wish to apply by adding a key ``"<PLUGIN NAME>/<RULE NAME>": "<SEVERITY>"``.
+- In the ``rules`` object, you can configure the plugin's rules by adding an entry ``"<PLUGIN NAME>/<RULE NAME>": "<SEVERITY>"`` or ``"<PLUGIN NAME>/<RULE NAME>": ["<SEVERITY>", "<OPTIONS>"]``.
 
 .. code-block:: javascript
 
@@ -222,10 +223,26 @@ Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 		}
 	}
 
-- You're now set to use 2 rules from Consensys' plugin! Try running the linter using ``solium -d contracts/``.
+- The above configuration means you've applied all the rules supplied by the plugin and modified the behaviour of 2 of them. Try running the linter using ``solium -d contracts/``.
+
+If you simply specify a plugin and do not configure any of its rules, all the rules provided by the plugin are applied on your code with their default severities and no additional options. **If you wish to change the behaviour of any of the rules of a plugin, you have to configure them inside "rules".**
+
+You should check the plugin's documentation provided by the plugin developer to know the list of rules provided and the options they accept.
 
 .. note::
 	Just like in sharable configs, solium internally ``require()`` s the plugin module. So as long as require() is able to find a module named ``solium-plugin-consensys``, it doesn't matter whether you install your plugin globally or locally and link it.
+
+
+Recommended Security Plugin
+===========================
+
+Starting ``v1.0.1``, Solium comes pre-installed with its `official security plugin <https://github.com/duaraghav8/solium-plugin-security>`_ (`view on NPM <https://www.npmjs.com/package/solium-plugin-security>`_) containing lint rules for best security practices. These rules have been taken from `Consensys recommended practices <https://consensys.github.io/smart-contract-best-practices/recommendations/>`_ and Solium's `Rule Wishlist thread <https://github.com/duaraghav8/Solium/issues/44>`_.
+
+You can get information about all the rules this plugin supplies on its `README <https://github.com/duaraghav8/solium-plugin-security/blob/master/README.md>`_.
+
+When you run ``solium --init``, the ``.soliumrc.json`` created for you contains the entry ``"plugins": ["security"]``. This means all security rules will by default be applied during linting.
+
+**We recommend that you keep the security plugin applied without modifying behaviour of any of its rules.** But if you still wish to configure them or remove the plugin altogether, you can.
 
 
 .. index:: list of core rules
