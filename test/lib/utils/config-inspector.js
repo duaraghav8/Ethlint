@@ -51,7 +51,7 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isValid ({ rules: {}, options: {randomAttr: true} }).should.equal (false);
 		configInspector.isValid ({ rules: {}, randomAttr: {} }).should.equal (false);
 		configInspector.isValid ({ rules: {}, options: {returnInternalIssues: 'hello'} }).should.equal (false);
-		configInspector.isValid ({ plugins: ['standard'] }).should.equal (false);
+
 		configInspector.isValid ({ plugins: [''], rules: {} }).should.equal (false);
 		configInspector.isValid ({ plugins: null, rules: {} }).should.equal (false);
 		configInspector.isValid ({ plugins: 19072, rules: {} }).should.equal (false);
@@ -66,6 +66,11 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isValid ({ plugins: {}, extends: 'a' }).should.equal (false);
 		configInspector.isValid ({ plugins: {a: 'b'}, extends: 'a' }).should.equal (false);
 		configInspector.isValid ({ plugins: 'myplugin', extends: 'a' }).should.equal (false);
+		configInspector.isValid ({ plugins: 'myplugin' }).should.equal (false);
+		configInspector.isValid ({ plugins: 10927 }).should.equal (false);
+		configInspector.isValid ({ plugins: null }).should.equal (false);
+		configInspector.isValid ({ plugins: {} }).should.equal (false);
+
 		configInspector.isValid ({ extends: 'ab', plugins: ['xy', {}] }).should.equal (false);
 		configInspector.isValid ({ extends: 'ab', plugins: ['xy', 1090] }).should.equal (false);
 
@@ -126,6 +131,11 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isValid ({ 'custom-rules-filename': 'koala', rules: {a: false} }).should.equal (true);
 		configInspector.isValid ({ 'custom-rules-filename': null, rules: {a: true} }).should.equal (true);
 		configInspector.isValid ({ 'custom-rules-filename': null, rules: {} }).should.equal (true);
+
+		configInspector.isValid ({ plugins: ['standard'] }).should.equal (true);
+		configInspector.isValid ({ plugins: ['s'], rules: {'s/foo': 1} }).should.equal (true);
+		configInspector.isValid ({ plugins: ['s'], extends: 'blah' }).should.equal (true);
+		configInspector.isValid ({ plugins: ['s'], rules: {'s/foo': 1}, extends: 'blah' }).should.equal (true);
 
 		done ();
 	});

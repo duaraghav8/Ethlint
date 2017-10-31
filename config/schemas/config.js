@@ -44,7 +44,8 @@ var Schema = {
 
 	anyOf: [
 		{ required: ['extends'] },
-		{ required: ['rules'] }
+		{ required: ['rules'] },
+		{ required: ['plugins'] }
 	],
 
 	properties: {
