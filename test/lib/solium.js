@@ -695,4 +695,53 @@ describe ('Checking Exported Solium API', function () {
 		done ();
 	});
 
+	it ('should work well with the pre-installed security plugin', function (done) {
+		var config = {
+			"plugins": ["security"]
+		};
+		var code = 'contract Foo { function bar() { address usr = tx.origin; } }';
+
+		var errors = Solium.lint (code, config);
+
+		errors.should.be.Array ();
+		errors.should.have.size (2);
+
+		errors.forEach (function (err) {
+			err.should.be.type ('object');
+			err.should.have.ownProperty ('ruleName');
+			err.ruleName.startsWith ('security/').should.equal (true);
+		});
+
+
+		config = {
+			"rules": {
+				"security/no-tx-origin": "error"
+			}
+		};
+
+		errors = Solium.lint (code, config);
+
+		errors.should.be.Array ();
+		errors.should.have.size (1);
+
+		errors [0].ruleName.should.equal ('security/no-tx-origin');
+		errors [0].type.should.equal ('error');
+
+
+		config = {
+			"plugins": ["security"],
+			"rules": {
+				"security/enforce-explicit-visibility": 0
+			}
+		};
+
+		errors = Solium.lint (code, config);
+
+		errors.should.be.Array ();
+		errors.should.have.size (1);
+		errors [0].ruleName.should.equal ('security/no-tx-origin');
+
+		done ();
+	});
+
 });

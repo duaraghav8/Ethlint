@@ -10,9 +10,12 @@ var ruleLoader = require ('../../../lib/utils/rule-loader');
 describe ('Test rule-loader functions', function () {
 
 	it ('should expose a set of functions', function (done) {
-		ruleLoader.should.be.size (3);	// including "constants" property
+		ruleLoader.should.be.size (4);	// including "constants" property
 
 		ruleLoader.should.have.ownProperty ('resolveUpstream');
+		ruleLoader.resolveUpstream.should.be.type ('function');
+
+		ruleLoader.should.have.ownProperty ('resolvePluginConfig');
 		ruleLoader.resolveUpstream.should.be.type ('function');
 
 		ruleLoader.should.have.ownProperty ('load');
@@ -85,6 +88,22 @@ describe ('Test rule-loader functions', function () {
 		// Installed plugin
 		result = ruleLoader.resolveUpstream ('test');
 		result.should.be.type ('object');
+
+		done ();
+	});
+
+	it ('should return rule config when a valid plugin is passed to resolvePluginConfig()', function (done) {
+		var testPlugin = require ('solium-plugin-test'),
+			config = ruleLoader.resolvePluginConfig ('test', testPlugin);
+
+		config.should.be.type ('object');
+		config.should.have.size (2);
+
+		config.should.have.ownProperty ('test/foo');
+		config ['test/foo'].should.equal ('warning');
+
+		config.should.have.ownProperty ('test/bar');
+		config ['test/bar'].should.equal ('warning');
 
 		done ();
 	});

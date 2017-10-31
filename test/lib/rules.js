@@ -388,13 +388,24 @@ describe ('Checking exported rules object', function () {
 		ruleDescriptions = rules.load (config);
 
 		ruleDescriptions.should.be.type ('object');
+		ruleDescriptions.should.have.ownProperty ('test/foo');
+		ruleDescriptions.should.have.ownProperty ('test/bar');
+
+		['test/foo', 'test/bar'].forEach (function (name) {
+			(rules.get (name) === undefined).should.be.false ();
+		});
+
+
+		config.rules = { 'test/foo': 0, 'test/bar': 0 };
+		ruleDescriptions = rules.load (config);
+
+		ruleDescriptions.should.be.type ('object');
 		ruleDescriptions.should.not.have.ownProperty ('test/foo');
 		ruleDescriptions.should.not.have.ownProperty ('test/bar');
 
 		['test/foo', 'test/bar'].forEach (function (name) {
 			(rules.get (name) === undefined).should.be.true ();
 		});
-
 
 		done ();
 	});
