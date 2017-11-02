@@ -478,6 +478,8 @@ Developing a Plugin
 Plugins allow third party developers to write rule implementations that work with solium and re-distribute them for use.
 Plugins too are distributed via NPM, have the prefix ``solium-plugin-`` and should, as a best practice, have the tags ``solium``, ``solidity`` and ``soliumplugin``.
 
+As an example, you can check out Solium's `official Security Plugin <https://github.com/duaraghav8/solium-plugin-security>`_.
+
 .. note::
 	For reasons discussed on our `blog <https://medium.com/solium/reserving-a-few-npm-names-for-solium-configs-plugins-c6a51f59074d>`_, we have reserved a few NPM solium plugin module names. If you find your organisation's name in the list in the blog, please follow the instructions at the bottom of the blog to claim your module.
 
