@@ -30,7 +30,7 @@ Installation & Setting up the Development Enviroment
 ****************************************************
 
 Make sure you have Node.js and NPM installed on your system.
-Install Solium v1 as a local module using ``npm install --save solium@v1-beta``. The ``@v1-beta`` tag is necessary till the time v1 is in Beta (until then, ``latest`` points to ``v0.5.5``).
+Install Solium ``v1`` as a local module using ``npm install --save solium``.
 
 You can now use Solium like:
 
@@ -41,6 +41,7 @@ You can now use Solium like:
 
 	const errors = Solium.lint(sourceCode, {
 		"extends": "solium:all",
+		"plugins": ["security"],
 		"rules": {
 			"quotes": ["error", "double"],
 			"double-quotes": [2],	// returns a rule deprecation warning
@@ -87,6 +88,7 @@ You can now use Solium like:
 
 	const result = Solium.lintAndFix(sourceCode, {
 		"extends": "solium:all",
+		"plugins": ["security"],
 		"rules": {
 			"quotes": ["error", "double"],
 			"double-quotes": [2],	// returns a rule deprecation warning
@@ -140,7 +142,7 @@ The output of ``lintAndFix()`` look like:
 To work with Solium:
 - clone the repository to your local machine using, for eg, ``git clone git@github.com:duaraghav8/Solium.git``.
 - Move into its directory using ``cd Solium``.
-- Install all dependencies **and** dev dependencies using ``npm install``.
+- Install all dependencies **and** dev dependencies using ``npm install --dev``.
 - To ensure that everything works fine, run ``npm test``. If you've cloned the ``master`` branch, there should be no test failures. If there are, please raise an issue or start a chat on our `Gitter channel <https://gitter.im/Solium-linter/Lobby#>`_.
 
 
@@ -543,7 +545,7 @@ Testing your Plugin
 
 Inside your main plugin directory itself:
 
-- Install solium v1 as a dev dependency using ``npm install --save-dev solium@v1-beta`` (``@v1-beta`` will be removed once v1 gets promoted to ``latest``).
+- Install solium v1 as a dev dependency using ``npm install --save-dev solium``.
 - Run ``npm install --save-dev mocha chai should`` to install the devDependencies for testing purposes.
 - In your ``package.json``, add the following key:
 

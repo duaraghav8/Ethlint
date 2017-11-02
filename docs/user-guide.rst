@@ -8,7 +8,7 @@ User Guide
 Quickstart
 **********
 
-- ``npm install -g solium@v1-beta``
+- ``npm install -g solium``
 - ``cd myDapp``
 - ``solium --init``
 - ``solium -d contracts/`` or ``solium -d .`` or ``solium -f myContract.sol``
@@ -25,13 +25,11 @@ Fix stuff
 Installation
 ************
 
-Since this documentation is for Solium ``v1`` (currently in Beta), we're going to neglect ``v0``.
+Since this documentation is for Solium ``v1``, we're going to neglect ``v0``. Furthermore, ``v0`` is now deprecated and we highly recommend you to move to ``v1``.
 
-Use ``npm install -g solium@v1-beta``.
+Use ``npm install -g solium``.
 
-Once v1 is out of Beta, the above instruction will be removed and you will simply be able to use ``npm install -g solium`` to install it. Currently, this command would install the ``latest`` stable package that is ``v0.5.5``.
-
-Verify that all is working fine using ``solium --version``.
+Verify that all is working fine using ``solium -V``.
 
 .. note::
 	If you're using vim with syntastic, and prefer to use a locally installed version of Solium (rather than a global version), you can install `syntastic local solium <https://github.com/sohkai/syntastic-local-solium.vim>`_ to automatically load the local version in packages that have installed their own.
@@ -96,9 +94,10 @@ The ``.soliumrc.json`` created in the initialisation phase contains some default
 
 - By default, soliumrc inherits ``solium:all`` - the base ruleset which enables all non-deprecated rules. You can replace the value by a sharable config's name (see `Sharable Configs`_).
 - A few rules are passed additional configuration, like double quotes for all strings, 4 spaces per indentation level, etc.
+- Solium comes bundled with its official security plugin. By default, this plugin is enabled. **We recommend that you keep the security plugin enabled without modifying behaviour of any of its rules.** But if you still wish to configure them or remove the plugin altogether, you can.
 
 .. note::
-	soliumrc must contain at least one of ``extends`` and ``rules``.
+	soliumrc must contain at least one of ``extends``, ``plugins`` and ``rules`` properties.
 
 .. note::
 	Severity can be expressed either as a string or integer. ``error`` = ``2``, ``warning`` = ``1``. ``off`` = ``0``, which means the rule is turned off. If you don't include a rule, it is turned off by default.
@@ -467,6 +466,7 @@ There have been additions in the Solium API. However, there are no breaking chan
 	const mySourceCode = '...',;
 	const config = {
 		extends: "solium:all",
+		plugins: ["security"],
 		rules: {
 			"double-quotes": "error"
 		},
