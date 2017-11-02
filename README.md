@@ -46,4 +46,4 @@ Solium lints all the files inside your project with ```.sol``` extension.
 # Migrating from v0
 If you're currently using Solium `v0`, we highly recommend you to [migrate to v1](http://solium.readthedocs.io/en/latest/user-guide.html#migrating-to-v1-0-0). v1 is backward compatible and provides you with much greater flexibility to configure rules, powerful security rules and auto code formatting among other features.
 
-#### [Access the complete Documentation](solium.readthedocs.io)
+#### [Access the complete Documentation](http://solium.readthedocs.io/)
