@@ -22,8 +22,22 @@ solium --init
 ```
 
 This creates 2 files for you:
-- ```.soliumignore``` - contains names of files and directories to ignore while linting
-- ```.soliumrc.json``` - contains configuration that tells Solium how to lint your project. You should modify this file to configure rules, plugins and sharable configs.
+- `.soliumignore` - contains names of files and directories to ignore while linting
+- `.soliumrc.json` - contains configuration that tells Solium how to lint your project. You should modify this file to configure rules, plugins and sharable configs.
+
+`.soliumrc.json` looks something like:
+
+```json
+{
+  "extends": "solium:all",
+  "plugins": ["security"],
+  "rules": {
+    "quotes": ["error", "double"],
+    "indentation": ["error", 4],
+    "arg-overflow": ["warning", 3]
+  }
+}
+```
 
 ### Lint a single Solidity file
 ```bash
