@@ -15,6 +15,16 @@ npm install -g solium
 solium -V
 ```
 
+## Install from the snap store
+
+In any of the [supported Linux distros](https://snapcraft.io/docs/core/install):
+
+```bash
+sudo snap install solium --edge
+```
+
+(Note that this is an experimental and unstable release, at the moment)
+
 # Usage
 In the root directory of your DApp, run the following:
 ```bash
