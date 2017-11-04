@@ -100,7 +100,7 @@ The ``.soliumrc.json`` created in the initialisation phase contains some default
 	soliumrc must contain at least one of ``extends``, ``plugins`` and ``rules`` properties.
 
 .. note::
-	Severity can be expressed either as a string or integer. ``error`` = ``2``, ``warning`` = ``1``. ``off`` = ``0``, which means the rule is turned off. If you don't include a rule, it is turned off by default.
+	Severity can be expressed either as a string or integer. ``error`` = ``2``, ``warning`` = ``1``. ``off`` = ``0``, which means the rule is turned off.
 
 
 .. index:: automatic code formatting

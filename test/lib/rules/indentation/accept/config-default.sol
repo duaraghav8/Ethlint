@@ -9,5 +9,6 @@ contract Counter {
 
     function inc() {
         count++;
+        _address.transfer(100);
     }
 }
