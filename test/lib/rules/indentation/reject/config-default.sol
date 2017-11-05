@@ -7,6 +7,13 @@ contract Foo {
 
     function singleLineWrong() {
       a = 1;
+
+      other.call(
+      'transferFrom',
+      myAddress,
+      this,
+      bond
+      );
     }
 
     function firstLineWrong() {

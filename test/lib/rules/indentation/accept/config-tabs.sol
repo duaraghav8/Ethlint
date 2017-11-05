@@ -23,5 +23,12 @@ contract Counter {
 			.mul(4)
 			.add(100)
 			.div(2);
+
+		other.call(
+			'transferFrom',
+			myAddress,
+			this,
+			bond
+		);
 	}
 }
