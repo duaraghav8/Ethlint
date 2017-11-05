@@ -32,4 +32,14 @@ contract Foo {
       b = 2;
       c = 3;
     }
+
+    function chainedFunctions() {
+        myObj
+            .foo()
+          .bar(100, "hello");
+
+        myObj
+            .foo()
+              .bar(100, "hello");
+    }
 }
