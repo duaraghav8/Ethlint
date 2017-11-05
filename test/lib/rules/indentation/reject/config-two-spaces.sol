@@ -10,4 +10,12 @@ contract Counter {
     function inc() {
         count++;
     }
+
+    function abstractFunc()
+    payable
+      returns (uint, bytes32);
+
+    function abstractFunc()
+    payable
+  returns (uint, bytes32);
 }

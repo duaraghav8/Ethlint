@@ -3,6 +3,10 @@ pragma solidity ^0.4.4;
 contract Counter {
     uint public count;
 
+    function accessPolicy()
+        public
+        returns (IAccessPolicy);
+
     function Counter() {
         count = 0;
         myObject

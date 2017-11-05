@@ -42,4 +42,12 @@ contract Foo {
             .foo()
               .bar(100, "hello");
     }
+
+    function abstractFunc()
+        payable
+      returns (uint, bytes32);
+
+    function abstractFunc()
+        payable
+          returns (uint, bytes32);
 }

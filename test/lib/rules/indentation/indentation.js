@@ -218,7 +218,7 @@ describe ('[RULE] indentation: Rejections', function () {
     var errors = Solium.lint (code, userConfig);
 
     errors.constructor.name.should.equal ('Array');
-    errors.length.should.equal (9);
+    errors.length.should.equal (11);
 
     Solium.reset ();
     done ();
@@ -237,7 +237,7 @@ describe ('[RULE] indentation: Rejections', function () {
     var errors = Solium.lint (code, userConfig);
 
     errors.constructor.name.should.equal ('Array');
-    errors.length.should.equal (7);
+    errors.length.should.equal (11);
 
     Solium.reset ();
     done ();
@@ -256,7 +256,7 @@ describe ('[RULE] indentation: Rejections', function () {
     var errors = Solium.lint (code, userConfig);
 
     errors.constructor.name.should.equal ('Array');
-    errors.length.should.equal (7);
+    errors.length.should.equal (11);
 
     Solium.reset ();
     done ();
