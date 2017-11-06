@@ -40,7 +40,7 @@
     "sol-digger": "0.0.2",
     "sol-explore": "^1.6.1",
     "solium-plugin-security": "^0.0.1",
-    "solparse": "^1.3.1"
+    "solparse": "^1.3.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
