@@ -239,6 +239,25 @@ describe ('[RULE] whitespace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should allow a a valid mix of CallExpression & MemberExpression', function (done) {
+		var errors, statements = [
+			'd(wall.dir()[9]);',
+			'require(msg.sender == address(wallet.directory().brg()));',
+			'balance = balance.add(balance.mul(dividends[currentDividend].amount).div(dividends[currentDividend].supply));',
+			'require(destination.call.value(value)(data));'
+		];
+
+		statements.forEach (function (stmt) {
+			errors = Solium.lint (toFunction (stmt), userConfig);
+
+			errors.should.be.Array ();
+			errors.length.should.equal (0);
+		});
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 
