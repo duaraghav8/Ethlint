@@ -339,7 +339,7 @@ You now have all the required knowledge to develop your core rule ``lib/rules/fo
 Testing your Core rule
 ======================
 
-- Inside the ``test/lib/rules``, creating a new diretcory ``foo-bar`` and a file inside this directory ``foo-bar.js`` (see `test examples <https://github.com/duaraghav8/Solium/tree/master/test/lib/rules>`_).
+- Inside the ``test/lib/rules``, creating a new directory ``foo-bar`` and a file inside this directory ``foo-bar.js`` (see `test examples <https://github.com/duaraghav8/Solium/tree/master/test/lib/rules>`_).
 - Now paste the below template in ``test/lib/rules/foo-bar/foo-bar.js``:
 
 .. code-block:: javascript
