@@ -27,6 +27,7 @@ module.exports = {
 		'comma-whitespace': 'error',
 		'conditionals-whitespace': 'error',
 		'operator-whitespace': 'error',
+		'max-one-break-per-loop': 'error',
 		'deprecated-suicide': 'warning',
 		'pragma-on-top': 'warning',
 		'quotes': 'error',
