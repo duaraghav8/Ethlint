@@ -16,6 +16,7 @@ module.exports = {
 		'mixedcase': 'warning',
 		'camelcase': 'warning',
 		'uppercase': 'warning',
+		'no-continue': 'error',
 		'no-empty-blocks': 'warning',
 		'no-unused-vars': 'error',
 		'blank-lines': 'warning',

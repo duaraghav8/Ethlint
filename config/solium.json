@@ -92,6 +92,13 @@
 			"description": "Ensure no use of with statements in the code"
 		},
 
+		"no-continue": {
+			"enabled": true,
+			"recommended": true,
+			"type:": "warning",
+			"description": "Ensure no use of continue statements in the code"
+		},
+
 		"no-empty-blocks": {
 			"enabled": true,
 			"recommended": true,
