@@ -35,7 +35,8 @@ module.exports = {
 		'no-with': 'off',
 
 		// Turn off more draconian rules by default
-		'no-suicide-or-selfdestruct': 'off'
+		'no-suicide-or-selfdestruct': 'off',
+		'no-bit-operations': 'off'
 	}
 
 };
