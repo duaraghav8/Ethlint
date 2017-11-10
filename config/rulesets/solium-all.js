@@ -26,14 +26,18 @@ module.exports = {
 		'semicolon-whitespace': 'error',
 		'comma-whitespace': 'error',
 		'conditionals-whitespace': 'error',
-		'operator-whitespace': 'error',
 		'deprecated-suicide': 'warning',
 		'pragma-on-top': 'warning',
 		'quotes': 'error',
 
 		// Turn OFF all deprecated rules
 		'double-quotes': 'off',
-		'no-with': 'off'
+		'no-with': 'off',
+
+		// Turn off more draconian rules by default
+		'no-bit-operations': 'off',
+		'no-fixed': 'off',
+		'no-suicide-or-selfdestruct': 'off'
 	}
 
 };
