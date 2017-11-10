@@ -169,6 +169,13 @@
 			"description": "'suicide' and 'selfdestruct' are disallowed"
 		},
 
+		"no-fixed": {
+			"enabled": true,
+			"recommended": false,
+			"type": "warning",
+			"description": "fixed point (fixed and ufixed types) are disallowed"
+		},
+
 		"pragma-on-top": {
 			"enabled": true,
 			"recommended": true,
