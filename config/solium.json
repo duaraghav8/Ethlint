@@ -155,6 +155,13 @@
 			"description": "Suggest replacing deprecated 'suicide' for 'selfdestruct'"
 		},
 
+		"prohibit-selfdestruct-suicide": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Suggest removing dangerous functions 'suicide' and 'selfdestruct'"
+		},
+
 		"pragma-on-top": {
 			"enabled": true,
 			"recommended": true,
