@@ -106,6 +106,13 @@
 			"description": "Flag all the variables that were declared but never used"
 		},
 
+		"max-one-break-per-loop": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Flag all loops which contain two or more break statements"
+		},
+
 		"double-quotes": {
 			"enabled": true,
 			"recommended": true,
