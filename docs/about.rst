@@ -14,8 +14,19 @@ Community
 
 Anyone who has contributed to strengthening this Project is a community member.
 
-- `Federico Bond <https://github.com/federicobond>`_
+- `The Augur Project <https://augur.net/>`_ (see `Augur Bounties <https://github.com/AugurProject/augur-bounties>`_)
+- `Beau Gunderson <https://github.com/beaugunderson>`_
+- `Nicolas Feignon <https://github.com/nfeignon>`_
+- `Simon Hajjar <https://github.com/Cisplatin>`_
+- `Mitchell Van Der Hoeff <https://github.com/mvanderh>`_
+- `Jack Peterson <https://github.com/tinybike>`_
+- `Joseph Krug <https://github.com/joeykrug>`_
 - `Micah Zoltu <https://github.com/MicahZoltu>`_
+- `Tom Kysar <https://github.com/tomkysar>`_
+- `Artem Litchmanov <https://github.com/artemlitch>`_
+- `Michelle Pokrass <https://github.com/mpokrass>`_
+- `Tristan H <https://github.com/TristanH>`_
+- `Federico Bond <https://github.com/federicobond>`_
 - `Elena Dimitrova <https://github.com/elenadimitrova>`_
 - `Christopher Gewecke <https://github.com/cgewecke>`_
 - `Ulrich Petri <https://github.com/ulope>`_
