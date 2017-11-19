@@ -12,10 +12,10 @@ var toFunction = wrappers.toFunction;
 var addPragma = wrappers.addPragma;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "no-empty-blocks": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'no-empty-blocks': true
+	}
 };
 
 describe ('[RULE] no-empty-blocks: Acceptances', function () {

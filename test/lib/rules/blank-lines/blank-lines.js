@@ -11,10 +11,10 @@ var Solium = require ('../../../../lib/solium'),
 	path = require ('path');
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "blank-lines": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'blank-lines': true
+	}
 };
 
 var addPragma = wrappers.addPragma;

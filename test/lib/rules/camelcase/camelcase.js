@@ -11,10 +11,10 @@ var toContract = wrappers.toContract;
 var addPragma = wrappers.addPragma;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "camelcase": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'camelcase': true
+	}
 };
 
 describe ('[RULE] camelcase: Acceptances', function () {
@@ -32,7 +32,7 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return addPragma(item)});
+		code = code.map(function(item){return addPragma(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -83,7 +83,7 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return addPragma(item)});
+		code = code.map(function(item){return addPragma(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -134,7 +134,7 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -185,7 +185,7 @@ describe ('[RULE] camelcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -238,7 +238,7 @@ describe ('[RULE] camelcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return addPragma(item)});
+		code = code.map(function(item){return addPragma(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -274,7 +274,7 @@ describe ('[RULE] camelcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return addPragma(item)});
+		code = code.map(function(item){return addPragma(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -310,7 +310,7 @@ describe ('[RULE] camelcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -346,7 +346,7 @@ describe ('[RULE] camelcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

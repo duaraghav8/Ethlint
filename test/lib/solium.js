@@ -9,6 +9,8 @@ var Solium = require ('../../lib/solium'),
 	wrappers = require ('../utils/wrappers'),
 	EventEmitter = require ('events').EventEmitter;
 
+/* eslint-disable no-unused-vars */
+
 describe ('Checking Exported Solium API', function () {
 
 	var meta = {
@@ -94,7 +96,7 @@ describe ('Checking Exported Solium API', function () {
 
 		var minmalConfig = { rules: {} };
 		var sourceCode = Solium.getSourceCode ();
-		var errorMessages = Solium.lint (wrappers.toFunction ('var foo = 100;'), minmalConfig, true)
+		var errorMessages = Solium.lint (wrappers.toFunction ('var foo = 100;'), minmalConfig, true);
 
 		sourceCode.text.should.equal ('');
 		(sourceCode.getText ()).should.equal (sourceCode.text);
@@ -194,10 +196,10 @@ describe ('Checking Exported Solium API', function () {
 
 	it ('should accept valid plugin rules', function (done) {
 		var config = {
-			"plugins": ["test"],
-			"rules": {
-				"test/foo": 1,
-				"test/bar": 2
+			'plugins': ['test'],
+			'rules': {
+				'test/foo': 1,
+				'test/bar': 2
 			}
 		};
 
@@ -426,47 +428,47 @@ describe ('Checking Exported Solium API', function () {
 		};
 
 		var current1 = {
-			"extends": "solium:all",
-			"plugins": [],
-			"rules": {
-				"pragma-on-top": "off",
-				"no-with": "warning",
-				"deprecated-suicide": "error",
-				"variable-declarations": 0,
-				"imports-on-top": 1,
-				"array-declarations": 2,
-				"operator-whitespace": ["off"],
-				"lbrace": ["warning"],
-				"mixedcase": ["error"],
-				"camelcase": [0],
-				"uppercase": [1],
-				"double-quotes": [2]
+			'extends': 'solium:all',
+			'plugins': [],
+			'rules': {
+				'pragma-on-top': 'off',
+				'no-with': 'warning',
+				'deprecated-suicide': 'error',
+				'variable-declarations': 0,
+				'imports-on-top': 1,
+				'array-declarations': 2,
+				'operator-whitespace': ['off'],
+				'lbrace': ['warning'],
+				'mixedcase': ['error'],
+				'camelcase': [0],
+				'uppercase': [1],
+				'double-quotes': [2]
 			},
-			"options": { "autofix": false }
+			'options': { 'autofix': false }
 		};
 
 		var current2 = {
-			"extends": "solium:all"
+			'extends': 'solium:all'
 		};
 
 		var current3 = {
-			"rules": {
-				"deprecated-suicide": "error",
-				"variable-declarations": 0,
-				"imports-on-top": 1
+			'rules': {
+				'deprecated-suicide': 'error',
+				'variable-declarations': 0,
+				'imports-on-top': 1
 			}
 		};
 
 		var current4 = {
-			"extends": "solium:all",
-			"plugins": ["test"]
+			'extends': 'solium:all',
+			'plugins': ['test']
 		};
 
 		var current5 = {
-			"plugins": ["test"],
-			"rules": {
-				"test/foo": "warning",
-				"test/bar": [2]
+			'plugins': ['test'],
+			'rules': {
+				'test/foo': 'warning',
+				'test/bar': [2]
 			}
 		};
 
@@ -474,8 +476,8 @@ describe ('Checking Exported Solium API', function () {
 		// In future, the declaration inside "plugins" will ensure that the plugin is installed (and if not, it will
 		// be installed automatically).
 		var current6 = {
-			"rules": {
-				"test/foo": "error"
+			'rules': {
+				'test/foo': 'error'
 			}
 		};
 
@@ -500,10 +502,10 @@ describe ('Checking Exported Solium API', function () {
 		var fixResults = [], code = 'contract Foo {}';
 
 		var config = {
-			"plugins": ["test"],
-			"rules": {
-				"lbrace": "warning",
-				"test/foo": "error"
+			'plugins': ['test'],
+			'rules': {
+				'lbrace': 'warning',
+				'test/foo': 'error'
 			}
 		};
 
@@ -614,7 +616,7 @@ describe ('Checking Exported Solium API', function () {
 		error.fix = function (f) { return []; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) {}
+		error.fix = function (f) {};
 		Solium.report.bind (Solium, error).should.throw ();
 
 		error.fix = function (f) { return 1908.287; };
@@ -623,7 +625,7 @@ describe ('Checking Exported Solium API', function () {
 		error.fix = function (f) { return {}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return 'hello world'; }
+		error.fix = function (f) { return 'hello world'; };
 		Solium.report.bind (Solium, error).should.throw ();
 
 		error.fix = function (f) { return true; };
@@ -635,43 +637,43 @@ describe ('Checking Exported Solium API', function () {
 		error.fix = function (f) { return function(){}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return [[]] };
+		error.fix = function (f) { return [[]]; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return [{}] };
+		error.fix = function (f) { return [{}]; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return [907] };
+		error.fix = function (f) { return [907]; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return ['humpty dumpty'] };
+		error.fix = function (f) { return ['humpty dumpty']; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: ''} };
+		error.fix = function (f) { return {text: ''}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: 19082, range: [0, 0]} };
+		error.fix = function (f) { return {text: 19082, range: [0, 0]}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: [-1, 0]} };
+		error.fix = function (f) { return {text: '', range: [-1, 0]}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: null} };
+		error.fix = function (f) { return {text: '', range: null}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: 'foobar'} };
+		error.fix = function (f) { return {text: '', range: 'foobar'}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: [27, 25.7]} };
+		error.fix = function (f) { return {text: '', range: [27, 25.7]}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: [27]} };
+		error.fix = function (f) { return {text: '', range: [27]}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: [27, 29, 33]} };
+		error.fix = function (f) { return {text: '', range: [27, 29, 33]}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
-		error.fix = function (f) { return {text: '', range: [27, 29], randomAttribute: true} };
+		error.fix = function (f) { return {text: '', range: [27, 29], randomAttribute: true}; };
 		Solium.report.bind (Solium, error).should.throw ();
 
 
@@ -697,7 +699,7 @@ describe ('Checking Exported Solium API', function () {
 
 	it ('should work well with the pre-installed security plugin', function (done) {
 		var config = {
-			"plugins": ["security"]
+			'plugins': ['security']
 		};
 		var code = 'contract Foo { function bar() { address usr = tx.origin; } }';
 
@@ -714,8 +716,8 @@ describe ('Checking Exported Solium API', function () {
 
 
 		config = {
-			"rules": {
-				"security/no-tx-origin": "error"
+			'rules': {
+				'security/no-tx-origin': 'error'
 			}
 		};
 
@@ -729,9 +731,9 @@ describe ('Checking Exported Solium API', function () {
 
 
 		config = {
-			"plugins": ["security"],
-			"rules": {
-				"security/enforce-explicit-visibility": 0
+			'plugins': ['security'],
+			'rules': {
+				'security/enforce-explicit-visibility': 0
 			}
 		};
 
@@ -745,3 +747,5 @@ describe ('Checking Exported Solium API', function () {
 	});
 
 });
+
+/* eslint-enable no-unused-vars */

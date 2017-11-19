@@ -5,8 +5,7 @@
 
 'use strict';
 
-var Solium = require ('../../../lib/solium'),
-	jsUtils = require('../../../lib/utils/js-utils');
+var jsUtils = require('../../../lib/utils/js-utils');
 
 describe ('Test jsUtils functions', function () {
 

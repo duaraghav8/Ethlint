@@ -179,7 +179,7 @@ describe ('Test config-inspector functions', function () {
 		configInspector.isAValidSharableConfig ({rules: {quotes: [1]}}).should.equal (true);
 		configInspector.isAValidSharableConfig ({rules: {quotes: [1]}}).should.equal (true);
 		configInspector.isAValidSharableConfig ({rules: {quotes: 1}}).should.equal (true);
-		configInspector.isAValidSharableConfig ({rules: {quotes: "error"}}).should.equal (true);
+		configInspector.isAValidSharableConfig ({rules: {quotes: 'error'}}).should.equal (true);
 
 		done ();
 	});

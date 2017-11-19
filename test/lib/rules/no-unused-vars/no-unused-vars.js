@@ -11,10 +11,10 @@ var toContract = wrappers.toContract;
 var toFunction = wrappers.toFunction;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "no-unused-vars": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'no-unused-vars': true
+	}
 };
 
 describe ('[RULE] no-unused-vars: Acceptances', function () {
@@ -29,7 +29,7 @@ describe ('[RULE] no-unused-vars: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -81,7 +81,7 @@ describe ('[RULE] no-unused-vars: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toFunction(item)});
+		code = code.map(function(item){return toFunction(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

@@ -10,9 +10,9 @@ var Solium = require ('../../../../lib/solium'),
 var toFunction = wrappers.toFunction, toContract = wrappers.toContract;
 
 var userConfig = {
-	"custom-rules-filename": null,
-	"rules": {
-		"variable-declarations": true
+	'custom-rules-filename': null,
+	'rules': {
+		'variable-declarations': true
 	}
 };
 
@@ -28,7 +28,7 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 		];
 		var errors, code;
 
-		code = declarations.map(function(item){return toFunction(item)});
+		code = declarations.map(function(item){return toFunction(item);});
 		
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -52,7 +52,7 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 
 
 		// var cannot be used to declare state variables, so truncate it from declarations array.
-		code = declarations.slice (1).map(function(item){return toContract(item)});
+		code = declarations.slice (1).map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -76,8 +76,8 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 
 	it ('should reject variables whose names are provided via config instead of the default names', function (done) {
 		var configWithCustomVarNames = {
-			"rules": {
-				"variable-declarations": ["error", ["myOwnVar", "myOwnVar2"]]
+			'rules': {
+				'variable-declarations': ['error', ['myOwnVar', 'myOwnVar2']]
 			}
 		};
 
@@ -96,7 +96,7 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 		];
 		var errors, code;
 
-		code = declarations.map(function(item){return toFunction(item)});
+		code = declarations.map(function(item){return toFunction(item);});
 		
 		errors = Solium.lint (code [0], configWithCustomVarNames);
 		errors.constructor.name.should.equal ('Array');
@@ -140,7 +140,7 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 
 
 		// var cannot be used to declare state variables, so truncate it from declarations array.
-		code = declarations.slice (1).map(function(item){return toContract(item)});
+		code = declarations.slice (1).map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], configWithCustomVarNames);
 		errors.constructor.name.should.equal ('Array');
@@ -181,8 +181,8 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 
 	it ('should not accept invalid values for its option', function (done) {
 		var configWithCustomVarNames = {
-			"rules": {
-				"variable-declarations": ["error", null]
+			'rules': {
+				'variable-declarations': ['error', null]
 			}
 		};
 		var code = toFunction (''),
@@ -226,6 +226,6 @@ describe ('[RULE] variable-declarations: Rejections', function () {
 
 		Solium.reset ();
 		done ();
-	})
+	});
 
 });

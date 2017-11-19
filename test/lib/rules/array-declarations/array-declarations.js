@@ -10,10 +10,10 @@ var fs = require ('fs'), path = require ('path'),
 
 var toContract = wrappers.toContract;
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "array-declarations": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'array-declarations': true
+	}
 };
 
 describe ('[RULE] array-declarations: Acceptances', function () {
@@ -208,7 +208,7 @@ describe ('[RULE] array-declarations: Fixes', function () {
 		var unfixed = fs.readFileSync (path.join (__dirname, './unfixed/ws-btw-lit-op.sol'), 'utf8'),
 			fixed = fs.readFileSync (path.join (__dirname, './fixed/ws-btw-op-clos.sol'), 'utf8');
 
-		var fixed = Solium.lintAndFix (unfixed, userConfig);
+		fixed = Solium.lintAndFix (unfixed, userConfig);
 
 		fixed.should.be.type ('object');
 		fixed.should.have.ownProperty ('fixedSourceCode');
@@ -229,7 +229,7 @@ describe ('[RULE] array-declarations: Fixes', function () {
 		var unfixed = fs.readFileSync (path.join (__dirname, './unfixed/ws-btw-op-clos.sol'), 'utf8'),
 			fixed = fs.readFileSync (path.join (__dirname, './fixed/ws-btw-op-clos.sol'), 'utf8');
 
-		var fixed = Solium.lintAndFix (unfixed, userConfig);
+		fixed = Solium.lintAndFix (unfixed, userConfig);
 
 		fixed.should.be.type ('object');
 		fixed.should.have.ownProperty ('fixedSourceCode');
@@ -250,7 +250,7 @@ describe ('[RULE] array-declarations: Fixes', function () {
 		var unfixed = fs.readFileSync (path.join (__dirname, './unfixed/mixed.sol'), 'utf8'),
 			fixed = fs.readFileSync (path.join (__dirname, './fixed/ws-btw-op-clos.sol'), 'utf8');
 
-		var fixed = Solium.lintAndFix (unfixed, userConfig);
+		fixed = Solium.lintAndFix (unfixed, userConfig);
 
 		fixed.should.be.type ('object');
 		fixed.should.have.ownProperty ('fixedSourceCode');

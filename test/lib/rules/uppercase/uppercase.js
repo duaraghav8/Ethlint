@@ -10,10 +10,10 @@ var wrappers = require ('../../../utils/wrappers');
 var toContract = wrappers.toContract;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "uppercase": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'uppercase': true
+	}
 };
 
 describe ('[RULE] uppercase: Acceptances', function () {
@@ -32,7 +32,7 @@ describe ('[RULE] uppercase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		code.forEach (function (declaration) {
 			errors = Solium.lint (declaration, userConfig);
@@ -59,7 +59,7 @@ describe ('[RULE] uppercase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

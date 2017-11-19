@@ -10,8 +10,8 @@ var Solium = require ('../../../../lib/solium'),
 var toContract = require ('../../../utils/wrappers').toContract;
 
 var userConfigSingle = {
-	"rules": {
-		"quotes": [1, "single"]
+	'rules': {
+		'quotes': [1, 'single']
 	}
 };
 
@@ -46,8 +46,8 @@ describe ('[RULE] quotes: Rejections for single quote', function () {
 });
 
 var userConfigDouble = {
-	"rules": {
-		"quotes": ["error", "double"]
+	'rules': {
+		'quotes': ['error', 'double']
 	}
 };
 
@@ -83,8 +83,8 @@ describe ('[RULE] quotes: Rejections for double quote', function () {
 
 describe ('[RULE] quotes: Fix when double quotes are mandatory', function () {
 	var config = {
-		"rules": {
-			"quotes": ["error", "double"]
+		'rules': {
+			'quotes': ['error', 'double']
 		}
 	};
 
@@ -150,8 +150,8 @@ describe ('[RULE] quotes: Fix when double quotes are mandatory', function () {
 
 describe ('[RULE] quotes: Fix when single quotes are mandatory', function () {
 	var config = {
-		"rules": {
-			"quotes": ["error", "single"]
+		'rules': {
+			'quotes': ['error', 'single']
 		}
 	};
 

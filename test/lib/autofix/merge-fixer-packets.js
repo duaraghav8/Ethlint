@@ -5,14 +5,10 @@
 
 'use strict';
 
-function shuffleArray (array) {
-	array.sort (function (a, b) {
-		return .5 - Math.random ();
-	});
-}
 
 var mfp = require ('../../../lib/autofix/merge-fixer-packets'),
 	ruleFixer = require ('../../../lib/autofix/rule-fixer');
+
 
 describe ('check exposed API', function () {
 

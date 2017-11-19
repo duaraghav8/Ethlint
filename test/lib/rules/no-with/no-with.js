@@ -9,12 +9,12 @@ var Solium = require ('../../../../lib/solium');
 var toFunction = require ('../../../utils/wrappers').toFunction;
 
 var userConfig = {
-	"custom-rules-filename": null,
-	"rules": {
-		"no-with": true
+	'custom-rules-filename': null,
+	'rules': {
+		'no-with': true
 	},
-	"options": {
-		"returnInternalIssues": true
+	'options': {
+		'returnInternalIssues': true
 	}
 };
 
@@ -38,11 +38,11 @@ describe ('[RULE] no-with: Rejection', function () {
 
 		// Only rule deprecation warning with the new config
 		var newConfig = {
-			"rules": {
-				"no-with": "error"
+			'rules': {
+				'no-with': 'error'
 			},
-			"options": {
-				"returnInternalIssues": true
+			'options': {
+				'returnInternalIssues': true
 			}
 		};
 

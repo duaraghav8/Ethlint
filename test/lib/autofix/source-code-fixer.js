@@ -37,7 +37,7 @@ describe ('Test the source-code-fixer API', function () {
 			fix: {range: [1, 4], text: ''}
 		}];
 
-		var result = scf.applyFixes ('', msgsNoFixes);
+		scf.applyFixes ('', msgsNoFixes);
 
 		msgsNoFixes.should.be.Array ();
 		msgsNoFixes.should.have.size (1);
@@ -57,7 +57,7 @@ describe ('Test the source-code-fixer API', function () {
 		msgsNoFixes [0].message.should.equal ('def');
 		msgsNoFixes [0].should.not.have.ownProperty ('fix');
 
-		result = scf.applyFixes ('abcd', msgsWithFixes);
+		scf.applyFixes ('abcd', msgsWithFixes);
 
 		msgsWithFixes.should.be.Array ();
 		msgsWithFixes.should.have.size (1);

@@ -10,9 +10,9 @@ var wrappers = require ('../../../utils/wrappers'),
 	toContract = wrappers.toContract, toFunction = wrappers.toFunction;
 
 var userConfig = {
-	"custom-rules-filename": null,
-	"rules": {
-		"deprecated-suicide": true
+	'custom-rules-filename': null,
+	'rules': {
+		'deprecated-suicide': true
 	}
 };
 
@@ -20,8 +20,7 @@ describe ('[RULE] deprecated-suicide', function () {
 
 	it ('should reject contracts using suicide', function (done) {
 		var code = toContract('function foo () { suicide(0x0); }'),
-
-		errors = Solium.lint (code, userConfig);
+			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (1);
@@ -51,7 +50,7 @@ describe ('[RULE] deprecated-suicide', function () {
 		unfixedCode = toFunction ('suicide (0x0);');
 		fixedCode = toFunction ('selfdestruct (0x0);');
 
-		var fixed = Solium.lintAndFix (unfixedCode, userConfig);
+		fixed = Solium.lintAndFix (unfixedCode, userConfig);
 
 		fixed.should.be.type ('object');
 		fixed.should.have.ownProperty ('fixedSourceCode');
@@ -68,7 +67,7 @@ describe ('[RULE] deprecated-suicide', function () {
 		unfixedCode = toContract ('function a () { suicide(0x0); }\nfunction b () { suicide(0x0); }');
 		fixedCode = toContract ('function a () { selfdestruct(0x0); }\nfunction b () { selfdestruct(0x0); }');
 
-		var fixed = Solium.lintAndFix (unfixedCode, userConfig);
+		fixed = Solium.lintAndFix (unfixedCode, userConfig);
 
 		fixed.should.be.type ('object');
 		fixed.should.have.ownProperty ('fixedSourceCode');

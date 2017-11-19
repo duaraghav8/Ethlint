@@ -12,10 +12,10 @@ var toContract = wrappers.toContract;
 var toFunction = wrappers.toFunction;
 var addPragma = wrappers.addPragma;
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "lbrace": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'lbrace': true
+	}
 };
 
 describe ('[RULE] lbrace: Acceptances', function () {
@@ -158,7 +158,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
 
-		code = 'pragma solidity ^4.4.0;\nimport {high} from "low.sol";\n\n\ncontract MyContract {\n    address public myAddress;\n\n    function MyContract(\n        uint x,\n        string y\n    )\n    public\n    returns (uint)\n    {\n        myAddress = address(this);\n    }\n}'
+		code = 'pragma solidity ^4.4.0;\nimport {high} from "low.sol";\n\n\ncontract MyContract {\n    address public myAddress;\n\n    function MyContract(\n        uint x,\n        string y\n    )\n    public\n    returns (uint)\n    {\n        myAddress = address(this);\n    }\n}';
 		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
@@ -176,7 +176,7 @@ describe ('[RULE] lbrace: Acceptances', function () {
 
 	it ('should allow opening brace to be on its own line in case a function has modifiers (without brackets)', function (done) {
 		var code = 'function modifs ()\npublic\nowner\npriced(0)\npayable\n{\n\tfoobar ();\n}',
-		    errors = Solium.lint (toContract(code), userConfig);
+			errors = Solium.lint (toContract(code), userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);

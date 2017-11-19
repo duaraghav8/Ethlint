@@ -7,6 +7,8 @@
 
 var ruleInspector = require ('../../../lib/utils/rule-inspector');
 
+/* eslint-disable no-unused-vars */
+
 describe ('Test rule-inspector functions', function () {
 
 	it ('should expose a set of functions', function (done) {
@@ -29,93 +31,93 @@ describe ('Test rule-inspector functions', function () {
 
 		// Complete object
 		configObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": ["new-rule"]
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': ['new-rule']
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": true
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': true
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// No fixable
 		configObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": []
+				'schema': []
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Schemas for passed options
 		configObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [
+				'schema': [
 					{ type: 'string', minLength: 5 },
 					{ type: 'object', properties: {modifies: {type: 'boolean'}} },
 					{ type: 'integer', minimum: 0, maximum: 69 }
 				]
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// No deprecation
 		configObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Only deprecation, no replacement
 		configObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": true
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': true
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// "replacedBy" attr without the "deprecated: true"
 		// In this case, "replacedBy" is redundant & will be ignored by solium, but its not invalid.
 		configObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": ["new-rule"]
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': ['new-rule']
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 		
 		configObjects.forEach (function (c) {
@@ -141,273 +143,273 @@ describe ('Test rule-inspector functions', function () {
 
 		// No create attr
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			}
 		});
 
 		// No meta attr
 		invalidConfigObjects.push ({
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid value for create
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": "jon snow dies"
+			'create': 'jon snow dies'
 		});
 
 		// Invalid value for meta
 		invalidConfigObjects.push ({
-			"meta": [10, {}, null],
-			"create": function (context) {}
+			'meta': [10, {}, null],
+			'create': function (context) {}
 		});
 
 		// No meta.docs
 		invalidConfigObjects.push ({
-			"meta": {
-				"schema": []
+			'meta': {
+				'schema': []
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// No meta.schema
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				}
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid meta.docs
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": null,
-				"schema": [],
-				"fixable": "code"
+			'meta': {
+				'docs': null,
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid meta.schema
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [{"type": "object"}, "think again"],
-				"fixable": "code"
+				'schema': [{'type': 'object'}, 'think again'],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid meta.fixable
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "somerandomnonsense"
+				'schema': [],
+				'fixable': 'somerandomnonsense'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// No meta.docs.recommended
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// No meta.docs.type
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// No meta.docs.description
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid meta.docs.recommended
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": 0,
-					"type": "error",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': 0,
+					'type': 'error',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid meta.docs.type
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "woo woo",
-					"description": "This is a rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'woo woo',
+					'description': 'This is a rule'
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid meta.docs.description
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": {"cutie": 3.142}
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': {'cutie': 3.142}
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Empty meta.docs.description
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": ""
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': ''
 				},
-				"schema": [],
-				"fixable": "code"
+				'schema': [],
+				'fixable': 'code'
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid value for "deprecated"
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": ["new-rule"]
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': ['new-rule']
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": null
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': null
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid value for "replacedBy"
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": "new-rule"
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': 'new-rule'
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": true
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': true
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid value for "replacedBy"
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": []
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': []
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": true
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': true
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid value for "replacedBy"
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": [""]
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': ['']
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": true
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': true
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		// Invalid value for "replacedBy"
 		invalidConfigObjects.push ({
-			"meta": {
-				"docs": {
-					"recommended": true,
-					"type": "error",
-					"description": "This is a rule",
-					"replacedBy": null
+			'meta': {
+				'docs': {
+					'recommended': true,
+					'type': 'error',
+					'description': 'This is a rule',
+					'replacedBy': null
 				},
-				"schema": [],
-				"fixable": "code",
-				"deprecated": true
+				'schema': [],
+				'fixable': 'code',
+				'deprecated': true
 			},
-			"create": function (context) {}
+			'create': function (context) {}
 		});
 
 		invalidConfigObjects.forEach (function (c, i) {
@@ -518,3 +520,5 @@ describe ('Test rule-inspector functions', function () {
 	});
 
 });
+
+/* eslint-enable no-unused-vars */

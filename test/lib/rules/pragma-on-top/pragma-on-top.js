@@ -8,9 +8,9 @@
 var Solium = require ('../../../../lib/solium');
 
 var userConfig = {
-	"custom-rules-filename": null,
-		"rules": {
-		"pragma-on-top": true
+	'custom-rules-filename': null,
+	'rules': {
+		'pragma-on-top': true
 	}
 };
 
@@ -82,8 +82,8 @@ describe ('[RULE] pragma-on-top: Fixes', function () {
 
 	it ('should move an existing pragma statement to top of file (above all code) when fix is enabled', function (done) {
 		var config = {
-			"rules": {
-				"pragma-on-top": "error"
+			'rules': {
+				'pragma-on-top': 'error'
 			}
 		};
 

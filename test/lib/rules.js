@@ -171,23 +171,23 @@ describe ('Checking exported rules object', function () {
 
 	it ('should load rules from the new config format using load() when both "extends" & "rules" are passed', function (done) {
 		var config = {
-			"extends": "solium:all",
-			"plugins": [],
-			"rules": {
-				"pragma-on-top": "off",
-				"no-with": "warning",
-				"deprecated-suicide": "error",
-				"variable-declarations": 0,
-				"imports-on-top": 1,
-				"array-declarations": 2,
-				"operator-whitespace": ["off", "double"],
-				"lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
-				"mixedcase": ["error"],
-				"camelcase": [0, 100, "hello", 9.283],
-				"uppercase": [1],
-				"double-quotes": [2, "double"]
+			'extends': 'solium:all',
+			'plugins': [],
+			'rules': {
+				'pragma-on-top': 'off',
+				'no-with': 'warning',
+				'deprecated-suicide': 'error',
+				'variable-declarations': 0,
+				'imports-on-top': 1,
+				'array-declarations': 2,
+				'operator-whitespace': ['off', 'double'],
+				'lbrace': ['warning', 1, 2, {a: 100, h: 'world'}],
+				'mixedcase': ['error'],
+				'camelcase': [0, 100, 'hello', 9.283],
+				'uppercase': [1],
+				'double-quotes': [2, 'double']
 			},
-			"options": { "autofix": false }
+			'options': { 'autofix': false }
 		};
 
 		var ruleDescriptions = rules.load (config);
@@ -219,19 +219,19 @@ describe ('Checking exported rules object', function () {
 
 	it ('should load rules from the new config format using load() when only "rules" is passed', function (done) {
 		var config = {
-			"rules": {
-				"pragma-on-top": "off",
-				"no-with": "warning",
-				"deprecated-suicide": "error",
-				"variable-declarations": 0,
-				"imports-on-top": 1,
-				"array-declarations": 2,
-				"operator-whitespace": ["off", "double"],
-				"lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
-				"mixedcase": ["error"],
-				"camelcase": [0, 100, "hello", 9.283],
-				"uppercase": [1],
-				"double-quotes": [2, "double"]
+			'rules': {
+				'pragma-on-top': 'off',
+				'no-with': 'warning',
+				'deprecated-suicide': 'error',
+				'variable-declarations': 0,
+				'imports-on-top': 1,
+				'array-declarations': 2,
+				'operator-whitespace': ['off', 'double'],
+				'lbrace': ['warning', 1, 2, {a: 100, h: 'world'}],
+				'mixedcase': ['error'],
+				'camelcase': [0, 100, 'hello', 9.283],
+				'uppercase': [1],
+				'double-quotes': [2, 'double']
 			}
 		};
 
@@ -288,12 +288,12 @@ describe ('Checking exported rules object', function () {
 
 	it ('should load rules from specified plugin(s) if they are installed', function (done) {
 		var config = {
-			"extends": "solium:all",
-			"plugins": ["test"],
-			"rules": {
-				"quotes": 1,
-				"test/foo": 1,
-				"test/bar": ["error"]
+			'extends': 'solium:all',
+			'plugins': ['test'],
+			'rules': {
+				'quotes': 1,
+				'test/foo': 1,
+				'test/bar': ['error']
 			}
 		};
 
@@ -412,22 +412,22 @@ describe ('Checking exported rules object', function () {
 
 	it ('should handle when a specified plugin is not installed', function (done) {
 		var config = {
-			"extends": "solium:all",
-			"plugins": ["16%^54#$^%3"]
+			'extends': 'solium:all',
+			'plugins': ['16%^54#$^%3']
 		};
 
 		rules.load.bind (rules, config).should.throw ();
 
 		config.plugins = 'test';
 		config.rules = {
-			"test/somerandomrule": 1
+			'test/somerandomrule': 1
 		};
 
 		rules.load.bind (rules, config).should.throw ();
 
 		config = {
-			"extends": "solium:all",
-			"plugins": ["test-invalid-schema"]
+			'extends': 'solium:all',
+			'plugins': ['test-invalid-schema']
 		};
 
 		rules.load.bind (rules, config).should.throw ();

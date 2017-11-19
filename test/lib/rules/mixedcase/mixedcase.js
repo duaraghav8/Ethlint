@@ -11,10 +11,10 @@ var toContract = wrappers.toContract;
 var toFunction = wrappers.toFunction;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "mixedcase": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'mixedcase': true
+	}
 };
 
 describe ('[RULE] mixedcase: Acceptances', function () {
@@ -35,7 +35,7 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -101,7 +101,7 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -165,7 +165,7 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toFunction(item)});
+		code = code.map(function(item){return toFunction(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -221,7 +221,7 @@ describe ('[RULE] mixedcase: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -295,7 +295,7 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -361,7 +361,7 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toContract(item)});
+		code = code.map(function(item){return toContract(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -425,7 +425,7 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toFunction(item)});
+		code = code.map(function(item){return toFunction(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');
@@ -481,7 +481,7 @@ describe ('[RULE] mixedcase: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toFunction(item)});
+		code = code.map(function(item){return toFunction(item);});
 
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

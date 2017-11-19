@@ -9,6 +9,8 @@ var RuleContext = require ('../../lib/rule-context'),
 	Solium = require ('../../lib/solium'),
 	_ = require ('lodash');
 
+/* eslint-disable no-unused-vars */
+
 describe ('Testing RuleContext object', function () {
 	var ruleDesc = {
 		enabled: true,
@@ -185,3 +187,5 @@ describe ('Testing RuleContext object', function () {
 	});
 
 });
+
+/* eslint-enable no-unused-vars */

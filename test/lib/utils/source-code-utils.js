@@ -11,11 +11,11 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 	var sourceCodeText = 'contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}',
 		varDeclarator = {
 			type: 'VariableDeclarator',
-  			id: { type: 'Identifier', name: 'x', start: 44, end: 45 },
-  			init: { type: 'Literal', value: 100, start: 48, end: 51 },
-  			start: 44,
-  			end: 51
-  		};
+			id: { type: 'Identifier', name: 'x', start: 44, end: 45 },
+			init: { type: 'Literal', value: 100, start: 48, end: 51 },
+			start: 44,
+			end: 51
+		};
 
 	it ('should create instance of SourceCode & expose set of functions (its own & those of astUtils)', function (done) {
 		var sourceCodeObject = new SourceCode (sourceCodeText);
@@ -71,14 +71,14 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		var sourceCodeObject = new SourceCode (sourceCodeText);
 		var functionCallText = 'fooBar ();',
 			functionCallNode = { type: 'ExpressionStatement',
-  				expression: 
-   				{ type: 'CallExpression',
-     				callee: { type: 'Identifier', name: 'fooBar', start: 0, end: 6 },
-     				arguments: [],
-     				start: 0,
-     			end: 9 },
-  				start: 0,
-  			end: 10 };
+				expression: 
+				{ type: 'CallExpression',
+					callee: { type: 'Identifier', name: 'fooBar', start: 0, end: 6 },
+					arguments: [],
+					start: 0,
+					end: 9 },
+				start: 0,
+				end: 10 };
 
 		sourceCodeObject.getText.bind (sourceCodeObject, {}).should.throw ();
 
@@ -163,53 +163,53 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 			sourceCodeObject = new SourceCode (sourceCodeText);
 
 		var prevNode = {
-  			"type": "VariableDeclaration",
-  			"declarations": [
-    			{
-      				"type": "VariableDeclarator",
-      				"id": {
-        				"type": "Identifier",
-        				"name": "x",
-        				"start": 4,
-        				"end": 5
-      				},
-      				"init": {
-        				"type": "Literal",
-        				"value": 100,
-        				"start": 8,
-        				"end": 11
-      				},
-      				"start": 4,
-      				"end": 11
-    			}
-  			],
-  			"start": 0,
-  			"end": 12
+			'type': 'VariableDeclaration',
+			'declarations': [
+				{
+					'type': 'VariableDeclarator',
+					'id': {
+						'type': 'Identifier',
+						'name': 'x',
+						'start': 4,
+						'end': 5
+					},
+					'init': {
+						'type': 'Literal',
+						'value': 100,
+						'start': 8,
+						'end': 11
+					},
+					'start': 4,
+					'end': 11
+				}
+			],
+			'start': 0,
+			'end': 12
 		};
 
-    	var currentNode = {
-  			"type": "VariableDeclaration",
-  			"declarations": [
-    			{
-      				"type": "VariableDeclarator",
-      				"id": {
-        				"type": "Identifier",
-        				"name": "z",
-        				"start": 35,
-        				"end": 36
-      				},
-      				"init": {
-        				"type": "Literal",
-        				"value": 300,
-        				"start": 39,
-        				"end": 42
-      				},
-      				"start": 35,
-      				"end": 42
-    			}
-  			],
-  			"start": 31,
-  			"end": 43
+		var currentNode = {
+			'type': 'VariableDeclaration',
+			'declarations': [
+				{
+					'type': 'VariableDeclarator',
+					'id': {
+						'type': 'Identifier',
+						'name': 'z',
+						'start': 35,
+						'end': 36
+					},
+					'init': {
+						'type': 'Literal',
+						'value': 300,
+						'start': 39,
+						'end': 42
+					},
+					'start': 35,
+					'end': 42
+				}
+			],
+			'start': 31,
+			'end': 43
 		};
 
 		sourceCodeObject

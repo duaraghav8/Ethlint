@@ -10,9 +10,9 @@ var Solium = require ('../../../../lib/solium'),
 var toContract = wrappers.toContract, toFunction = wrappers.toFunction;
 
 var userConfig = {
-	"custom-rules-filename": null,
-	"rules": {
-		"arg-overflow": true
+	'custom-rules-filename': null,
+	'rules': {
+		'arg-overflow': true
 	}
 };
 
@@ -123,8 +123,8 @@ describe ('[RULE] argument overflow: Handling options', function () {
 
 	it ('should accept <= N arguments in same line, N supplied through config', function (done) {
 		var userConfig = {
-			"rules": {
-				"arg-overflow": [1, 4]
+			'rules': {
+				'arg-overflow': [1, 4]
 			}
 		};
 
@@ -177,8 +177,8 @@ describe ('[RULE] argument overflow: Handling options', function () {
 
 	it ('should reject > N arguments in same line, N supplied through config', function (done) {
 		var userConfig = {
-			"rules": {
-				"arg-overflow": [1, 4]
+			'rules': {
+				'arg-overflow': [1, 4]
 			}
 		};
 
@@ -212,8 +212,8 @@ describe ('[RULE] argument overflow: Handling options', function () {
 
 	it ('should reject invalid option values', function (done) {
 		var config = {
-			"rules": {
-				"arg-overflow": [1, 0]
+			'rules': {
+				'arg-overflow': [1, 0]
 			}
 		};
 		var code = toContract ('struct A { uint i; }');

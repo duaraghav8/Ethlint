@@ -10,10 +10,10 @@ var Solium = require ('../../../../lib/solium'),
 	path = require ('path');
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "imports-on-top": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'imports-on-top': true
+	}
 };
 
 describe ('[RULE] imports-on-top: Acceptances', function () {

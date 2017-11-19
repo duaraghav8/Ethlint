@@ -15,11 +15,11 @@ var Solium = require ('../../../../lib/solium'),
 
 var toContract = wrappers.toContract;
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "double-quotes": true
-  },
-  "options": { "returnInternalIssues": true }
+	'custom-rules-filename': null,
+	'rules': {
+		'double-quotes': true
+	},
+	'options': { 'returnInternalIssues': true }
 };
 
 describe ('[RULE] double-quotes: Acceptances', function () {

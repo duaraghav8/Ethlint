@@ -6,14 +6,14 @@
 'use strict';
 
 var Solium = require ('../../../../lib/solium');
-var wrappers = require ('../../../utils/wrappers')
+var wrappers = require ('../../../utils/wrappers');
 var toFunction = wrappers.toFunction;
 
 var userConfig = {
-  "custom-rules-filename": null,
-  "rules": {
-    "operator-whitespace": true
-  }
+	'custom-rules-filename': null,
+	'rules': {
+		'operator-whitespace': true
+	}
 };
 
 describe ('[RULE] operator-whitespace: Acceptances', function () {
@@ -46,9 +46,9 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toFunction(item)});
+		code = code.map(function(item){return toFunction(item);});
 		code.forEach (function (snippet) {
-			var errors = Solium.lint (snippet, userConfig);
+			errors = Solium.lint (snippet, userConfig);
 			errors.constructor.name.should.equal ('Array');
 			errors.length.should.equal (0);
 		});
@@ -104,7 +104,7 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 		];
 		var errors;
 
-		code = code.map(function(item){return toFunction(item)});
+		code = code.map(function(item){return toFunction(item);});
 		
 		errors = Solium.lint (code [0], userConfig);
 		errors.constructor.name.should.equal ('Array');

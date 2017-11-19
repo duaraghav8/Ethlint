@@ -7,21 +7,23 @@
 
 var pluginSchema = require ('../../../config/schemas/plugin.js'), isAValidPlugin = pluginSchema.validationFunc;
 
+/* eslint-disable no-unused-vars */
+
 describe ('Checking Plugin Schema', function () {
 
 	var sampleRule = {
-		"meta": {
-			"docs": {
-				"recommended": true,
-				"type": "error",
-				"description": "This is a rule",
-				"replacedBy": ["new-rule"]
+		'meta': {
+			'docs': {
+				'recommended': true,
+				'type': 'error',
+				'description': 'This is a rule',
+				'replacedBy': ['new-rule']
 			},
-			"schema": [],
-			"fixable": "code",
-			"deprecated": true
+			'schema': [],
+			'fixable': 'code',
+			'deprecated': true
 		},
-		"create": function (context) {}
+		'create': function (context) {}
 	};
 
 
@@ -41,33 +43,33 @@ describe ('Checking Plugin Schema', function () {
 	it ('should accept valid plugin objects', function (done) {
 
 		var plugin = {
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			},
-			"meta": {
-				"description": "This is my badass plugin"
+			'meta': {
+				'description': 'This is my badass plugin'
 			}
 		};
 
 		isAValidPlugin (plugin).should.equal (true);
 
 		plugin = {
-			"rules": {
-				"a": sampleRule,
-				"b": sampleRule
+			'rules': {
+				'a': sampleRule,
+				'b': sampleRule
 			},
-			"meta": {
-				"description": "c"
+			'meta': {
+				'description': 'c'
 			}
 		};
 
 		isAValidPlugin (plugin).should.equal (true);
 
 		plugin = {
-			"rules": {},
-			"meta": {
-				"description": "c"
+			'rules': {},
+			'meta': {
+				'description': 'c'
 			}
 		};
 
@@ -81,107 +83,107 @@ describe ('Checking Plugin Schema', function () {
 
 		// no 'rules'
 		invalidPlugins.push ({
-			"meta": {
-				"description": "This is my badass plugin"
+			'meta': {
+				'description': 'This is my badass plugin'
 			}
 		});
 
 		// no "meta"
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			}
 		});
 
 		// invalid rule
 		invalidPlugins.push ({
-			"rules": "hello world",
-			"meta": {
-				"description": "This is my badass plugin"
+			'rules': 'hello world',
+			'meta': {
+				'description': 'This is my badass plugin'
 			}
 		});
 
 		// invalid meta
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule
 			},
-			"meta": []
+			'meta': []
 		});
 
 		// invalid rule name
 		invalidPlugins.push ({
-			"rules": {
-				"": sampleRule
+			'rules': {
+				'': sampleRule
 			},
-			"meta": {
-				"description": "This is my badass plugin"
+			'meta': {
+				'description': 'This is my badass plugin'
 			}
 		});
 
 		// invalid rule definition
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": null
+			'rules': {
+				'sample-rule-1': null
 			},
-			"meta": {
-				"description": "This is my badass plugin"
+			'meta': {
+				'description': 'This is my badass plugin'
 			}
 		});
 
 		// no meta.description
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			},
-			"meta": {}
+			'meta': {}
 		});
 
 		// empty meta.description
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			},
-			"meta": {
-				"description": ""
+			'meta': {
+				'description': ''
 			}
 		});
 
 		// invalid meta.description value
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			},
-			"meta": {
-				"description": 190828
+			'meta': {
+				'description': 190828
 			}
 		});
 
 		// extra property
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			},
-			"meta": {
-				"description": "This is my badass plugin"
+			'meta': {
+				'description': 'This is my badass plugin'
 			},
-			"randombullshit": {}
+			'randombullshit': {}
 		});
 
 		// extra property in meta
 		invalidPlugins.push ({
-			"rules": {
-				"sample-rule-1": sampleRule,
-				"sample-rule-2": sampleRule
+			'rules': {
+				'sample-rule-1': sampleRule,
+				'sample-rule-2': sampleRule
 			},
-			"meta": {
-				"description": "This is my badass plugin",
-				"morebullshit": true
+			'meta': {
+				'description': 'This is my badass plugin',
+				'morebullshit': true
 			}
 		});
 
@@ -199,3 +201,5 @@ describe ('Checking Plugin Schema', function () {
 	});
 
 });
+
+/* eslint-enable no-unused-vars */
