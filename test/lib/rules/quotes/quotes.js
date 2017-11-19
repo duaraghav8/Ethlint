@@ -37,7 +37,7 @@ describe ('[RULE] quotes: Rejections for single quote', function () {
 			errors = Solium.lint (toContract(code), userConfigSingle);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (5);
+		errors.length.should.equal (41);
 
 		Solium.reset ();
 		done ();
@@ -73,7 +73,7 @@ describe ('[RULE] quotes: Rejections for double quote', function () {
 			errors = Solium.lint (toContract(code), userConfigDouble);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (5);
+		errors.length.should.equal (41);
 
 		Solium.reset ();
 		done ();
@@ -103,7 +103,7 @@ describe ('[RULE] quotes: Fix when double quotes are mandatory', function () {
 		fixed.errorMessages.should.be.Array ();
 		fixed.errorMessages.length.should.equal (0);
 		fixed.fixesApplied.should.be.Array ();
-		fixed.fixesApplied.length.should.equal (3);
+		fixed.fixesApplied.length.should.equal (11);
 
 		Solium.reset ();
 		done ();
@@ -170,7 +170,7 @@ describe ('[RULE] quotes: Fix when single quotes are mandatory', function () {
 		fixed.errorMessages.should.be.Array ();
 		fixed.errorMessages.length.should.equal (0);
 		fixed.fixesApplied.should.be.Array ();
-		fixed.fixesApplied.length.should.equal (3);
+		fixed.fixesApplied.length.should.equal (11);
 
 		Solium.reset ();
 		done ();
