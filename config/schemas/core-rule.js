@@ -54,7 +54,7 @@ var Schema = {
 					type: 'object',
 					properties: {
 						recommended: { type: 'boolean' },
-						type: { type: 'string', enum: ['error', 'warning'] },
+						type: { type: 'string', enum: ['error', 'warning', 'off'] },
 						description: { type: 'string', minLength: 1 },
 
 						replacedBy: {

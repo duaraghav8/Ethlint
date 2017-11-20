@@ -170,7 +170,7 @@ Create a file ``foo-bar.js`` inside `lib/rules <https://github.com/duaraghav8/So
 		meta: {
 			docs: {
 				recommended: true,
-				type: 'warning',	// either 'warning' or 'error'
+				type: 'warning',	// 'warning' | 'error' | 'off'
 				description: 'This is my foobar rule'
 			},
 			schema: [],
@@ -536,6 +536,9 @@ Read about `Peer Dependencies on NPM <https://nodejs.org/en/blog/npm/peer-depend
 			}
 		}
 	};
+
+.. note::
+	In the above example, you can set the ``type`` property to ``off``. The effect of this is that the rule exists in your plugin but is **disabled by default**. This feature can be used when you require that a user only purposely enable the rule (probaby because it may not be desirable for general audience).
 
 
 Notice that every rule you define inside the ``rules`` object has the exact **same schema as the core rule** described above. So if you know how to implement a core rule, you need not learn anything new to implement a plugin rule.
