@@ -42,6 +42,31 @@ describe ('Testing SourceCode instance for exposed functionality', function () {
 		sourceCodeObject.should.have.property ('getParent');
 		sourceCodeObject.getParent.should.be.type ('function');
 
+		// functions for node type checking
+		sourceCodeObject.should.have.property ('isBlockStatement');
+		sourceCodeObject.isBlockStatement.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isBreakStatement');
+		sourceCodeObject.isBreakStatement.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isExpression');
+		sourceCodeObject.isExpression.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isAssignment');
+		sourceCodeObject.isAssignment.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isUpdate');
+		sourceCodeObject.isUpdate.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isMember');
+		sourceCodeObject.isMember.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isIfStatement');
+		sourceCodeObject.isIfStatement.should.be.type ('function');
+
+		sourceCodeObject.should.have.property ('isLoopStatement');
+		sourceCodeObject.isLoopStatement.should.be.type ('function');
+
 		//prototype functions
 		sourceCodeObject.should.have.property ('getText');
 		sourceCodeObject.getText.should.be.type ('function');

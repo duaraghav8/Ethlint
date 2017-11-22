@@ -69,6 +69,18 @@ describe ('Testing astUtils Object', function () {
 		astUtils.should.have.ownProperty ('isASTNode');
 		astUtils.isASTNode.should.be.type ('function');
 
+		astUtils.should.have.ownProperty ('isBlockStatement');
+		astUtils.isBlockStatement.should.be.type ('function');
+
+		astUtils.should.have.ownProperty ('isMember');
+		astUtils.isMember.should.be.type ('function');
+
+		astUtils.should.have.ownProperty ('isIfStatement');
+		astUtils.isIfStatement.should.be.type ('function');
+
+		astUtils.should.have.ownProperty ('isLoopStatement');
+		astUtils.isLoopStatement.should.be.type ('function');
+
 		astUtils.should.have.ownProperty ('getParent');
 		astUtils.getParent.should.be.type ('function');
 
@@ -109,6 +121,16 @@ describe ('Testing astUtils Object', function () {
 
 		done ();
 	});
+
+  it ('should handle invalid argument(s) passed to utility functions', function (done) {
+		astUtils.isIfStatement.bind (astUtils).should.throw ();
+		astUtils.isIfStatement.bind (astUtils, null).should.throw ();
+		astUtils.isIfStatement.bind (astUtils, 100).should.throw ();
+		astUtils.isIfStatement.bind (astUtils, 'foo').should.throw ();
+		astUtils.isIfStatement.bind (astUtils, []).should.throw ();
+
+		done ();
+  });
 
 	it ('should handle invalid argument(s) passed to getParent ()', function (done) {
 		astUtils.getParent.bind (astUtils).should.throw ();
