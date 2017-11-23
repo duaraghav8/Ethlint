@@ -50,6 +50,8 @@ If you want to run the linter over a specific file, use ``solium --file myContra
 You can also run solium so it watches your directory for changes and automatically re-lints the contracts:
 ``solium --watch --dir contracts/``.
 
+By default, solium looks for the ``.soliumrc.json`` configuration file in your current directory. You can override this setting by using the ``--config``/``-c`` option like ``solium -d contracts/ -c ../configs/.soliumrc.json``.
+
 Use ``solium --help`` for more information on usage.
 
 .. note::
