@@ -40,7 +40,7 @@
     "sol-digger": "0.0.2",
     "sol-explore": "^1.6.1",
     "solium-plugin-security": "0.0.2",
-    "solparse": "1.4.0",
+    "solparse": "1.4.1",
     "text-table": "^0.2.0"
   },
   "devDependencies": {

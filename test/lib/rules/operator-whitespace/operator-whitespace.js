@@ -74,6 +74,62 @@ describe ('[RULE] operator-whitespace: Acceptances', function () {
 		done ();
 	});
 
+	it ('should accept SequenceExpression & tuple nodes with no extraneous whitespace', function (done) {
+		const code = [
+			'var (a, b) = (10, foo(90, "hello"));',
+			'var (a) = 10;',
+			'var (a) = (10);',
+			'var (a, b, abra, kadabra) = (i,i,i,i);',
+			'var (myVar) = callSomeFunc(0x00, true);',
+
+			'(a, b) = (10, foo(90, "hello"));',
+			'(a) = 10;',
+			'(a) = (10);',
+			'(a, b, abra, kadabra) = (i,i,i,i);',
+			'(myVar) = callSomeFunc(0x00, true);',
+
+			'(a, b) += (10, foo(90, "hello"));',
+			'(a) += 10;',
+			'(a) += (10);',
+			'(a, b, abra, kadabra) += (i,i,i,i);',
+			'(myVar) += callSomeFunc(0x00, true);',
+
+			'(a, b) *= (10, foo(90, "hello"));',
+			'(a) *= 10;',
+			'(a) *= (10);',
+			'(a, b, abra, kadabra) *= (i,i,i,i);',
+			'(myVar) *= callSomeFunc(0x00, true);',
+
+			'(a, b) /= (10, foo(90, "hello"));',
+			'(a) /= 10;',
+			'(a) /= (10);',
+			'(a, b, abra, kadabra) /= (i,i,i,i);',
+			'(myVar) /= callSomeFunc(0x00, true);',
+
+			'(a, b) -= (10, foo(90, "hello"));',
+			'(a) -= 10;',
+			'(a) -= (10);',
+			'(a, b, abra, kadabra) -= (i,i,i,i);',
+			'(myVar) -= callSomeFunc(0x00, true);',
+
+			'(a, b) %= (10, foo(90, "hello"));',
+			'(a) %= 10;',
+			'(a) %= (10);',
+			'(a, b, abra, kadabra) %= (i,i,i,i);',
+			'(myVar) %= callSomeFunc(0x00, true);'
+		];
+
+		code.forEach (statement => {
+			const errors = Solium.lint (toFunction (statement), userConfig);
+
+			errors.should.be.Array ();
+			errors.should.have.size(0);
+		});
+
+		Solium.reset ();
+		done ();
+	});
+
 });
 
 
@@ -224,6 +280,44 @@ describe ('[RULE] operator-whitespace: Rejections', function () {
 			var errors = Solium.lint (snippet, userConfig);
 			errors.constructor.name.should.equal ('Array');
 			errors.length.should.equal (1);
+		});
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject SequenceExpression nodes with extraneous whitespace', function (done) {
+		const single = [
+			'(a, b)\n  = (10, foo(90, "hello"));',
+			'(a) =         10;',
+			'(a)             = (10);',
+			'(a, b, abra, kadabra)\n\n\t= (i,i,i,i);',
+			'(myVar) = \t \tcallSomeFunc(0x00, true);',
+
+			'(a, b) +=\t(10, foo(90, "hello"));',
+			'(a) +=10;',
+			'(a) +=(10);',
+			'(a, b, abra, kadabra)+= (i,i,i,i);',
+			'(myVar) +=\t\n\t\ncallSomeFunc(0x00, true);',
+
+			'(a, b)     *=(10, foo(90, "hello"));',
+			'(a)*=10;',
+			'(a)   *=\t(10);',
+			'(a, b, abra, kadabra) \n*=\n (i,i,i,i);',
+			'(myVar)*=\t\t\t\n\ncallSomeFunc(0x00, true);',
+
+			'(a, b)/=(10, foo(90, "hello"));',
+			'(a) \n/=\t\t 10;',
+			'(a)     /=  (10);',
+			'(a, b, abra, kadabra)/=(i,i,i,i);',
+			'(myVar)   /=   callSomeFunc(0x00, true);'
+		];
+
+		single.forEach (statement => {
+			const errors = Solium.lint (toFunction (statement), userConfig);
+
+			errors.should.be.Array ();
+			errors.should.have.size(1);
 		});
 
 		Solium.reset ();
