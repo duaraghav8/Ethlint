@@ -122,7 +122,7 @@ describe ('Testing astUtils Object', function () {
 		done ();
 	});
 
-  it ('should handle invalid argument(s) passed to utility functions', function (done) {
+	it ('should handle invalid argument(s) passed to utility functions', function (done) {
 		astUtils.isIfStatement.bind (astUtils).should.throw ();
 		astUtils.isIfStatement.bind (astUtils, null).should.throw ();
 		astUtils.isIfStatement.bind (astUtils, 100).should.throw ();
@@ -130,7 +130,7 @@ describe ('Testing astUtils Object', function () {
 		astUtils.isIfStatement.bind (astUtils, []).should.throw ();
 
 		done ();
-  });
+	});
 
 	it ('should handle invalid argument(s) passed to getParent ()', function (done) {
 		astUtils.getParent.bind (astUtils).should.throw ();
