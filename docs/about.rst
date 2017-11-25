@@ -9,8 +9,12 @@ It borrows ideas from `ESLint <https://eslint.org/>`_, `Solidity Parser <https:/
 The linter was initially designed to strictly follow Solidity's official `Style Guide <http://solidity.readthedocs.io/en/latest/style-guide.html>`_, but has since evolved into a completely customizable tool (read our `v1 release blog <https://medium.com/solium/introducing-solium-v1-d2bd0a7fbfb>`_).
 
 
+.. index:: community
+
+*********
 Community
-=========
+*********
+
 
 Anyone who has contributed to strengthening this Project is a community member.
 

@@ -28,6 +28,7 @@ Contents
 
    user-guide.rst
    developer-guide.rst
+   experimental-features.rst
    known-issues.rst
    contributing.rst
    about.rst
