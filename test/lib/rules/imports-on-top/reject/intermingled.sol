@@ -8,3 +8,7 @@ contract Halo {
 }
 
 import * as symbolName from "filename";
+
+library Bar {}
+
+import "nano.sol";

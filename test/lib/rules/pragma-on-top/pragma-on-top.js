@@ -30,6 +30,28 @@ describe ('[RULE] pragma-on-top: Acceptances', function () {
 		errors.should.be.Array ();
 		errors.length.should.equal (0);
 
+		code = `
+			pragma solidity ^4.4.0;
+			// Hello world
+			pragma experimental ABIEncoderV2;
+			/* Avada Kedavra! */
+			pragma experimental "v0.5.0";
+
+			import {foo} from "bar";
+
+			contract Foo {}
+		`;
+		errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (0);
+
+		code = '/*Foo Bar*\/';	// empty source code
+		errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (0);
+
 		Solium.reset ();
 		done ();
 	});
@@ -45,14 +67,48 @@ describe ('[RULE] pragma-on-top: Rejections', function () {
 
 		errors.should.be.Array ();
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('No PRAGMA directive "pragma solidity <VERSION>" found at the top of file.');
+		errors [0].message.should.equal ('No Pragma directive found at the top of file.');
 
 		code = '\/*Hello world*\/\nimport {foo} from "bar";\npragma solidity ^4.4.0;';
 		errors = Solium.lint (code, userConfig);
 
 		errors.should.be.Array ();
 		errors.length.should.equal (1);
-		errors [0].message.should.equal ('Pragma Directive "pragma solidity ^4.4.0;" should only be at the top of the file.');
+		errors [0].message.should.equal ('"pragma solidity ^4.4.0;" should be at the top of the file.');
+
+		code = `
+			pragma experimental ABIEncoderV2;
+			pragma experimental "v0.5.0";
+			import {foo} from "bar";
+			contract Foo {}
+		`;
+		errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (1);
+		errors [0].message.should.equal ('No Pragma directive found at the top of file.');
+
+		code = `
+			import {foo} from "bar";
+			pragma experimental ABIEncoderV2;
+			contract Foo {}
+			pragma experimental "v0.5.0";
+		`;
+		errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (3);	// issues reported: no pragma & experimental pragmas not on top
+
+		code = `
+			pragma experimental ABIEncoderV2;
+			pragma solidity ^0.4.0;
+			import {foo} from "bar";
+			contract Foo {}
+		`;
+		errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (1);
 
 		Solium.reset ();
 		done ();
@@ -70,6 +126,31 @@ describe ('[RULE] pragma-on-top: Rejections', function () {
 
 		errors.should.be.Array ();
 		errors.length.should.equal (1);
+
+		code = 'pragma solidity ^4.4.0;\npragma experimental ABIEncoderV2;\ncontract Foo {}\npragma solidity ^4.4.0;';
+		errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (1);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject pragma experimental statement(s) having anything except pragma above them', done => {
+		let code = `
+			pragma solidity ^0.4.0;
+			pragma experimental "blahblah";
+			pragma experimental "blahblah2";
+			import {foo} from "bar";
+			pragma experimental ABIEncoderV2;
+			contract Foo {}
+			pragma experimental "v0.5.0";
+		`;
+		let errors = Solium.lint (code, userConfig);
+
+		errors.should.be.Array ();
+		errors.length.should.equal (2);
 
 		Solium.reset ();
 		done ();

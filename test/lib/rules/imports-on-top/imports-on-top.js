@@ -18,9 +18,48 @@ var userConfig = {
 
 describe ('[RULE] imports-on-top: Acceptances', function () {
 
-	it ('should accept if all import statements are on top of the file (but below the optional PRAGMA directive)', function (done) {
+	it ('should accept if all import statements are on top of the file (but below the pragma directive)', function (done) {
 		var code = fs.readFileSync (path.join (__dirname, './accept/on-top.sol'), 'utf8'),
 			errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		// imports without pragmas
+		code = `
+			import "filename";
+			import * as symbolName from "filename";
+			import {symbol1 as alias, symbol2} from "filename";
+			import "filename" as symbolName;
+		`;
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = `
+			pragma solidity ^0.4.0;
+			import "filename";
+			import * as symbolName from "filename";
+			import {symbol1 as alias, symbol2} from "filename";
+			import "filename" as symbolName;
+			contract Foo {}
+		`;
+		errors = Solium.lint (code, userConfig);
+
+		errors.constructor.name.should.equal ('Array');
+		errors.length.should.equal (0);
+
+		code = `
+			pragma experimental blahblah;
+			import "filename";
+			import * as symbolName from "filename";
+			import {symbol1 as alias, symbol2} from "filename";
+			import "filename" as symbolName;
+
+			library Foo {}
+		`;
+		errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
@@ -39,7 +78,7 @@ describe ('[RULE] imports-on-top: Rejections', function () {
 			errors = Solium.lint (code, userConfig);
 
 		errors.constructor.name.should.equal ('Array');
-		errors.length.should.equal (1);
+		errors.length.should.equal (2);
 
 		Solium.reset ();
 		done ();
