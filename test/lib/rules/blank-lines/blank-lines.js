@@ -21,7 +21,7 @@ var addPragma = wrappers.addPragma;
 
 describe ('[RULE] blank-lines: Acceptances', function () {
 
-	it ('should accept contract declarations succeded by 2 blank lines (all declarations except for last)', function (done) {
+	it ('should accept contract declarations succeeded by 2 blank lines (all declarations except for last)', function (done) {
 		var code = fs.readFileSync (path.join (__dirname, './accept/contract.sol'), 'utf8'),
 			errors = Solium.lint (addPragma(code), userConfig);
 
@@ -60,6 +60,114 @@ describe ('[RULE] blank-lines: Acceptances', function () {
 
 		errors.constructor.name.should.equal ('Array');
 		errors.length.should.equal (0);
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should accept properly separated top level declarations accompanied by comments', done => {
+		let snippets = [
+			`
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+
+
+			library Fafa {}
+
+
+			// inherits
+			contract bar is foobar {}
+			`
+		];
+
+		snippets.forEach (code => {
+			let errors = Solium.lint (code, userConfig);
+			errors.should.be.Array ();
+			errors.should.have.size (0);
+		});
 
 		Solium.reset ();
 		done ();
@@ -130,6 +238,92 @@ describe ('[RULE] blank-lines: Rejections', function () {
 		errors.length.should.equal (2);
 
 		errors [0].node.name.should.equal ('spam');
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should reject top level declarations accompanied by comments but not gapped properly', done => {
+		let snippets = [
+			`
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+			`
+			pragma solidity ^0.4.17;
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`
+		];
+
+		snippets.forEach (code => {
+			let errors = Solium.lint (code, userConfig);
+			errors.should.be.Array ();
+			errors.should.have.size (1);
+		});
 
 		Solium.reset ();
 		done ();
