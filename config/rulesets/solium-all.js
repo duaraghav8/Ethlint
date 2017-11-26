@@ -30,6 +30,7 @@ module.exports = {
 		'deprecated-suicide': 'warning',
 		'pragma-on-top': 'warning',
 		'quotes': 'error',
+		'function-order': 'warning',
 
 		// Turn OFF all deprecated rules
 		'double-quotes': 'off',
