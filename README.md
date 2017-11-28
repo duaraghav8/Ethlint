@@ -39,6 +39,8 @@ This creates 2 files for you:
 }
 ```
 
+To know which lint rules Solium applies for you, see [Core rules](http://solium.readthedocs.io/en/latest/user-guide.html#list-of-core-rules) and [Security rules](https://github.com/duaraghav8/solium-plugin-security/tree/661c2b4f1ea0aa1fea95a78abc3d2287d63f3048#list-of-rules)
+
 ### Lint a single Solidity file
 ```bash
 solium -f ./contracts/foobar.sol
