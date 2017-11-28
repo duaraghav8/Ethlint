@@ -31,6 +31,11 @@ Use ``npm install -g solium``.
 
 Verify that all is working fine using ``solium -V``.
 
+Install from the snap store
+===========================
+
+In any of the `supported Linux distros <https://snapcraft.io/docs/core/install>`_, ``sudo snap install solium --edge``
+
 .. note::
 	If you're using vim with syntastic, and prefer to use a locally installed version of Solium (rather than a global version), you can install `syntastic local solium <https://github.com/sohkai/syntastic-local-solium.vim>`_ to automatically load the local version in packages that have installed their own.
 
