@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for whitespace rule
+ * @fileoverview Tests for all whitespace rules
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
@@ -252,6 +252,69 @@ describe ('[RULE] whitespace: Acceptances', function () {
 
 			errors.should.be.Array ();
 			errors.length.should.equal (0);
+		});
+
+		Solium.reset ();
+		done ();
+	});
+
+	it ('should accept SequenceExpression & tuple nodes with no extraneous whitespace', function (done) {
+		const code = [
+			'var (a, b) = (10, foo(90, "hello"));',
+			'var (a) = 10;',
+			'var (a) = (10);',
+			'var (a, b, abra, kadabra) = (i,i,i,i);',
+			'var (myVar) = callSomeFunc(0x00, true);',
+			'var (,, myVar, ,,) = callSomeFunc(0x00, true);',
+
+			'(a, b) = (10, foo(90, "hello"));',
+			'(a) = 10;',
+			'(a) = (10);',
+			'(a, b, abra, kadabra) = (i,i,i,i);',
+			'(myVar) = callSomeFunc(0x00, true);',
+			'(,, myVar, ,,) = callSomeFunc(0x00, true);',
+
+			'(a, b) += (10, foo(90, "hello"));',
+			'(a) += 10;',
+			'(a) += (10);',
+			'(a, b, abra, kadabra) += (i,i,i,i);',
+			'(myVar) += callSomeFunc(0x00, true);',
+			'(,, myVar, ,,) += callSomeFunc(0x00, true);',
+
+			'(a, b) *= (10, foo(90, "hello"));',
+			'(a) *= 10;',
+			'(a) *= (10);',
+			'(a, b, abra, kadabra) *= (i,i,i,i);',
+			'(myVar) *= callSomeFunc(0x00, true);',
+			'(,, myVar, ,,) *= callSomeFunc(0x00, true);',
+
+			'(a, b) /= (10, foo(90, "hello"));',
+			'(a) /= 10;',
+			'(a) /= (10);',
+			'(a, b, abra, kadabra) /= (i,i,i,i);',
+			'(myVar) /= callSomeFunc(0x00, true);',
+			'(,, myVar, ,,) /= callSomeFunc(0x00, true);',
+
+			'(a, b) -= (10, foo(90, "hello"));',
+			'(a) -= 10;',
+			'(a) -= (10);',
+			'(a, b, abra, kadabra) -= (i,i,i,i);',
+			'(myVar) -= callSomeFunc(0x00, true);',
+			'(,, myVar, ,,) -= callSomeFunc(0x00, true);',
+
+			'(a, b) %= (10, foo(90, "hello"));',
+			'(a) %= 10;',
+			'(a) %= (10);',
+			'(a, b, abra, kadabra) %= (i,i,i,i);',
+			'(myVar) %= callSomeFunc(0x00, true);',
+			'(,, myVar, ,,) %= callSomeFunc(0x00, true);',
+		];
+
+		code.forEach (statement => {
+			const errors = Solium.lint (toFunction (statement), userConfig);
+
+			errors.should.be.Array ();
+			errors.should.have.size(0);
 		});
 
 		Solium.reset ();
