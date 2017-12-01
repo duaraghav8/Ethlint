@@ -3,32 +3,32 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
-var fs = require ('fs'), path = require ('path');
-var rsSoliumAll = require ('../../../config/rulesets/solium-all');
-var JS_EXT = '.js';
+let fs = require("fs"), path = require("path");
+let rsSoliumAll = require("../../../config/rulesets/solium-all");
+let JS_EXT = ".js";
 
-describe ('Tests for solium-all.js ruleset', function () {
+describe("Tests for solium-all.js ruleset", function() {
 
-	it ('should have a set of properties', function (done) {
-		rsSoliumAll.should.be.type ('object');
-		rsSoliumAll.should.have.ownProperty ('rules');
-		rsSoliumAll.rules.should.be.type ('object');
+    it("should have a set of properties", function(done) {
+        rsSoliumAll.should.be.type("object");
+        rsSoliumAll.should.have.ownProperty("rules");
+        rsSoliumAll.rules.should.be.type("object");
 
-		done ();
-	});
+        done();
+    });
 
-	it ('should have an entry for every rule file in lib/rules directory', function (done) {
-		var listOfRuleFiles = fs.readdirSync (__dirname + '/../../../lib/rules/');
+    it("should have an entry for every rule file in lib/rules directory", function(done) {
+        let listOfRuleFiles = fs.readdirSync(__dirname + "/../../../lib/rules/");
 
-		listOfRuleFiles.forEach (function (filename) {
-			if (path.extname (filename) === JS_EXT) {
-				rsSoliumAll.rules.should.have.ownProperty (filename.slice (0, -JS_EXT.length));
-			}
-		});
+        listOfRuleFiles.forEach(function(filename) {
+            if (path.extname(filename) === JS_EXT) {
+                rsSoliumAll.rules.should.have.ownProperty(filename.slice(0, -JS_EXT.length));
+            }
+        });
 
-		done ();
-	});
+        done();
+    });
 
 });

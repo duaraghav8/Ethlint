@@ -3,20 +3,20 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
-const Solium = require ('../../../../lib/solium');
+const Solium = require("../../../../lib/solium");
 const userConfig = {
-	'rules': {
-		'function-order': 'error'
-	}
+    "rules": {
+        "function-order": "error"
+    }
 };
 
 
-describe ('[RULE] function-order: Acceptances', function () {
+describe("[RULE] function-order: Acceptances", function() {
 
-	it ('should accept functions ordered correctly inside a contract', done => {
-		let codes = [`
+    it("should accept functions ordered correctly inside a contract", done => {
+        let codes = [`
 			contract Foo {
 				function Foo() {}
 				string myName = "Hello";
@@ -48,7 +48,7 @@ describe ('[RULE] function-order: Acceptances', function () {
 			}
 		`];
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function Foo() {}
 				string myName = "Hello";
@@ -63,7 +63,7 @@ describe ('[RULE] function-order: Acceptances', function () {
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function Foo() {}
 				string myName = "Hello";
@@ -80,11 +80,11 @@ describe ('[RULE] function-order: Acceptances', function () {
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function a(uint x) myModif internal returns (uint);
 				uint stateV1 = 100;
@@ -95,70 +95,70 @@ describe ('[RULE] function-order: Acceptances', function () {
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function Foo() {}
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function() {}
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function a() external {}
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function a() {}
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function a() internal {}
 			}
 		`);
 
-		codes.push (`
+        codes.push(`
 			contract Foo {
 				function a() private {}
 			}
 		`);
 
-		codes.forEach (code => {
-			const errors = Solium.lint (code, userConfig);
-			errors.should.be.Array ();
-			errors.should.have.size (0);
-		});
+        codes.forEach(code => {
+            const errors = Solium.lint(code, userConfig);
+            errors.should.be.Array();
+            errors.should.have.size(0);
+        });
 
-		Solium.reset ();
-		done ();
-	});
+        Solium.reset();
+        done();
+    });
 
 });
 
 
-describe ('[RULE] function-order: Rejections', function () {
+describe("[RULE] function-order: Rejections", function() {
 
-	it ('should reject functions ordered incorrectly inside a contract', done => {
-		let code = `
+    it("should reject functions ordered incorrectly inside a contract", done => {
+        let code = `
 			contract Foo {
 				function bar() {}
 				function Foo(string f) {}
 			}
 		`;
-		let errors = Solium.lint (code, userConfig);
+        let errors = Solium.lint(code, userConfig);
 
-		errors.should.be.Array ();
-		errors.should.have.size (1);
+        errors.should.be.Array();
+        errors.should.have.size(1);
 
-		code = `
+        code = `
 			contract Foo {
 				function a(uint x) myModif private returns (uint) {}
 				function a() private {}
@@ -189,13 +189,13 @@ describe ('[RULE] function-order: Rejections', function () {
 				function Foo() {}
 			}
 		`;
-		errors = Solium.lint (code, userConfig);
+        errors = Solium.lint(code, userConfig);
 
-		errors.should.be.Array ();
-		errors.should.have.size (13);
+        errors.should.be.Array();
+        errors.should.have.size(13);
 
-		Solium.reset ();
-		done ();
-	});
+        Solium.reset();
+        done();
+    });
 
 });
