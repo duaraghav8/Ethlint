@@ -60,6 +60,7 @@ solium -d contracts --fix
 ```
 
 # IDE & Editor Integrations
+- [VS Code: Solidity with Solium linting by Beau Gunderson](https://marketplace.visualstudio.com/items?itemName=beaugunderson.solidity-extended)
 - [VS Code: Solidity with Solium linting by Juan Blanco](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity)
 - [VS Code: Solidity with Solium linting by CodeChain.io](https://marketplace.visualstudio.com/items?itemName=kodebox.solidity-language-server)
 - [Sublime Solium Gutter by Florian Sey](https://github.com/sey/sublime-solium-gutter)
