@@ -35,7 +35,6 @@ module.exports = {
         "strict": "error",
         "no-var": "error",
         "no-caller": "error",
-        "no-inner-declarations": "warn",
         "no-console": "off",
         "no-undef": "off",
         "no-useless-escape": "off",

@@ -142,11 +142,10 @@ describe("Testing RuleContext object", function() {
                 message: "hello",
                 node: sampleNode,
                 location: {
-                    line: 7, column: 56
+                    line: 7,
+                    column: 56
                 },
-                fix: function(fixer) {
-                    return null;
-                }
+                fix(fixer) { return null; }
             }
         ).should.not.throw();
 

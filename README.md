@@ -1,4 +1,4 @@
-![solium](https://cloud.githubusercontent.com/assets/12758282/18283522/4b206522-7483-11e6-9bcd-2a70ebc8cfdb.png)
+# Solium
 
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/Solium-linter/Lobby)
 [![Build Status](https://travis-ci.org/duaraghav8/Solium.svg?branch=master)](https://travis-ci.org/duaraghav8/Solium)
@@ -39,7 +39,7 @@ This creates 2 files for you:
 }
 ```
 
-To know which lint rules Solium applies for you, see [Core rules](http://solium.readthedocs.io/en/latest/user-guide.html#list-of-core-rules) and [Security rules](https://github.com/duaraghav8/solium-plugin-security/tree/661c2b4f1ea0aa1fea95a78abc3d2287d63f3048#list-of-rules)
+To know which lint rules Solium applies for you, see [Core rules](http://solium.readthedocs.io/en/latest/user-guide.html#list-of-core-rules) and [Security rules](https://www.npmjs.com/package/solium-plugin-security#list-of-rules)
 
 ### Lint a single Solidity file
 ```bash

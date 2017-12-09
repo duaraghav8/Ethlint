@@ -29,12 +29,12 @@ describe("[RULE] no-with: Rejection", function() {
         errors [0].type.should.equal("warning");
         errors [0].internal.should.equal(true);
         errors [0].message.startsWith(
-            "[DEPRECATED] You are using a deprecated soliumrc configuration format."
+            "[Deprecated] You are using a deprecated soliumrc configuration format."
         ).should.equal(true);
 
         errors [1].type.should.equal("warning");
         errors [1].internal.should.equal(true);
-        errors [1].message.should.equal("[DEPRECATED] Rule \"no-with\" is deprecated.");
+        errors [1].message.should.equal("[Deprecated] Rule \"no-with\" is deprecated.");
 
         // Only rule deprecation warning with the new config
         let newConfig = {
@@ -53,7 +53,7 @@ describe("[RULE] no-with: Rejection", function() {
 
         errors [0].type.should.equal("warning");
         errors [0].internal.should.equal(true);
-        errors [0].message.should.equal("[DEPRECATED] Rule \"no-with\" is deprecated.");
+        errors [0].message.should.equal("[Deprecated] Rule \"no-with\" is deprecated.");
 
         Solium.reset();
         done();

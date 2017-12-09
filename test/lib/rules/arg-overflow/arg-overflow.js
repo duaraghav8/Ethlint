@@ -16,7 +16,7 @@ let userConfig = {
     }
 };
 
-describe("[RULE] argument overflow: Rejections", function() {
+describe("[RULE] arg-overflow: Rejections", function() {
 
     it("should enforce the rule that excess element lists must go on individual lines", function(done) {
         let code = toContract("function ArgumentOverflow(int one, int two, int three, int four) {}"),
@@ -57,7 +57,7 @@ describe("[RULE] argument overflow: Rejections", function() {
 
 });
 
-describe("[RULE] argument overflow: Acceptances", function() {
+describe("[RULE] arg-overflow: Acceptances", function() {
 
     it("should accept <= 3 arguments on single line", function(done) {
         let code = toContract("function ArgumentOverflow(int one, int two, int three) {}"),
@@ -119,7 +119,7 @@ describe("[RULE] argument overflow: Acceptances", function() {
 
 });
 
-describe("[RULE] argument overflow: Handling options", function() {
+describe("[RULE] arg-overflow: Handling options", function() {
 
     it("should accept <= N arguments in same line, N supplied through config", function(done) {
         let userConfig = {

@@ -25,6 +25,7 @@ describe("Checking Exported Solium API", function() {
     it("should be an instance of EventEmitter & expose a set of functions", function(done) {
         Solium.should.be.type("object");
         Solium.should.be.instanceof(EventEmitter);
+        Solium.should.have.size(8);
 		
         Solium.should.have.ownProperty("reset");
         Solium.reset.should.be.type("function");
@@ -743,6 +744,62 @@ describe("Checking Exported Solium API", function() {
         errors.should.have.size(1);
         errors [0].ruleName.should.equal("security/no-tx-origin");
 
+        done();
+    });
+
+    it("should respect comment directives", done => {
+        const config = {
+            "extends": "solium:all",
+            "plugins": ["security"],
+            "rules": {
+                "indentation": ["error", 4],
+                "arg-overflow": ["error", 1],
+                "uppercase": 2
+            }
+        };
+
+        // Disable linting over entire file
+        let code = `// solium-disable
+            contract Foo {
+            function foo(){}
+            struct abc {
+            uint x;
+            }
+            }`;
+        let errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(0);
+
+
+        code = `// solium-disable indentation
+            contract Foo {
+            function foo(){}
+            struct abc {
+            uint x;
+            }
+            }`;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        // no. of issues may change when core or security rules are added or there is a change in solium:all
+        errors.should.have.size(4);
+
+
+        code = `// solium-disable indentation, pragma-on-top, security/enforce-explicit-visibility
+            contract Foo {
+            function foo(){}
+            struct abc {
+            uint x;
+            }
+            }`;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        // no. of issues may change when core or security rules are added or there is a change in solium:all
+        errors.should.have.size(2);
+
+        Solium.reset();
         done();
     });
 

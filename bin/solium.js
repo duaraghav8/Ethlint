@@ -5,7 +5,6 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
-var cli = require ('../lib/cli');
-cli.execute (process.argv);
+require("../lib/cli").execute(process.argv);
