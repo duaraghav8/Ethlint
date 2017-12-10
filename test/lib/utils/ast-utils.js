@@ -5,7 +5,7 @@
 
 "use strict";
 
-let astUtils = require("../../../lib/utils/ast-utils");
+const astUtils = require("../../../lib/utils/ast-utils");
 
 /* eslint-disable no-mixed-spaces-and-tabs */
 
@@ -14,14 +14,24 @@ describe("Testing astUtils Object", function() {
     let sourceCode = "contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}",
 
         varDeclarator = {
-            type: "VariableDeclarator",
-  			id: { type: "Identifier", name: "x", start: 44, end: 45 },
-  			init: { type: "Literal", value: 100, start: 48, end: 51 },
-  			start: 44,
-  			end: 51
-  		},
+            "type": "VariableDeclarator",
+            "id": {
+                "type": "Identifier",
+                "name": "x",
+                "start": 44,
+                "end": 45
+            },
+            "init": {
+                "type": "Literal",
+                "value": 100,
+                "start": 48,
+                "end": 51
+            },
+            "start": 44,
+            "end": 51
+        },
 
-  		functionDeclaration = {
+        functionDeclaration = {
             "type": "FunctionDeclaration",
             "name": "foo",
             "params": null,
@@ -30,37 +40,38 @@ describe("Testing astUtils Object", function() {
                 "type": "BlockStatement",
                 "body": [
                     {
-        			"type": "VariableDeclaration",
-        			"declarations": [
-          			{
-            			"type": "VariableDeclarator",
-            			"id": {
-              				"type": "Identifier",
-              				"name": "x",
-              				"start": 44,
-              				"end": 45
-            			},
-            			"init": {
-              			"type": "Literal",
-              			"value": 100,
-              			"start": 48,
-              			"end": 51
-            			},
-            			"start": 44,
-            			"end": 51
-          			}
-        			],
-        			"start": 40,
-        			"end": 52
-      			}
-    			],
-    			"start": 40,
-    			"end": 52
-  			},
-  			"is_abstract": false,
-  			"start": 20,
-  			"end": 57
+                        "type": "VariableDeclaration",
+                        "declarations": [
+                            {
+                                "type": "VariableDeclarator",
+                                "id": {
+                                    "type": "Identifier",
+                                    "name": "x",
+                                    "start": 44,
+                                    "end": 45
+                                },
+                                "init": {
+                                    "type": "Literal",
+                                    "value": 100,
+                                    "start": 48,
+                                    "end": 51
+                                },
+                                "start": 44,
+                                "end": 51
+                            }
+                        ],
+                        "start": 40,
+                        "end": 52
+                    }
+                ],
+                "start": 40,
+                "end": 52
+            },
+            "is_abstract": false,
+            "start": 20,
+            "end": 55
         };
+
 
     it("should expose a set of functions for use", function(done) {
         astUtils.should.have.ownProperty("init");
