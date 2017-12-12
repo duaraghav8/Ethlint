@@ -57,6 +57,12 @@ You can also run solium so it watches your directory for changes and automatical
 
 By default, solium looks for the ``.soliumrc.json`` configuration file in your current directory. You can override this setting by using the ``--config``/``-c`` option like ``solium -d contracts/ -c ../configs/.soliumrc.json``.
 
+Solium supports multiple output formats:
+
+- ``Pretty`` (Default): ``--reporter pretty``
+- ``GCC``: ``--reporter gcc``
+
+
 Use ``solium --help`` for more information on usage.
 
 .. note::
@@ -108,6 +114,40 @@ The ``.soliumrc.json`` created in the initialisation phase contains some default
 
 .. note::
 	Severity can be expressed either as a string or integer. ``error`` = ``2``, ``warning`` = ``1``. ``off`` = ``0``, which means the rule is turned off.
+
+
+.. index:: configuring with comments
+
+Configuring with comments
+=========================
+**Comment Directives** can be used to configure Solium to ignore specific pieces of code.
+They follow the pattern ``solium-disable<optional suffix>``.
+
+If you only use the directive, Solium disables all rules for the marked code. If that's not desirable, specify the rules to disable after the directive, separated by comma.
+
+- Disable linting on a specific line
+
+.. code-block:: javascript
+
+	contract Foo {
+		/* solium-disable-next-line */
+		function() {
+			var bar = 'Hello world';	// solium-disable-line quotes
+
+			// solium-disable-next-line security/no-throw, indentation
+							throw;
+		}
+	}
+
+- Disable linting on entire file
+
+.. code-block:: javascript
+
+	/* solium-disable */
+
+	contract Foo {
+		...
+	}
 
 
 .. index:: automatic code formatting
@@ -316,6 +356,33 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-----------------+-------+
 | function-order             | Ensure order of functions in a contract: constructor,fallback,external,public,internal,private               |                                         -                                         |                 |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-----------------+-------+
+
+
+.. index:: IDE and Editor integrations
+
+*************************
+IDE & Editor Integrations
+*************************
+
+-  `VS Code: Solidity with Solium linting by Beau Gunderson`_
+-  `VS Code: Solidity with Solium linting by Juan Blanco`_
+-  `VS Code: Solidity with Solium linting by CodeChain.io`_
+-  `Sublime Solium Gutter by Florian Sey`_
+-  `Sublime Solium Linter by Alex Step`_
+-  `Atom Solium Linter by Travis Jacobs`_
+-  `Syntastic local solium by Brett Sun`_
+-  `Solium Ale Integration by Jeff Sutherland`_
+-  `Solium Neomake Integration by Beau Gunderson`_
+
+.. _`VS Code: Solidity with Solium linting by Beau Gunderson`: https://marketplace.visualstudio.com/items?itemName=beaugunderson.solidity-extended
+.. _`VS Code: Solidity with Solium linting by Juan Blanco`: https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity
+.. _`VS Code: Solidity with Solium linting by CodeChain.io`: https://marketplace.visualstudio.com/items?itemName=kodebox.solidity-language-server
+.. _Sublime Solium Gutter by Florian Sey: https://github.com/sey/sublime-solium-gutter
+.. _Sublime Solium Linter by Alex Step: https://github.com/alexstep/SublimeLinter-contrib-solium
+.. _Atom Solium Linter by Travis Jacobs: https://github.com/travs/linter-solium
+.. _Syntastic local solium by Brett Sun: https://github.com/sohkai/syntastic-local-solium.vim
+.. _Solium Ale Integration by Jeff Sutherland: https://github.com/w0rp/ale
+.. _Solium Neomake Integration by Beau Gunderson: https://github.com/neomake/neomake
 
 
 .. index:: migration guide

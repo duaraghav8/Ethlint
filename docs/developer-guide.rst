@@ -155,7 +155,7 @@ Writing a Core Rule
 To write a core rule for Solium, please start by raising an issue on `github <https://github.com/duaraghav8/Solium>`_ describing your proposal. You can check out some of the rules in the roadmap in our `Rules Wishlist <https://github.com/duaraghav8/Solium/issues/44>`_.
 
 .. note::
-	Solium is currently written entirely in ES5. We plan to `move to ES6 <https://github.com/duaraghav8/Solium/issues/76>`_ but for now, please write all the JS code you'd be contributing to solium core in ES5.
+	You are allowed (even encouraged) to write any code you wish to contribute in ``ES6``. 
 
 Say you want to develop a new rule ``foo-bar``. Here's how you'd go about it:
 
@@ -391,10 +391,16 @@ After writing your tests, add an entry for your rule ``foo-bar`` in `solium json
 
 Finally, add an entry for your rule in `solium all <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-all.js>`_ ruleset: ``foo-bar: <SEVERITY>`` where severity should be how your rule should be treated by default (as an error or warning). Severity should be same as what you specified in your rule's ``meta.docs.type``.
 
-Now run ``npm test`` and resolve any failures. Once everything passes, you're ready to make a Pull Request :D
+Now run ``npm run lint`` to let eslint work its magic. Resolve any lint issues you might see in your rule & test files.
+Run ``npm test`` and resolve any failures.
+
+Once everything passes and there are no lint issues, you're ready to make a Pull Request :D
 
 .. note::
-	Running ``npm test`` also prints coverage stats at the bottom of the CLI output. It creates the ``coverage`` directory whose ``index.html`` can be opened in any browser to view the same.
+	ESLint allows us to disable linting on specific pieces of code. This should only be used after a brief discussion about why it's suitable.
+
+.. note::
+	Running ``npm test`` also prints coverage stats at the bottom of the CLI output. It creates the ``coverage`` directory whose ``index.html`` can be opened in any browser to view the same. Write enough tests to keep the coverage for the rule above ``90%``.
 
 
 .. index:: developing sharable config

@@ -5,9 +5,9 @@
 [![Latest News](https://img.shields.io/badge/Blog-Medium-yellowgreen.svg)](https://medium.com/solium)
 [![Snap Status](https://build.snapcraft.io/badge/duaraghav8/Solium.svg)](https://build.snapcraft.io/user/duaraghav8/Solium)
 
-Solium is a Security & Style focused Linter for your Solidity Smart Contracts.
+Solium analyzes your Solidity code for style & security issues and fixes them.
 
-It provides powerful rules for writing cleaner, more secure contracts, automatic code formatting and simple-to-understand re-distributable configuration files.
+Standardize Smart Contract practices across your organisation. Integrate with your build system. Deploy with confidence!
 
 ## Install
 ```bash
@@ -44,13 +44,39 @@ To know which lint rules Solium applies for you, see [Core rules](http://solium.
 ### Lint
 ```bash
 solium -f foobar.sol
-```
-
-```bash
 solium -d contracts/
 ```
 
-### Fix lint issues
+### Configure with comments <sup>[BETA]</sup>
+**Comment Directives** can be used to configure Solium to ignore specific pieces of code.
+They follow the pattern `solium-disable<optional suffix>`.
+
+If you only use the directive, Solium disables all rules for the marked code. If that's not desirable, specify the rules to disable after the directive, separated by comma.
+
+- Disable linting on a specific line
+```
+contract Foo {
+	/* solium-disable-next-line */
+	function() {
+		var bar = 'Hello world';	// solium-disable-line quotes
+
+		// solium-disable-next-line security/no-throw, indentation
+						throw;
+	}
+}
+```
+
+- Disable linting on entire file
+
+```
+/* solium-disable */
+
+contract Foo {
+	...
+}
+```
+
+### Fix
 Solium automatically fixes your code to resolve whatever issues it can.
 ```bash
 solium -d contracts --fix

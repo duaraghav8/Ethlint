@@ -45,3 +45,30 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Remco Bloemen <https://github.com/Recmo>`_
 - `Brett Sun <https://github.com/sohkai>`_
 - `Franco Victorio <https://github.com/fvictorio>`_
+
+
+***************
+Who uses Solium
+***************
+
+Hint: The best smart contract organisations do!
+
+-  `Augur`_
+-  `Zeppelin`_
+-  `Consensys`_
+-  `Paritytech`_
+-  `Aragon`_
+-  `Melon Project`_
+-  `Digix`_
+-  `Giveth`_
+
+.. _Augur: https://augur.net/
+.. _Zeppelin: https://zeppelin.solutions/
+.. _Consensys: https://consensys.net/
+.. _Paritytech: https://paritytech.io/
+.. _Aragon: https://aragon.one/
+.. _Melon Project: https://ipfs.io/ipns/melon.fund/
+.. _Digix: https://digix.global/
+.. _Giveth: https://giveth.io/
+
+`Are you building something cool with Solium? Would love to add your name on this list, send in a PR :)`
