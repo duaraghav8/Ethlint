@@ -290,6 +290,12 @@ describe("[RULE] lbrace: Rejections", function() {
         code = "if (true){}";
         errors = Solium.lint(toFunction(code), userConfig);
 
+        code = "if (true)\n{call();}";
+        errors = Solium.lint(toFunction(code), userConfig);
+
+        code = "\n\n\n\n\tif (true)\n{call();}\n\n\n";
+        errors = Solium.lint(toFunction(code), userConfig);
+
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
 

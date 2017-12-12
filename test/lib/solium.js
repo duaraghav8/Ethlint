@@ -747,62 +747,1370 @@ describe("Checking Exported Solium API", function() {
         done();
     });
 
-    it("should respect comment directives", done => {
-        const config = {
-            "extends": "solium:all",
-            "plugins": ["security"],
-            "rules": {
-                "indentation": ["error", 4],
-                "arg-overflow": ["error", 1],
-                "uppercase": 2
-            }
-        };
+});
 
-        // Disable linting over entire file
-        let code = `// solium-disable
-            contract Foo {
-            function foo(){}
-            struct abc {
-            uint x;
+/* eslint-enable no-unused-vars */
+
+describe("Solium.lint() comment directives", () => {
+
+
+    /**
+     * Tests for disabling directives should cover the following patterns:
+     * - Line comments & Block Comments
+     * - Only directive & Directive + list of rules (single, multiple) both core and security plugin's
+     * - Directives at different positions of the program
+     * - Having/Not having extraneous whitespace (including \n in block comments)
+     * - Comments that seem like dirs but aren't due to minor changes (like char addition, etc)
+     * - Non-Directive comments (should have no impact on linting therefore)
+     */
+
+    it("should ignore any comments which are not meant for linter configuration", done => {
+        const code = `
+
+
+
+
+            // Hello world
+            /**
+             * this is my sample contract
+             */
+            contract foobar {
+                /**/ /********/
+                function() payable {
+                    /* nothing here
+                        seriously. nothing*/
+                    call(10, /****some stupid comment***/"hello world");
+                    /* soliummmm-disable-next-line */
+                    var x = 100;
+                }
+
+                // olium-disable
+                function baz(uint x, address abc) returns (uint, string) {
+                    // majola
+                    var addr = tx.origin;
+                }
+            }/* something*/
+
+
+            // Another comment
+
+
+
+        `;
+        const errors = Solium.lint(code, { "extends": "solium:all" });
+
+        errors.should.be.Array();
+        errors.should.have.size(10); // This no. can change if changes are made in any rules from solium:all ruleset
+
+        Solium.reset();
+        done();
+    });
+
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+
+    it("should respect solium-disable", done => {
+        const config = { "extends": "solium:all" };
+        let code = `//    \t   solium-disable
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
             }
-            }`;
+        `;
         let errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(0); // Number should remain 0 regardless of what rules are manipulated
+
+
+        code = `
+
+            //solium-disable
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
 
         errors.should.be.Array();
         errors.should.have.size(0);
 
 
-        code = `// solium-disable indentation
-            contract Foo {
-            function foo(){}
-            struct abc {
-            uint x;
+        code = `
+
+            //solium-disable
+            //solium-disable indentation
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
             }
-            }`;
+
+
+        `;
         errors = Solium.lint(code, config);
 
         errors.should.be.Array();
-        // no. of issues may change when core or security rules are added or there is a change in solium:all
-        errors.should.have.size(4);
+        errors.should.have.size(0); // the 2nd comment dir. should have no effect
 
 
-        code = `// solium-disable indentation, pragma-on-top, security/enforce-explicit-visibility
-            contract Foo {
-            function foo(){}
-            struct abc {
-            uint x;
+        code = `
+
+            //solium-disable indentation
+            //solium-disable
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
             }
-            }`;
+
+
+        `;
         errors = Solium.lint(code, config);
 
         errors.should.be.Array();
-        // no. of issues may change when core or security rules are added or there is a change in solium:all
-        errors.should.have.size(2);
+        errors.should.have.size(0);
+
+
+        code = `
+
+            // solium-disable indentation
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(7); // May change if rules other than indentation are changed
+
+
+        code = `
+
+            // solium-disable indentation
+            contract blah{}
+            contract f {
+                // solium-disable indentation
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(7);
+
+
+        config.plugins = ["security"];  // enable security plugin
+        code = `
+
+            //solium-disable security/enforce-explicit-visibility
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(14); // May change if rules other than sec/e-e-v are changed
+
+
+        code = `
+
+            //solium-disable security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            //solium-disable security/enforce-explicit-visibility,security/no-throw,foo/bar
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            //solium-disable     security/no-throw,  \t   \tlbrace
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+
+        // Should disable sec/no-throw & lbrace rules after line 4 all the way down (turtles!)
+        code = `
+
+            contract blah{}
+            contract f {
+                //solium-disable     security/no-throw,  \t   \tlbrace
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        // Should disable all rules starting line 4 (after line 3)
+        code = `
+
+            contract blah{}
+            //\t  \t\tsolium-disable
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(5);
+
+        delete config.plugins; // disable security plugin
+
+
+        code = `
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+            // \tsolium-disable
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13); // should lint without disruption, disable directive has no effect here
+
+
+        // Block comments
+        code = `/*    \t   solium-disable     */
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(0); // Number should remain 0 regardless of what rules are manipulated
+
+
+        code = `
+
+            /*solium-disable*/
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(0);
+
+
+        code = `
+
+            /* solium-disable indentation */
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(7); // May change if rules other than indentation are changed
+
+
+        config.plugins = ["security"];  // enable security plugin
+        code = `
+
+            /*solium-disable security/enforce-explicit-visibility*/
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(14); // May change if rules other than sec/e-e-v are changed
+
+
+        code = `
+
+            /*solium-disable security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar\t */
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            /*solium-disable security/enforce-explicit-visibility,security/no-throw,foo/bar\t */
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            /*solium-disable     security/no-throw,  \t   \tlbrace           */
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+
+        // Should disable sec/no-throw & lbrace rules after line 4 all the way down (turtles!)
+        code = `
+
+            contract blah{}
+            contract f {
+                /* solium-disable     security/no-throw,  \t   \tlbrace    */
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        // Should disable all rules starting line 4 (after line 3)
+        code = `
+
+            contract blah{}
+            /*\t  \t\tsolium-disable*/
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(5);
+
+        delete config.plugins; // disable security plugin
+
+
+        code = `
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+            /* \tsolium-disable \t*/
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13); // should lint without disruption, disable directive has no effect here
+
+
+        // solium-disable tag disables rules from NEXT line, not from current line
+        code = "//hello world\n\n/* solium-disable  */ contract foo {\nfunction(){}\n}";
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(3);
+
+        code = "//hello world\n\n/* solium-disable  */ contract foo { function(){} }";
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(5);
+
+
+        code = `
+            contract Foo {}
+            /*\t\t\tsolium-disable \n\n       \n  */
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(3);
+
+
+        config.plugins = ["security"];
+        code = `
+            contract Foo {}
+            /*\t\t\tsolium-disable\nsecurity/no-throw\n,lbrace,\nindentation  */
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(6); // can change if rules other than specified above are changed
+        delete config.plugins;
+
+
+        Solium.reset();
+        done();
+    });
+
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+
+    it("should respect solium-disable-line", done => {
+        const config = { "extends": "solium:all" };
+        let code = `
+            contract blah{}//    \t   solium-disable-line
+            contract f {
+            }
+        `;
+        let errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(5);
+
+
+        code = `
+
+            contract blah{} //solium-disable-line
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(8);
+
+
+        code = `
+
+            
+            contract blah{}     \t// \t\tsolium-disable-line indentation, lbrace
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(11);
+
+
+        config.plugins = ["security"];  // enable security plugin
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }\t\t//solium-disable-line security/no-throw
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(14);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x, //solium-disable-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }//solium-disable-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,//solium-disable-line security/enforce-explicit-visibility,security/no-throw,foo/bar
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }\t\t//solium-disable-line security/enforce-explicit-visibility,security/no-throw,foo/bar
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; } // solium-disable-line     security/no-throw,  \t   \tlbrace
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f { //\t  \t\tsolium-disable-line
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+        delete config.plugins; // disable security plugin
+
+
+        code = `
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+            // \tsolium-disable-line
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        // Block comments
+        code = `
+            contract blah{}/*    \t   solium-disable-line*/
+            contract f {
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(5);
+
+
+        code = `
+
+            contract blah{} /*solium-disable-line*/
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(8);
+
+
+        code = `
+
+            
+            contract blah{}     \t/* \t\tsolium-disable-line indentation, lbrace*/
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(11);
+
+
+        config.plugins = ["security"];  // enable security plugin
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }\t\t/*solium-disable-line security/no-throw*/
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(14);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x, /*solium-disable-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar*/
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }/*solium-disable-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar*/
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,/*solium-disable-line security/enforce-explicit-visibility,security/no-throw,foo/bar \t   */
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }\t\t/*solium-disable-line security/enforce-explicit-visibility,security/no-throw,foo/bar      */
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; } /* solium-disable-line     security/no-throw,  \t   \tlbrace\t\t*/
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f { /*\t  \t\tsolium-disable-line  */
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+        delete config.plugins; // disable security plugin
+
+
+        code = `
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+            /* \tsolium-disable-line\t  */
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+            contract Foo {}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}     /*\n\t\tsolium-disable-line \t\t       \t  */
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(9);
+
+
+        config.plugins = ["security"];
+        code = `
+            contract Foo {}
+            contract f {
+                function(){throw;}/*\t\n\tsolium-disable-line\nsecurity/no-throw\n,lbrace,\nindentation  */
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(8);
+        delete config.plugins;
+        
+
+        Solium.reset();
+        done();
+    });
+
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+    /**************************************************************************************************/
+
+    it("should respect solium-disable-next-line", done => {
+        const config = { "extends": "solium:all" };
+        let code = `
+            contract blah{}//    \t   solium-disable-next-line
+            contract f {
+            }
+        `;
+        let errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(6);
+
+
+        code = `
+
+            contract blah{} //solium-disable-next-line
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(10);
+
+
+        code = `
+
+            
+            contract blah{}
+            \t// \t\tsolium-disable-next-line indentation, lbrace
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+
+        config.plugins = ["security"];  // enable security plugin
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    //solium-disable-next-line security/no-throw
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(14);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    //solium-disable-next-line security/no-throw
+
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(15); // next line is blank, so no effect of disable-next-line
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                //solium-disable-next-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    //solium-disable-next-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                //solium-disable-next-line security/enforce-explicit-visibility,security/no-throw,foo/bar
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    \t\t//solium-disable-next-line security/enforce-explicit-visibility,security/no-throw,foo/bar
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                      // solium-disable-next-line     security/no-throw,  \t   \tlbrace
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            \t\t//\t  \t\tsolium-disable-next-line
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+        delete config.plugins; // disable security plugin
+
+
+        code = `
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+            // \tsolium-disable-next-line`;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        // Block comments
+        code = `
+        /*    \t   solium-disable-next-line*/
+            contract blah{}
+            contract f {
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(5);
+
+
+        code = `
+
+            /*solium-disable-next-line*/
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(8);
+
+
+        code = `
+
+                 \t/* \t\tsolium-disable-next-line indentation, lbrace*/
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(11);
+
+
+        config.plugins = ["security"];  // enable security plugin
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    \t\t/*solium-disable-next-line security/no-throw*/
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(14);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                /*solium-disable-next-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar*/
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    /*solium-disable-next-line security/enforce-explicit-visibility, security/no-throw,\t\tfoo/bar*/
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                /*solium-disable-next-line security/enforce-explicit-visibility,security/no-throw,foo/bar \t   */
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    \t\t/*solium-disable-next-line security/enforce-explicit-visibility,security/no-throw,foo/bar      */
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                     /* solium-disable-next-line     security/no-throw,  \t   \tlbrace\t\t*/
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+
+            contract blah{}
+             /*\t  \t\tsolium-disable-next-line  */
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      { throw; }
+            }
+
+
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(12);
+
+        delete config.plugins; // disable security plugin
+
+
+        code = `
+            contract blah{}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                    returns (uint, uint)      {}
+            }
+            /* \tsolium-disable-next-line\t  */`;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(13);
+
+
+        code = `
+            contract Foo {}
+            contract f {
+                function(uint x,
+                    string y)
+                    payable
+                    owned
+                         /*\t\t\tsolium-disable-next-line \t\t       \t  */
+                    returns (uint, uint)      {}
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(9);
+
+
+        config.plugins = ["security"];
+        code = `
+            contract Foo {}
+            contract f {
+                /*\t\n\tsolium-disable-next-line\nsecurity/no-throw\n,lbrace,\nindentation  */
+                function(){throw;}
+            }
+        `;
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(8);
+        delete config.plugins;
+
+
+        code = "/* solium-disable-next-line no-empty-blocks */ /* solium-disable-next-line camelcase */"
+            + "\ncontract foo {}";
+        errors = Solium.lint(code, config);
+
+        errors.should.be.Array();
+        errors.should.have.size(1);
 
         Solium.reset();
         done();
     });
 
 });
-
-/* eslint-enable no-unused-vars */
