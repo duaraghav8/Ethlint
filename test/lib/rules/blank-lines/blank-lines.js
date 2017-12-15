@@ -32,7 +32,7 @@ describe("[RULE] blank-lines: Acceptances", function() {
         done();
     });
 
-    it("should accept library declarations succeded by 2 blank lines (all declarations except for last)", function(done) {
+    it("should accept library declarations succeeded by 2 blank lines (all declarations except for last)", function(done) {
         let code = fs.readFileSync(path.join(__dirname, "./accept/library.sol"), "utf8"),
             errors = Solium.lint(addPragma(code), userConfig);
 
