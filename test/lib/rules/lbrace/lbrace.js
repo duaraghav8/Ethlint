@@ -31,6 +31,47 @@ describe("[RULE] lbrace: Acceptances", function() {
         done();
     });
 
+    it("should allow lbrace 1 line after returns declaration", done => {
+        let code = `contract Foo {
+    function calcUnclaimedRewards(uint gav)
+        view
+        returns (
+            uint,
+            string aaa,
+            bytes32 exa,
+            uint ff
+        )
+    {
+        //code
+    }
+}`;
+        let errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(0);
+
+
+        code = `contract Foo {
+    function calcUnclaimedRewards(uint gav)
+        view
+        returns (
+            uint,
+            string aaa,
+            bytes32 exa,
+            uint ff)
+    {
+        //code
+    }
+}`;
+        errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(0);
+
+        Solium.reset();
+        done();
+    });
+
     it("should allow (short-declaration) bodies with opening brace on same line after a single space", function(done) {
         let code = "contract Visual {}",
             errors = Solium.lint(addPragma(code), userConfig);
@@ -368,6 +409,12 @@ describe("[RULE] lbrace: Rejections", function() {
         errors.length.should.equal(1);
 
 
+        code = "while (true) foo();";
+        errors = Solium.lint(toFunction(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
+
         code = "while (true){}";
         errors = Solium.lint(toFunction(code), userConfig);
 
@@ -392,6 +439,12 @@ describe("[RULE] lbrace: Rejections", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
 
+
+        code = "for (;;) foo();";
+        errors = Solium.lint(toFunction(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
 
         code = "for (;;){}";
         errors = Solium.lint(toFunction(code), userConfig);
@@ -679,6 +732,13 @@ describe("[RULE] lbrace: Rejections", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
 
+
+        code = "do foo(); while (true);";
+        errors = Solium.lint(toFunction(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
+
         Solium.reset();
         done();
     });
@@ -719,6 +779,55 @@ describe("[RULE] lbrace: Rejections", function() {
         errors = Solium.lint(toFunction(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
+
+
+        code = `contract Foo {
+        function() returns (uint x, address y) {
+                if (true)
+                        foo(); else chumma();}}`;
+        errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.should.have.size(1);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should reject lbrace that's NOT 1 line after returns declaration", done => {
+        let code = `contract Foo {
+    function calcUnclaimedRewards(uint gav)
+        view
+        returns (
+            uint,
+            string aaa,
+            bytes32 exa,
+            uint ff
+        ) {
+        //code
+    }
+}`;
+        let errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(1);
+
+
+        code = `contract Foo {
+    function calcUnclaimedRewards(uint gav)
+        view
+        returns (
+            uint,
+            string aaa,
+            bytes32 exa,
+            uint ff) {
+        //code
+    }
+}`;
+        errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
         errors.length.should.equal(1);
 
         Solium.reset();

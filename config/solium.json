@@ -61,7 +61,7 @@
 			"enabled": true,
 			"recommended": true,
 			"type": "error",
-			"description": "Ensure that every if, for, while and do statement is followed by an opening curly brace '{' on the same line"
+			"description": "Ensure correct positioning of the opening brace '{'"
 		},
 
 		"mixedcase": {

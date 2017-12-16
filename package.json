@@ -1,7 +1,7 @@
 {
   "name": "solium",
   "version": "1.0.11",
-  "description": "A customisable linter to identify & fix patterns in Ethereum Solidity",
+  "description": "Linter to identify & fix Style & Security issues in Solidity",
   "main": "./lib/solium.js",
   "bin": {
     "solium": "./bin/solium.js"
@@ -22,7 +22,9 @@
     "code-quality",
     "dapp",
     "developer-tools",
-    "security"
+    "security",
+    "soliumconfig",
+    "soliumplugin"
   ],
   "repository": {
     "type": "git",
@@ -40,7 +42,7 @@
     "sol-digger": "0.0.2",
     "sol-explore": "^1.6.1",
     "solium-plugin-security": "0.0.2",
-    "solparse": "2.0.2",
+    "solparse": "2.2.0",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
