@@ -40,7 +40,7 @@
     "js-string-escape": "^1.0.1",
     "lodash": "^4.14.2",
     "sol-digger": "0.0.2",
-    "sol-explore": "^1.6.1",
+    "sol-explore": "1.6.1",
     "solium-plugin-security": "0.0.2",
     "solparse": "2.2.0",
     "text-table": "^0.2.0"
@@ -54,7 +54,7 @@
     "solium-config-test": "0.0.1",
     "solium-config-test-invalid-schema": "0.0.0",
     "solium-config-test-invalid-syntax": "0.0.0",
-    "solium-plugin-test": "^0.1.5",
+    "solium-plugin-test": "0.1.5",
     "solium-plugin-test-invalid-schema": "0.0.0"
   }
 }

@@ -25,7 +25,7 @@ describe("Checking Exported Solium API", function() {
     it("should be an instance of EventEmitter & expose a set of functions", function(done) {
         Solium.should.be.type("object");
         Solium.should.be.instanceof(EventEmitter);
-        Solium.should.have.size(8);
+        Solium.should.have.size(10);
 		
         Solium.should.have.ownProperty("reset");
         Solium.reset.should.be.type("function");
@@ -37,6 +37,22 @@ describe("Checking Exported Solium API", function() {
         Solium.report.should.be.type("function");
         Solium.should.have.ownProperty("getSourceCode");
         Solium.getSourceCode.should.be.type("function");
+        Solium.should.have.ownProperty("getDefaultConfig");
+        Solium.getDefaultConfig.should.be.type("function");
+        Solium.should.have.ownProperty("version");
+        Solium.version.should.be.type("string");
+
+        done();
+    });
+
+    it("should provide default dotfiles", done => {
+        const defaultConfigs = Solium.getDefaultConfig();
+
+        defaultConfigs.should.have.size(2);
+        defaultConfigs.should.have.ownProperty(".soliumrc.json");
+        defaultConfigs.should.have.ownProperty(".soliumignore");
+        defaultConfigs[".soliumrc.json"].should.be.type("object");
+        defaultConfigs[".soliumignore"].should.be.type("string");
 
         done();
     });
