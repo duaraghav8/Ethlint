@@ -82,7 +82,7 @@ Solium automatically fixes your code to resolve whatever issues it can.
 solium -d contracts --fix
 ```
 
-## IDE & Editor Integrations
+## Integrations
 - [VS Code: Solidity with Solium linting by Beau Gunderson](https://marketplace.visualstudio.com/items?itemName=beaugunderson.solidity-extended)
 - [VS Code: Solidity with Solium linting by Juan Blanco](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity)
 - [VS Code: Solidity with Solium linting by CodeChain.io](https://marketplace.visualstudio.com/items?itemName=kodebox.solidity-language-server)
@@ -92,6 +92,7 @@ solium -d contracts --fix
 - [Syntastic local solium by Brett Sun](https://github.com/sohkai/syntastic-local-solium.vim)
 - [Solium Ale Integration by Jeff Sutherland](https://github.com/w0rp/ale)
 - [Solium Neomake Integration by Beau Gunderson](https://github.com/neomake/neomake)
+- [Solium Official Plugin for Embark](https://github.com/duaraghav8/embark-solium)
 
 ## Migrating from v0
 If you're currently using Solium `v0`, we highly recommend you to [migrate to v1](http://solium.readthedocs.io/en/latest/user-guide.html#migrating-to-v1-0-0). v1 is backward compatible and provides you with much greater flexibility to configure rules, powerful security rules and auto code formatting among other features.
