@@ -229,6 +229,27 @@ describe("[RULE] lbrace: Acceptances", function() {
 
         errors.should.be.Array();
         errors.length.should.equal(0);
+
+
+        code = `
+            function requestSubscription(
+                uint giveQuantity,
+                uint shareQuantity,
+                uint incentiveQuantity
+            )
+                external
+                pre_cond(firstCond)   // a comment
+                pre_cond(someCond)    // a comment
+                payable
+                blue    // a comment wooww
+            {
+                bar(100);
+            }
+        `;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(0);
 		
         Solium.reset();
         done();
@@ -884,6 +905,47 @@ describe("[RULE] lbrace: Rejections", function() {
                 pre_cond(someCond)    // a comment
 
             {
+                bar(100);
+            }
+        `;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(1);
+
+
+        code = `
+            function requestSubscription(
+                uint giveQuantity,
+                uint shareQuantity,
+                uint incentiveQuantity
+            )
+                external
+                pre_cond(firstCond)   // a comment
+                pre_cond(someCond)    // a comment
+                fuckertron
+
+            {
+                bar(100);
+            }
+        `;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(1);
+
+
+        code = `
+            function requestSubscription(
+                uint giveQuantity,
+                uint shareQuantity,
+                uint incentiveQuantity
+            )
+                external
+                pre_cond(firstCond)   // a comment
+                pre_cond(someCond)    // a comment
+                fuckertron
+                lol { // a lol comment
                 bar(100);
             }
         `;
