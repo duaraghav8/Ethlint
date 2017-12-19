@@ -1,22 +1,19 @@
 pragma solidity ^0.4.0;
 
 
-import "filename" as symbolName;
+import * as symbolName from "filename";
 
 
 contract Halo {
-
     function foo () returns (uint) {
         return 0;
     }
 }
 
-import * as symbolName from "filename";
+import "nano.sol";
 
 library Foo {
     function bar () returns (uint) {
         return 1;
     }
 }
-
-import "nano.sol";
