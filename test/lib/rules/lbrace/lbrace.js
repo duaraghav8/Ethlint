@@ -210,6 +210,25 @@ describe("[RULE] lbrace: Acceptances", function() {
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
+
+
+        code = `
+            function requestSubscription(
+                uint giveQuantity,
+                uint shareQuantity,
+                uint incentiveQuantity
+            )
+                external
+                pre_cond(firstCond)   // a comment
+                pre_cond(someCond)    // a comment
+            {
+                bar(100);
+            }
+        `;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(0);
 		
         Solium.reset();
         done();
@@ -831,6 +850,48 @@ describe("[RULE] lbrace: Rejections", function() {
         errors.length.should.equal(1);
 
         Solium.reset();
+        done();
+    });
+
+
+    it("should reject lbrace that's NOT 1 line after last modifier", done => {
+        let code = `
+            function requestSubscription(
+                uint giveQuantity,
+                uint shareQuantity,
+                uint incentiveQuantity
+            )
+                external
+                pre_cond(firstCond)   // a comment
+                pre_cond(someCond) {    // a comment
+                bar(100);
+            }
+        `;
+        let errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(1);
+
+
+        code = `
+            function requestSubscription(
+                uint giveQuantity,
+                uint shareQuantity,
+                uint incentiveQuantity
+            )
+                external
+                pre_cond(firstCond)   // a comment
+                pre_cond(someCond)    // a comment
+
+            {
+                bar(100);
+            }
+        `;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(1);
+
         done();
     });
 

@@ -103,6 +103,7 @@ If you're currently using Solium `v0`, we highly recommend you to [migrate to v1
 - [Consensys](https://consensys.net/)
 - [Paritytech](https://paritytech.io/)
 - [Aragon](https://aragon.one/)
+- [Ethereum Name Service](https://github.com/ensdomains)
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
 - [Digix](https://digix.global/)
 - [Giveth](https://giveth.io/)
