@@ -17,10 +17,10 @@ let userConfig = {
 };
 
 let runAll = {
-    "extends": "solium:all",
+    "extends": "solium:all"
 };
 
-const eol = require('os').EOL;
+const eol = require("os").EOL;
 
 
 describe("[RULE] imports-on-top: Acceptances", function() {
@@ -124,8 +124,8 @@ describe("[RULE] imports-on-top: Fixes", function() {
 
         // The fixed source code should have two new lines after the first pragma solidity then have all the imports
         let lines = fixedSourceCode.split(eol);
-        lines[3].should.equal('import "nano.sol";');
-        lines[4].should.equal('import * as symbolName from "filename";');
+        lines[3].should.equal("import \"nano.sol\";");
+        lines[4].should.equal("import * as symbolName from \"filename\";");
 
         // If we re-lint the fixedSourceCode with "extends": "all" we should get no errors
         errors = Solium.lint(fixedSourceCode, runAll);
@@ -150,6 +150,6 @@ describe("[RULE] imports-on-top: Fixes", function() {
 
         Solium.reset();
         done();
-    })
+    });
 
 });
