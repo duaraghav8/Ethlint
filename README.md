@@ -84,6 +84,7 @@ solium -d contracts --fix
 
 ## Integrations
 - [VS Code: Solidity with Solium linting by Beau Gunderson](https://marketplace.visualstudio.com/items?itemName=beaugunderson.solidity-extended)
+- [ethereum/emacs-solidity](https://github.com/ethereum/emacs-solidity) with Solium Support by [Lefteris Karapetsas](https://github.com/LefterisJP)
 - [VS Code: Solidity with Solium linting by Juan Blanco](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity)
 - [VS Code: Solidity with Solium linting by CodeChain.io](https://marketplace.visualstudio.com/items?itemName=kodebox.solidity-language-server)
 - [Sublime Solium Gutter by Florian Sey](https://github.com/sey/sublime-solium-gutter)
