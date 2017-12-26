@@ -8,11 +8,3 @@ contract Halo {
 }
 
 import "nano.sol";
-
-library Foo {
-    function bar () returns (uint) {
-        return 1;
-    }
-}
-
-import * as symbolName from "filename";
