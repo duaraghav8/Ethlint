@@ -330,3 +330,150 @@ describe("[RULE] blank-lines: Rejections", function() {
     });
 
 });
+
+
+describe("[RULE] blank-lines: Fixes", function() {
+
+    it("Should correct spacing between top level declarations with < 2 lines of gap between them", function(done) {
+        const code = fs.readFileSync(path.join(__dirname, "./reject/contract.sol"), "utf8");
+        let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(addPragma(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        // The fixes should have fixed all linting errors with respect to this rule
+        errors = Solium.lint(fixedSourceCode, userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        Solium.reset();
+        done();
+    });
+
+    it("Should correct multiline functions not followed by a blank line", function(done) {
+        let code = fs.readFileSync(path.join(__dirname, "./reject/function.sol"), "utf8"),
+            {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(addPragma(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        // The fixes should have fixed all linting errors with respect to this rule
+        errors = Solium.lint(fixedSourceCode, userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should correct top level declarations accompanied by comments but not gapped properly", function(done) {
+        let snippets = [
+            `
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+            `
+			pragma solidity ^0.4.17;
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+            `
+			pragma solidity ^0.4.17;
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+
+			// import 'zeppelin-solidity/contracts/token/StandardToken.sol';
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+            `
+			pragma solidity ^0.4.17;
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+            `
+			pragma solidity ^0.4.17;
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+            `
+			pragma solidity ^0.4.17;
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			/* import 'zeppelin-solidity/contracts/token/StandardToken.sol'; */
+
+			contract Test {
+
+				function Test () {
+				}
+
+			}
+			`,
+            `
+            pragma solidity ^0.4.17;
+            
+            /*
+            This is a test for block comments
+            that extend across multiple lines
+            */
+            contract Test {
+                  
+            }
+            `,
+            `
+            pragma solidity ^0.4.17;
+            
+            
+            contract T {} // Test
+            contract S {}
+            `
+        ];
+
+        snippets.forEach(code => {
+            let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(code, userConfig);
+            errors.should.be.Array();
+            errors.should.have.size(0);
+
+            errors = Solium.lint(fixedSourceCode, userConfig);
+            errors.should.be.Array();
+            errors.should.have.size(0);
+        });
+
+        Solium.reset();
+        done();
+    });
+
+});
