@@ -45,6 +45,7 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Remco Bloemen <https://github.com/Recmo>`_
 - `Brett Sun <https://github.com/sohkai>`_
 - `Franco Victorio <https://github.com/fvictorio>`_
+- `Gabriel Alacchi <https://github.com/GabrielAlacchi>`_
 
 
 ***************
