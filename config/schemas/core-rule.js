@@ -6,7 +6,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
 // A fully qualified object for this Schema is:
 /*
@@ -30,63 +30,63 @@
 }
 */
 
-var Ajv = require ('ajv'),
-	SchemaValidator = new Ajv ({ allErrors: true });
+let Ajv = require("ajv"),
+    SchemaValidator = new Ajv({ allErrors: true });
 
 // If this constraint is set to true on any attribute, then that attribute MUST be of type function. If set to false, attr MUST NOT be a function.
-SchemaValidator.addKeyword ('shouldBeOfTypeFunction', {
-	validate: function (isSet, attr) {
-		return isSet === (typeof attr === 'function');
-	}
+SchemaValidator.addKeyword("shouldBeOfTypeFunction", {
+    validate: function(isSet, attr) {
+        return isSet === (typeof attr === "function");
+    }
 });
 
 
-var Schema = {
-	type: 'object',
+let Schema = {
+    type: "object",
 
-	properties: {
+    properties: {
 
-		meta: {
-			type: 'object',
-			properties: {
+        meta: {
+            type: "object",
+            properties: {
 
-				docs: {
-					type: 'object',
-					properties: {
-						recommended: { type: 'boolean' },
-						type: { type: 'string', enum: ['error', 'warning', 'off'] },
-						description: { type: 'string', minLength: 1 },
+                docs: {
+                    type: "object",
+                    properties: {
+                        recommended: { type: "boolean" },
+                        type: { type: "string", enum: ["error", "warning", "off"] },
+                        description: { type: "string", minLength: 1 },
 
-						replacedBy: {
-							type: 'array',
-							minItems: 1,
-							items: { type: 'string', minLength: 1 }
-						}
-					},
-					required: ['recommended', 'type', 'description']
-				},
+                        replacedBy: {
+                            type: "array",
+                            minItems: 1,
+                            items: { type: "string", minLength: 1 }
+                        }
+                    },
+                    required: ["recommended", "type", "description"]
+                },
 
-				schema: { type: 'array', items: { type: 'object' } },
+                schema: { type: "array", items: { type: "object" } },
 
-				fixable: {
-					type: 'string', enum: ['code', 'whitespace']
-				},
+                fixable: {
+                    type: "string", enum: ["code", "whitespace"]
+                },
 
-				deprecated: { type: 'boolean' }
+                deprecated: { type: "boolean" }
 
-			},
-			required: ['docs', 'schema']
-		},
+            },
+            required: ["docs", "schema"]
+        },
 
-		create: {
-			shouldBeOfTypeFunction: true
-		}
+        create: {
+            shouldBeOfTypeFunction: true
+        }
 
-	},
+    },
 
-	required: ['meta', 'create'],
+    required: ["meta", "create"],
 
-	additionalProperties: false
+    additionalProperties: false
 };
 
 

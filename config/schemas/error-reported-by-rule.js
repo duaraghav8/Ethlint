@@ -5,7 +5,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
 // A fully qualified object for this Schema is:
 /*
@@ -26,42 +26,42 @@
 }
 */
 
-var Ajv = require ('ajv'),
-	astNode = require ('./ast-node'),
-	SchemaValidator = new Ajv ({ allErrors: true });
+let Ajv = require("ajv"),
+    astNode = require("./ast-node"),
+    SchemaValidator = new Ajv({ allErrors: true });
 
 
-SchemaValidator.addKeyword ('shouldBeOfTypeFunction', {
-	validate: function (isSet, attr) {
-		return isSet === (typeof attr === 'function');
-	}
+SchemaValidator.addKeyword("shouldBeOfTypeFunction", {
+    validate: function(isSet, attr) {
+        return isSet === (typeof attr === "function");
+    }
 });
 
-var Schema = {
+let Schema = {
 
-	type: 'object',
-	properties: {
+    type: "object",
+    properties: {
 
-		message: { type: 'string', minLength: 1 },
-		node: astNode,
-		fix: { shouldBeOfTypeFunction: true },
-		location: {
-			type: 'object',
-			properties: {
-				line: { type: 'integer', minimum: 1 },	// line starts from 1
-				column: { type: 'integer', minimum: 0 }	// column starts from 0
-			},
-			additionalProperties: false
-		}
+        message: { type: "string", minLength: 1 },
+        node: astNode,
+        fix: { shouldBeOfTypeFunction: true },
+        location: {
+            type: "object",
+            properties: {
+                line: { type: "integer", minimum: 1 },	// line starts from 1
+                column: { type: "integer", minimum: 0 }	// column starts from 0
+            },
+            additionalProperties: false
+        }
 
-	},
+    },
 
-	required: ['message', 'node'],
-	additionalProperties: false
+    required: ["message", "node"],
+    additionalProperties: false
 
 };
 
 
 module.exports = {
-	schema: Schema, validationFunc: SchemaValidator.compile (Schema)
+    schema: Schema, validationFunc: SchemaValidator.compile(Schema)
 };

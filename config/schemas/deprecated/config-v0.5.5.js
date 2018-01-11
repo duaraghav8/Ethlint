@@ -3,9 +3,9 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
-var optionsSchema = require ('../config').properties.options;
+let optionsSchema = require("../config").properties.options;
 
 // A fully qualified object for this Schema is:
 /*
@@ -19,31 +19,31 @@ var optionsSchema = require ('../config').properties.options;
 }
 */
 
-var Schema = {
-	type: 'object',
+let Schema = {
+    type: "object",
 
-	properties: {
-		'custom-rules-filename': {
-			oneOf: [
-				{ type: 'string', minLength: 1 },
-				{ type: 'null' }
-			]
-		},
+    properties: {
+        "custom-rules-filename": {
+            oneOf: [
+                { type: "string", minLength: 1 },
+                { type: "null" }
+            ]
+        },
 
-		rules: {
-			type: 'object',
-			patternProperties: {
-				'^.+$': { type: 'boolean' }
-			},
-			additionalProperties: false
-		},
+        rules: {
+            type: "object",
+            patternProperties: {
+                "^.+$": { type: "boolean" }
+            },
+            additionalProperties: false
+        },
 
-		options: optionsSchema
-	},
+        options: optionsSchema
+    },
 
-	required: ['rules'],
+    required: ["rules"],
 
-	additionalProperties: false
+    additionalProperties: false
 };
 
 

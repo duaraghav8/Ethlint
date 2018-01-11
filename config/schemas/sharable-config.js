@@ -14,21 +14,21 @@
 }
 */
 
-'use strict';
+"use strict";
 
-var rulesSchema = require ('./config').properties.rules;
+let rulesSchema = require("./config").properties.rules;
 
 
-var Schema = {
+let Schema = {
 
-	type: 'object',
+    type: "object",
 
-	properties: {
-		rules: rulesSchema
-	},
+    properties: {
+        rules: rulesSchema
+    },
 
-	required: ['rules'],
-	additionalProperties: false
+    required: ["rules"],
+    additionalProperties: false
 
 };
 

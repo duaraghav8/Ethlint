@@ -4,7 +4,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
 // A fully qualified object for this Schema is:
 /*
@@ -36,36 +36,36 @@
 }
 */
 
-var coreRule = require ('./core-rule'), SchemaValidator = coreRule.SchemaValidator;
+let coreRule = require("./core-rule"), SchemaValidator = coreRule.SchemaValidator;
 
 
-var Schema = {
+let Schema = {
 
-	type: 'object',
+    type: "object",
 
-	properties: {
+    properties: {
 
-		rules: {
-			type: 'object',
-			patternProperties: { '^.+$': coreRule.Schema },
-			additionalProperties: false
-		},
+        rules: {
+            type: "object",
+            patternProperties: { "^.+$": coreRule.Schema },
+            additionalProperties: false
+        },
 
-		meta: {
-			type: 'object',
-			properties: {
-				description: { type: 'string', minLength: 1	}
-			},
-			required: ['description'],
-			additionalProperties: false
-		}
+        meta: {
+            type: "object",
+            properties: {
+                description: { type: "string", minLength: 1	}
+            },
+            required: ["description"],
+            additionalProperties: false
+        }
 
-	},
+    },
 
-	required: ['rules', 'meta'],
-	additionalProperties: false
+    required: ["rules", "meta"],
+    additionalProperties: false
 
 };
 
 
-module.exports = { Schema: Schema, validationFunc: SchemaValidator.compile (Schema) };
+module.exports = { Schema: Schema, validationFunc: SchemaValidator.compile(Schema) };

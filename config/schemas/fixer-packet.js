@@ -5,7 +5,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
 // A fully qualified object for this Schema is:
 /*
@@ -15,46 +15,46 @@
 ]
 */
 
-var Ajv = require ('ajv'), validator = new Ajv ({ allErrors: true });
+let Ajv = require("ajv"), validator = new Ajv({ allErrors: true });
 
-var singleFixerPacket = {
-	type: 'object',
+let singleFixerPacket = {
+    type: "object",
 
-	properties: {
+    properties: {
 
-		range: {
-			type: 'array',
-			minItems: 2,
-			maxItems: 2,
-			items: {
-				type: 'integer', minimum: 0
-			}
-		},
+        range: {
+            type: "array",
+            minItems: 2,
+            maxItems: 2,
+            items: {
+                type: "integer", minimum: 0
+            }
+        },
 
-		text: {
-			type: 'string'
-		}
+        text: {
+            type: "string"
+        }
 
-	},
+    },
 
-	required: ['range', 'text'],
-	additionalProperties: false
+    required: ["range", "text"],
+    additionalProperties: false
 };
 
-var Schema = {
-	oneOf: [
-		{
-			type: 'array',
-			minItems: 1,
-			items: singleFixerPacket
-		},
+let Schema = {
+    oneOf: [
+        {
+            type: "array",
+            minItems: 1,
+            items: singleFixerPacket
+        },
 
-		singleFixerPacket
-	]
+        singleFixerPacket
+    ]
 };
 
 
 module.exports = {
-	Schema: Schema,
-	validationFunc: validator.compile (Schema)
+    Schema: Schema,
+    validationFunc: validator.compile(Schema)
 };

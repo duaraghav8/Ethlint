@@ -6,7 +6,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
 // A fully qualified, minimal object for this Schema is:
 /*
@@ -17,27 +17,27 @@
 }
 */
 
-var array = { type: 'array' }, number = { type: 'number' }, bool = { type: 'boolean' },
-	string = { type: 'string' }, object = { type: 'object' }, attrNull = { type: 'null' };
+let array = { type: "array" }, number = { type: "number" }, bool = { type: "boolean" },
+    string = { type: "string" }, object = { type: "object" }, attrNull = { type: "null" };
 
-var Schema = {
+let Schema = {
 
-	type: 'object',
+    type: "object",
 
-	properties: {
-		type: { type: 'string', minLength: 1 },
-		start: { type: 'integer', minimum: 0 },
-		end: { type: 'integer', minimum: 0 }
-	},
+    properties: {
+        type: { type: "string", minLength: 1 },
+        start: { type: "integer", minimum: 0 },
+        end: { type: "integer", minimum: 0 }
+    },
 
-	patternProperties: {
-		'^.+$': {
-			oneOf: [array, string, object, number, attrNull, bool]
-		}
-	},
+    patternProperties: {
+        "^.+$": {
+            oneOf: [array, string, object, number, attrNull, bool]
+        }
+    },
 
-	required: ['type', 'start', 'end'],
-	additionalProperties: false
+    required: ["type", "start", "end"],
+    additionalProperties: false
 
 };
 

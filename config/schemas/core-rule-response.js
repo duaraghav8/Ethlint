@@ -3,7 +3,7 @@
  * @author Raghav Dua <duaraghav8@gmail.com>
  */
 
-'use strict';
+"use strict";
 
 // A fully qualified object for this Schema is:
 /*
@@ -18,19 +18,18 @@
 }
 */
 
-var Ajv = require ('ajv'),
-	SchemaValidator = require ('./core-rule').SchemaValidator;
+let SchemaValidator = require("./core-rule").SchemaValidator;
 
-var Schema = {
-	type: 'object',
+let Schema = {
+    type: "object",
 
-	patternProperties: {
-		'^.+$': {
-			shouldBeOfTypeFunction: true	// This custom attribute is defined in SchemaValidator of ./core-rule.js
-		}
-	},
+    patternProperties: {
+        "^.+$": {
+            shouldBeOfTypeFunction: true	// This custom attribute is defined in SchemaValidator of ./core-rule.js
+        }
+    },
 
-	additionalProperties: false
+    additionalProperties: false
 };
 
 
