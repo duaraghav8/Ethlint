@@ -29,7 +29,7 @@ This creates 2 files for you:
 
 ```json
 {
-  "extends": "solium:all",
+  "extends": "solium:recommended",
   "plugins": ["security"],
   "rules": {
     "quotes": ["error", "double"],

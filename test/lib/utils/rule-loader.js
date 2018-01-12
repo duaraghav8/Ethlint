@@ -27,10 +27,14 @@ describe("Test rule-loader functions", function() {
     it("should expose a set of constants", function(done) {
         ruleLoader.should.have.ownProperty("constants");
         ruleLoader.constants.should.be.type("object");
-        ruleLoader.constants.should.be.size(5);
+        ruleLoader.constants.should.be.size(6);
 
         ruleLoader.constants.should.have.ownProperty("SOLIUM_RULESET_ALL");
         ruleLoader.constants.SOLIUM_RULESET_ALL.should.be.type("string");
+
+        ruleLoader.constants.should.have.ownProperty("SOLIUM_RULESET_RECOMMENDED");
+        ruleLoader.constants.SOLIUM_RULESET_RECOMMENDED.should.be.type("string");
+        
 
         ruleLoader.constants.should.have.ownProperty("SOLIUM_CORE_RULES_DIRNAME");
         ruleLoader.constants.SOLIUM_CORE_RULES_DIRNAME.should.be.type("string");

@@ -105,7 +105,7 @@ The ``.soliumrc.json`` created in the initialisation phase contains some default
 		}
 	}
 
-- By default, soliumrc inherits ``solium:all`` - the base ruleset which enables all non-deprecated rules. You can replace the value by a sharable config's name (see `Sharable Configs`_).
+- By default, soliumrc inherits ``solium:recommended`` (starting ``v1.1.3``, prior to which it was ``solium:all``) - the base ruleset which enables all non-deprecated rules recommended for general audience. You can replace the value by a sharable config's name (see `Sharable Configs`_).
 - A few rules are passed additional configuration, like double quotes for all strings, 4 spaces per indentation level, etc.
 - Solium comes bundled with its official security plugin. By default, this plugin is enabled. **We recommend that you keep the security plugin enabled without modifying behaviour of any of its rules.** But if you still wish to configure them or remove the plugin altogether, you can.
 
@@ -188,7 +188,7 @@ How the autofix mechanism works is:
 Sharable Configs
 ****************
 
-The list of rules in Solium will keep growing over time. After a point, its just overkill to spend time specifying rules, their severities and options in your soliumrc every time you create a new Solidity Project. At that time, you can either choose to inherit ``solium:all`` configuration or borrow configurations written by others.
+The list of rules in Solium will keep growing over time. After a point, its just overkill to spend time specifying rules, their severities and options in your soliumrc every time you create a new Solidity Project. At that time, you can either choose to inherit ``solium:recommended`` or ``solium:all`` configuration or borrow configurations written by others.
 
 A Sharable Config allows you to borrow someone else's soliumrc configuration. The idea is to simply pick a style to follow and focus on your business problem instead of making your own style specification.
 
@@ -249,7 +249,7 @@ Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 .. code-block:: javascript
 
 	{
-		"extends": "solium:all",
+		"extends": "solium:recommended",
 		"plugins": ["consensys"]
 	}
 
@@ -261,7 +261,7 @@ Coming back to our previous example - Consensys' ``solium-plugin-consensys``:
 .. code-block:: javascript
 
 	{
-		"extends": "solium:all",
+		"extends": "solium:recommended",
 		"plugins": ["consensys"],
 		"rules": {
 			"consensys/race-conditions": "error",
@@ -297,8 +297,10 @@ When you run ``solium --init``, the ``.soliumrc.json`` created for you contains 
 List of Core Rules
 ******************
 
-Below is the list of core rules supplied by Solium. All are enabled by default (if you inherit ``solium:all`` in your soliumrc) **except for the deprecated ones**.
-Enabling a deprecated rule will display a warning message on the CLI.
+Below is the list of core rules supplied by Solium. By default, ``solium:recommended`` is extended by your soliumrc, which enables all lint rules recommended for general audience (See `solium-recommended <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-recommended.js>`_).
+You can choose to further configure their severities inside your soliumrc itself.
+If you choose ``solium:all`` instead, all core rules are enabled **except for the deprecated ones**.
+Enabling a deprecated rule will display a warning message on Solium CLI.
 
 These rules may or may not contain fixes. Their fixes will be applied on the code if you use the ``--fix`` flag in your lint command. Some rules even take options that can modify their behavior.
 
@@ -428,7 +430,7 @@ Please change it to this:
 .. code-block:: javascript
 
     {
-      "extends": "solium:all",
+      "extends": "solium:recommended",
       "rules": {
         "imports-on-top": 0,
         "variable-declarations": 0,
@@ -474,7 +476,7 @@ A fully fledged example of v1's ``.soliumrc.json`` is:
 .. code-block:: javascript
 
 	{
-		"extends": "solium:all",
+		"extends": "solium:recommended",
 		"plugins": ["consensys", "foobar"],
 		"rules": {
 			"consensys/race-conditions": "error",
@@ -541,7 +543,7 @@ There have been additions in the Solium API. However, there are no breaking chan
 
 	const mySourceCode = '...',;
 	const config = {
-		extends: "solium:all",
+		extends: "solium:recommended",
 		plugins: ["security"],
 		rules: {
 			"double-quotes": "error"

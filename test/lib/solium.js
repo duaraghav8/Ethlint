@@ -763,6 +763,17 @@ describe("Checking Exported Solium API", function() {
         done();
     });
 
+    it("should work well with the solium:recommended ruleset", done => {
+        Solium.lint.bind(
+            Solium,
+            "contract Foo {}",
+            { "extends": "solium:recommended" }
+        ).should.not.throw();
+
+        Solium.reset();
+        done();
+    });
+
 });
 
 /* eslint-enable no-unused-vars */

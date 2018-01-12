@@ -40,7 +40,7 @@ You can now use Solium like:
 		sourceCode = 'contract fOO_bar { string hola = \'hello\'; }';
 
 	const errors = Solium.lint(sourceCode, {
-		"extends": "solium:all",
+		"extends": "solium:recommended",
 		"plugins": ["security"],
 		"rules": {
 			"quotes": ["error", "double"],
@@ -87,7 +87,7 @@ You can now use Solium like:
 		sourceCode = 'contract fOO_bar { string hola = \'hello\'; }';
 
 	const result = Solium.lintAndFix(sourceCode, {
-		"extends": "solium:all",
+		"extends": "solium:recommended",
 		"plugins": ["security"],
 		"rules": {
 			"quotes": ["error", "double"],
@@ -140,6 +140,7 @@ The output of ``lintAndFix()`` look like:
 	The input supplied to ``lint()`` and ``lintAndFix()`` is the same. Its the output format that differs.
 
 To work with Solium:
+
 - clone the repository to your local machine using, for eg, ``git clone git@github.com:duaraghav8/Solium.git``.
 - Move into its directory using ``cd Solium``.
 - Install all dependencies **and** dev dependencies using ``npm install --dev``.
