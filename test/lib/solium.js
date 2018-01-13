@@ -32,9 +32,11 @@ describe("Checking Exported Solium API", function() {
         Solium.should.have.ownProperty("lint");
         Solium.lint.should.be.type("function");
         Solium.should.have.ownProperty("lintAndFix");
-        Solium.lint.should.be.type("function");
+        Solium.lintAndFix.should.be.type("function");
         Solium.should.have.ownProperty("report");
         Solium.report.should.be.type("function");
+        Solium.should.have.ownProperty("reportInternal");
+        Solium.reportInternal.should.be.type("function");
         Solium.should.have.ownProperty("getSourceCode");
         Solium.getSourceCode.should.be.type("function");
         Solium.should.have.ownProperty("getDefaultConfig");
@@ -53,6 +55,23 @@ describe("Checking Exported Solium API", function() {
         defaultConfigs.should.have.ownProperty(".soliumignore");
         defaultConfigs[".soliumrc.json"].should.be.type("object");
         defaultConfigs[".soliumignore"].should.be.type("string");
+
+        done();
+    });
+
+    it("should exit gracefully in case of syntax error in code passed to lint()", done => {
+        Solium.lint.bind(Solium, "sjbkjgdskgaalihaiu", { "extends": "solium:recommended" }).should.throw();
+
+        Solium.reset();
+        done();
+    });
+
+    it("should throw when reportInternal() is passed invalid issue object", done => {
+        const invalidData = [undefined, , null, 1902, "hello world", [1, 2, 3], true, false, 9.28937];
+
+        invalidData.forEach(data => {
+            Solium.reportInternal.bind(Solium, data).should.throw();
+        });
 
         done();
     });

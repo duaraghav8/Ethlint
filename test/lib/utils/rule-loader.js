@@ -16,7 +16,7 @@ describe("Test rule-loader functions", function() {
         ruleLoader.resolveUpstream.should.be.type("function");
 
         ruleLoader.should.have.ownProperty("resolvePluginConfig");
-        ruleLoader.resolveUpstream.should.be.type("function");
+        ruleLoader.resolvePluginConfig.should.be.type("function");
 
         ruleLoader.should.have.ownProperty("load");
         ruleLoader.load.should.be.type("function");
@@ -67,6 +67,7 @@ describe("Test rule-loader functions", function() {
         ruleLoader.resolveUpstream.bind(ruleLoader, false).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, 10.2897).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, "").should.throw();
+        ruleLoader.resolveUpstream.bind(ruleLoader, "solium:blahblah").should.throw();
 
         // Valid sharable config names, but not installed
         ruleLoader.resolveUpstream.bind(ruleLoader, "17623").should.throw();

@@ -25,31 +25,17 @@ describe("[RULE] no-unused-vars: Acceptances", function() {
             "bytes32 x = \"hello\"; function foo () returns (bytes32) { return x; }",
             "string x = \"hello\"; function foo () returns (int) { return x; }",
             "address x = 0x0; function foo () returns (address) { return x; }",
-            "mapping (address => uint) x; function foo () returns (mapping) { return x; }"
+            "mapping (address => uint) x; function foo () returns (mapping) { return x; }",
+            "function foo() { var bax = 100; result = bax * 89; }",
+            "function foo() { string bax = \"hello world\"; callMyFunc(bax); }"
         ];
         let errors;
 
-        code = code.map(function(item){return toContract(item);});
-
-        errors = Solium.lint(code [0], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [1], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [2], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [3], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [4], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
+        code.forEach(line => {
+            errors = Solium.lint(toContract(line), userConfig);
+            errors.should.be.Array();
+            errors.should.have.size(0);
+        });
 
         Solium.reset();
         done();

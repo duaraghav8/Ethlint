@@ -15,6 +15,25 @@ let userConfigSingle = {
     }
 };
 
+describe("[RULE] quotes: Acceptances general", () => {
+
+    it("should not take action against any non-string Literals", done => {
+        const literals = ["19028", "0x00", "0x908d819", "90182.1892"];
+
+        literals.forEach(lit => {
+            let code = toContract(`function foo() { var myVar = ${lit}; }`),
+                errors = Solium.lint(code, { "rules": { "quotes": [1, "single"] } });
+
+            errors.should.be.Array();
+            errors.should.have.size(0);
+        });
+
+        Solium.reset();
+        done();
+    });
+
+});
+
 describe("[RULE] quotes: Acceptances for single quote", function() {
 
     it("should accept when receiving single quote strings", function(done) {
