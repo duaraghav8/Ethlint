@@ -5,11 +5,9 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium");
-let wrappers = require("../../../utils/wrappers");
-let toContract = wrappers.toContract;
-let toFunction = wrappers.toFunction;
-let addPragma = wrappers.addPragma;
+const { EOL } = require("os");
+const Solium = require("../../../../lib/solium"),
+    wrappers = require("../../../utils/wrappers"), { toContract, toFunction, addPragma } = wrappers;
 
 let userConfig = {
     "custom-rules-filename": null,
@@ -194,7 +192,7 @@ describe("[RULE] whitespace: Acceptances", function() {
         done();
     });
 
-    it("should allow the code that provides nothing to check, i.e., no arguments in CallExpression / no properties in ObjectExpression", function(done) {
+    it("should allow the code that provides nothing to check, i.e., no arguments in CallExpression", function(done) {
         let code = "call ();",
             errors = Solium.lint(toFunction(code), userConfig);
 
@@ -229,7 +227,7 @@ describe("[RULE] whitespace: Acceptances", function() {
     });
 
     it("should allow acceptable comma whitespace between Name-Value declarations", function(done) {
-        let code = "myStruct ({a:100, b:9028,\nc: 19082,d:\"hello world\",\n\t\te:\"this passes YOLO\"});",
+        let code = `myStruct ({a:100, b:9028,${EOL}c: 19082,d:\"hello world\",${EOL}\t\te:\"this passes YOLO\"});`,
             errors = Solium.lint(toFunction(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
