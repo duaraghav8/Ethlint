@@ -5,7 +5,8 @@
 
 "use strict";
 
-let SourceCode = require("../../../lib/utils/source-code-utils");
+const { EOL } = require("os"),
+    SourceCode = require("../../../lib/utils/source-code-utils");
 
 describe("Testing SourceCode instance for exposed functionality", function() {
     let sourceCodeText = "contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}",
@@ -270,7 +271,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
 
     it("should behave as expected upon calling getTextOnLine()", function(done) {
         let sourceCodeObject = new SourceCode(sourceCodeText),
-            sourceCodeTextLines = sourceCodeText.split("\n");
+            sourceCodeTextLines = sourceCodeText.split(EOL);
 
         for (let i = 0; i < sourceCodeTextLines.length; i++) {
             sourceCodeObject.getTextOnLine(i+1)
