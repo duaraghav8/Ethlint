@@ -367,6 +367,7 @@ IDE & Editor Integrations
 *************************
 
 -  `VS Code: Solidity with Solium linting by Beau Gunderson`_
+-  `ethereum/emacs-solidity with Solium support by Lefteris Karapetsas`_
 -  `VS Code: Solidity with Solium linting by Juan Blanco`_
 -  `VS Code: Solidity with Solium linting by CodeChain.io`_
 -  `Sublime Solium Gutter by Florian Sey`_
@@ -375,8 +376,10 @@ IDE & Editor Integrations
 -  `Syntastic local solium by Brett Sun`_
 -  `Solium Ale Integration by Jeff Sutherland`_
 -  `Solium Neomake Integration by Beau Gunderson`_
+-  `Solium official plugin for Embark Framework`_
 
 .. _`VS Code: Solidity with Solium linting by Beau Gunderson`: https://marketplace.visualstudio.com/items?itemName=beaugunderson.solidity-extended
+.. _`ethereum/emacs-solidity with Solium support by Lefteris Karapetsas`: https://github.com/ethereum/emacs-solidity
 .. _`VS Code: Solidity with Solium linting by Juan Blanco`: https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity
 .. _`VS Code: Solidity with Solium linting by CodeChain.io`: https://marketplace.visualstudio.com/items?itemName=kodebox.solidity-language-server
 .. _Sublime Solium Gutter by Florian Sey: https://github.com/sey/sublime-solium-gutter
@@ -385,6 +388,7 @@ IDE & Editor Integrations
 .. _Syntastic local solium by Brett Sun: https://github.com/sohkai/syntastic-local-solium.vim
 .. _Solium Ale Integration by Jeff Sutherland: https://github.com/w0rp/ale
 .. _Solium Neomake Integration by Beau Gunderson: https://github.com/neomake/neomake
+.. _Solium official plugin for Embark Framework`: https://github.com/duaraghav8/embark-solium
 
 
 .. index:: migration guide
