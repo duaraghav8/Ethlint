@@ -435,4 +435,15 @@ describe("Checking exported rules object", function() {
         done();
     });
 
+    it("should throw when a non-existant plugin rule is specified in config", done => {
+        const config = {
+            "rules": {
+                "security/buttercup": 2
+            }
+        };
+
+        rules.load.bind(rules, config).should.throw("\"security/buttercup\" - No such rule exists.");
+        done();
+    });
+
 });
