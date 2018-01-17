@@ -33,8 +33,7 @@ This creates 2 files for you:
   "plugins": ["security"],
   "rules": {
     "quotes": ["error", "double"],
-    "indentation": ["error", 4],
-    "arg-overflow": ["warning", 3]
+    "indentation": ["error", 4]
   }
 }
 ```
