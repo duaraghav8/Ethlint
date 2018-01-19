@@ -413,4 +413,19 @@ describe("[RULE] indentation: Rejections", function() {
         Solium.reset();
         done();
     });
+
+    it("should reject any kind of indent when indent is set to 0", done => {
+        const config = {
+            "rules": {
+                "indentation": ["error", 0]
+            }
+        };
+        const code = "contract Foo {\nfunction bar() {\nif (true) {\n  lol(100, \'hello\');\n}\n}\n}",
+            errors = Solium.lint(code, config);
+        
+        errors.should.have.size(1);
+
+        Solium.reset();
+        done();
+    });
 });
