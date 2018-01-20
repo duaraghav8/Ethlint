@@ -1,4 +1,8 @@
-# Solium
+<p align="center">
+  <img src="./art/Solium.png">
+</p>
+
+<br />
 
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/Solium-linter/Lobby)
 [![Build Status](https://travis-ci.org/duaraghav8/Solium.svg?branch=master)](https://travis-ci.org/duaraghav8/Solium)
