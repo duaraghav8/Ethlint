@@ -85,22 +85,6 @@ Solium automatically fixes your code to resolve whatever issues it can.
 solium -d contracts --fix
 ```
 
-## Integrations
-- [VS Code: Solidity with Solium linting by Beau Gunderson](https://marketplace.visualstudio.com/items?itemName=beaugunderson.solidity-extended)
-- [ethereum/emacs-solidity](https://github.com/ethereum/emacs-solidity) with Solium Support by [Lefteris Karapetsas](https://github.com/LefterisJP)
-- [VS Code: Solidity with Solium linting by Juan Blanco](https://marketplace.visualstudio.com/items?itemName=JuanBlanco.solidity)
-- [VS Code: Solidity with Solium linting by CodeChain.io](https://marketplace.visualstudio.com/items?itemName=kodebox.solidity-language-server)
-- [Sublime Solium Gutter by Florian Sey](https://github.com/sey/sublime-solium-gutter)
-- [Sublime Solium Linter by Alex Step](https://github.com/alexstep/SublimeLinter-contrib-solium)
-- [Atom Solium Linter by Travis Jacobs](https://github.com/travs/linter-solium)
-- [Syntastic local solium by Brett Sun](https://github.com/sohkai/syntastic-local-solium.vim)
-- [Solium Ale Integration by Jeff Sutherland](https://github.com/w0rp/ale)
-- [Solium Neomake Integration by Beau Gunderson](https://github.com/neomake/neomake)
-- [Solium Official Plugin for Embark](https://github.com/duaraghav8/embark-solium)
-
-## Migrating from v0
-If you're currently using Solium `v0`, we highly recommend you to [migrate to v1](http://solium.readthedocs.io/en/latest/user-guide.html#migrating-to-v1-0-0). v1 is backward compatible and provides you with much greater flexibility to configure rules, powerful security rules and auto code formatting among other features.
-
 ## Trusted by the best
 - [Augur](https://augur.net/)
 - [Zeppelin](https://zeppelin.solutions/)
@@ -112,4 +96,5 @@ If you're currently using Solium `v0`, we highly recommend you to [migrate to v1
 - [Digix](https://digix.global/)
 - [Giveth](https://giveth.io/)
 
+#### See the [list of IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) available for Solium
 #### [Access the complete Documentation](http://solium.readthedocs.io/)
