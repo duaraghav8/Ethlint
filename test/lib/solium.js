@@ -59,8 +59,24 @@ describe("Checking Exported Solium API", function() {
         done();
     });
 
-    it("should exit gracefully in case of syntax error in code passed to lint()", done => {
-        Solium.lint.bind(Solium, "sjbkjgdskgaalihaiu", { "extends": "solium:recommended" }).should.throw();
+    it("should throw in case of syntax error in code passed to lint()", done => {
+        // syntax error is "fuction" instead of "function"
+        const code = "contract Foo {\n\n\tfuction foobar() {\n\t\tbax();\n\t}\n\n}",
+            config = { "plugins": ["security"] };
+
+        Solium.lint.bind(Solium, code, config).should.throw();
+
+        try {
+            Solium.lint(code, config);
+        } catch (e) {
+            e.message.should.equal(
+                "An error occured while parsing the source code:" +
+                " Expected \";\", \"=\", comment, end of line, or whitespace but \"(\" found. Line: 3, Column: 16"
+            );
+            e.name.should.equal("SyntaxError");
+            e.location.start.line.should.equal(3);
+            e.location.start.column.should.equal(16);
+        }
 
         Solium.reset();
         done();
