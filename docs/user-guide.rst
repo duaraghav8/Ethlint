@@ -388,7 +388,7 @@ IDE & Editor Integrations
 .. _Syntastic local solium by Brett Sun: https://github.com/sohkai/syntastic-local-solium.vim
 .. _Solium Ale Integration by Jeff Sutherland: https://github.com/w0rp/ale
 .. _Solium Neomake Integration by Beau Gunderson: https://github.com/neomake/neomake
-.. _Solium official plugin for Embark Framework`: https://github.com/duaraghav8/embark-solium
+.. _Solium official plugin for Embark Framework: https://github.com/duaraghav8/embark-solium
 
 
 .. index:: migration guide
