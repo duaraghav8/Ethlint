@@ -96,5 +96,4 @@ solium -d contracts --fix
 - [Digix](https://digix.global/)
 - [Giveth](https://giveth.io/)
 
-#### See the [list of IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) available for Solium
-#### [Access the complete Documentation](http://solium.readthedocs.io/)
+#### See the [list of IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) available for Solium or access the complete [Documentation](http://solium.readthedocs.io/).
