@@ -1,5 +1,5 @@
-Solium
-======
+.. image:: ../art/Solium.png
+   :align: center
 
 Solium is a Linter for the Solidity programming language.
 
