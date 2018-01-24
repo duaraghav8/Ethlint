@@ -47,7 +47,7 @@ To know which lint rules Solium applies for you, see [Core rules](http://solium.
 ---
 **NOTE**
 
-Solium does NOT strictly adhere to Solidity [Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). It aims to promote coding practices agreed upon by the community at large.
+Solium does **not** strictly adhere to Solidity [Style Guide](http://solidity.readthedocs.io/en/latest/style-guide.html). It aims to promote coding practices agreed upon by the community at large.
 
 ---
 
