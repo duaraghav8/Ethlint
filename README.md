@@ -42,7 +42,7 @@ This creates 2 files for you:
 }
 ```
 
-To know which lint rules Solium applies for you, see [Core rules](http://solium.readthedocs.io/en/latest/user-guide.html#list-of-core-rules) and [Security rules](https://www.npmjs.com/package/solium-plugin-security#list-of-rules).
+To know which lint rules Solium applies for you, see [Style rules](http://solium.readthedocs.io/en/latest/user-guide.html#list-of-core-rules) and [Security rules](https://www.npmjs.com/package/solium-plugin-security#list-of-rules).
 
 ---
 **NOTE**

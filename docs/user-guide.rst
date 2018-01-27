@@ -293,11 +293,14 @@ When you run ``solium --init``, the ``.soliumrc.json`` created for you contains 
 
 .. index:: list of core rules
 
-******************
-List of Core Rules
-******************
+*******************
+List of Style Rules
+*******************
 
-Below is the list of core rules supplied by Solium. By default, ``solium:recommended`` is extended by your soliumrc, which enables all lint rules recommended for general audience (See `solium-recommended <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-recommended.js>`_).
+.. note::
+       See `security plugin <https://github.com/duaraghav8/solium-plugin-security/blob/master/README.md#list-of-rules>`_ if you're looking for documentation on Solium's security rules.
+
+Below is the list of style rules supplied by Solium. By default, ``solium:recommended`` is extended by your soliumrc, which enables all lint rules recommended for general audience (See `solium-recommended <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-recommended.js>`_).
 You can choose to further configure their severities inside your soliumrc itself.
 If you choose ``solium:all`` instead, all core rules are enabled **except for the deprecated ones**.
 Enabling a deprecated rule will display a warning message on Solium CLI.
