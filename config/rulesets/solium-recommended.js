@@ -11,12 +11,7 @@ module.exports = {
         "imports-on-top": "error",
         "variable-declarations": "error",
         "array-declarations": "error",
-        "operator-whitespace": "error",
         "no-unused-vars": "error",
-        "function-whitespace": "error",
-        "semicolon-whitespace": "error",
-        "comma-whitespace": "error",
-        "conditionals-whitespace": "error",
         "quotes": "error",
 
         "no-empty-blocks": "warning",
@@ -24,6 +19,10 @@ module.exports = {
         "whitespace": "warning",
         "deprecated-suicide": "warning",
         "pragma-on-top": "warning",
+        "function-whitespace": "warning",
+        "semicolon-whitespace": "warning",
+        "comma-whitespace": "warning",
+        "operator-whitespace": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
@@ -32,6 +31,7 @@ module.exports = {
         "blank-lines": "off",
         "arg-overflow": "off",
         "function-order": "off",
+        "conditionals-whitespace": "off",
 
         // Disable deprecated rules
         "double-quotes": "off",
