@@ -1,6 +1,6 @@
-###################
+##########
 User Guide
-###################
+##########
 
 .. index:: quickstart
 
@@ -571,14 +571,3 @@ There have been additions in the Solium API. However, there are no breaking chan
 =======================
 
 v0's CLI allowed the ``--sync`` flag so a user could sync their ``.soliumrc.json`` with the newly added rules after updating solium. sync was not a great design choice and so we've removed it. v1 is designed in a way such that core developers can keep adding more rules to solium and a user doesn't need to do anything apart from installing an update in order to use that rule. It gets applied automatically.
-
-.. index:: roadmap
-
-*******
-Roadmap
-*******
-
-- `Critical Bug fixes <https://github.com/duaraghav8/Solium/issues>`_
-- `Additional Rules <https://github.com/duaraghav8/Solium/issues/44>`_
-- `Integrations <https://github.com/duaraghav8/Solium/issues/28>`_
-- Dynamic analysis

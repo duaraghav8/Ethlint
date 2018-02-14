@@ -46,3 +46,4 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Brett Sun <https://github.com/sohkai>`_
 - `Franco Victorio <https://github.com/fvictorio>`_
 - `Gabriel Alacchi <https://github.com/GabrielAlacchi>`_
+- `Utkarsh Gupta <https://github.com/UtkarshGupta-CS>`_

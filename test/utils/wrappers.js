@@ -7,6 +7,8 @@
 
 "use strict";
 
+const { EOL } = require("os");
+
 module.exports = {
     /**
      * Wrap a solidity statement in valid contract boilerplate. 
@@ -14,8 +16,8 @@ module.exports = {
      * @return {String}      wrapped snippet
      */
     toContract: function(code) {
-        let pre = "pragma solidity ^0.4.3;\n\n\ncontract Wrap {\n\t";
-        let post = "\n}";
+        let pre = `pragma solidity ^0.4.3;${EOL.repeat(3)}contract Wrap {${EOL}\t`;
+        let post = `${EOL}}`;
         return pre + code + post;
     },
 
@@ -25,8 +27,8 @@ module.exports = {
      * @return {String}      wrapped snippet
      */
     toFunction: function(code) {
-        let pre = "pragma solidity ^0.4.3;\n\n\ncontract Wrap {\n\tfunction wrap() {\n\t\t";
-        let post = "\n\t}\n}";
+        let pre = `pragma solidity ^0.4.3;${EOL.repeat(3)}contract Wrap {${EOL}\tfunction wrap() {${EOL}\t\t`;
+        let post = `${EOL}\t}${EOL}}`;
         return pre + code + post;
     },
 
@@ -36,7 +38,7 @@ module.exports = {
      * @return {String}      snippet with pragma statement.
      */
     addPragma: function(code) {
-        let pre = "pragma solidity ^0.4.3;\n\n\n";
+        let pre = `pragma solidity ^0.4.3;${EOL.repeat(3)}`;
         return pre + code;
     }
 };

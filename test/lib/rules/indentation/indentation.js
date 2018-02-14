@@ -5,12 +5,12 @@
 
 "use strict";
 
-let fs = require("fs");
-let path = require("path");
-let Solium = require("../../../../lib/solium");
-
-let acceptDir = path.join(__dirname, "accept");
-let rejectDir = path.join(__dirname, "reject");
+const fs = require("fs"),
+    path = require("path"),
+    Solium = require("../../../../lib/solium");
+const acceptDir = path.join(__dirname, "accept"),
+    rejectDir = path.join(__dirname, "reject"),
+    { EOL } = require("os");
 
 describe("[RULE] indentation: Acceptances", function() {
     it("should accept a valid file under the default options", function(done) {
@@ -420,7 +420,7 @@ describe("[RULE] indentation: Rejections", function() {
                 "indentation": ["error", 0]
             }
         };
-        const code = "contract Foo {\nfunction bar() {\nif (true) {\n  lol(100, \'hello\');\n}\n}\n}",
+        const code = `contract Foo {${EOL}function bar() {${EOL}if (true) {${EOL}  lol(100, \'hello\');${EOL}}${EOL}}${EOL}}`,
             errors = Solium.lint(code, config);
         
         errors.should.have.size(1);

@@ -5,8 +5,9 @@
 
 "use strict";
 
-let wrappers = require("../../utils/wrappers"),
-    Solium = require("../../../lib/solium");
+const wrappers = require("../../utils/wrappers"),
+    Solium = require("../../../lib/solium"),
+    { EOL } = require("os");
 
 let userConfig = {
     "custom-rules-filename": null,
@@ -33,9 +34,9 @@ describe("Test wrappers", function() {
         let toContract = wrappers.toContract;
         let statement = "uint x = 1;";
         let expected = 
-            "pragma solidity ^0.4.3;\n\n\n" +
-            "contract Wrap {\n" +
-            "\t" + statement + "\n" +
+            `pragma solidity ^0.4.3;${EOL.repeat(3)}` +
+            `contract Wrap {${EOL}` +
+            "\t" + statement + EOL +
             "}";
 
         let errors = Solium.lint(expected, userConfig);
@@ -51,11 +52,11 @@ describe("Test wrappers", function() {
         let toFunction = wrappers.toFunction;
         let statement = "uint x = 1;";
         let expected = 
-            "pragma solidity ^0.4.3;\n\n\n" +
-            "contract Wrap {\n" +
-            "\tfunction wrap() {\n" + 
-            "\t\t" + statement + "\n" +
-            "\t}\n" +
+            `pragma solidity ^0.4.3;${EOL.repeat(3)}` +
+            `contract Wrap {${EOL}` +
+            `\tfunction wrap() {${EOL}` +
+            "\t\t" + statement + EOL +
+            `\t}${EOL}` +
             "}";
 
         let errors = Solium.lint(expected, userConfig);
@@ -70,7 +71,7 @@ describe("Test wrappers", function() {
     it("addPragma: should correctly pre-pend a pragma statement to a solidity contract or library", function(done) {
         let addPragma = wrappers.addPragma;
         let contract = "contract Abc { }";
-        let expected = "pragma solidity ^0.4.3;\n\n\n" + contract;
+        let expected = `pragma solidity ^0.4.3;${EOL.repeat(3)}` + contract;
             
         let errors = Solium.lint(expected, userConfig);
         errors.constructor.name.should.equal("Array");

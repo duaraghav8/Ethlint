@@ -57,7 +57,7 @@ solium -f foobar.sol
 solium -d contracts/
 ```
 
-### Configure with comments <sup>[BETA]</sup>
+### Configure with comments
 **Comment Directives** can be used to configure Solium to ignore specific pieces of code.
 They follow the pattern `solium-disable<optional suffix>`.
 

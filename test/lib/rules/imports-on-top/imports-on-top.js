@@ -5,9 +5,8 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium"),
-    fs = require("fs"),
-    path = require("path");
+const Solium = require("../../../../lib/solium"),
+    fs = require("fs"), path = require("path"), { EOL } = require("os");
 
 let userConfig = {
     "custom-rules-filename": null,
@@ -596,7 +595,7 @@ contract foo {}
         errors.length.should.equal(0);
 
         // Ensure that the bad import is moved to the right place.
-        const importLine = fixedSourceCode.split("\n")[4].trim();
+        const importLine = fixedSourceCode.split(EOL)[4].trim();
         importLine.should.equal("import \"nano.sol\";");
 
         // If we re-lint the fixedSourceCode with userConfig we should get no errors
@@ -619,7 +618,7 @@ contract foo {}
         errors.length.should.equal(0);
 
         // The fixed source code should have two new lines after the first pragma solidity then have all the imports
-        let lines = fixedSourceCode.split("\n");
+        let lines = fixedSourceCode.split(EOL);
         lines[3].should.equal("import \"nano.sol\";");
 
         errors = Solium.lint(fixedSourceCode, userConfig);
