@@ -92,7 +92,7 @@ Solium automatically fixes your code to resolve whatever issues it can.
 solium -d contracts --fix
 ```
 
-## Trusted by the best
+## Solium is trusted by the best
 - [Augur](https://augur.net/)
 - [Zeppelin](https://zeppelin.solutions/)
 - [Consensys](https://consensys.net/)
@@ -102,5 +102,8 @@ solium -d contracts --fix
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
 - [Digix](https://digix.global/)
 - [Giveth](https://giveth.io/)
+
+## Support us
+If Solium has helped secure your smart contracts, consider adding the [![Secured with Solium](./art/solium-badge.svg)](http://solium.readthedocs.io/en/latest/) badge to your repository. This encourages more contributions from the commuity.
 
 #### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/)
