@@ -100,7 +100,5 @@ solium -d contracts --fix
 - [Aragon](https://aragon.one/)
 - [Ethereum Name Service](https://github.com/ensdomains)
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
-- [Digix](https://digix.global/)
-- [Giveth](https://giveth.io/)
 
 #### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/)
