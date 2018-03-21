@@ -167,6 +167,13 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure that functions in a contract are ordered according to their visibility"
+		},
+
+		"emit": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Use emit statements to trigger events"
 		}
 	}
 }

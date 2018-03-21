@@ -30,6 +30,7 @@ module.exports = {
         "pragma-on-top": "warning",
         "quotes": "error",
         "function-order": "warning",
+        "emit": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",

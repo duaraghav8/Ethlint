@@ -23,6 +23,7 @@ module.exports = {
         "semicolon-whitespace": "warning",
         "comma-whitespace": "warning",
         "operator-whitespace": "warning",
+        "emit": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
