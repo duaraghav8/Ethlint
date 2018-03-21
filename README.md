@@ -100,8 +100,6 @@ solium -d contracts --fix
 - [Aragon](https://aragon.one/)
 - [Ethereum Name Service](https://github.com/ensdomains)
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
-- [Digix](https://digix.global/)
-- [Giveth](https://giveth.io/)
 
 ## Support us
 If Solium has helped secure your smart contracts, consider adding the [![Secured with Solium](./art/solium-badge.svg)](http://solium.readthedocs.io/en/latest/) badge to your repository. This encourages more contributions from the commuity.
