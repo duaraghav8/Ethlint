@@ -333,6 +333,47 @@ describe("Testing astUtils Object", function() {
         done();
     });
 
+    it("should behave correctly when calling isAChildOf()", done => {
+        const child = {type: "Blah", start: 10, end: 20},
+            parent = {type: "Blah", start: 0, end: 30}, notChild = {type: "Blah", start: 45, end: 80};
+
+        astUtils.isAChildOf(child, parent).should.be.true();
+        astUtils.isAChildOf(parent, child).should.be.false();
+        astUtils.isAChildOf(parent, parent).should.be.false();
+        astUtils.isAChildOf(notChild, parent).should.be.false();
+        astUtils.isAChildOf(child, notChild).should.be.false();
+
+        done();
+    });
+
+    it("should reject invalid nodes when calling isAChildOf()", done => {
+        const validNode = {type: "Blah", start: 10, end: 20},
+            invalidNode = {start: 10, end: 20};
+
+        astUtils.isAChildOf.bind(astUtils).should.throw();
+        astUtils.isAChildOf.bind(astUtils, null).should.throw();
+        astUtils.isAChildOf.bind(astUtils, 100).should.throw();
+        astUtils.isAChildOf.bind(astUtils, "foo").should.throw();
+        astUtils.isAChildOf.bind(astUtils, []).should.throw();
+
+        astUtils.isAChildOf.bind(astUtils, validNode, null).should.throw();
+        astUtils.isAChildOf.bind(astUtils, validNode, 100).should.throw();
+        astUtils.isAChildOf.bind(astUtils, validNode, "foo").should.throw();
+        astUtils.isAChildOf.bind(astUtils, validNode, []).should.throw();
+
+        astUtils.isAChildOf.bind(astUtils, null, validNode).should.throw();
+        astUtils.isAChildOf.bind(astUtils, 100, validNode).should.throw();
+        astUtils.isAChildOf.bind(astUtils, "foo", validNode).should.throw();
+        astUtils.isAChildOf.bind(astUtils, [], validNode).should.throw();
+
+        astUtils.isAChildOf.bind(astUtils, invalidNode, validNode).should.throw();
+        astUtils.isAChildOf.bind(astUtils, validNode, invalidNode).should.throw();
+
+        astUtils.isAChildOf.bind(astUtils, validNode, validNode).should.not.throw();
+
+        done();
+    });
+
 });
 
 /* eslint-enable no-mixed-spaces-and-tabs */

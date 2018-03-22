@@ -43,6 +43,9 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.should.have.property("getParent");
         sourceCodeObject.getParent.should.be.type("function");
 
+        sourceCodeObject.should.have.property("isAChildOf");
+        sourceCodeObject.isAChildOf.should.be.type("function");
+
         // functions for node type checking
         sourceCodeObject.should.have.property("isBlockStatement");
         sourceCodeObject.isBlockStatement.should.be.type("function");
