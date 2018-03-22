@@ -481,7 +481,7 @@ describe("[RULE] mixedcase: Rejections", function() {
         ];
         let errors;
 
-        code = code.map(function(item){return toFunction(item);});
+        code = code.map(function(item){return toContract(item);});
 
         errors = Solium.lint(code [0], userConfig);
         errors.constructor.name.should.equal("Array");
