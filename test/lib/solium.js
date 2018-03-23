@@ -25,7 +25,7 @@ describe("Checking Exported Solium API", function() {
     it("should be an instance of EventEmitter & expose a set of functions", function(done) {
         Solium.should.be.type("object");
         Solium.should.be.instanceof(EventEmitter);
-        Solium.should.have.size(10);
+        Solium.should.have.size(11);
 		
         Solium.should.have.ownProperty("reset");
         Solium.reset.should.be.type("function");
