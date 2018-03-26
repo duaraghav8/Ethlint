@@ -104,4 +104,4 @@ solium -d contracts --fix
 ## Support us
 If Solium has helped secure your smart contracts, consider adding the [![Secured with Solium](./art/solium-badge.svg)](http://solium.readthedocs.io/en/latest/) badge to your repository. This encourages more contributions from the commuity.
 
-#### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/)
+#### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)
