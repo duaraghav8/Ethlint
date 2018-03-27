@@ -1,6 +1,6 @@
 {
   "name": "solium",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "Linter to identify and fix Style & Security issues in Solidity",
   "main": "./lib/solium.js",
   "bin": {
