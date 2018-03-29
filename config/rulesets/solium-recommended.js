@@ -24,6 +24,7 @@ module.exports = {
         "comma-whitespace": "warning",
         "operator-whitespace": "warning",
         "emit": "warning",
+        "no-constant": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
