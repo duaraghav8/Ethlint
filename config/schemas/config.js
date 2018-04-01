@@ -25,7 +25,7 @@
 		"double-quotes": [2, "double"],
 		"satoshi/nakamoto": "error"
 	},
-	"options": { "autofix": true, "returnInternalIssues": true }
+	"options": { "autofix": true, "autofix_dryrun": true, "returnInternalIssues": true }
 }
 */
 
@@ -76,6 +76,7 @@ let Schema = {
             type: "object",
             properties: {
                 autofix: { type: "boolean" },
+                autofix_dryrun: { type: "boolean" },
                 returnInternalIssues: { type: "boolean" }
             },
             additionalProperties: false
