@@ -133,6 +133,83 @@ describe("Testing astUtils Object", function() {
         done();
     });
 
+    it("should return node itself when getting 0th parent of a node", function(done) {
+        let node = {
+            type: "TestNode",
+            start: 0, end: 190,
+            parent: {type: "TestParentNode", start: 21, end: 981}
+        };
+
+        let parent = astUtils.getNthParent(node, 0);
+
+        parent.should.be.type("object");
+        parent.should.have.ownProperty("type");
+        parent.type.should.equal("TestNode");
+
+        done();
+    });
+
+    it("should return immediate parent when getting 1st parent of a node", function(done) {
+        let node = {
+            type: "TestNode",
+            start: 0, end: 190,
+            parent: {type: "TestParentNode", start: 21, end: 981}
+        };
+
+        let parent = astUtils.getNthParent(node, 1);
+
+        parent.should.be.type("object");
+        parent.should.have.ownProperty("type");
+        parent.type.should.equal("TestParentNode");
+
+        done();
+    });
+
+    it("should return 2nd parent of a node", function(done) {
+        let node = {
+            type: "TestNode",
+            start: 0, end: 190,
+            parent: {
+                type: "TestParentNode",
+                start: 21,
+                end: 981,
+                parent: {type: "RootNode", start: 0, end: 1000}
+            }
+        };
+
+        let parent = astUtils.getNthParent(node, 2);
+
+        parent.should.be.type("object");
+        parent.should.have.ownProperty("type");
+        parent.type.should.equal("RootNode");
+
+        done();
+    });
+
+    it("throw an exception if getting a non-existing parent", function(done) {
+        let node = {
+            type: "TestNode",
+            start: 0, end: 190,
+            parent: {type: "TestParentNode", start: 21, end: 981}
+        };
+
+        astUtils.getNthParent.bind(node, 2).should.throw();
+
+        done();
+    });
+
+    it("should handle invalid parent number", function(done) {
+        let node = {
+            type: "TestNode",
+            start: 0, end: 190,
+            parent: {type: "TestParentNode", start: 21, end: 981}
+        };
+
+        astUtils.getNthParent.bind(node, -1).should.throw();
+
+        done();
+    });
+
     it("should handle invalid argument(s) passed to utility functions", function(done) {
         astUtils.isIfStatement.bind(astUtils).should.throw();
         astUtils.isIfStatement.bind(astUtils, null).should.throw();
