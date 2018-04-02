@@ -120,6 +120,13 @@
 			"description": "Ensure that all strings use only 1 style - either double quotes or single quotes."
 		},
 
+		"value-in-payable": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that all strings use only 1 style - either double quotes or single quotes."
+		},
+
 		"blank-lines": {
 			"enabled": true,
 			"recommended": true,

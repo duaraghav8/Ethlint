@@ -26,6 +26,7 @@ module.exports = {
         "semicolon-whitespace": "error",
         "comma-whitespace": "error",
         "conditionals-whitespace": "error",
+        "value-in-payable": "error",
         "deprecated-suicide": "warning",
         "pragma-on-top": "warning",
         "quotes": "error",
