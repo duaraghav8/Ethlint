@@ -124,7 +124,7 @@
 			"enabled": true,
 			"recommended": true,
 			"type": "error",
-			"description": "Ensure that all strings use only 1 style - either double quotes or single quotes."
+			"description": "Ensure 'msg.value' is only used in functions with the 'payable' modifier"
 		},
 
 		"blank-lines": {
