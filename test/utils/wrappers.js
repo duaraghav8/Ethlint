@@ -7,6 +7,8 @@
 
 "use strict";
 
+let Solium = require("../../lib/solium");
+
 const { EOL } = require("os");
 
 module.exports = {
@@ -40,5 +42,47 @@ module.exports = {
     addPragma: function(code) {
         let pre = `pragma solidity ^0.4.3;${EOL.repeat(3)}`;
         return pre + code;
+    },
+
+    noErrors: function(code, userConfig) {
+        let errors = Solium.lint(code, userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+    },
+
+    expectError: function(code, userConfig) {
+        let errors = Solium.lint(code, userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
+    },
+
+    acceptanceCases: function(ruleName, userConfig, codeSnippets) {
+        describe(`[RULE] ${ruleName}: Acceptances`, function() {
+            codeSnippets.forEach((code) => {
+                it(`should accept - ${code}`, function(done) {
+                    let contractCode = module.exports.toContract(code);
+
+                    module.exports.noErrors(contractCode, userConfig);
+
+                    Solium.reset();
+                    done();
+                });
+            });
+        });
+    },
+
+    rejectionCases: function(ruleName, userConfig, codeSnippets) {
+        describe(`[RULE] ${ruleName}: Rejections`, function() {
+            codeSnippets.forEach((code) => {
+                it(`should reject - ${code}`, function(done) {
+                    let contractCode = module.exports.toContract(code);
+
+                    module.exports.expectError(contractCode, userConfig);
+
+                    Solium.reset();
+                    done();
+                });
+            });
+        });
     }
 };

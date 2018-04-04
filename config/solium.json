@@ -99,6 +99,13 @@
 			"description": "Ensure that no empty blocks {} exist"
 		},
 
+		"magic-number": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that magic numbers are extracted to constants"
+		},
+
 		"no-unused-vars": {
 			"enabled": true,
 			"recommended": true,

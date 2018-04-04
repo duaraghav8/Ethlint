@@ -6,62 +6,36 @@
 "use strict";
 
 const Solium = require("../../../../lib/solium");
+let wrappers = require("../../../utils/wrappers");
+let acceptanceCases = wrappers.acceptanceCases;
+let rejectionCases = wrappers.rejectionCases;
 const userConfig = {
     "rules": {
         "no-constant": "error"
     }
 };
 
+acceptanceCases("no-constant", userConfig,
+    [
+        "function foo() view pure returns(bool);",
+        "function foo() view pure returns(bool) {}",
+        "function foo() {}",
+        "function foo();",
+        "function(){}",
+        "function foo() myModifier(100, \"hello\") boo;"
+    ]
+);
 
-describe("[RULE] emit: Acceptances", () => {
-
-    it("should accept function declarations that don't have constant modifier", done => {
-        const declarations = [
-            "function foo() view pure returns(bool);",
-            "function foo() view pure returns(bool) {}",
-            "function foo() {}",
-            "function foo();",
-            "function(){}",
-            "function foo() myModifier(100, \"hello\") boo;"
-        ];
-
-        declarations.forEach(func => {
-            const issues = Solium.lint(`contract Foo { ${func} }`, userConfig);
-
-            issues.should.be.Array();
-            issues.should.be.empty();
-        });
-
-        done();
-    });
-
-});
-
-
-describe("[RULE] emit: Rejections", () => {
-
-    it("should reject function declarations that have constant modifier", done => {
-        const declarations = [
-            "function foo() view pure constant returns(bool);",
-            "function foo() constant pure returns(bool) {}",
-            "function foo() constant {}",
-            "function foo() constant;",
-            "function()constant{}",
-            "function foo() myModifier(100, \"hello\") constant boo;"
-        ];
-
-        declarations.forEach(func => {
-            const issues = Solium.lint(`contract Foo { ${func} }`, userConfig);
-
-            issues.should.be.Array();
-            issues.should.have.size(1);
-        });
-
-        done();
-    });
-
-});
-
+rejectionCases("no-constant", userConfig,
+    [
+        "function foo() view pure constant returns(bool);",
+        "function foo() constant pure returns(bool) {}",
+        "function foo() constant {}",
+        "function foo() constant;",
+        "function()constant{}",
+        "function foo() myModifier(100, \"hello\") constant boo;"
+    ]
+);
 
 describe("[RULE] emit: fixes", () => {
 

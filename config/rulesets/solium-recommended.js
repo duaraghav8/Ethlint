@@ -25,6 +25,7 @@ module.exports = {
         "operator-whitespace": "warning",
         "emit": "warning",
         "no-constant": "warning",
+        "magic-number": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",

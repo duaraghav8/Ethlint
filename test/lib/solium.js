@@ -26,7 +26,7 @@ describe("Checking Exported Solium API", function() {
         Solium.should.be.type("object");
         Solium.should.be.instanceof(EventEmitter);
         Solium.should.have.size(11);
-		
+
         Solium.should.have.ownProperty("reset");
         Solium.reset.should.be.type("function");
         Solium.should.have.ownProperty("lint");
@@ -862,7 +862,7 @@ describe("Solium.lint() comment directives", () => {
         const errors = Solium.lint(code, { "extends": "solium:all" });
 
         errors.should.be.Array();
-        errors.should.have.size(10); // This no. can change if changes are made in any rules from solium:all ruleset
+        errors.should.have.size(12); // This no. can change if changes are made in any rules from solium:all ruleset
 
         Solium.reset();
         done();
