@@ -99,7 +99,7 @@
 			"description": "Ensure that no empty blocks {} exist"
 		},
 
-		"magic-number": {
+		"magic-to-const": {
 			"enabled": true,
 			"recommended": true,
 			"type": "warning",

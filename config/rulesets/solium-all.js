@@ -22,7 +22,7 @@ module.exports = {
         "indentation": "warning",
         "arg-overflow": "warning",
         "whitespace": "warning",
-        "magic-number": "warning",
+        "magic-to-const": "warning",
         "function-whitespace": "error",
         "semicolon-whitespace": "error",
         "comma-whitespace": "error",

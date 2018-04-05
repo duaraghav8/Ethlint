@@ -12,11 +12,11 @@ let rejectionCases = wrappers.rejectionCases;
 let userConfig = {
     "custom-rules-filename": null,
     "rules": {
-        "magic-number": true
+        "magic-to-const": true
     }
 };
 
-acceptanceCases("magic-number", userConfig,
+acceptanceCases("magic-to-const", userConfig,
     [
         "uint constant x = 123;",
         "uint a = 1; uint b = 0; uint c = -1;",
@@ -25,7 +25,7 @@ acceptanceCases("magic-number", userConfig,
     ]
 );
 
-rejectionCases("magic-number", userConfig,
+rejectionCases("magic-to-const", userConfig,
     [
         "uint a = 5;"
     ]
