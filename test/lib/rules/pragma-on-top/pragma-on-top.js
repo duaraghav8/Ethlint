@@ -188,4 +188,32 @@ describe("[RULE] pragma-on-top: Fixes", function() {
         done();
     });
 
+    it("should move an existing experimental pragma statement to top of file (above all code) when fix is enabled", function(done) {
+        let config = {
+            "rules": {
+                "pragma-on-top": "error"
+            }
+        };
+
+        let unfixedCode = "pragma solidity ^0.4.0;\ncontract Foo {}\npragma experimental \"^0.5.0\";";
+
+        let fixedCode = "pragma solidity ^0.4.0;\npragma experimental \"^0.5.0\";\ncontract Foo {}\n";
+
+        let fixed = Solium.lintAndFix(unfixedCode, config);
+
+        fixed.should.be.type("object");
+        fixed.should.have.ownProperty("fixedSourceCode");
+        fixed.should.have.ownProperty("errorMessages");
+        fixed.should.have.ownProperty("fixesApplied");
+
+        fixed.fixedSourceCode.should.equal(fixedCode);
+        fixed.errorMessages.should.be.Array();
+        fixed.errorMessages.length.should.equal(0);
+        fixed.fixesApplied.should.be.Array();
+        fixed.fixesApplied.length.should.equal(1);
+
+        Solium.reset();
+        done();
+    });
+
 });
