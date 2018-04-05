@@ -1,41 +1,39 @@
 /**
- * @fileoverview Tests for "msg.value" usage rule
+ * @fileoverview Tests for value-in-payable rule
  * @author Ivan Mushketyk <ivan.mushketik@gmail.com>
  */
 
 "use strict";
 
-let Solium = require("../../../../lib/solium");
-let wrappers = require("../../../utils/wrappers");
-let toContract = wrappers.toContract;
+const Solium = require("../../../../lib/solium"),
+    { toContract } = require("../../../utils/wrappers");
 
 let userConfig = {
-    "custom-rules-filename": null,
     "rules": {
-        "value-in-payable": true
+        "value-in-payable": "error"
     }
 };
 
-describe("[RULE] value-in-payable: Acceptances", function() {
+describe("[RULE] value-in-payable: Acceptances", () => {
 
-    it("should accepts function that access 'msg.value' and has the 'payable' modifier", function(done) {
-        let code = toContract("function pay() payable { require(msg.value >= MIN_PRICE); }");
+    it("should accept functions that access 'msg.value' and have the 'payable' modifier", function(done) {
+        const code = toContract("function pay() payable { require(msg.value >= MIN_PRICE); }"),
+            errors = Solium.lint(code, userConfig);
 
-        let errors = Solium.lint(code, userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
+        errors.should.be.Array();
+        errors.should.be.empty();
 
         Solium.reset();
         done();
     });
 
-    it("should accepts code that access 'msg.value' outside a function", function(done) {
-        let code = toContract(`function foo() { }
+    it("should accept code that accesses 'msg.value' outside a function", function(done) {
+        const code = toContract(`function foo() { }
                                unit foo1 = msg.value;`);
+        const errors = Solium.lint(code, userConfig);
 
-        let errors = Solium.lint(code, userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
+        errors.should.be.Array();
+        errors.should.be.empty();
 
         Solium.reset();
         done();
@@ -54,8 +52,8 @@ describe("[RULE] value-in-payable: Rejections", function() {
         code = code.map(function(item){return toContract(item);});
 
         errors = Solium.lint(code[0], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
+        errors.should.be.Array();
+        errors.should.have.size(1);
 
         Solium.reset();
         done();
