@@ -27,6 +27,28 @@ describe("[RULE] value-in-payable: Acceptances", () => {
         done();
     });
 
+    it("should accept functions that access 'msg.value' and have the 'private' modifier", function(done) {
+        const code = toContract("function pay() private { require(msg.value >= MIN_PRICE); }"),
+            errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.should.be.empty();
+
+        Solium.reset();
+        done();
+    });
+
+    it("should accept functions that access 'msg.value' and have the 'internal' modifier", function(done) {
+        const code = toContract("function pay() internal { require(msg.value >= MIN_PRICE); }"),
+            errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.should.be.empty();
+
+        Solium.reset();
+        done();
+    });
+
     it("should accept code that accesses 'msg.value' outside a function", function(done) {
         const code = toContract(`function foo() { }
                                unit foo1 = msg.value;`);
