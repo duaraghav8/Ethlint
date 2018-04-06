@@ -127,6 +127,13 @@
 			"description": "Ensure 'msg.value' is only used in functions with the 'payable' modifier"
 		},
 
+		"no-experimental": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that experimental features are not used in production"
+		},
+
 		"blank-lines": {
 			"enabled": true,
 			"recommended": true,
