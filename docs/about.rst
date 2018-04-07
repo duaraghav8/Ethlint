@@ -47,3 +47,4 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Franco Victorio <https://github.com/fvictorio>`_
 - `Gabriel Alacchi <https://github.com/GabrielAlacchi>`_
 - `Utkarsh Gupta <https://github.com/UtkarshGupta-CS>`_
+- `Ivan Mushketyk <https://github.com/mushketyk>`_
