@@ -14,7 +14,6 @@ module.exports = {
         "no-unused-vars": "error",
         "quotes": "error",
         "value-in-payable": "error",
-        "no-experimental": "error",
 
         "no-empty-blocks": "warning",
         "indentation": "warning",
@@ -27,6 +26,7 @@ module.exports = {
         "operator-whitespace": "warning",
         "emit": "warning",
         "no-constant": "warning",
+        "no-experimental": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",

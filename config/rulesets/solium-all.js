@@ -12,7 +12,6 @@ module.exports = {
         "variable-declarations": "error",
         "array-declarations": "error",
         "operator-whitespace": "error",
-        "no-experimental": "error",
         "lbrace": "error",
         "function-whitespace": "error",
         "semicolon-whitespace": "error",
@@ -35,6 +34,7 @@ module.exports = {
         "function-order": "warning",
         "emit": "warning",
         "no-constant": "warning",
+        "no-experimental": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",

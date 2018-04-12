@@ -130,7 +130,7 @@
 		"no-experimental": {
 			"enabled": true,
 			"recommended": true,
-			"type": "error",
+			"type": "warning",
 			"description": "Ensure that experimental features are not used in production"
 		},
 

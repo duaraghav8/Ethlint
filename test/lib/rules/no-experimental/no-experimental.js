@@ -7,7 +7,7 @@
 
 const Solium = require("../../../../lib/solium");
 
-let userConfig = {
+const userConfig = {
     "rules": {
         "no-experimental": "error"
     }
@@ -15,8 +15,8 @@ let userConfig = {
 
 describe("[RULE] no-experimental: Acceptances", () => {
 
-    it("should accept contracts without 'pragma experimental'", function(done) {
-        const code = "pragma solidity ^0.4.0; contract Foo {}",
+    it("should accept contracts without 'pragma experimental'", done => {
+        const code = "pragma solidity ^0.4.0; contract Foo {} library Bar {}",
             errors = Solium.lint(code, userConfig);
 
         errors.should.be.Array();
@@ -29,12 +29,22 @@ describe("[RULE] no-experimental: Acceptances", () => {
 
 describe("[RULE] no-experimental: Rejections", function() {
 
-    it("should reject contracts with 'pragma experimental'", function(done) {
+    it("should reject contracts with 'pragma experimental'", done => {
         let code = `
             pragma experimental "^0.5.0";
             contract Foo {}
         `;
         let errors = Solium.lint(code, userConfig);
+        errors.should.be.Array();
+        errors.should.have.size(1);
+
+        code = `
+            pragma solidity ^0.4.0;
+            pragma experimental "^0.5.0";
+            contract Foo {}
+            contract Bar {}
+        `;
+        errors = Solium.lint(code, userConfig);
         errors.should.be.Array();
         errors.should.have.size(1);
 
