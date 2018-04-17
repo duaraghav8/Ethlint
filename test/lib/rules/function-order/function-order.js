@@ -131,6 +131,16 @@ describe("[RULE] function-order: Acceptances", function() {
 			}
 		`);
 
+        codes.push(`
+			contract Foo {
+				function constructor() {}
+				string myName = "Hello";
+				function() {}
+
+				function a() private {}
+			}
+		`);
+
         codes.forEach(code => {
             const errors = Solium.lint(code, userConfig);
             errors.should.be.Array();
