@@ -31,6 +31,7 @@ module.exports = {
         "quotes": "error",
         "function-order": "warning",
         "emit": "warning",
+        "long-lines": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",

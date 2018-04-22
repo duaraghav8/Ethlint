@@ -174,6 +174,14 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Use emit statements to trigger events"
+		},
+
+		"long-lines": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure maximum line length"
 		}
+
 	}
 }
