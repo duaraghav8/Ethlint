@@ -120,6 +120,20 @@
 			"description": "Ensure that all strings use only 1 style - either double quotes or single quotes."
 		},
 
+		"value-in-payable": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure 'msg.value' is only used in functions with the 'payable' modifier"
+		},
+
+		"no-experimental": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that experimental features are not used in production"
+		},
+
 		"blank-lines": {
 			"enabled": true,
 			"recommended": true,
@@ -176,12 +190,19 @@
 			"description": "Use emit statements to trigger events"
 		},
 
-		"long-lines": {
+		"no-constant": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Use view instead of deprecated constant in function declaration"
+		},
+
+    "long-lines": {
 			"enabled": true,
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure maximum line length"
-		}
+    }
 
 	}
 }

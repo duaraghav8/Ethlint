@@ -89,7 +89,7 @@ contract Foo {
 ### Fix
 Solium automatically fixes your code to resolve whatever issues it can.
 ```bash
-solium -d contracts --fix
+solium -d contracts/ --fix
 ```
 
 ## Trusted by the best
