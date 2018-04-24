@@ -197,7 +197,7 @@
 			"description": "Use view instead of deprecated constant in function declaration"
 		},
 
-    "long-lines": {
+    "max-len": {
 			"enabled": true,
 			"recommended": true,
 			"type": "warning",
