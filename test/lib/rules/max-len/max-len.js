@@ -58,7 +58,7 @@ describe("[RULE] max-len: default len", function() {
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(1);
             errors[0].node.type.should.equal("ContractStatement");
-            errors[0].message.should.equal("line is longer than 79 characters");
+            errors[0].message.should.equal(`Line exceeds the limit of ${DEFAULT_MAX_ACCEPTABLE_LEN} characters`);
 
             Solium.reset();
             done();
@@ -77,7 +77,7 @@ describe("[RULE] max-len: default len", function() {
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(1);
             errors[0].node.type.should.equal("ExpressionStatement");
-            errors[0].message.should.equal("line is longer than 79 characters");
+            errors[0].message.should.equal(`Line exceeds the limit of ${DEFAULT_MAX_ACCEPTABLE_LEN} characters`);
 
             Solium.reset();
             done();
@@ -96,7 +96,7 @@ describe("[RULE] max-len: default len", function() {
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(1);
             errors[0].node.type.should.equal("ExpressionStatement");
-            errors[0].message.should.equal("line is longer than 79 characters");
+            errors[0].message.should.equal(`Line exceeds the limit of ${DEFAULT_MAX_ACCEPTABLE_LEN} characters`);
 
             Solium.reset();
             done();
@@ -149,7 +149,7 @@ describe("[RULE] max-len: custom len", function() {
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(1);
             errors[0].node.type.should.equal("ContractStatement");
-            errors[0].message.should.equal(`line is longer than ${this.CUSTOM_MAX_ACCEPTABLE_LEN} characters`);
+            errors[0].message.should.equal(`Line exceeds the limit of ${this.CUSTOM_MAX_ACCEPTABLE_LEN} characters`);
 
             Solium.reset();
             done();
@@ -168,7 +168,7 @@ describe("[RULE] max-len: custom len", function() {
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(1);
             errors[0].node.type.should.equal("ExpressionStatement");
-            errors[0].message.should.equal(`line is longer than ${this.CUSTOM_MAX_ACCEPTABLE_LEN} characters`);
+            errors[0].message.should.equal(`Line exceeds the limit of ${this.CUSTOM_MAX_ACCEPTABLE_LEN} characters`);
 
             Solium.reset();
             done();
@@ -187,7 +187,7 @@ describe("[RULE] max-len: custom len", function() {
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(1);
             errors[0].node.type.should.equal("ExpressionStatement");
-            errors[0].message.should.equal(`line is longer than ${this.CUSTOM_MAX_ACCEPTABLE_LEN} characters`);
+            errors[0].message.should.equal(`Line exceeds the limit of ${this.CUSTOM_MAX_ACCEPTABLE_LEN} characters`);
 
             Solium.reset();
             done();
