@@ -197,12 +197,12 @@
 			"description": "Use view instead of deprecated constant in function declaration"
 		},
 
-    	"max-len": {
-			"enabled": true,
-			"recommended": true,
-			"type": "warning",
-			"description": "Ensure that a line of code doesn't exceed the specified number of characters"
-    	}
+        "max-len": {
+            "enabled": true,
+            "recommended": true,
+            "type": "warning",
+            "description": "Ensure that a line of code doesn't exceed the specified number of characters"
+        }
 
 	}
 }
