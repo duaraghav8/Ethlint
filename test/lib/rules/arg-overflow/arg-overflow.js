@@ -25,7 +25,15 @@ describe("[RULE] arg-overflow: Rejections", function() {
         errors.should.be.Array();
         errors.length.should.equal(1);
         errors[0].message.should.equal(
-            "Function \"ArgumentOverflow\": in case of more than 3 parameters, drop each into its own line.");
+            "In case of more than 3 parameters, drop each into its own line.");
+        
+        code = toContract("constructor(int one, int two, int three, int four) {}"),
+        errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.length.should.equal(1);
+        errors[0].message.should.equal(
+            "In case of more than 3 parameters, drop each into its own line.");
 
         code = toFunction("myFuncCall (10, \"hello world\", 20.67, 0x0);");
         errors = Solium.lint(code, userConfig);

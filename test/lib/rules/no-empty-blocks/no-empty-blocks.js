@@ -54,12 +54,27 @@ describe("[RULE] no-empty-blocks: Acceptances", function() {
         done();
     });
 
-    it("should ACCEPT all EMPTY function declarations (see fallback functions)", function(done) {
+    it("should ACCEPT all EMPTY function & constructor declarations (see fallback functions)", function(done) {
         let code = "function foo () {}",
             errors = Solium.lint(toContract(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
+
+        // new constructor syntax
+        code = "constructor(uint x, string y, address z) {\n/*hello world*/\n}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.should.be.empty();
+
+
+        // fallback func
+        code = "function(){}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.should.be.Array();
+        errors.should.be.empty();
 
         Solium.reset();
         done();

@@ -124,6 +124,24 @@ describe("[RULE] whitespace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = "constructor(uint x, string y) {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor() {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor(uint x, string y, address z, string foobar) {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         Solium.reset();
         done();
     });
@@ -403,6 +421,18 @@ describe("[RULE] whitespace: Rejections", function() {
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
+
+        code = "constructor(uint i , Coin coin) {}",
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
+
+        code = "constructor(uint i , Coin coin\t,address lulu) {}",
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(2);
 
         code = "var foobar = 100 ;";
         errors = Solium.lint(toFunction(code), userConfig);
