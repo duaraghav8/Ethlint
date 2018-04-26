@@ -88,8 +88,20 @@ describe("[RULE] whitespace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = "constructor() { spam(); }";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         //it is fine EVEN IF there is no extraneous space
         code = "function singleLine() {spam();}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor() {spam();}";
         errors = Solium.lint(toContract(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
@@ -223,6 +235,12 @@ describe("[RULE] whitespace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = "constructor() {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         code = "if (true) {}";
         errors = Solium.lint(toFunction(code), userConfig);
 
@@ -255,7 +273,7 @@ describe("[RULE] whitespace: Acceptances", function() {
         done();
     });
 
-    it("should allow a a valid mix of CallExpression & MemberExpression", function(done) {
+    it("should allow a valid mix of CallExpression & MemberExpression", function(done) {
         let errors, statements = [
             "d(wall.dir()[9]);",
             "require(msg.sender == address(wallet.directory().brg()));",
