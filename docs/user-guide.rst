@@ -369,7 +369,7 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-----------------+-------+
 | no-experimental            | Ensure that experimental features are not used in production                                                 |                                         -                                         |                 |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-----------------+-------+
-| max-len                    | Ensure that a line of code doesn't exceed the specified number of characters                                 |  Single integer representing the number of characters to allow per line of code   | 79              |       |
+| max-len                    | Ensure that a line of code doesn't exceed the specified number of characters                                 |  Single integer representing the number of characters to allow per line of code   | 145             |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-----------------+-------+
 
 .. index:: IDE and Editor integrations
