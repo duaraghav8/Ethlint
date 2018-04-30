@@ -212,7 +212,7 @@ describe("Checking exported rules object", function() {
         // We extend ALL solium core rules and eliminate a few by setting their severity to 0.
         // The rest of the rules should all be available.
         // The below count will keep changing with every change in the number of core rules that exist in solium.
-        Object.keys(ruleDescriptions).length.should.equal(25);
+        Object.keys(ruleDescriptions).length.should.equal(26);
 
         done();
     });

@@ -28,6 +28,7 @@ module.exports = {
         "no-constant": "warning",
         "no-experimental": "warning",
         "max-len": "warning",
+        "error-message": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
