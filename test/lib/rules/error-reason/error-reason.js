@@ -5,19 +5,19 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium");
-let toFunction = require("../../../utils/wrappers").toFunction;
+const Solium = require("../../../../lib/solium"),
+    { toFunction } = require("../../../utils/wrappers");
 
-let userConfigDefault = {
+const userConfigDefault = {
     "rules": {
-        "error-reason": true
+        "error-reason": "warning"
     }
 };
 
 describe("[RULE] error-reason: Acceptances", function() {
 
     it("should accept revert calls with an error message", function(done) {
-        let code = toFunction("revert(\"Error message\");"),
+        const code = toFunction("revert(\"Error message\");"),
             errors = Solium.lint(code, userConfigDefault);
 
         errors.should.be.Array();
@@ -28,13 +28,13 @@ describe("[RULE] error-reason: Acceptances", function() {
     });
 
     it("should accept revert calls without an error message when it is disabled", function(done) {
-        let userConfig = {
+        const userConfig = {
             "rules": {
-                "error-reason": ["warning", { "revert": false, "require": true }]
+                "error-reason": ["error", { "revert": false, "require": true }]
             }
         };
 
-        let code = toFunction("revert();"),
+        const code = toFunction("revert();"),
             errors = Solium.lint(code, userConfig);
 
         errors.should.be.Array();
@@ -45,7 +45,7 @@ describe("[RULE] error-reason: Acceptances", function() {
     });
 
     it("should accept require calls with an error message", function(done) {
-        let code = toFunction("require(1 == 1, \"Error message\");"),
+        const code = toFunction("require(1 == 1, \"Error message\");"),
             errors = Solium.lint(code, userConfigDefault);
 
         errors.should.be.Array();
@@ -56,13 +56,13 @@ describe("[RULE] error-reason: Acceptances", function() {
     });
 
     it("should accept require calls without an error message when it is disabled", function(done) {
-        let userConfig = {
+        const userConfig = {
             "rules": {
                 "error-reason": ["warning", { "revert": true, "require": false }]
             }
         };
 
-        let code = toFunction("require(1 == 1);"),
+        const code = toFunction("require(1 == 1);"),
             errors = Solium.lint(code, userConfig);
 
         errors.should.be.Array();
@@ -83,7 +83,7 @@ describe("[RULE] error-reason: Rejections", function() {
         errors.should.be.Array();
         errors.should.have.size(1);
 
-        let userConfig = {
+        const userConfig = {
             "rules": {
                 "error-reason": ["warning", { "revert": true, "require": false }]
             }
@@ -105,7 +105,7 @@ describe("[RULE] error-reason: Rejections", function() {
         errors.should.be.Array();
         errors.should.have.size(1);
 
-        let userConfig = {
+        const userConfig = {
             "rules": {
                 "error-reason": ["warning", { "revert": false, "require": true }]
             }
