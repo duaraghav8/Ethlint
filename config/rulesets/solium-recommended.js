@@ -26,7 +26,6 @@ module.exports = {
         "operator-whitespace": "warning",
         "emit": "warning",
         "no-constant": "warning",
-        "no-experimental": "warning",
         "max-len": "warning",
         "error-reason": "warning",
 
@@ -38,6 +37,7 @@ module.exports = {
         "arg-overflow": "off",
         "function-order": "off",
         "conditionals-whitespace": "off",
+        "no-experimental": "off",
 
         // Disable deprecated rules
         "double-quotes": "off",
