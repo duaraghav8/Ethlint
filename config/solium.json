@@ -202,6 +202,13 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure that a line of code doesn't exceed the specified number of characters"
+		},
+
+		"error-reason": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that error message is provided for revert and require statements"
 		}
 
 	}
