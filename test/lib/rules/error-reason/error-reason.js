@@ -10,11 +10,11 @@ let toFunction = require("../../../utils/wrappers").toFunction;
 
 let userConfig = {
     "rules": {
-        "error-message": true
+        "error-reason": "warning"
     }
 };
 
-describe("[RULE] error-message: Acceptances", function() {
+describe("[RULE] error-reason: Acceptances", function() {
 
     it("should accept revert calls with an error message", function(done) {
         let code = toFunction("revert(\"Error message\");"),
@@ -40,7 +40,7 @@ describe("[RULE] error-message: Acceptances", function() {
 
 });
 
-describe("[RULE] error-message: Rejections", function() {
+describe("[RULE] error-reason: Rejections", function() {
 
     it("should reject revert calls without an error message", function(done) {
         let code = "revert();",
