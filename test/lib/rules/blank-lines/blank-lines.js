@@ -235,7 +235,7 @@ describe("[RULE] blank-lines: Rejections", () => {
             errors = Solium.lint(addPragma(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(2);
+        errors.length.should.equal(5);
 
         errors [0].node.name.should.equal("spam");
 

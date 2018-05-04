@@ -127,6 +127,20 @@
 			"description": "Ensure that all strings use only 1 style - either double quotes or single quotes."
 		},
 
+		"value-in-payable": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure 'msg.value' is only used in functions with the 'payable' modifier"
+		},
+
+		"no-experimental": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that experimental features are not used in production"
+		},
+
 		"blank-lines": {
 			"enabled": true,
 			"recommended": true,
@@ -188,6 +202,21 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Use view instead of deprecated constant in function declaration"
+		},
+
+		"max-len": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that a line of code doesn't exceed the specified number of characters"
+		},
+
+		"error-reason": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that error message is provided for revert and require statements"
 		}
+
 	}
 }

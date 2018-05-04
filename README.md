@@ -89,7 +89,7 @@ contract Foo {
 ### Fix
 Solium automatically fixes your code to resolve whatever issues it can.
 ```bash
-solium -d contracts --fix
+solium -d contracts/ --fix
 ```
 
 ## Trusted by the best
@@ -100,5 +100,12 @@ solium -d contracts --fix
 - [Aragon](https://aragon.one/)
 - [Ethereum Name Service](https://github.com/ensdomains)
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
+
+## Our backers
+<p align="left">
+  <a href="https://blog.ethereum.org/2018/03/07/announcing-beneficiaries-ethereum-foundation-grants/">
+    <img src="./art/ethereum-logo.png" width="100" alt="Ethereum">
+  </a>
+</p>
 
 #### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)

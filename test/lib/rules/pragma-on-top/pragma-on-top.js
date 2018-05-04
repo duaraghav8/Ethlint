@@ -5,7 +5,8 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium");
+const { EOL } = require("os");
+const Solium = require("../../../../lib/solium");
 
 let userConfig = {
     "custom-rules-filename": null,
@@ -183,6 +184,33 @@ describe("[RULE] pragma-on-top: Fixes", function() {
         fixed.errorMessages.length.should.equal(0);
         fixed.fixesApplied.should.be.Array();
         fixed.fixesApplied.length.should.equal(1);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should move an existing experimental pragma statement to top of file (above all code) when fix is enabled", done => {
+        const config = {
+            "rules": {
+                "pragma-on-top": "error"
+            }
+        };
+
+        const unfixedCode = `pragma solidity ^0.4.0;${EOL}contract Foo {}${EOL}pragma experimental \"^0.5.0\";`,
+            fixedCode = `pragma solidity ^0.4.0;${EOL}pragma experimental \"^0.5.0\";${EOL}contract Foo {}${EOL}`;
+
+        let fixed = Solium.lintAndFix(unfixedCode, config);
+
+        fixed.should.be.type("object");
+        fixed.should.have.ownProperty("fixedSourceCode");
+        fixed.should.have.ownProperty("errorMessages");
+        fixed.should.have.ownProperty("fixesApplied");
+
+        fixed.fixedSourceCode.should.equal(fixedCode);
+        fixed.errorMessages.should.be.Array();
+        fixed.errorMessages.should.be.empty();
+        fixed.fixesApplied.should.be.Array();
+        fixed.fixesApplied.should.have.size(1);
 
         Solium.reset();
         done();
