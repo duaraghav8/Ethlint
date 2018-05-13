@@ -5,7 +5,7 @@ description: |
   Solium is a linter for Solidity which uses Abstract Syntax Trees and allows
   the user to enable/disable existing rules and add their own ones!
 
-grade: devel # must be 'stable' to release into candidate/stable channels
+grade: stable
 confinement: strict
 
 apps:
