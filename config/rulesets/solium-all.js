@@ -36,6 +36,7 @@ module.exports = {
         "no-constant": "warning",
         "no-experimental": "warning",
         "max-len": "warning",
+        "deprecated-constructor": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",
