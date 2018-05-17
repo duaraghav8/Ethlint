@@ -134,6 +134,13 @@
 			"description": "Ensure that experimental features are not used in production"
 		},
 
+		"no-ignore-return-values": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure no ignore return values of function"
+		},
+
 		"blank-lines": {
 			"enabled": true,
 			"recommended": true,
