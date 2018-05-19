@@ -108,4 +108,6 @@ solium -d contracts/ --fix
   </a>
 </p>
 
+If Solium helped make your life simpler, please consider donating ETH to `0xacc661A56af9793a4437876a52F4Ad3fc3C443d6`
+
 #### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)
