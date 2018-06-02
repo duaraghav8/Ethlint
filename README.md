@@ -101,10 +101,13 @@ solium -d contracts/ --fix
 - [Ethereum Name Service](https://github.com/ensdomains)
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
 
-## Our backers
+## Our supporters
 <p align="left">
   <a href="https://blog.ethereum.org/2018/03/07/announcing-beneficiaries-ethereum-foundation-grants/">
     <img src="./art/ethereum-logo.png" width="100" alt="Ethereum">
+  </a>
+  <a href="https://medium.com/@AugurProject/announcing-the-augur-bounty-program-bf11b1e1b7cf">
+    <img src="./art/augur.png" width="70" alt="Augur">
   </a>
 </p>
 
