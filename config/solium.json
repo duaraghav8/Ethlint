@@ -202,7 +202,14 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure that a line of code doesn't exceed the specified number of characters"
-		}
+		},
+
+                "duplicate-code": {
+                        "enabled": true,
+                        "recommended": true,
+                        "type": "warning",
+                        "description": "Ensure duplicate codes does not exist"
+                }
 
 	}
 }
