@@ -77,6 +77,7 @@ let Schema = {
             properties: {
                 autofix: { type: "boolean" },
                 autofix_dryrun: { type: "boolean" },
+                debug: { type: "boolean" },
                 returnInternalIssues: { type: "boolean" }
             },
             additionalProperties: false

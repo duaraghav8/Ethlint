@@ -68,7 +68,7 @@ If you only use the directive, Solium disables all rules for the marked code. If
 contract Foo {
 	/* solium-disable-next-line */
 	function() {
-		var bar = 'Hello world';	// solium-disable-line quotes
+		bytes32 bar = 'Hello world';	// solium-disable-line quotes
 
 		// solium-disable-next-line security/no-throw, indentation
 						throw;
@@ -89,7 +89,7 @@ contract Foo {
 ### Fix
 Solium automatically fixes your code to resolve whatever issues it can.
 ```bash
-solium -d contracts --fix
+solium -d contracts/ --fix
 ```
 
 ## Trusted by the best
@@ -100,5 +100,17 @@ solium -d contracts --fix
 - [Aragon](https://aragon.one/)
 - [Ethereum Name Service](https://github.com/ensdomains)
 - [Melon Project](https://ipfs.io/ipns/melon.fund/)
+
+## Our supporters
+<p align="left">
+  <a href="https://blog.ethereum.org/2018/03/07/announcing-beneficiaries-ethereum-foundation-grants/">
+    <img src="./art/ethereum-logo.png" width="100" alt="Ethereum">
+  </a>
+  <a href="https://medium.com/@AugurProject/announcing-the-augur-bounty-program-bf11b1e1b7cf">
+    <img src="./art/augur.png" width="70" alt="Augur">
+  </a>
+</p>
+
+If Solium helped make your life simpler, please consider donating ETH to `0xacc661A56af9793a4437876a52F4Ad3fc3C443d6`
 
 #### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)

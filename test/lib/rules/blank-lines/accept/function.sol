@@ -1,6 +1,9 @@
 contract A {
     function spam();
     function ham();
+    constructor(uint x, string foobar){}
+    function(){}
+    function baba(){}
 }
 
 
@@ -16,6 +19,18 @@ contract B is A {
     function ham() {
 
     }
+
+    constructor(address baz) {
+
+    }
+
+    function(uint x) {
+
+    }
+
+    function lola() {
+
+    }
 }
 
 
@@ -26,10 +41,18 @@ contract Chumma {
         return 1;
     }
 
+    function() {
+        // just a fallback function :)
+    }
+
     /// @notice gets something else important
     function anotherFunction() constant returns(uint256)
     {
         return 2;
+    }
+
+    constructor(address owner, uint age) public payable {
+        if (true) { lol(); }
     }
 
     /**
