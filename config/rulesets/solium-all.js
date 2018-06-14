@@ -36,7 +36,8 @@ module.exports = {
         "no-constant": "warning",
         "no-experimental": "warning",
         "max-len": "warning",
-        "modifier-order": "warning",
+        "error-reason": "warning",
+        "visibility-first": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",
