@@ -1,6 +1,6 @@
 /**
- * @fileoverview Tests for camelcase rule
- * @author Raghav Dua <duaraghav8@gmail.com>
+ * @fileoverview Tests for visibility-first rule.
+ * @author Harrison Beckerich <https://github.com/hbeckeri>
  */
 
 "use strict";
@@ -12,11 +12,11 @@ let toContract = wrappers.toContract;
 let userConfig = {
     "custom-rules-filename": null,
     "rules": {
-        "modifier-order": true
+        "visibility-first": true
     }
 };
 
-describe("[RULE] modifier-order: Acceptances", function() {
+describe("[RULE] visibility-first: Acceptances", function() {
 
     it("accepts valid contract names", function(done) {
         let code = [
@@ -51,7 +51,7 @@ describe("[RULE] modifier-order: Acceptances", function() {
 });
 
 
-describe("[RULE] modifier-order: Rejections", function() {
+describe("[RULE] visibility-first: Rejections", function() {
     it("rejects invalid struct names", function(done) {
         let code = [
             "function test() onlyOwner public {}",
