@@ -14,6 +14,8 @@ module.exports = {
         "no-unused-vars": "error",
         "quotes": "error",
         "value-in-payable": "error",
+        "linebreak-style": "error",
+
         "no-empty-blocks": "warning",
         "indentation": "warning",
         "whitespace": "warning",
