@@ -1,0 +1,7 @@
+// This is comment containing \n and \r\n
+// Lets hope it all works!!
+
+import "file";
+
+//some file!
+//WHAT UP!

@@ -209,7 +209,13 @@
 			"recommended": true,
 			"type": "warning",
 			"description": "Ensure that error message is provided for revert and require statements"
-		}
+		},
 
+		"linebreak-style": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure consistent linebreak style"
+		}
 	}
 }
