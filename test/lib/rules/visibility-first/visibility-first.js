@@ -10,15 +10,13 @@ let wrappers = require("../../../utils/wrappers");
 let toContract = wrappers.toContract;
 
 let userConfig = {
-    "custom-rules-filename": null,
     "rules": {
-        "visibility-first": true
+        "visibility-first": "warning"
     }
 };
 
-describe("[RULE] visibility-first: Acceptances", function() {
-
-    it("accepts valid contract names", function(done) {
+describe("[RULE] visibility-first: Acceptances", () => {
+    it("accepts valid contract names", done => {
         let code = [
             "function test() public onlyOwner {}",
             "function test() external onlyOwner {}",
@@ -27,7 +25,7 @@ describe("[RULE] visibility-first: Acceptances", function() {
         ];
         let errors;
 
-        code = code.map(function(item){return toContract(item);});
+        code = code.map(item => toContract(item));
 
         errors = Solium.lint(code [0], userConfig);
         errors.constructor.name.should.equal("Array");
@@ -51,8 +49,8 @@ describe("[RULE] visibility-first: Acceptances", function() {
 });
 
 
-describe("[RULE] visibility-first: Rejections", function() {
-    it("rejects invalid struct names", function(done) {
+describe("[RULE] visibility-first: Rejections", () => {
+    it("rejects invalid struct names", done => {
         let code = [
             "function test() onlyOwner public {}",
             "function test() onlyOwner external {}",
@@ -61,7 +59,7 @@ describe("[RULE] visibility-first: Rejections", function() {
         ];
         let errors;
 
-        code = code.map(function(item){return toContract(item);});
+        code = code.map(item => toContract(item));
 
         errors = Solium.lint(code [0], userConfig);
         errors.constructor.name.should.equal("Array");
