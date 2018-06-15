@@ -5,11 +5,11 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium");
-let wrappers = require("../../../utils/wrappers");
-let toContract = wrappers.toContract;
+const Solium = require("../../../../lib/solium");
+const wrappers = require("../../../utils/wrappers");
+const toContract = wrappers.toContract;
 
-let userConfig = {
+const userConfig = {
     "rules": {
         "visibility-first": "warning"
     }
