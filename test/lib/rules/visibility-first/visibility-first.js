@@ -21,7 +21,13 @@ describe("[RULE] visibility-first: Acceptances", () => {
             "function test() public onlyOwner {}",
             "function test() external onlyOwner {}",
             "function test() internal onlyOwner {}",
-            "function test() private onlyOwner {}"
+            "function test() private onlyOwner {}",
+            "function test() onlyOwner {}",
+            "function test() public {}",
+            "function test() external {}",
+            "function test() internal {}",
+            "function test() private {}",
+            "function test() {}"
         ];
         let errors;
 
@@ -40,6 +46,30 @@ describe("[RULE] visibility-first: Acceptances", () => {
         errors.length.should.equal(0);
 
         errors = Solium.lint(code [3], userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        errors = Solium.lint(code [4], userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        errors = Solium.lint(code [5], userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        errors = Solium.lint(code [6], userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        errors = Solium.lint(code [7], userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        errors = Solium.lint(code [8], userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        errors = Solium.lint(code [9], userConfig);
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
