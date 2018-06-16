@@ -48,8 +48,10 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^4.13.0",
+    "eslint-plugin-prettier": "^2.6.0",
     "mocha": "^3.4.2",
     "nyc": "^11.2.1",
+    "prettier": "^1.13.5",
     "should": "^11.0.0",
     "solium-config-test": "0.0.1",
     "solium-config-test-invalid-schema": "0.0.0",
