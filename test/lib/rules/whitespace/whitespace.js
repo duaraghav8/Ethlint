@@ -88,8 +88,20 @@ describe("[RULE] whitespace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = "constructor() { spam(); }";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         //it is fine EVEN IF there is no extraneous space
         code = "function singleLine() {spam();}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor() {spam();}";
         errors = Solium.lint(toContract(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
@@ -119,6 +131,24 @@ describe("[RULE] whitespace: Acceptances", function() {
         errors.length.should.equal(0);
 
         code = "function foo (uint x, string y);";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor(uint x, string y) {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor() {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor(uint x, string y, address z, string foobar) {}";
         errors = Solium.lint(toContract(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
@@ -205,6 +235,12 @@ describe("[RULE] whitespace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = "constructor() {}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         code = "if (true) {}";
         errors = Solium.lint(toFunction(code), userConfig);
 
@@ -237,7 +273,7 @@ describe("[RULE] whitespace: Acceptances", function() {
         done();
     });
 
-    it("should allow a a valid mix of CallExpression & MemberExpression", function(done) {
+    it("should allow a valid mix of CallExpression & MemberExpression", function(done) {
         let errors, statements = [
             "d(wall.dir()[9]);",
             "require(msg.sender == address(wallet.directory().brg()));",
@@ -403,6 +439,18 @@ describe("[RULE] whitespace: Rejections", function() {
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
+
+        code = "constructor(uint i , Coin coin) {}",
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
+
+        code = "constructor(uint i , Coin coin\t,address lulu) {}",
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(2);
 
         code = "var foobar = 100 ;";
         errors = Solium.lint(toFunction(code), userConfig);

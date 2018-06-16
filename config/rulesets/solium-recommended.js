@@ -13,6 +13,7 @@ module.exports = {
         "array-declarations": "error",
         "no-unused-vars": "error",
         "quotes": "error",
+        "value-in-payable": "error",
 
         "no-empty-blocks": "warning",
         "indentation": "warning",
@@ -24,6 +25,10 @@ module.exports = {
         "comma-whitespace": "warning",
         "operator-whitespace": "warning",
         "emit": "warning",
+        "no-constant": "warning",
+        "max-len": "warning",
+        "error-reason": "warning",
+        "visibility-first": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
@@ -33,6 +38,7 @@ module.exports = {
         "arg-overflow": "off",
         "function-order": "off",
         "conditionals-whitespace": "off",
+        "no-experimental": "off",
 
         // Disable deprecated rules
         "double-quotes": "off",

@@ -7,4 +7,14 @@ contract B is A {
     } function sam() {
 
     }
+    constructor(uint x, string ham) {
+        // boo!
+    }       function() {
+        if (myLifeIsSad()) {
+            staySad("always");
+        }
+    }
+    function normalFunc() {
+        
+    }
 }

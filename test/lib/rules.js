@@ -59,14 +59,14 @@ describe("Checking exported rules object", function() {
 
         //specified rule is neither pre-defined nor custom
         rules.loadUsingDeprecatedConfigFormat.bind(rules, {"NON_EXISTANT_RULE_1": true}).should.throw();
-		
+
         done();
     });
 
     it("should return a rule object after valid call to loadUsingDeprecatedConfigFormat () & get ()", function(done) {
         let config = { "mixedcase": true, "camelcase": false, "lbrace": true };
         rules.loadUsingDeprecatedConfigFormat(config, path.join(__dirname, "../extras/custom-rules-file.js"));
-		
+
         let ret = rules.get("mixedcase");
         ret.should.be.type("object");
         ret.should.have.ownProperty("create");
@@ -212,7 +212,7 @@ describe("Checking exported rules object", function() {
         // We extend ALL solium core rules and eliminate a few by setting their severity to 0.
         // The rest of the rules should all be available.
         // The below count will keep changing with every change in the number of core rules that exist in solium.
-        Object.keys(ruleDescriptions).length.should.equal(21);
+        Object.keys(ruleDescriptions).length.should.equal(27);
 
         done();
     });

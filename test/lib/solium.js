@@ -1665,7 +1665,7 @@ describe("Solium.lint() comment directives", () => {
         errors = Solium.lint(code, config);
 
         errors.should.be.Array();
-        errors.should.have.size(13);
+        errors.should.have.size(14);
 
 
         code = `

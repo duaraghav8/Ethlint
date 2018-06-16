@@ -6,7 +6,7 @@ Solium was authored by `Raghav Dua <https://github.com/duaraghav8>`_ in 2016.
 
 It borrows ideas from `ESLint <https://eslint.org/>`_, `Solidity Parser <https://github.com/ConsenSys/solidity-parser>`_ and other such ambitious projects.
 
-The linter was initially designed to strictly follow Solidity's official `Style Guide <http://solidity.readthedocs.io/en/latest/style-guide.html>`_, but has since evolved into a completely customizable tool (read our `v1 release blog <https://medium.com/solium/introducing-solium-v1-d2bd0a7fbfb>`_).
+The linter was initially designed to strictly follow Solidity's official `Style Guide <http://solidity.readthedocs.io/en/latest/style-guide.html>`_, but has since evolved into a completely customizable tool focused on style and security of smart contract code (read our `v1 release blog <https://medium.com/solium/introducing-solium-v1-d2bd0a7fbfb>`_).
 
 
 .. index:: community
@@ -18,6 +18,7 @@ Community
 
 Anyone who has contributed to strengthening this Project is a community member.
 
+- `The Ethereum Foundation <https://ethereum.org/>`_ (see `Ethereum Inaugral Grants announcement <https://blog.ethereum.org/2018/03/07/announcing-beneficiaries-ethereum-foundation-grants/>`_)
 - `The Augur Project <https://augur.net/>`_ (see `Augur Bounties <https://github.com/AugurProject/augur-bounties>`_)
 - `Beau Gunderson <https://github.com/beaugunderson>`_
 - `Nicolas Feignon <https://github.com/nfeignon>`_
@@ -47,3 +48,6 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Franco Victorio <https://github.com/fvictorio>`_
 - `Gabriel Alacchi <https://github.com/GabrielAlacchi>`_
 - `Utkarsh Gupta <https://github.com/UtkarshGupta-CS>`_
+- `Ivan Mushketyk <https://github.com/mushketyk>`_
+- `Bernd Bohmeier <https://github.com/berndbohmeier>`_
+- `Donatas Stundys <https://github.com/dostu>`_

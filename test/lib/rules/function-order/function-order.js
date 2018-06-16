@@ -50,7 +50,9 @@ describe("[RULE] function-order: Acceptances", function() {
 
         codes.push(`
 			contract Foo {
-				function Foo() {}
+				constructor(string name, address account) {
+
+				}
 				string myName = "Hello";
 				function() {}
 
@@ -187,12 +189,15 @@ describe("[RULE] function-order: Rejections", function() {
 				function() {}
 				string myName = "Hello";
 				function Foo() {}
+				constructor(uint x, bool boop) {
+
+				}
 			}
 		`;
         errors = Solium.lint(code, userConfig);
 
         errors.should.be.Array();
-        errors.should.have.size(13);
+        errors.should.have.size(14);
 
         Solium.reset();
         done();

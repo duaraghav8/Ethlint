@@ -1,6 +1,6 @@
 {
   "name": "solium",
-  "version": "1.1.5",
+  "version": "1.1.7",
   "description": "Linter to identify and fix Style & Security issues in Solidity",
   "main": "./lib/solium.js",
   "bin": {
@@ -42,7 +42,7 @@
     "sol-digger": "0.0.2",
     "sol-explore": "1.6.1",
     "solium-plugin-security": "0.1.1",
-    "solparse": "2.2.4",
+    "solparse": "2.2.5",
     "text-table": "^0.2.0"
   },
   "devDependencies": {
