@@ -5,9 +5,8 @@
 
 "use strict";
 
-const Solium = require("../../../../lib/solium");
-const wrappers = require("../../../utils/wrappers");
-const toContract = wrappers.toContract;
+const Solium = require("../../../../lib/solium"),
+    { toContract } = require("../../../utils/wrappers");
 
 const userConfig = {
     "rules": {
@@ -18,6 +17,7 @@ const userConfig = {
 describe("[RULE] visibility-first: Acceptances", () => {
     it("accepts valid contract names", done => {
         let code = [
+            "function test() public onlyOwner modA modB modC modD private modE {}",
             "function test() public onlyOwner {}",
             "function test() external onlyOwner {}",
             "function test() internal onlyOwner {}",
@@ -33,45 +33,11 @@ describe("[RULE] visibility-first: Acceptances", () => {
 
         code = code.map(item => toContract(item));
 
-        errors = Solium.lint(code [0], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [1], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [2], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [3], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [4], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [5], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [6], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [7], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [8], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
-
-        errors = Solium.lint(code [9], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
+        code.forEach(snip => {
+            errors = Solium.lint(snip, userConfig);
+            errors.should.be.Array();
+            errors.should.be.empty();
+        });
 
         Solium.reset();
         done();
@@ -82,6 +48,9 @@ describe("[RULE] visibility-first: Acceptances", () => {
 describe("[RULE] visibility-first: Rejections", () => {
     it("rejects invalid struct names", done => {
         let code = [
+            "function test() onlyOwner modA modB modC public {}",
+            "function test() onlyOwner modA modB modC external modD modE {}",
+            "function test() onlyOwner modA modB modC internal modD modE private {}",
             "function test() onlyOwner public {}",
             "function test() onlyOwner external {}",
             "function test() onlyOwner internal {}",
@@ -91,21 +60,11 @@ describe("[RULE] visibility-first: Rejections", () => {
 
         code = code.map(item => toContract(item));
 
-        errors = Solium.lint(code [0], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [1], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [2], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [3], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
+        code.forEach(snip => {
+            errors = Solium.lint(snip, userConfig);
+            errors.should.be.Array();
+            errors.should.have.size(1);
+        });
 
         Solium.reset();
         done();
