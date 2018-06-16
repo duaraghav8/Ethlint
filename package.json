@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "nyc --reporter=text --reporter=html mocha --require should --reporter spec --recursive",
-    "lint": "eslint lib/ test/ bin/ config/"
+    "lint": "node_modules/prettier/bin-prettier.js --write \"lib/**/*.js\" --write \"test/**/*.js\" --write \"bin/**/*.js\" --write \"config/**/*.js\"",
+    "precommit": "pretty-quick --staged"
   },
   "keywords": [
     "lint",
@@ -49,9 +50,11 @@
     "chai": "^3.5.0",
     "eslint": "^4.13.0",
     "eslint-plugin-prettier": "^2.6.0",
+    "husky": "^0.14.3",
     "mocha": "^3.4.2",
     "nyc": "^11.2.1",
     "prettier": "^1.13.5",
+    "pretty-quick": "^1.6.0",
     "should": "^11.0.0",
     "solium-config-test": "0.0.1",
     "solium-config-test-invalid-schema": "0.0.0",
