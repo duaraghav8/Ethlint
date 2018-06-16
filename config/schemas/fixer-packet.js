@@ -15,46 +15,45 @@
 ]
 */
 
-let Ajv = require("ajv"), validator = new Ajv({ allErrors: true });
+let Ajv = require("ajv"),
+  validator = new Ajv({ allErrors: true });
 
 let singleFixerPacket = {
-    type: "object",
+  type: "object",
 
-    properties: {
-
-        range: {
-            type: "array",
-            minItems: 2,
-            maxItems: 2,
-            items: {
-                type: "integer", minimum: 0
-            }
-        },
-
-        text: {
-            type: "string"
-        }
-
+  properties: {
+    range: {
+      type: "array",
+      minItems: 2,
+      maxItems: 2,
+      items: {
+        type: "integer",
+        minimum: 0
+      }
     },
 
-    required: ["range", "text"],
-    additionalProperties: false
+    text: {
+      type: "string"
+    }
+  },
+
+  required: ["range", "text"],
+  additionalProperties: false
 };
 
 let Schema = {
-    oneOf: [
-        {
-            type: "array",
-            minItems: 1,
-            items: singleFixerPacket
-        },
+  oneOf: [
+    {
+      type: "array",
+      minItems: 1,
+      items: singleFixerPacket
+    },
 
-        singleFixerPacket
-    ]
+    singleFixerPacket
+  ]
 };
 
-
 module.exports = {
-    Schema: Schema,
-    validationFunc: validator.compile(Schema)
+  Schema: Schema,
+  validationFunc: validator.compile(Schema)
 };
