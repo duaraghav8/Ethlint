@@ -20,31 +20,27 @@ let optionsSchema = require("../config").properties.options;
 */
 
 let Schema = {
-    type: "object",
+  type: "object",
 
-    properties: {
-        "custom-rules-filename": {
-            oneOf: [
-                { type: "string", minLength: 1 },
-                { type: "null" }
-            ]
-        },
-
-        rules: {
-            type: "object",
-            patternProperties: {
-                "^.+$": { type: "boolean" }
-            },
-            additionalProperties: false
-        },
-
-        options: optionsSchema
+  properties: {
+    "custom-rules-filename": {
+      oneOf: [{ type: "string", minLength: 1 }, { type: "null" }]
     },
 
-    required: ["rules"],
+    rules: {
+      type: "object",
+      patternProperties: {
+        "^.+$": { type: "boolean" }
+      },
+      additionalProperties: false
+    },
 
-    additionalProperties: false
+    options: optionsSchema
+  },
+
+  required: ["rules"],
+
+  additionalProperties: false
 };
-
 
 module.exports = Schema;

@@ -1,11 +1,13 @@
 module.exports = {
+    "plugins": ["prettier"],
     "env": {
         "browser": true,
         "commonjs": true,
         "es6": true
     },
-    "extends": "eslint:recommended",
+    "extends": "prettier",
     "rules": {
+        "prettier/prettier": "error",
         "indent": [
             "error",
             4

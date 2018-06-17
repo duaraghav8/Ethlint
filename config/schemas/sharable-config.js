@@ -18,19 +18,15 @@
 
 let rulesSchema = require("./config").properties.rules;
 
-
 let Schema = {
+  type: "object",
 
-    type: "object",
+  properties: {
+    rules: rulesSchema
+  },
 
-    properties: {
-        rules: rulesSchema
-    },
-
-    required: ["rules"],
-    additionalProperties: false
-
+  required: ["rules"],
+  additionalProperties: false
 };
-
 
 module.exports = Schema;

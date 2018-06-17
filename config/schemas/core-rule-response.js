@@ -21,16 +21,15 @@
 let SchemaValidator = require("./core-rule").SchemaValidator;
 
 let Schema = {
-    type: "object",
+  type: "object",
 
-    patternProperties: {
-        "^.+$": {
-            shouldBeOfTypeFunction: true	// This custom attribute is defined in SchemaValidator of ./core-rule.js
-        }
-    },
+  patternProperties: {
+    "^.+$": {
+      shouldBeOfTypeFunction: true // This custom attribute is defined in SchemaValidator of ./core-rule.js
+    }
+  },
 
-    additionalProperties: false
+  additionalProperties: false
 };
-
 
 module.exports = { Schema: Schema, SchemaValidator: SchemaValidator };

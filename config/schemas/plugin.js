@@ -36,36 +36,34 @@
 }
 */
 
-let coreRule = require("./core-rule"), SchemaValidator = coreRule.SchemaValidator;
-
+let coreRule = require("./core-rule"),
+  SchemaValidator = coreRule.SchemaValidator;
 
 let Schema = {
+  type: "object",
 
-    type: "object",
-
-    properties: {
-
-        rules: {
-            type: "object",
-            patternProperties: { "^.+$": coreRule.Schema },
-            additionalProperties: false
-        },
-
-        meta: {
-            type: "object",
-            properties: {
-                description: { type: "string", minLength: 1	}
-            },
-            required: ["description"],
-            additionalProperties: false
-        }
-
+  properties: {
+    rules: {
+      type: "object",
+      patternProperties: { "^.+$": coreRule.Schema },
+      additionalProperties: false
     },
 
-    required: ["rules", "meta"],
-    additionalProperties: false
+    meta: {
+      type: "object",
+      properties: {
+        description: { type: "string", minLength: 1 }
+      },
+      required: ["description"],
+      additionalProperties: false
+    }
+  },
 
+  required: ["rules", "meta"],
+  additionalProperties: false
 };
 
-
-module.exports = { Schema: Schema, validationFunc: SchemaValidator.compile(Schema) };
+module.exports = {
+  Schema: Schema,
+  validationFunc: SchemaValidator.compile(Schema)
+};

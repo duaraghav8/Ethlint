@@ -31,63 +31,58 @@
 */
 
 let Ajv = require("ajv"),
-    SchemaValidator = new Ajv({ allErrors: true });
+  SchemaValidator = new Ajv({ allErrors: true });
 
 // If this constraint is set to true on any attribute, then that attribute MUST be of type function. If set to false, attr MUST NOT be a function.
 SchemaValidator.addKeyword("shouldBeOfTypeFunction", {
-    validate: function(isSet, attr) {
-        return isSet === (typeof attr === "function");
-    }
+  validate: function(isSet, attr) {
+    return isSet === (typeof attr === "function");
+  }
 });
 
-
 let Schema = {
-    type: "object",
+  type: "object",
 
-    properties: {
+  properties: {
+    meta: {
+      type: "object",
+      properties: {
+        docs: {
+          type: "object",
+          properties: {
+            recommended: { type: "boolean" },
+            type: { type: "string", enum: ["error", "warning", "off"] },
+            description: { type: "string", minLength: 1 },
 
-        meta: {
-            type: "object",
-            properties: {
-
-                docs: {
-                    type: "object",
-                    properties: {
-                        recommended: { type: "boolean" },
-                        type: { type: "string", enum: ["error", "warning", "off"] },
-                        description: { type: "string", minLength: 1 },
-
-                        replacedBy: {
-                            type: "array",
-                            minItems: 1,
-                            items: { type: "string", minLength: 1 }
-                        }
-                    },
-                    required: ["recommended", "type", "description"]
-                },
-
-                schema: { type: "array", items: { type: "object" } },
-
-                fixable: {
-                    type: "string", enum: ["code", "whitespace"]
-                },
-
-                deprecated: { type: "boolean" }
-
-            },
-            required: ["docs", "schema"]
+            replacedBy: {
+              type: "array",
+              minItems: 1,
+              items: { type: "string", minLength: 1 }
+            }
+          },
+          required: ["recommended", "type", "description"]
         },
 
-        create: {
-            shouldBeOfTypeFunction: true
-        }
+        schema: { type: "array", items: { type: "object" } },
 
+        fixable: {
+          type: "string",
+          enum: ["code", "whitespace"]
+        },
+
+        deprecated: { type: "boolean" }
+      },
+      required: ["docs", "schema"]
     },
 
-    required: ["meta", "create"],
+    create: {
+      shouldBeOfTypeFunction: true
+    }
+  },
 
-    additionalProperties: false
+  required: ["meta", "create"],
+
+  additionalProperties: false
 };
-
 
 module.exports = { Schema: Schema, SchemaValidator: SchemaValidator };
