@@ -5,11 +5,13 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium"),
+const Solium = require("../../../../lib/solium"),
+    wrappers = require("../../../utils/wrappers"),
+    { addPragma } = wrappers,
     path = require("path"),
     fs = require("fs");
 
-let userConfigUnix = {
+const userConfigUnix = {
     rules: {
         "linebreak-style": "error"
     }
@@ -17,10 +19,10 @@ let userConfigUnix = {
 
 describe("[RULE] linebreak-style: Acceptances for Unix Line breaks", function() {
     it("should accept when receiving Unix Line breaks", function(done) {
-        let code = fs
+        const code = fs
             .readFileSync(path.join(__dirname, "./unix-endings"))
             .toString();
-        let errors = Solium.lint(code, userConfigUnix);
+        const errors = Solium.lint(addPragma(code), userConfigUnix);
 
         errors.should.be.Array();
         errors.length.should.equal(0);
@@ -32,10 +34,10 @@ describe("[RULE] linebreak-style: Acceptances for Unix Line breaks", function() 
 
 describe("[RULE] linebreak-style: Rejections for Unix Line breaks", function() {
     it("should reject when receiving Windows Line breaks", function(done) {
-        let code = fs
+        const code = fs
             .readFileSync(path.join(__dirname, "./windows-endings"))
             .toString();
-        let errors = Solium.lint(code, userConfigUnix);
+        const errors = Solium.lint(code, userConfigUnix);
 
         errors.should.be.Array();
         errors.length.should.be.above(0);
@@ -45,7 +47,7 @@ describe("[RULE] linebreak-style: Rejections for Unix Line breaks", function() {
     });
 });
 
-let userConfigWindows = {
+const userConfigWindows = {
     rules: {
         "linebreak-style": ["error", "windows"]
     }
@@ -53,11 +55,11 @@ let userConfigWindows = {
 
 describe("[RULE] linebreak-style: Acceptances for Windows Line breaks", function() {
     it("should accept when receiving Windows Line breaks", function(done) {
-        let code = fs
+        const code = fs
             .readFileSync(path.join(__dirname, "./windows-endings"))
             .toString();
 
-        let errors = Solium.lint(code, userConfigWindows);
+        const errors = Solium.lint(code, userConfigWindows);
 
         errors.should.be.Array();
         errors.length.should.equal(0);
@@ -69,10 +71,11 @@ describe("[RULE] linebreak-style: Acceptances for Windows Line breaks", function
 
 describe("[RULE] linebreak-style: Rejections for Windows Line breaks", function() {
     it("should reject when receiving Unix Line breaks", function(done) {
-        let code = fs
+        const code = fs
             .readFileSync(path.join(__dirname, "./unix-endings"))
             .toString();
-        let errors = Solium.lint(code, userConfigWindows);
+
+        const errors = Solium.lint(code, userConfigWindows);
 
         errors.should.be.Array();
         errors.length.should.be.above(0);

@@ -39,7 +39,6 @@ module.exports = {
         "max-len": "warning",
         "error-reason": "warning",
         "visibility-first": "warning",
-        "linebreak-style": "error",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",

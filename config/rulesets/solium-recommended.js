@@ -39,7 +39,6 @@ module.exports = {
         "conditionals-whitespace": "off",
         "no-experimental": "off",
         "visibility-first": "warning",
-        "linebreak-style": "error",
 
         // Disable deprecated rules
         "double-quotes": "off",
