@@ -1,0 +1,15 @@
+// This is comment containing \n and \r\n
+// Lets hope it all works!!
+// \t hello world \r\r
+// hello \n\\n world
+
+contract Foo {
+		string myName = "Harry\r\n\\\npotter";
+		string myName = "Harry\n\rpotter";
+        function f () {
+				var myName = "Harry\/\npotter";
+                var foobar = "Hello world";
+                string fuu = "chumma";
+        }
+}
+

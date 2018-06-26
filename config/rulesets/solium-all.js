@@ -20,6 +20,7 @@ module.exports = {
         "value-in-payable": "error",
         "no-unused-vars": "error",
         "quotes": "error",
+        "linebreak-style": "error",
 
         "mixedcase": "warning",
         "camelcase": "warning",
