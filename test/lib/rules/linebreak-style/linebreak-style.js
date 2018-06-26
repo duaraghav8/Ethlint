@@ -47,6 +47,25 @@ describe("[RULE] linebreak-style: Rejections for Unix Line breaks", function() {
     });
 });
 
+
+// TODO: solve issue #221
+// describe("[RULE] linebreak-style: Fixes for Unix Line breaks", function() {
+//     it("should change to Unix Line Breaks when receiving Windows Line breaks", function(done) {
+//         const unfixedCode = fs
+//             .readFileSync(path.join(__dirname, "./windows-endings"))
+//             .toString();
+//         const fixedCode = fs
+//             .readFileSync(path.join(__dirname, "./unix-endings"))
+//             .toString(); 
+//         const newCode = Solium.lintAndFix(unfixedCode, userConfigUnix);
+
+//         newCode.fixedSourceCode.should.equal(fixedCode);
+
+//         Solium.reset();
+//         done();
+//     });
+// });
+
 const userConfigWindows = {
     rules: {
         "linebreak-style": ["error", "windows"]
@@ -84,3 +103,21 @@ describe("[RULE] linebreak-style: Rejections for Windows Line breaks", function(
         done();
     });
 });
+
+// TODO: solve issue #221
+// describe("[RULE] linebreak-style: Fixes for Windows Line breaks", function() {
+//     it("should change to Windows Line breaks when receiving Unix Line breaks", function(done) {
+//         const unfixedCode = fs
+//             .readFileSync(path.join(__dirname, "./unix-endings"))
+//             .toString();
+//         const fixedCode = fs
+//             .readFileSync(path.join(__dirname, "./windows-endings"))
+//             .toString(); 
+//         const newCode = Solium.lintAndFix(unfixedCode, userConfigWindows);
+
+//         newCode.fixedSourceCode.should.equal(fixedCode);
+
+//         Solium.reset();
+//         done();
+//     });
+// });
