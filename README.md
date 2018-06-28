@@ -68,7 +68,7 @@ If you only use the directive, Solium disables all rules for the marked code. If
 contract Foo {
 	/* solium-disable-next-line */
 	function() {
-		var bar = 'Hello world';	// solium-disable-line quotes
+		bytes32 bar = 'Hello world';	// solium-disable-line quotes
 
 		// solium-disable-next-line security/no-throw, indentation
 						throw;
