@@ -15,7 +15,8 @@ module.exports = {
         "quotes": "error",
         "value-in-payable": "error",
         "linebreak-style": "error",
-
+        "constructor-name": "error",
+        
         "no-empty-blocks": "warning",
         "indentation": "warning",
         "whitespace": "warning",

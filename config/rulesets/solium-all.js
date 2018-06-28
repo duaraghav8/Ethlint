@@ -21,7 +21,8 @@ module.exports = {
         "no-unused-vars": "error",
         "quotes": "error",
         "linebreak-style": "error",
-
+        "constructor-name": "error",
+        
         "mixedcase": "warning",
         "camelcase": "warning",
         "uppercase": "warning",
