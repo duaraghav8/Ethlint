@@ -178,16 +178,18 @@ Create a file ``foo-bar.js`` inside `lib/rules <https://github.com/duaraghav8/So
 			fixable: 'code'
 		},
 
-		create: function (context) {
+		create(context) {
 			function lintIfStatement(emitted) {
-				var node = emitted.node;
+				const { node } = emitted;
 
-				if (emitted.exit) { return; }
+				if (emitted.exit) {
+					return;
+				}
 
 				context.report({
-					node: node
-					fix: function(fixer) {
-						// magic
+					node,
+					fix(fixer) {
+						// fix logic
 					},
 					message: 'Oh snap! A lint error:('
 				});
@@ -329,7 +331,7 @@ As mentioned earlier, ``create()`` should return an object. The function specifi
 			console.log (node.type);	// prints "ForStatement" and the node has appropriate properties of 'for' statement
 		}
 
-		return {ForStatement: inspectForLoop};
+		return { ForStatement: inspectForLoop };
 	}
 
 See `emitted node example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L55>`_
@@ -352,21 +354,21 @@ Testing your Core rule
 
 	'use strict';
 
-	var Solium = require('../../../../lib/solium'),
+	const Solium = require('../../../../lib/solium'),
 		wrappers = require('../../../utils/wrappers');
-	var toContract = wrappers.toContract, toFunction = wrappers.toFunction;
+	const { toContract, toFunction } = wrappers;
 
 	// Solium should only lint using your rule so only issues flagged by your rule are reported
 	// so you can easily test it. Replace foo-bar with your rule name.
-	var config = {
+	const config = {
 		"rules": {
-			"foo-bar": "error"	// alternatively - ["error" OR "warning", options acc. to meta.schema of rule]
+			"foo-bar": "error"	// alternatively - ["error" OR "warning", options according to meta.schema of rule]
 		}
 	};
 
-	describe('[RULE] foo-bar: Rejections', function () {
-		it('should reject some stuff', function(done) {
-			var code = 'contract Blah { function bleh() {} }',
+	describe('[RULE] foo-bar: Rejections', () => {
+		it('should reject some stuff', done => {
+			const code = 'contract Blah { function bleh() {} }',
 				errors = Solium.lint(code, config);
 
 			// YOUR TESTS GO HERE. For eg:
@@ -377,8 +379,8 @@ Testing your Core rule
 		});
 	});
 
-	describe('[RULE] foo-bar: Acceptances', function () {
-		it('should accept some stuff', function(done) {
+	describe('[RULE] foo-bar: Acceptances', () => {
+		it('should accept some stuff', done => {
 			// YOUR LINTING & TESTS GO HERE. For eg:
 
 			Solium.reset();
@@ -529,9 +531,11 @@ Read about `Peer Dependencies on NPM <https://nodejs.org/en/blog/npm/peer-depend
 					},
 					schema: []
 				},
-				create: function (context) {
+				create(context) {
 					function inspectProgram (emitted) {
-						if (emitted.exit) { return; }
+						if (emitted.exit) {
+							return;
+						}
 						context.report ({
 							node: emitted.node,
 							message: 'The rule baz/foo reported an error successfully.'
@@ -571,13 +575,13 @@ Inside your main plugin directory itself:
 
 .. code-block:: javascript
 
-	var Solium = require ('solium');
+	const Solium = require ('solium');
 	/**
 	 * If you require any other modules like lodash, install them.
 	 * If the module is only being used in your tests, then it should go in your dev dependencies.
 	 * If being used by any of your rules, then it must go into dependencies.
 	 */
-	var config = {
+	const config = {
 		plugins: ['baz'],
 		rules: {
 			'baz/foo': 'warning'
@@ -587,10 +591,10 @@ Inside your main plugin directory itself:
 			returnInternalIssues: true
 		}
 	};
-	describe ('Rule foo: Acceptances', function () {
-		it ('should accept some stuff and reject other stuff', function (done) {
-			var code = 'contract BlueBerry { function foo () {} }';
-			var errors = Solium.lint (code, config);
+	describe ('Rule foo: Acceptances', () => {
+		it ('should accept some stuff and reject other stuff', done => {
+			const code = 'contract BlueBerry { function foo () {} }';
+			const errors = Solium.lint (code, config);
 			// If your rules also contain fix()es you'd like to test, use:
 			// var errors = Solium.lintAndFix (code, config);
 			console.log ('Errors:\n', errors);
