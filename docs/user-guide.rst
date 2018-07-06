@@ -72,6 +72,14 @@ Use ``solium --help`` for more information on usage.
 .. note::
 	``-d`` can be used in place of ``--dir`` and ``-f`` in place of ``--file``.
 
+.. note::
+    You can override configuration for plugins and rules with ``--plugin`` and ``--rule``.
+
+    ``solium --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
+
+    You can use ``solium --no-soliumrc`` If you want to run solium in any arbitrary folder without the config files.
+
+    ``solium --no-soliumrc --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
 
 After linting over your code, Solium produces either warnings, errors or both. The app exits with a non-zero code ONLY if 1 or more errors were found.
 So if all you got was warnings, solium exits with code ``0``.
