@@ -109,6 +109,10 @@ solium -d contracts/ --fix
   <a href="https://medium.com/@AugurProject/announcing-the-augur-bounty-program-bf11b1e1b7cf">
     <img src="./art/augur.png" width="70" alt="Augur">
   </a>
+  &nbsp;&nbsp;
+  <a href="https://gitcoin.co/universe?sort=None&direction=-&page=1&q=solium">
+    <img src="./art/gitcoin.png" width="80" alt="Gitcoin">
+  </a>
 </p>
 
 If Solium helped make your life simpler, please consider donating ETH to `0xacc661A56af9793a4437876a52F4Ad3fc3C443d6`
