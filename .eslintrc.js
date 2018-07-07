@@ -39,6 +39,10 @@ module.exports = {
         "no-undef": "off",
         "no-useless-escape": "off",
         "no-sparse-arrays": "off",   // we give undefined as test cases using pattern [, a, b]
-        "no-whitespace-before-property": "off"  // TODO: apply this rule on array bracket properties only
+        "no-whitespace-before-property": "off",  // TODO: apply this rule on array bracket properties only
+        "prefer-const": ["error", {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }]
     }
 };
