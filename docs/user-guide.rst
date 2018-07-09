@@ -72,18 +72,17 @@ Use ``solium --help`` for more information on usage.
 .. note::
 	``-d`` can be used in place of ``--dir`` and ``-f`` in place of ``--file``.
 
-.. note::
-    You can specify rules or plugins to apply as commandline options.
-    If you specify one, it overrides its corresponding configuration in the soliumrc file.
 
-    ``solium --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
+You can specify rules or plugins to apply as commandline options. If you specify one, it overrides its corresponding configuration in the soliumrc file.
 
-    You can use ``solium --no-soliumrc`` If you want to run solium in any arbitrary folder without the config files.
+``solium --plugin zeppelin --rule 'indentation: ["error", 4]' -d contracts/``
 
-    ``solium --no-soliumrc --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
+Use ``--no-soliumrc`` and ``--no-soliumignore`` if you want to run solium in any arbitrary folder without looking for the config files.
 
-After linting over your code, Solium produces either warnings, errors or both. The app exits with a non-zero code ONLY if 1 or more errors were found.
-So if all you got was warnings, solium exits with code ``0``.
+``solium --no-soliumrc --no-soliumignore --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
+
+After linting over your code, Solium produces either warnings, errors or both. The tool exits with a non-zero code only if 1 or more errors were found.
+So if all you got was warnings, solium exits with ``0``.
 
 Whether an issue should be flagged as an error or warning by its rule is configurable through ``.soliumrc.json``.
 
