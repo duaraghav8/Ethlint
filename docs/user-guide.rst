@@ -73,7 +73,8 @@ Use ``solium --help`` for more information on usage.
 	``-d`` can be used in place of ``--dir`` and ``-f`` in place of ``--file``.
 
 .. note::
-    You can override configuration for plugins and rules with ``--plugin`` and ``--rule``.
+    You can specify rules or plugins to apply as commandline options.
+    If you specify one, it overrides its corresponding configuration in the soliumrc file.
 
     ``solium --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
 
