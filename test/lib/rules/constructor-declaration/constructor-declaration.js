@@ -1,5 +1,5 @@
 /**
- * @fileoverview Ensure constructor name does not match bounty name
+ * @fileoverview Ensure that constructors are not declared using the deprecated style
  * @author Daniel McLellan <daniel.mclellan@gmail.com>
  */
 
@@ -8,11 +8,11 @@ const Solium = require("../../../../lib/solium");
 // const toContract = require("../../../utils/wrappers").toContract;
 const userConfig = {
     "rules": {
-        "constructor-name": "error"
+        "constructor-declaration": "error"
     }
 };
 
-describe("[RULE] constructor-name: Rejections", function() {
+describe("[RULE] constructor-declaration: Rejections", function() {
     it("should correct the use of the bounty name as constructor", done => {
         let code = `
         pragma experimental "^0.5.0";
@@ -25,7 +25,8 @@ describe("[RULE] constructor-name: Rejections", function() {
         done();
     });
 });
-describe("[RULE] constructor-name: Acceptances", function() {
+
+describe("[RULE] constructor-declaration: Acceptances", function() {
     it("should accept the contract using contructor as first function", done => {
         let code = `
         pragma experimental "^0.5.0";
