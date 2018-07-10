@@ -223,6 +223,13 @@
 			"recommended": true,
 			"type": "error",
 			"description": "Ensure consistent linebreak style"
+		},
+		
+		"constructor-declaration": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure that constructors are not declared using the deprecated style"
 	    }
 	}
 }
