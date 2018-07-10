@@ -5,20 +5,14 @@
 
 "use strict";
 const Solium = require("../../../../lib/solium");
-// const toContract = require("../../../utils/wrappers").toContract;
 const userConfig = {
     "rules": {
         "constructor-declaration": "error"
     }
 };
 
-<<<<<<< HEAD:test/lib/rules/constructor-name/constructor-name.js
-describe("[RULE] constructor-name: Rejections", function() {
-    it("should identify the use of the bounty name as constructor", done => {
-=======
 describe("[RULE] constructor-declaration: Rejections", function() {
     it("should correct the use of the bounty name as constructor", done => {
->>>>>>> 8e114f3aeacb5cf78f4576802e5e914d37b017d6:test/lib/rules/constructor-declaration/constructor-declaration.js
         let code = `
         pragma experimental "^0.5.0";
         contract Foo { function Foo() {} }
