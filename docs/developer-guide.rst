@@ -206,7 +206,7 @@ Your rule should expose an object that contains 2 attributes - ``meta`` object w
 ``meta``
 
 - Contains ``docs`` object used to describe the rule.
-- The ``schema`` object is used to describe the schema of options the user can pass to this rule via soliumrc config (see `AJV <https://github.com/epoberezkin/ajv>`_). This ensure that a valid set of options are passed to your rule. You can see the schema of `quotes <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L37>`_ rule to understand how to write the schema for your rule.
+- The ``schema`` object is used to describe the schema of options the user can pass to this rule via soliumrc config (see `AJV <https://github.com/epoberezkin/ajv>`_). This ensures that a valid set of options are passed to your rule. You can see the schema of `quotes <https://github.com/duaraghav8/Solium/blob/master/lib/rules/quotes.js#L37>`_ rule to understand how to write the schema for your rule.
 - The ``fixable`` attribute can have value as either ``code`` or ``whitespace``. Set this attribute if your rule also contains fixes for the issues you report. Use ``whitespace`` if your rule only add/removes whitespace from the code. Else use ``code``.
 - When a rule needs to be deprecated, we can add ``deprecated: true`` inside meta. We can add ``replacedBy: ["RULE NAME"]`` inside meta.docs if this rule is to be replaced by a new rule (see `deprecated example <https://github.com/duaraghav8/Solium/blob/master/lib/rules/double-quotes.js#L32-L36>`_).
 

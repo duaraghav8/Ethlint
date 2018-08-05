@@ -143,6 +143,33 @@ describe("[RULE] function-order: Acceptances", function() {
         done();
     });
 
+    it("should accept valid config options", done => {
+        const config = { rules: {} }, code = "contract Foo {}";
+        const testOptions = [
+            {ignore: {constructorFunc: false}},
+            {ignore: {fallbackFunc: false}},
+            {ignore: {functions: []}},
+            {ignore: {visibilities: []}},
+            {ignore: {constructorFunc: false, visibilities: [], functions: []}},
+            {ignore: {fallbackFunc: false, constructorFunc: false, visibilities: [], functions: []}},
+            {ignore: {visibilities: [], functions: []}},
+            {ignore: {constructorFunc: false, visibilities: []}},
+            {ignore: {constructorFunc: false, functions: []}}
+        ];
+
+        testOptions.forEach(opt => {
+            config.rules["function-order"] = ["error", opt];
+            Solium.lint.bind(Solium, code, config).should.not.throw();
+        });
+
+        done();
+    });
+
+    // TODO: Add tests to ensure ignore configuration works fine.
+    it("should ignore functions as specified in configuration", done => {
+        done();
+    });
+
 });
 
 
@@ -200,6 +227,27 @@ describe("[RULE] function-order: Rejections", function() {
         errors.should.have.size(14);
 
         Solium.reset();
+        done();
+    });
+
+    it("should reject invalid config options", done => {
+        const config = { rules: {} }, code = "contract Foo {}";
+        const testOptions = [
+            {},
+            {ignore: {}},
+            {foobarbaz: {visibilities: []}},
+            {ignore: {foobar: []}},
+            {ignore: {constructorFunc: "hello", visibilities: [], functions: []}},
+            {ignore: {constructorFunc: false, visibilities: 18926, functions: []}},
+            {ignore: {constructorFunc: false, visibilities: [], functions: {}}},
+            {ignore: {fallbackFunc: null}}
+        ];
+
+        testOptions.forEach(opt => {
+            config.rules["function-order"] = ["error", opt];
+            Solium.lint.bind(Solium, code, config).should.throw();
+        });
+
         done();
     });
 

@@ -367,7 +367,7 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | pragma-on-top              | Ensure a) A PRAGMA directive exists and b) its on top of the file                                            |                                         -                                         |                                     | YES   |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
-| function-order             | Ensure order of functions in a contract: constructor,fallback,external,public,internal,private               |                                         -                                         |                                     |       |
+| function-order             | Ensure order of functions in a contract: constructor,fallback,external,public,internal,private               |        Functions to ignore (https://github.com/duaraghav8/Solium/issues/235)      |(See below)                          |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | emit                       | Ensure that emit statement is used to trigger a solidity event                                               |                                         -                                         |                                     | YES   |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
@@ -385,6 +385,28 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | linebreak-style            | Ensure consistent linebreak style                                                                            |                    linebreak style (either "windows" or "unix")                   |  unix                               |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+
+
+The following is an example of a configuration object passed to the ``function-order`` rule. See https://github.com/duaraghav8/Solium/issues/235 to understand its purpose and usage.
+
+.. code-block:: javascript
+
+	{
+        "rules": {
+            "function-order": [
+                "error",
+                {
+                    "ignore": {
+                        "constructorFunc": true,
+                        "fallbackFunc": true,
+                        "functions": ["foo", "myFunc"],
+                        "visibilities": ["private"]
+                    }
+                }
+            ]
+        }
+    }
+
 
 
 .. index:: IDE and Editor integrations
