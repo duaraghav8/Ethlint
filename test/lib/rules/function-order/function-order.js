@@ -5,7 +5,9 @@
 
 "use strict";
 
-const Solium = require("../../../../lib/solium");
+const Solium = require("../../../../lib/solium"),
+    { toContract } = require("../../../utils/wrappers");
+
 const userConfig = {
     "rules": {
         "function-order": "error"
@@ -165,8 +167,53 @@ describe("[RULE] function-order: Acceptances", function() {
         done();
     });
 
-    // TODO: Add tests to ensure ignore configuration works fine.
     it("should ignore functions as specified in configuration", done => {
+        const config = {
+            rules: {
+                "function-order": ["error", { ignore: {} }]
+            }
+        };
+
+        const cases = [
+            [
+                {constructorFunc: true},
+                `
+				function() payable {}
+				constructor() public { foobar(); }
+				`
+            ],
+            [
+                {fallbackFunc: true},
+                `
+				function myFunc(uint x, string bby) external;
+				function() payable {}
+				`
+            ],
+            [
+                {functions: ["mySecondFunc"]},
+                `
+				function myFunc(uint x, string bby) internal {}
+				function mySecondFunc(address sherlock) public {}
+				`
+            ],
+            [
+                {visibilities: ["internal", "private"]},
+                `
+				function dummy() private;
+				function myFunc(uint x, string bby) internal {}
+				function mySecondFunc(address sherlock) public {}
+				function myThirdFunc(address sherlock) public {}
+				`
+            ]
+        ];
+
+        cases.forEach(tc => {
+            config.rules["function-order"][1].ignore = tc[0];
+            const errors = Solium.lint(toContract(tc[1]), config);
+            errors.should.be.Array();
+            errors.should.be.empty();
+        });
+
         done();
     });
 
