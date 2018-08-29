@@ -463,7 +463,7 @@ You're now ready to test your config.
 Testing your Sharable Config
 ============================
 
-Solium internally simply ``require()``s the config you extends from in your soliumrc. So as long as require() can resolve the name ``solium-config-foobar``, it doesn't care where the config is installed.
+Solium internally simply ``require()`` s the config you extend from in your soliumrc. So as long as require() can resolve the name ``solium-config-foobar``, it doesn't care where the config is installed.
 
 The simplest way to test is to first link your config and make it globally available. Traverse to your config directory and run ``npm link``. You can verify that your config is globally available by going to any random directory, opening a node REPL and running ``require('solium-config-foobar')``.
 
