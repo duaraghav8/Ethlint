@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "nyc --reporter=text --reporter=html mocha --require should --reporter spec --recursive",
-    "lint": "eslint lib/ test/ bin/ config/"
+    "lint": "eslint lib/ test/ bin/ config/",
+    "browserify": "mkdir build; browserify lib/lib.js -o build/solium-browser-bundle.js"
   },
   "keywords": [
     "lint",
@@ -47,6 +48,13 @@
     "text-table": "^0.2.0"
   },
   "devDependencies": {
+    "ajv": "^5.2.2",
+    "babel-eslint": "^7.1.1",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "babelify": "^7.3.0",
     "chai": "^3.5.0",
     "eslint": "^4.13.0",
     "mocha": "^3.4.2",
@@ -57,5 +65,37 @@
     "solium-config-test-invalid-syntax": "0.0.0",
     "solium-plugin-test": "0.1.5",
     "solium-plugin-test-invalid-schema": "0.0.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "babelify",
+        {
+          "plugins": [
+            [
+              "fast-async",
+              {
+                "runtimePatten": null,
+                "compiler": {
+                  "promises": true,
+                  "es7": true,
+                  "noRuntime": true,
+                  "wrapAwait": true
+                }
+              }
+            ],
+            "transform-object-assign"
+          ]
+        }
+      ],
+      [
+        "babelify",
+        {
+          "presets": [
+            "es2015"
+          ]
+        }
+      ]
+    ]
   }
 }
