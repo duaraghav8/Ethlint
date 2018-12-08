@@ -1,0 +1,7 @@
+-   id: solium
+    name: Run solium linter
+    description: This runs the solium linter.
+    entry: solium
+    args: [--dir=.]
+    language: node
+    types: [text]
