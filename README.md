@@ -4,20 +4,23 @@
 
 <br />
 
+[![Build Status](https://travis-ci.org/duaraghav8/Ethlint.svg?branch=master)](https://travis-ci.org/duaraghav8/Ethlint)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/Solium-linter/Lobby)
-[![Build Status](https://travis-ci.org/duaraghav8/Solium.svg?branch=master)](https://travis-ci.org/duaraghav8/Solium)
 [![Latest News](https://img.shields.io/badge/Blog-Medium-yellowgreen.svg)](https://medium.com/solium)
-[![Snap Status](https://build.snapcraft.io/badge/duaraghav8/Solium.svg)](https://build.snapcraft.io/user/duaraghav8/Solium)
 
-Solium analyzes your Solidity code for style & security issues and fixes them.
+Ethlint (Formerly Solium) analyzes your Solidity code for style & security issues and fixes them.
 
-Standardize Smart Contract practices across your organisation. Integrate with your build system. Deploy with confidence!
+Standardize Smart Contract practices across your organisation. Integrate with your build system. Deploy with confidence.
 
 ## Install
 ```bash
-npm install -g solium
+npm install -g ethlint
 solium -V
 ```
+
+For backward-compatibility, you can still use `npm install -g solium`.
+
+If you're currently using the `solium` package for `npm install`, it is highly recommended that you move to `ethlint`. The `solium` package will not receive updates after April, 2019. There are no differences between the updates pushed to `ethlint` and `solium` packages.
 
 ## Usage
 In the root directory of your DApp:
