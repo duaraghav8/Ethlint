@@ -13,7 +13,7 @@ Quickstart
 - ``solium --init``
 - ``solium -d contracts/`` or ``solium -d .`` or ``solium -f myContract.sol``
 
-Fix stuff
+Fix code
 
 - ``solium -f myContract.sol --fix``
 - ``git diff myContract.sol``
@@ -165,7 +165,9 @@ Automatic code formatting
 *************************
 
 For the times when you're feeling lazy, just run ``solium -d contracts/ --fix`` to fix your lint issues.
-This doesn't fix all your problems (nothing fixes all your problems) but all lint issues that CAN be fixed WILL be fixed, if the rule implementation that flags the issue also contains a fix for it.
+This doesn't fix all the code problems but all lint issues that CAN be fixed WILL be fixed, if the rule implementation that flags the issue also contains a fix for it.
+
+Alternatively, you can use the ``--fix-dry-run`` option to see the list of changes the linter intends to apply to your code. This option is only supported with the ``pretty`` reporter, which is enabled by default.
 
 .. warning::
 	Solium fixes your code in-place, so your original file is over-written.

@@ -4,6 +4,7 @@
 - Moved deprecated rules in documentation into their own section.
 - Added support for tilde for specifying version literals in `pragma` statements.
 - Added rule `constructor` to warn the user when the deprecated style of constructor declaration is being used.
+- Added `--fix-dry-run` option to CLI to allow users to see a git-style diff of the changes the `--fix` option will make.
 - Fixed Hex literal parsing. Incorrect parsing caused the linter to crash in some [cases](https://github.com/duaraghav8/Ethlint/issues/232).
 - Changed documentation URL to [ethlint.readthedocs.io](https://ethlint.readthedocs.io).
 
