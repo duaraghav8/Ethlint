@@ -20,6 +20,7 @@ module.exports = {
         "value-in-payable": "error",
         "no-unused-vars": "error",
         "quotes": "error",
+        "linebreak-style": "error",
 
         "mixedcase": "warning",
         "camelcase": "warning",
@@ -37,6 +38,8 @@ module.exports = {
         "no-experimental": "warning",
         "max-len": "warning",
         "error-reason": "warning",
+        "visibility-first": "warning",
+        "constructor": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",

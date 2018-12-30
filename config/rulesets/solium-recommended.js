@@ -14,6 +14,7 @@ module.exports = {
         "no-unused-vars": "error",
         "quotes": "error",
         "value-in-payable": "error",
+        "linebreak-style": "error",
 
         "no-empty-blocks": "warning",
         "indentation": "warning",
@@ -28,6 +29,8 @@ module.exports = {
         "no-constant": "warning",
         "max-len": "warning",
         "error-reason": "warning",
+        "constructor": "warning",
+        "visibility-first": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",

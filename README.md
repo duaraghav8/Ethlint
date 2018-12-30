@@ -4,20 +4,23 @@
 
 <br />
 
+[![Build Status](https://travis-ci.org/duaraghav8/Ethlint.svg?branch=master)](https://travis-ci.org/duaraghav8/Ethlint)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/Solium-linter/Lobby)
-[![Build Status](https://travis-ci.org/duaraghav8/Solium.svg?branch=master)](https://travis-ci.org/duaraghav8/Solium)
 [![Latest News](https://img.shields.io/badge/Blog-Medium-yellowgreen.svg)](https://medium.com/solium)
-[![Snap Status](https://build.snapcraft.io/badge/duaraghav8/Solium.svg)](https://build.snapcraft.io/user/duaraghav8/Solium)
 
-Solium analyzes your Solidity code for style & security issues and fixes them.
+Ethlint (Formerly Solium) analyzes your Solidity code for style & security issues and fixes them.
 
-Standardize Smart Contract practices across your organisation. Integrate with your build system. Deploy with confidence!
+Standardize Smart Contract practices across your organisation. Integrate with your build system. Deploy with confidence.
 
 ## Install
 ```bash
-npm install -g solium
+npm install -g ethlint
 solium -V
 ```
+
+For backward-compatibility, you can still use `npm install -g solium`.
+
+If you're currently using the `solium` package for `npm install`, it is highly recommended that you move to `ethlint`. The `solium` package will not receive updates after April, 2019. There are no differences between the updates pushed to `ethlint` and `solium` packages.
 
 ## Usage
 In the root directory of your DApp:
@@ -109,8 +112,12 @@ solium -d contracts/ --fix
   <a href="https://medium.com/@AugurProject/announcing-the-augur-bounty-program-bf11b1e1b7cf">
     <img src="./art/augur.png" width="70" alt="Augur">
   </a>
+  &nbsp;&nbsp;
+  <a href="https://gitcoin.co/universe?sort=None&direction=-&page=1&q=solium">
+    <img src="./art/gitcoin.png" width="80" alt="Gitcoin">
+  </a>
 </p>
 
 If Solium helped make your life simpler, please consider donating ETH to `0xacc661A56af9793a4437876a52F4Ad3fc3C443d6`
 
-#### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Complete Documentation](http://solium.readthedocs.io/) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)
+#### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Documentation](https://ethlint.readthedocs.io) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)

@@ -73,8 +73,16 @@ Use ``solium --help`` for more information on usage.
 	``-d`` can be used in place of ``--dir`` and ``-f`` in place of ``--file``.
 
 
-After linting over your code, Solium produces either warnings, errors or both. The app exits with a non-zero code ONLY if 1 or more errors were found.
-So if all you got was warnings, solium exits with code ``0``.
+You can specify rules or plugins to apply as commandline options. If you specify one, it overrides its corresponding configuration in the soliumrc file.
+
+``solium --plugin zeppelin --rule 'indentation: ["error", 4]' -d contracts/``
+
+Use ``--no-soliumrc`` and ``--no-soliumignore`` if you want to run solium in any arbitrary folder without looking for the config files.
+
+``solium --no-soliumrc --no-soliumignore --plugin zeppelin --rule 'indentation: ["error", 4]' -f contract.sol``
+
+After linting over your code, Solium produces either warnings, errors or both. The tool exits with a non-zero code only if 1 or more errors were found.
+So if all you got was warnings, solium exits with ``0``.
 
 Whether an issue should be flagged as an error or warning by its rule is configurable through ``.soliumrc.json``.
 
@@ -337,13 +345,9 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | uppercase                  | Ensure that all constants (and only constants) contain only upper case letters and underscore                |                                         -                                         |                                     |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
-| no-with [DEPRECATED]       | Ensure no use of with statements in the code                                                                 |                                         -                                         |                                     |       |
-+----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | no-empty-blocks            | Ensure that no empty blocks {} exist                                                                         |                                         -                                         |                                     |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | no-unused-vars             | Flag all the variables that were declared but never used                                                     |                                         -                                         |                                     |       |
-+----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
-| double-quotes [DEPRECATED] | Ensure that string are quoted with double-quotes only. Deprecated and replaced by "quotes".                  |                                         -                                         |                                     |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | quotes                     | Ensure that all strings use only 1 style - either double quotes or single quotes                             |                    Single option - either "double" or "single"                    | double                              | YES   |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
@@ -359,7 +363,7 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | pragma-on-top              | Ensure a) A PRAGMA directive exists and b) its on top of the file                                            |                                         -                                         |                                     | YES   |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
-| function-order             | Ensure order of functions in a contract: constructor,fallback,external,public,internal,private               |                                         -                                         |                                     |       |
+| function-order             | Ensure order of functions in a contract: constructor,fallback,external,public,internal,private               |        Functions to ignore (https://github.com/duaraghav8/Solium/issues/235)      |(See below)                          |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | emit                       | Ensure that emit statement is used to trigger a solidity event                                               |                                         -                                         |                                     | YES   |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
@@ -372,6 +376,44 @@ For eg- your choice of indentation might be Tab or 4 spaces or 2 spaces. What in
 | max-len                    | Ensure that a line of code doesn't exceed the specified number of characters                                 |  Single integer representing the number of characters to allow per line of code   | 145                                 |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 | error-reason               | Ensure that error message is provided for revert and require statements                                      |            Object with "revert" and "require" keys with boolean values            | { "revert": true, "require": true } |       |
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+| visibility-first           | Ensure that the visibility modifier for a function should come before any custom modifiers                   |                                         -                                         |                                     |       |
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+| linebreak-style            | Ensure consistent linebreak style                                                                            |                    linebreak style (either "windows" or "unix")                   |  unix                               |       |
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+| constructor                | Ensure that the deprecated style of constructor declaration is not used                                      |                                                                                   |                                     | YES   |
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+
+
+The following is an example of a configuration object passed to the ``function-order`` rule. See https://github.com/duaraghav8/Solium/issues/235 to understand its purpose and usage.
+
+.. code-block:: javascript
+
+	{
+        "rules": {
+            "function-order": [
+                "error",
+                {
+                    "ignore": {
+                        "constructorFunc": true,
+                        "fallbackFunc": true,
+                        "functions": ["foo", "myFunc"],
+                        "visibilities": ["private"]
+                    }
+                }
+            ]
+        }
+    }
+
+
+Deprecated rules:
+
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+|            Name            |                                                  Description                                                 |                                      Options                                      |     Defaults                        | Fixes |
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+| double-quotes              | Ensure that string are quoted with double-quotes only. Replaced by "quotes".                                 |                                         -                                         |                                     |       |
++----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
+| no-with                    | Ensure no use of with statements in the code                                                                 |                                         -                                         |                                     |       |
 +----------------------------+--------------------------------------------------------------------------------------------------------------+-----------------------------------------------------------------------------------+-------------------------------------+-------+
 
 .. index:: IDE and Editor integrations
