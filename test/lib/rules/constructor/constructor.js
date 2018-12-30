@@ -1,6 +1,6 @@
 /**
  * @fileoverview Tests for the constructor rule
- * @author Utkarsh Patil <utkarsh2305@gmail.com>
+ * @author Utkarsh Patil <utkarsh2305@gmail.com>, Daniel McLellan <daniel.mclellan@gmail.com>
  */
 
 "use strict";
