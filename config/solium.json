@@ -204,12 +204,32 @@
 			"description": "Ensure that a line of code doesn't exceed the specified number of characters"
 		},
 
-		"deprecated-constructor": {
+		"error-reason": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that error message is provided for revert and require statements"
+		},
+
+ 		"deprecated-constructor": {
 			"enabled": true,
 			"recommended": true,
 			"type": "warning",
 			"description": "Suggest replacing deprecated contract name with 'constructor' for constructor function"
-		}
+		},
 
+		"visibility-first": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Ensure that the visibility modifier for a function should come before any custom modifiers"
+		},
+
+		"linebreak-style": {
+			"enabled": true,
+			"recommended": true,
+			"type": "error",
+			"description": "Ensure consistent linebreak style"
+    }
 	}
 }
