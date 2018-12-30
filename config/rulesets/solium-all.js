@@ -39,7 +39,7 @@ module.exports = {
         "max-len": "warning",
         "error-reason": "warning",
         "visibility-first": "warning",
-        "deprecated-constructor": "warning",
+        "constructor": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",

@@ -211,7 +211,7 @@
 			"description": "Ensure that error message is provided for revert and require statements"
 		},
 
- 		"deprecated-constructor": {
+		"constructor": {
 			"enabled": true,
 			"recommended": true,
 			"type": "warning",
@@ -230,6 +230,6 @@
 			"recommended": true,
 			"type": "error",
 			"description": "Ensure consistent linebreak style"
-    }
+		}
 	}
 }

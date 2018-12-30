@@ -29,7 +29,7 @@ module.exports = {
         "no-constant": "warning",
         "max-len": "warning",
         "error-reason": "warning",
-        "deprecated-constructor": "warning",
+        "constructor": "warning",
         "visibility-first": "warning",
 
         "lbrace": "off",
