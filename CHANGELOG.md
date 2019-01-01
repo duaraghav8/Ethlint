@@ -2,6 +2,8 @@
 
 ## 1.2.1 ()
 - Moved deprecated rules in documentation into their own section.
+- Added `fix` functionality to `linebreak-style` rule.
+- Added `linebreak-style` rule configuration to default `.soliumrc.json`.
 - Added support for tilde for specifying version literals in `pragma` statements.
 - Added rule `constructor` to warn the user when the deprecated style of constructor declaration is being used.
 - Added `--fix-dry-run` option to CLI to allow users to see a git-style diff of the changes the `--fix` option will make.
