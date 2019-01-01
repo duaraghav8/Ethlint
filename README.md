@@ -10,7 +10,7 @@
 
 Ethlint (Formerly Solium) analyzes your Solidity code for style & security issues and fixes them.
 
-Standardize Smart Contract practices across your organisation. Integrate with your build system. Deploy with confidence.
+See [Documentation](https://ethlint.readthedocs.io/) and [Changelog](./CHANGELOG.md)
 
 ## Install
 ```bash
@@ -95,15 +95,6 @@ Solium automatically fixes your code to resolve whatever issues it can.
 solium -d contracts/ --fix
 ```
 
-## Trusted by the best
-- [Augur](https://augur.net/)
-- [Zeppelin](https://zeppelin.solutions/)
-- [Consensys](https://consensys.net/)
-- [Paritytech](https://paritytech.io/)
-- [Aragon](https://aragon.one/)
-- [Ethereum Name Service](https://github.com/ensdomains)
-- [Melon Project](https://ipfs.io/ipns/melon.fund/)
-
 ## Our supporters
 <p align="left">
   <a href="https://blog.ethereum.org/2018/03/07/announcing-beneficiaries-ethereum-foundation-grants/">
@@ -118,6 +109,6 @@ solium -d contracts/ --fix
   </a>
 </p>
 
-If Solium helped make your life simpler, please consider donating ETH to `0xacc661A56af9793a4437876a52F4Ad3fc3C443d6`
+If Ethlint helped make your life simpler, please consider donating ETH to `0xacc661A56af9793a4437876a52F4Ad3fc3C443d6`
 
 #### [IDE and Editor Integrations](http://solium.readthedocs.io/en/latest/user-guide.html#index-9) | [Documentation](https://ethlint.readthedocs.io) | [Demo Video](https://www.youtube.com/watch?v=MlQ6fzwixpI)
