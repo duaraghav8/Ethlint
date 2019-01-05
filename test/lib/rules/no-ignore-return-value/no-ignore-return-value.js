@@ -1,5 +1,5 @@
 /**
- * @fileoverview Tests for function-order rule
+ * @fileoverview Tests for no-ignore-return-value rule
  * @author Yuichi Nukiyama
  */
 
@@ -8,12 +8,12 @@
 const Solium = require("../../../../lib/solium");
 const userConfig = {
     "rules": {
-        "no-ignore-return-values": "warning"
+        "no-ignore-return-value": "warning"
     }
 };
 
 
-describe("[RULE] function-call: Acceptances", function() {
+describe("[RULE] no-ignore-return-value: Acceptances", function() {
 
     it("should accept functions which use return value", done => {
         let codes = [`
@@ -49,7 +49,7 @@ describe("[RULE] function-call: Acceptances", function() {
     });
 });
 
-describe("[RULE] function-call: Rejections", function() {
+describe("[RULE] no-ignore-return-value: Rejections", function() {
 
     it("should reject functions which don't use return value", done => {
         let codes = [`

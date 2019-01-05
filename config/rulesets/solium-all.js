@@ -36,7 +36,7 @@ module.exports = {
         "emit": "warning",
         "no-constant": "warning",
         "no-experimental": "warning",
-        "no-ignore-return-values": "warning",
+        "no-ignore-return-value": "warning",
         "max-len": "warning",
         "error-reason": "warning",
         "visibility-first": "warning",

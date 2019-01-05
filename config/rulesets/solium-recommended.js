@@ -31,7 +31,7 @@ module.exports = {
         "error-reason": "warning",
         "constructor": "warning",
         "visibility-first": "warning",
-        "no-ignore-return-values": "warning",
+        "no-ignore-return-value": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
