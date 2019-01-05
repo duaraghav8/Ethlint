@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.2 ()
+- Changed `.soliumignore`-related warning messages to be more user-friendly.
+
 ## 1.2.1 (2019-01-01) :sparkler:
 - Added `fix` functionality to `linebreak-style` rule.
 - Added `linebreak-style` rule configuration to default `.soliumrc.json`.
