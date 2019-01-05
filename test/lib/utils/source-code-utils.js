@@ -5,17 +5,18 @@
 
 "use strict";
 
-const { EOL } = require("os"),
-    SourceCode = require("../../../lib/utils/source-code-utils");
+const SourceCode = require("../../../lib/utils/source-code-utils");
 
 describe("Testing SourceCode instance for exposed functionality", function() {
-    let sourceCodeText = "contract Visual {\n\n\tfunction foo () {\n\t\tvar x = 100;\n\t}\n\n}",
+    // Linter should account for both windows & unix linebreak styles,
+    // so use a mix of them.
+    let sourceCodeText = "contract Visual {\n\r\n\tfunction foo () {\r\n\t\tvar x = 100;\n\t}\n\r\n}\n\r\n",
         varDeclarator = {
             type: "VariableDeclarator",
-            id: { type: "Identifier", name: "x", start: 44, end: 45 },
-            init: { type: "Literal", value: 100, start: 48, end: 51 },
-            start: 44,
-            end: 51
+            id: { type: "Identifier", name: "x", start: 46, end: 47 },
+            init: { type: "Literal", value: 100, start: 50, end: 53 },
+            start: 46,
+            end: 53
         };
 
     it("should create instance of SourceCode & expose set of functions (its own & those of astUtils)", function(done) {
@@ -167,7 +168,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.getNextChars(varDeclarator).should.equal("");
         sourceCodeObject.getNextChars(varDeclarator, 1).should.equal(";");
         sourceCodeObject.getNextChars(varDeclarator, -1).should.equal(";");
-        sourceCodeObject.getNextChars(varDeclarator, 100).should.equal(";\n\t}\n\n}");
+        sourceCodeObject.getNextChars(varDeclarator, 100).should.equal(";\n\t}\n\r\n}\n\r\n");
 
         done();
     });
@@ -181,7 +182,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.getPrevChars(varDeclarator, 4).should.equal("var ");
         sourceCodeObject.getPrevChars(varDeclarator, -4).should.equal("var ");
         sourceCodeObject.getPrevChars(varDeclarator, 100).should.equal(
-            "contract Visual {\n\n\tfunction foo () {\n\t\tvar "
+            "contract Visual {\n\r\n\tfunction foo () {\r\n\t\tvar "
         );
 
         done();
@@ -274,7 +275,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
 
     it("should behave as expected upon calling getTextOnLine()", function(done) {
         let sourceCodeObject = new SourceCode(sourceCodeText),
-            sourceCodeTextLines = sourceCodeText.split(EOL);
+            sourceCodeTextLines = sourceCodeText.split(/\r?\n/);
 
         for (let i = 0; i < sourceCodeTextLines.length; i++) {
             sourceCodeObject.getTextOnLine(i+1)

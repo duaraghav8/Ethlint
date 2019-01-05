@@ -35,7 +35,7 @@ let Ajv = require("ajv"),
 
 // If this constraint is set to true on any attribute, then that attribute MUST be of type function. If set to false, attr MUST NOT be a function.
 SchemaValidator.addKeyword("shouldBeOfTypeFunction", {
-    validate: function(isSet, attr) {
+    validate(isSet, attr) {
         return isSet === (typeof attr === "function");
     }
 });
@@ -90,4 +90,4 @@ let Schema = {
 };
 
 
-module.exports = { Schema: Schema, SchemaValidator: SchemaValidator };
+module.exports = { Schema, SchemaValidator };

@@ -5,7 +5,9 @@
 
 "use strict";
 
-const Solium = require("../../../../lib/solium");
+const Solium = require("../../../../lib/solium"),
+    { toContract } = require("../../../utils/wrappers");
+
 const userConfig = {
     "rules": {
         "function-order": "error"
@@ -143,6 +145,78 @@ describe("[RULE] function-order: Acceptances", function() {
         done();
     });
 
+    it("should accept valid config options", done => {
+        const config = { rules: {} }, code = "contract Foo {}";
+        const testOptions = [
+            {ignore: {constructorFunc: false}},
+            {ignore: {fallbackFunc: false}},
+            {ignore: {functions: []}},
+            {ignore: {visibilities: []}},
+            {ignore: {constructorFunc: false, visibilities: [], functions: []}},
+            {ignore: {fallbackFunc: false, constructorFunc: false, visibilities: [], functions: []}},
+            {ignore: {visibilities: [], functions: []}},
+            {ignore: {constructorFunc: false, visibilities: []}},
+            {ignore: {constructorFunc: false, functions: []}}
+        ];
+
+        testOptions.forEach(opt => {
+            config.rules["function-order"] = ["error", opt];
+            Solium.lint.bind(Solium, code, config).should.not.throw();
+        });
+
+        done();
+    });
+
+    it("should ignore functions as specified in configuration", done => {
+        const config = {
+            rules: {
+                "function-order": ["error", { ignore: {} }]
+            }
+        };
+
+        const cases = [
+            [
+                {constructorFunc: true},
+                `
+				function() payable {}
+				constructor() public { foobar(); }
+				`
+            ],
+            [
+                {fallbackFunc: true},
+                `
+				function myFunc(uint x, string bby) external;
+				function() payable {}
+				`
+            ],
+            [
+                {functions: ["mySecondFunc"]},
+                `
+				function myFunc(uint x, string bby) internal {}
+				function mySecondFunc(address sherlock) public {}
+				`
+            ],
+            [
+                {visibilities: ["internal", "private"]},
+                `
+				function dummy() private;
+				function myFunc(uint x, string bby) internal {}
+				function mySecondFunc(address sherlock) public {}
+				function myThirdFunc(address sherlock) public {}
+				`
+            ]
+        ];
+
+        cases.forEach(tc => {
+            config.rules["function-order"][1].ignore = tc[0];
+            const errors = Solium.lint(toContract(tc[1]), config);
+            errors.should.be.Array();
+            errors.should.be.empty();
+        });
+
+        done();
+    });
+
 });
 
 
@@ -200,6 +274,27 @@ describe("[RULE] function-order: Rejections", function() {
         errors.should.have.size(14);
 
         Solium.reset();
+        done();
+    });
+
+    it("should reject invalid config options", done => {
+        const config = { rules: {} }, code = "contract Foo {}";
+        const testOptions = [
+            {},
+            {ignore: {}},
+            {foobarbaz: {visibilities: []}},
+            {ignore: {foobar: []}},
+            {ignore: {constructorFunc: "hello", visibilities: [], functions: []}},
+            {ignore: {constructorFunc: false, visibilities: 18926, functions: []}},
+            {ignore: {constructorFunc: false, visibilities: [], functions: {}}},
+            {ignore: {fallbackFunc: null}}
+        ];
+
+        testOptions.forEach(opt => {
+            config.rules["function-order"] = ["error", opt];
+            Solium.lint.bind(Solium, code, config).should.throw();
+        });
+
         done();
     });
 

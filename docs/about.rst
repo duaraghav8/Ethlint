@@ -50,3 +50,4 @@ Anyone who has contributed to strengthening this Project is a community member.
 - `Utkarsh Gupta <https://github.com/UtkarshGupta-CS>`_
 - `Ivan Mushketyk <https://github.com/mushketyk>`_
 - `Bernd Bohmeier <https://github.com/berndbohmeier>`_
+- `Donatas Stundys <https://github.com/dostu>`_

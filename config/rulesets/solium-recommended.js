@@ -14,6 +14,7 @@ module.exports = {
         "no-unused-vars": "error",
         "quotes": "error",
         "value-in-payable": "error",
+        "linebreak-style": "error",
 
         "no-empty-blocks": "warning",
         "indentation": "warning",
@@ -26,9 +27,11 @@ module.exports = {
         "operator-whitespace": "warning",
         "emit": "warning",
         "no-constant": "warning",
-        "no-experimental": "warning",
-        "no-ignore-return-values": "warning",
         "max-len": "warning",
+        "error-reason": "warning",
+        "constructor": "warning",
+        "visibility-first": "warning",
+        "no-ignore-return-values": "warning",
 
         "lbrace": "off",
         "mixedcase": "off",
@@ -37,6 +40,7 @@ module.exports = {
         "blank-lines": "off",
         "arg-overflow": "off",
         "function-order": "off",
+        "no-experimental": "off",
         "conditionals-whitespace": "off",
 
         // Disable deprecated rules
