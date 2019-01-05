@@ -242,17 +242,19 @@ The functions exposed by SourceCode object are as follows:
 
 7. ``getParent (node)`` - get the parent node of the specified node
 
-8. ``getNextChar (node)`` - get 1 character after the code of specified node
+8. ``getNthParent (node)`` - get the Nth parent node of the specified node
 
-9. ``getPrevChar (node)`` - get 1 character before the code of specified node
+9. ``getNextChar (node)`` - get 1 character after the code of specified node
 
-10. ``getNextChars (node, charCount)`` - get charCount no. of characters after the code of specified node
+10. ``getPrevChar (node)`` - get 1 character before the code of specified node
 
-11. ``getPrevChars (node, charCount)`` - get charCount no. of characters befre the code of specified node
+11. ``getNextChars (node, charCount)`` - get charCount no. of characters after the code of specified node
 
-12. ``isASTNode (arg)`` - Returns true if the given argument is a valid (Spider-Monkey compliant) AST Node
+12. ``getPrevChars (node, charCount)`` - get charCount no. of characters befre the code of specified node
 
-13. ``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
+13. ``isASTNode (arg)`` - Returns true if the given argument is a valid (Spider-Monkey compliant) AST Node
+
+14. ``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
 
 - ``context.report()`` - Lastly, the context object provides you with a clean interface to report lint issues:
 

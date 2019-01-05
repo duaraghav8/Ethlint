@@ -26,7 +26,7 @@ describe("Checking Exported Solium API", function() {
         Solium.should.be.type("object");
         Solium.should.be.instanceof(EventEmitter);
         Solium.should.have.size(11);
-		
+
         Solium.should.have.ownProperty("reset");
         Solium.reset.should.be.type("function");
         Solium.should.have.ownProperty("lint");
@@ -109,13 +109,16 @@ describe("Checking Exported Solium API", function() {
 
         sourceCode.should.have.property("getEndingColumn");
         sourceCode.getColumn.should.be.type("function");
-		
+
         sourceCode.should.have.property("getParent");
         sourceCode.getParent.should.be.type("function");
 
+        sourceCode.should.have.property("getNthParent");
+        sourceCode.getNthParent.should.be.type("function");
+
         sourceCode.should.have.property("getEndingLine");
         sourceCode.getParent.should.be.type("function");
-		
+
         sourceCode.should.have.property("isASTNode");
         sourceCode.getParent.should.be.type("function");
 
@@ -124,19 +127,19 @@ describe("Checking Exported Solium API", function() {
 
         sourceCode.should.have.property("getTextOnLine");
         sourceCode.getText.should.be.type("function");
-		
+
         sourceCode.should.have.property("getStringBetweenNodes");
         sourceCode.getText.should.be.type("function");
 
         sourceCode.should.have.property("getNextChar");
         sourceCode.getNextChar.should.be.type("function");
-		
+
         sourceCode.should.have.property("getPrevChar");
         sourceCode.getPrevChar.should.be.type("function");
-		
+
         sourceCode.should.have.property("getNextChars");
         sourceCode.getNextChars.should.be.type("function");
-		
+
         sourceCode.should.have.property("getPrevChars");
         sourceCode.getPrevChars.should.be.type("function");
 
