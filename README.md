@@ -10,7 +10,7 @@
 
 Ethlint (Formerly Solium) analyzes your Solidity code for style & security issues and fixes them.
 
-See [Documentation](https://ethlint.readthedocs.io/) and [Changelog](./CHANGELOG.md)
+See [Documentation](https://ethlint.readthedocs.io/), [Changelog](./CHANGELOG.md) and [upcoming releases](https://github.com/duaraghav8/Ethlint/projects).
 
 ## Install
 ```bash

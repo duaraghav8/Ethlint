@@ -1,7 +1,9 @@
 # Changelog
 
 ## 1.2.2 ()
+- Added support for parsing function declarations inside Inline Assembly blocks.
 - Changed `.soliumignore`-related warning messages to be more user-friendly.
+- Fixed bugs in parser related to Inline Assembly variable declaration.
 
 ## 1.2.1 (2019-01-01) :sparkler:
 - Added `fix` functionality to `linebreak-style` rule.
