@@ -2,6 +2,7 @@
 
 ## 1.2.2 ()
 - Added support for parsing function declarations inside Inline Assembly blocks.
+- Added Issue Templates to the repository for Bug report, Feature request and Lint rule suggestion.
 - Changed `.soliumignore`-related warning messages to be more user-friendly.
 - Fixed bugs in parser related to Inline Assembly variable declaration.
 
