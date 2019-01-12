@@ -20,6 +20,9 @@ describe("[RULE] uppercase: Acceptances", function() {
 
     it("should accept all constants that are uppercase", function(done) {
         let code = [
+            "uint256 constant N = 19028;",
+            "uint256 constant A_Z = 18;",
+            "uint256 constant A__90 = 18;",
             "uint constant HE = 100;",
             "address constant HELLO_WORLD = 0x0;",
             "bytes32 constant HELLOWORLD = \"dd\";",
@@ -55,31 +58,20 @@ describe("[RULE] uppercase: Rejections", function() {
             "address constant hello_world = 0x0;",
             "bytes32 constant helloworld= \"dd\";",
             "string constant HellO = \"dd\";",
-            "string constant HeO = \"dd\";"
+            "string constant HeO = \"dd\";",
+            "string constant _ = \"dd\";",
+            "string constant D_ = \"dd\";",
+            "string constant _F = \"dd\";"
         ];
         let errors;
 
         code = code.map(function(item){return toContract(item);});
 
-        errors = Solium.lint(code [0], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [1], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [2], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [3], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
-
-        errors = Solium.lint(code [4], userConfig);
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
+        code.forEach(function(declaration) {
+            errors = Solium.lint(declaration, userConfig);
+            errors.constructor.name.should.equal("Array");
+            errors.length.should.equal(1);
+        });
 
         Solium.reset();
         done();

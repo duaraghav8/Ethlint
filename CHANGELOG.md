@@ -6,6 +6,7 @@
 - Added Contribution guidelines.
 - Changed `.soliumignore`-related warning messages to be more user-friendly.
 - Fixed bugs in parser related to Inline Assembly variable declaration.
+- Fixed `uppercase` rule to allow single-character names, where the character must be an alphabet.
 
 ## 1.2.1 (2019-01-01) :sparkler:
 - Added `fix` functionality to `linebreak-style` rule.
