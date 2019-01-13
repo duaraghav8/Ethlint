@@ -45,7 +45,7 @@
     "sol-digger": "0.0.2",
     "sol-explore": "1.6.1",
     "solium-plugin-security": "0.1.1",
-    "solparse": "2.2.7",
+    "solparse": "2.2.8",
     "text-table": "^0.2.0"
   },
   "devDependencies": {

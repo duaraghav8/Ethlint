@@ -58,17 +58,31 @@ describe("[RULE] operator-whitespace: Acceptances", function() {
     });
 
     it("should accept multi-line Binary Expression whose operator resides on the line where left side expression ends AND whose right side expression begins 1 line below the line where left expression ends.", function(done) {
-        let code = [
+        let errors, code = [
             "if (foobarMotherfuckers (price, 100) &&\n\t++crazyCounter) {\n}",
             "if (foobarMotherfuckers (price, 100)\t &&\n\t++crazyCounter) {\n}"
         ];
 
         code = code.map(function(str) { return toFunction(str); });
         code.forEach(function(snippet) {
-            let errors = Solium.lint(snippet, userConfig);
+            errors = Solium.lint(snippet, userConfig);
             errors.constructor.name.should.equal("Array");
             errors.length.should.equal(0);
         });
+
+        code = toFunction(`
+            if (
+              appWasMade(_listingAddress) &&
+              listings[_listingAddress].applicationExpiry < now &&
+              !getListingIsWhitelisted(_listingAddress) &&
+              (challengeID == NO_CHALLENGE || challenges[challengeID].resolved == true)
+            ) {
+              return true;
+            }
+        `);
+        errors = Solium.lint(code, userConfig);
+        errors.should.be.Array();
+        errors.should.be.empty();
 
         Solium.reset();
         done();

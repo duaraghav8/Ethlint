@@ -8,6 +8,7 @@
 - Fixed bugs in parser related to Inline Assembly variable declaration.
 - Fixed `uppercase` rule to allow single-character names, where the character must be an alphabet.
 - Fixed `indentation` rule to allow Call expression arguments to start with circular bracket ([#223](https://github.com/duaraghav8/Ethlint/issues/223)).
+- Fixed `BinaryExpression` position bug in parser that led to [#175](https://github.com/duaraghav8/Ethlint/issues/175) & [#223](https://github.com/duaraghav8/Ethlint/issues/223).
 
 ## 1.2.1 (2019-01-01) :sparkler:
 - Added `fix` functionality to `linebreak-style` rule.
