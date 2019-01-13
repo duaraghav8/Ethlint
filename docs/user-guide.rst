@@ -391,7 +391,7 @@ The following is an example of a configuration object passed to the ``function-o
 
 .. code-block:: javascript
 
-	{
+    {
         "rules": {
             "function-order": [
                 "error",
