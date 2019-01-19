@@ -6,7 +6,6 @@
 
 [![Build Status](https://travis-ci.org/duaraghav8/Ethlint.svg?branch=master)](https://travis-ci.org/duaraghav8/Ethlint)
 [![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.svg)](https://gitter.im/Solium-linter/Lobby)
-[![Latest News](https://img.shields.io/badge/Blog-Medium-yellowgreen.svg)](https://medium.com/solium)
 
 Ethlint (Formerly Solium) analyzes your Solidity code for style & security issues and fixes them.
 
@@ -40,12 +39,13 @@ This creates 2 files for you:
   "plugins": ["security"],
   "rules": {
     "quotes": ["error", "double"],
-    "indentation": ["error", 4]
+    "indentation": ["error", 4],
+    "linebreak-style": ["error", "unix"]
   }
 }
 ```
 
-To know which lint rules Solium applies for you, see [Style rules](http://solium.readthedocs.io/en/latest/user-guide.html#list-of-style-rules) and [Security rules](https://www.npmjs.com/package/solium-plugin-security#list-of-rules).
+To know which lint rules Solium applies for you, see [Style rules](http://ethlint.readthedocs.io/en/latest/user-guide.html#list-of-style-rules) and [Security rules](https://www.npmjs.com/package/solium-plugin-security#list-of-rules).
 
 ---
 **NOTE**
