@@ -2,6 +2,7 @@
 
 ## 1.2.3 ()
 - Added support for `solium-disable-previous-line` comment directive.
+- Added support for `solium-enable` comment directive. See [configuring with comments](https://ethlint.readthedocs.io/en/latest/user-guide.html#configuring-with-comments). This feature currently has a limitation which has been documented in [Known Issues](https://ethlint.readthedocs.io/en/latest/known-issues.html).
 
 ## 1.2.2 (2019-01-13)
 - Added support for parsing function declarations inside Inline Assembly blocks.

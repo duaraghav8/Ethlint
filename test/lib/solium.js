@@ -2191,4 +2191,117 @@ describe("Solium.lint() comment directives", () => {
         done();
     });
 
+    it("should respect solium-enable comment directive", done => {
+        const config = {
+            "rules": {
+                "no-empty-blocks": "error",
+                "security/no-throw": "error",
+                "mixedcase": "error"
+            }
+        };
+
+        const snippets = [
+            {
+                code: `
+                // solium-disable
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                // solium-enable
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                `,
+                expectedIssues: 3
+            },
+            {
+                code: `
+                // solium-disable mixedcase, security/no-throw
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                // solium-enable mixedcase, security/no-throw
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                `,
+                expectedIssues: 4
+            },
+            {
+                code: `
+                // solium-disable no-empty-blocks, security/no-throw
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                // solium-enable security/no-throw
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                `,
+                expectedIssues: 3
+            },
+            {
+                code: `
+                // solium-disable no-empty-blocks
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                // solium-enable security/no-throw, no-empty-blocks, quotes
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                `,
+                expectedIssues: 5
+            },
+            {
+                code: `
+                // solium-disable no-empty-blocks, mixedcase, security/no-throw
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                // solium-enable
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                `,
+                expectedIssues: 3
+            },
+
+            // This is the edge case not yet handled.
+            // Its expectedIssues value should be changed from 0 to 3 once it is handled.
+            {
+                code: `
+                // solium-disable
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                // solium-enable no-empty-blocks, mixedcase, security/no-throw
+                function BAFF() {
+                    if (true) {}
+                    throw;
+                }
+                `,
+                expectedIssues: 0
+            }
+        ];
+
+        snippets.forEach(({code, expectedIssues}) => {
+            let errors = Solium.lint(wrappers.toContract(code), config);
+            errors.should.have.size(expectedIssues);
+        });
+
+        done();
+    });
+
 });

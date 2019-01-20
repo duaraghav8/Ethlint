@@ -60,6 +60,7 @@ describe("comment-directive-parser", () => {
         cdp.isRuleEnabledOnLine.should.be.type("function");
         cdp._constructLineConfigurations.should.be.type("function");
         cdp._addRulesToLineConfig.should.be.type("function");
+        cdp._removeRulesFromLineConfig.should.type("function");
         cdp._constructLineConfigurationFromComment.should.be.type("function");
         cdp._cleanCommentText.should.be.type("function");
         cdp._parseRuleNames.should.be.type("function");
@@ -75,7 +76,7 @@ describe("comment-directive-parser", () => {
 
         badRuleNames.forEach(r => {
             cdp.isRuleEnabledOnLine.bind(
-                cdp, r, 1).should.throw("Rule name should be a non-empty string string.");
+                cdp, r, 1).should.throw("Rule name should be a non-empty string.");
         });
 
         badLineNumbers.forEach(l => {
@@ -130,7 +131,10 @@ describe("comment-directive-parser", () => {
             ["/* solium-disable-line foorule*/", " solium-disable-line foorule"],
             ["//   solium-disable-previous-line   ", "   solium-disable-previous-line   "],
             ["/*   solium-disable-previous-line\t*/", "   solium-disable-previous-line\t"],
-            ["/* solium-disable-previous-line security/no-throw, quotes */", " solium-disable-previous-line security/no-throw, quotes "]
+            ["/* solium-disable-previous-line security/no-throw, quotes */", " solium-disable-previous-line security/no-throw, quotes "],
+            ["//   solium-enable   ", "   solium-enable   "],
+            ["/*   solium-enable\t*/", "   solium-enable\t"],
+            ["/* solium-enable security/no-throw, quotes */", " solium-enable security/no-throw, quotes "]
         ];
 
         texts.forEach(([dirty, clean]) => {
@@ -155,7 +159,9 @@ describe("comment-directive-parser", () => {
             ["  \tsolium-disable-line  pragma-on-top,\t\tindentation", "pragma-on-top,indentation", "solium-disable-line"],
             ["  \tsolium-disable-line foorule", "foorule", "solium-disable-line"],
             ["\t\tsolium-disable-previous-line  \t ", "all", "solium-disable-previous-line"],
-            [" solium-disable-previous-line security/no-throw, quotes  \t ", "security/no-throw,quotes", "solium-disable-previous-line"]
+            [" solium-disable-previous-line security/no-throw, quotes  \t ", "security/no-throw,quotes", "solium-disable-previous-line"],
+            ["\t\tsolium-enable  \t ", "all", "solium-enable"],
+            [" solium-enable security/no-throw, quotes  \t ", "security/no-throw,quotes", "solium-enable"]
         ];
 
         ruleCodes.forEach(([text, expectedOutput, p2r]) => {

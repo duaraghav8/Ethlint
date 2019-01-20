@@ -167,6 +167,28 @@ If you only use the directive, Solium disables all rules for the marked code. If
 		...
 	}
 
+- Disable linting over a section of code with ``solium-enable`` directive
+
+.. code-block:: javascript
+
+	/* solium-disable */
+
+	contract Foo {
+		...
+	}
+
+	/* solium-enable */
+
+	contract Bar {
+		...
+	}
+
+	// solium-disable security/no-throw, indentation
+	contract Baz {
+		throw;
+		// solium-enable security/no-throw
+	}
+
 
 .. index:: automatic code formatting
 
