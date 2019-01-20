@@ -868,10 +868,6 @@ describe("Solium.lint() comment directives", () => {
         done();
     });
 
-    /**************************************************************************************************/
-    /**************************************************************************************************/
-    /**************************************************************************************************/
-
     it("should respect solium-disable", done => {
         const config = { "extends": "solium:all" };
         let code = `//    \t   solium-disable
@@ -1388,10 +1384,6 @@ describe("Solium.lint() comment directives", () => {
         done();
     });
 
-    /**************************************************************************************************/
-    /**************************************************************************************************/
-    /**************************************************************************************************/
-
     it("should respect solium-disable-line", done => {
         const config = { "extends": "solium:all" };
         let code = `
@@ -1758,10 +1750,6 @@ describe("Solium.lint() comment directives", () => {
         Solium.reset();
         done();
     });
-
-    /**************************************************************************************************/
-    /**************************************************************************************************/
-    /**************************************************************************************************/
 
     it("should respect solium-disable-next-line", done => {
         const config = { "extends": "solium:all" };
@@ -2172,6 +2160,34 @@ describe("Solium.lint() comment directives", () => {
         errors.should.have.size(1);
 
         Solium.reset();
+        done();
+    });
+
+    it("should respect solium-disable-previous-line", done => {
+        let config = {
+            "rules": {
+                "no-empty-blocks": "error"
+            }
+        };
+        let code = `
+        if (true) {
+            // solium-disable-previous-line no-empty-blocks
+        }
+        `;
+        let errors = Solium.lint(wrappers.toFunction(code), config);
+        errors.should.be.empty();
+
+        config.rules = {
+            "indentation": ["error", "tab"],
+            "security/no-throw": "error"
+        };
+        code = `
+                throw;
+                //solium-disable-previous-line
+        `;
+        errors = Solium.lint(wrappers.toFunction(code), config);
+        errors.should.be.empty();
+
         done();
     });
 

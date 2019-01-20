@@ -145,6 +145,16 @@ If you only use the directive, Solium disables all rules for the marked code. If
 			// solium-disable-next-line security/no-throw, indentation
 							throw;
 		}
+
+		function func(string foo) {
+			/**
+			 * Below if block is intentionally empty but needs to be preceded by
+			 * a doc comment.
+			 */
+			if (condition) {
+				// solium-disable-previous-line no-empty-blocks
+			}
+		}
 	}
 
 - Disable linting on entire file

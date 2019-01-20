@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.3 ()
+- Added support for `solium-disable-previous-line` comment directive.
+
 ## 1.2.2 (2019-01-13)
 - Added support for parsing function declarations inside Inline Assembly blocks.
 - Added Issue Templates to the repository for Bug report, Feature request and Lint rule suggestion.

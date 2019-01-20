@@ -19,11 +19,15 @@ const AST = solidityParser.parse(code, { comment: true });
 
 describe("comment-directive-parser", () => {
 
-    it("should expose a class to create CDP objects", done => {
-        function shouldThrow(f, msg) {
-            try { f(); } catch (e) { e.message.should.equal(msg); }
+    function shouldThrow(f, msg) {
+        try {
+            f();
+        } catch (e) {
+            e.message.should.equal(msg);
         }
+    }
 
+    it("should expose a class to create CDP objects", done => {
         CommentDirectiveParser.should.be.type("function");
 
         const minimalAST = { type: "Program", start: 0, end: 1 };
@@ -82,6 +86,20 @@ describe("comment-directive-parser", () => {
         done();
     });
 
+    it("should throw when disable-previous-line is used on the first line", done => {
+        const code = `// solium-disable-previous-line
+        contract Foo {}
+        `;
+        const ast = solidityParser.parse(code, { comment: true });
+
+        shouldThrow(
+            () => { new CommentDirectiveParser(ast.comments, ast); },
+            "Comment directive \"solium-disable-previous-line\" refers to an invalid line number."
+        );
+
+        done();
+    });
+
     it("should work as expected when calling private utility functions", done => {
         const cdp = new CommentDirectiveParser(AST.comments, AST);
         const texts = [
@@ -109,7 +127,10 @@ describe("comment-directive-parser", () => {
             ["/* solium-disable foorule*/", " solium-disable foorule"],
             ["/* solium-disable-line*/", " solium-disable-line"],
             ["/* solium-disable-line pragma-on-top, indentation*/", " solium-disable-line pragma-on-top, indentation"],
-            ["/* solium-disable-line foorule*/", " solium-disable-line foorule"]
+            ["/* solium-disable-line foorule*/", " solium-disable-line foorule"],
+            ["//   solium-disable-previous-line   ", "   solium-disable-previous-line   "],
+            ["/*   solium-disable-previous-line\t*/", "   solium-disable-previous-line\t"],
+            ["/* solium-disable-previous-line security/no-throw, quotes */", " solium-disable-previous-line security/no-throw, quotes "]
         ];
 
         texts.forEach(([dirty, clean]) => {
@@ -132,7 +153,9 @@ describe("comment-directive-parser", () => {
             ["  \tsolium-disable foorule", "foorule", "solium-disable"],
             ["  \tsolium-disable-line", "all", "solium-disable-line"],
             ["  \tsolium-disable-line  pragma-on-top,\t\tindentation", "pragma-on-top,indentation", "solium-disable-line"],
-            ["  \tsolium-disable-line foorule", "foorule", "solium-disable-line"]
+            ["  \tsolium-disable-line foorule", "foorule", "solium-disable-line"],
+            ["\t\tsolium-disable-previous-line  \t ", "all", "solium-disable-previous-line"],
+            [" solium-disable-previous-line security/no-throw, quotes  \t ", "security/no-throw,quotes", "solium-disable-previous-line"]
         ];
 
         ruleCodes.forEach(([text, expectedOutput, p2r]) => {
