@@ -31,7 +31,17 @@ describe("[RULE] uppercase: Acceptances", function() {
             "uint constant HELLO_NUMBER_0 = 190;",
             "string constant HELLO_NUMBER89116 = \"hello\";",
             "string constant HELLO_98_NUMBER = \"number\";",
-            "address constant H0 = 0x1;"
+            "address constant H0 = 0x1;",
+            "string constant _F = \"dd\";",
+            "string constant D_ = \"dd\";",
+            "string constant __F = \"dd\";",
+            "string constant D__ = \"dd\";",
+            "string constant __F__ = \"dd\";",
+            "string constant _F00BAR = \"dd\";",
+            "string constant D9HG8_ = \"dd\";",
+            "string constant __FJO8 = \"dd\";",
+            "string constant D891JK9__ = \"dd\";",
+            "string constant __F9018SJ__ = \"dd\";"
         ];
         let errors;
 
@@ -60,8 +70,12 @@ describe("[RULE] uppercase: Rejections", function() {
             "string constant HellO = \"dd\";",
             "string constant HeO = \"dd\";",
             "string constant _ = \"dd\";",
-            "string constant D_ = \"dd\";",
-            "string constant _F = \"dd\";"
+            "string constant ___F = \"dd\";",
+            "string constant D___ = \"dd\";",
+            "string constant ___F___ = \"dd\";",
+            "string constant ___F00BAR = \"dd\";",
+            "string constant D9HG8___ = \"dd\";",
+            "string constant ___F9018SJ___ = \"dd\";"
         ];
         let errors;
 
