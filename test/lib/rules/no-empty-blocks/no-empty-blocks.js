@@ -54,27 +54,23 @@ describe("[RULE] no-empty-blocks: Acceptances", function() {
         done();
     });
 
-    it("should ACCEPT all EMPTY function & constructor declarations (see fallback functions)", function(done) {
-        let code = "function foo () {}",
-            errors = Solium.lint(toContract(code), userConfig);
+    it("should allow fallback and payable functions & payable constructors", done => {
+        let snippets = [
+            "function(string address) {}",
+            "function foo(string address) payable external {}",
+            "function(string address) payable public {}",
+            "constructor(uint x) payable {}",
 
-        errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(0);
+            "function(string address) { /* hello world */ }",
+            "function foo(string address) payable external {\t\t\t\t\t\n\n\t}",
+            "function(string address) payable public {       }",
+            "constructor(uint x) payable {   /* testing     */    }"
+        ];
 
-        // new constructor syntax
-        code = "constructor(uint x, string y, address z) {\n/*hello world*/\n}";
-        errors = Solium.lint(toContract(code), userConfig);
-
-        errors.should.be.Array();
-        errors.should.be.empty();
-
-
-        // fallback func
-        code = "function(){}";
-        errors = Solium.lint(toContract(code), userConfig);
-
-        errors.should.be.Array();
-        errors.should.be.empty();
+        snippets.forEach(code => {
+            let errors = Solium.lint(toContract(code), userConfig);
+            errors.should.be.empty();
+        });
 
         Solium.reset();
         done();
@@ -191,6 +187,28 @@ describe("[RULE] no-empty-blocks: Rejections", function() {
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should reject functions & constructors with empty bodies", done => {
+        let snippets = [
+            "function foo(string address) {}",
+            "function foo(string address) external {}",
+            "constructor(uint x) {}",
+            "constructor(uint x) public {}",
+
+            "function foo(string address) { /* hello world */ }",
+            "function foo(string address) external {\t\t\t\t\t\n\n\t}",
+            "constructor(uint x) {       }",
+            "constructor(uint x) public {   /* testing     */    }"
+        ];
+
+        snippets.forEach(code => {
+            let errors = Solium.lint(toContract(code), userConfig);
+            errors.should.have.size(1);
+        });
 
         Solium.reset();
         done();
