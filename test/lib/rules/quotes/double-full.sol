@@ -9,8 +9,9 @@ import "../myContract.sol" as MyContract;
 
 contract Foo {
         string fucker = "hello wordl";
-        function f () {
+        function f () returns (string){
                 var foobar = "Hello world";
                 string fuu = "chumma";
+                return ("Hello World");
         }
 }
