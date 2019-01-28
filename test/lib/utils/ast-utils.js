@@ -112,7 +112,7 @@ describe("Testing astUtils Object", function() {
         ian(100).should.equal(false);
         ian({}).should.equal(false);
 
-        ian({type: "TestNode", start: 0, end: 10}).should.equal(true);
+        ian({ type: "TestNode", start: 0, end: 10 }).should.equal(true);
 
         done();
     });
@@ -121,7 +121,7 @@ describe("Testing astUtils Object", function() {
         let node = {
             type: "TestNode",
             start: 0, end: 190,
-            parent: {type: "TestParentNode", start: 21, end: 981}
+            parent: { type: "TestParentNode", start: 21, end: 981 }
         };
 
         let parent = astUtils.getParent(node);
@@ -334,8 +334,8 @@ describe("Testing astUtils Object", function() {
     });
 
     it("should behave correctly when calling isAChildOf()", done => {
-        const child = {type: "Blah", start: 10, end: 20},
-            parent = {type: "Blah", start: 0, end: 30}, notChild = {type: "Blah", start: 45, end: 80};
+        const child = { type: "Blah", start: 10, end: 20 },
+            parent = { type: "Blah", start: 0, end: 30 }, notChild = { type: "Blah", start: 45, end: 80 };
 
         astUtils.isAChildOf(child, parent).should.be.true();
         astUtils.isAChildOf(parent, child).should.be.false();
@@ -347,8 +347,8 @@ describe("Testing astUtils Object", function() {
     });
 
     it("should reject invalid nodes when calling isAChildOf()", done => {
-        const validNode = {type: "Blah", start: 10, end: 20},
-            invalidNode = {start: 10, end: 20};
+        const validNode = { type: "Blah", start: 10, end: 20 },
+            invalidNode = { start: 10, end: 20 };
 
         astUtils.isAChildOf.bind(astUtils).should.throw();
         astUtils.isAChildOf.bind(astUtils, null).should.throw();

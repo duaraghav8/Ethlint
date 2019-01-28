@@ -94,45 +94,45 @@ describe("Testing RuleContext object", function() {
         let sampleNode = { type: "Literal", start: 0, end: 10 };
 
         rcObject.report.bind(rcObject, {}).should.throw();
-        rcObject.report.bind(rcObject, {message: 91072}).should.throw();
-        rcObject.report.bind(rcObject, {message: "hello", node: true}).should.throw();
+        rcObject.report.bind(rcObject, { message: 91072 }).should.throw();
+        rcObject.report.bind(rcObject, { message: "hello", node: true }).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, randomAttr: {}}
+            { message: "hello", node: sampleNode, randomAttr: {} }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, location: {randomAttr: 1908}}
+            { message: "hello", node: sampleNode, location: { randomAttr: 1908 } }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, location: {line: 90.1897}}
+            { message: "hello", node: sampleNode, location: { line: 90.1897 } }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, location: {column: null}}
+            { message: "hello", node: sampleNode, location: { column: null } }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, location: {line: 0}}
+            { message: "hello", node: sampleNode, location: { line: 0 } }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, location: {column: -1}}
+            { message: "hello", node: sampleNode, location: { column: -1 } }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, location: NaN}
+            { message: "hello", node: sampleNode, location: NaN }
         ).should.throw();
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode, fix: "this is a fix!!"}
+            { message: "hello", node: sampleNode, fix: "this is a fix!!" }
         ).should.throw();
 
         // A minimal valid object should not throw
         rcObject.report.bind(
             rcObject,
-            {message: "hello", node: sampleNode}
+            { message: "hello", node: sampleNode }
         ).should.not.throw();
 
         // A maximal valid object should not throw
@@ -157,7 +157,7 @@ describe("Testing RuleContext object", function() {
         let rcObject = new RuleContext("foo", ruleDesc, meta, Solium);
 
         rcObject.report({
-            node: {type: "TestNode", start: 0, end: 2},
+            node: { type: "TestNode", start: 0, end: 2 },
             message: "test run"
         });
         let errorObjects = Solium.lint(sourceCode, { rules: {} }, true);

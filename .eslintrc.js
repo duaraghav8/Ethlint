@@ -30,6 +30,10 @@ module.exports = {
             "error",
             "never"
         ],
+        "object-curly-spacing": [
+            "error",
+            "always"
+        ],
         "comma-dangle": "error",
         "comma-spacing": "error",
         "strict": "error",

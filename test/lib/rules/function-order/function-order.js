@@ -148,15 +148,15 @@ describe("[RULE] function-order: Acceptances", function() {
     it("should accept valid config options", done => {
         const config = { rules: {} }, code = "contract Foo {}";
         const testOptions = [
-            {ignore: {constructorFunc: false}},
-            {ignore: {fallbackFunc: false}},
-            {ignore: {functions: []}},
-            {ignore: {visibilities: []}},
-            {ignore: {constructorFunc: false, visibilities: [], functions: []}},
-            {ignore: {fallbackFunc: false, constructorFunc: false, visibilities: [], functions: []}},
-            {ignore: {visibilities: [], functions: []}},
-            {ignore: {constructorFunc: false, visibilities: []}},
-            {ignore: {constructorFunc: false, functions: []}}
+            { ignore: { constructorFunc: false } },
+            { ignore: { fallbackFunc: false } },
+            { ignore: { functions: [] } },
+            { ignore: { visibilities: [] } },
+            { ignore: { constructorFunc: false, visibilities: [], functions: [] } },
+            { ignore: { fallbackFunc: false, constructorFunc: false, visibilities: [], functions: [] } },
+            { ignore: { visibilities: [], functions: [] } },
+            { ignore: { constructorFunc: false, visibilities: [] } },
+            { ignore: { constructorFunc: false, functions: [] } }
         ];
 
         testOptions.forEach(opt => {
@@ -176,28 +176,28 @@ describe("[RULE] function-order: Acceptances", function() {
 
         const cases = [
             [
-                {constructorFunc: true},
+                { constructorFunc: true },
                 `
 				function() payable {}
 				constructor() public { foobar(); }
 				`
             ],
             [
-                {fallbackFunc: true},
+                { fallbackFunc: true },
                 `
 				function myFunc(uint x, string bby) external;
 				function() payable {}
 				`
             ],
             [
-                {functions: ["mySecondFunc"]},
+                { functions: ["mySecondFunc"] },
                 `
 				function myFunc(uint x, string bby) internal {}
 				function mySecondFunc(address sherlock) public {}
 				`
             ],
             [
-                {visibilities: ["internal", "private"]},
+                { visibilities: ["internal", "private"] },
                 `
 				function dummy() private;
 				function myFunc(uint x, string bby) internal {}
@@ -281,13 +281,13 @@ describe("[RULE] function-order: Rejections", function() {
         const config = { rules: {} }, code = "contract Foo {}";
         const testOptions = [
             {},
-            {ignore: {}},
-            {foobarbaz: {visibilities: []}},
-            {ignore: {foobar: []}},
-            {ignore: {constructorFunc: "hello", visibilities: [], functions: []}},
-            {ignore: {constructorFunc: false, visibilities: 18926, functions: []}},
-            {ignore: {constructorFunc: false, visibilities: [], functions: {}}},
-            {ignore: {fallbackFunc: null}}
+            { ignore: {} },
+            { foobarbaz: { visibilities: [] } },
+            { ignore: { foobar: [] } },
+            { ignore: { constructorFunc: "hello", visibilities: [], functions: [] } },
+            { ignore: { constructorFunc: false, visibilities: 18926, functions: [] } },
+            { ignore: { constructorFunc: false, visibilities: [], functions: {} } },
+            { ignore: { fallbackFunc: null } }
         ];
 
         testOptions.forEach(opt => {

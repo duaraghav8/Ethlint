@@ -62,7 +62,7 @@ describe("Test rule-loader functions", function() {
         ruleLoader.resolveUpstream.bind(ruleLoader, []).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, [11]).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, {}).should.throw();
-        ruleLoader.resolveUpstream.bind(ruleLoader, {a: 11}).should.throw();
+        ruleLoader.resolveUpstream.bind(ruleLoader, { a: 11 }).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, true).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, false).should.throw();
         ruleLoader.resolveUpstream.bind(ruleLoader, 10.2897).should.throw();

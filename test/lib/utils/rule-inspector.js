@@ -68,7 +68,7 @@ describe("Test rule-inspector functions", function() {
                 },
                 "schema": [
                     { type: "string", minLength: 5 },
-                    { type: "object", properties: {modifies: {type: "boolean"}} },
+                    { type: "object", properties: { modifies: { type: "boolean" } } },
                     { type: "integer", minimum: 0, maximum: 69 }
                 ]
             },
@@ -217,7 +217,7 @@ describe("Test rule-inspector functions", function() {
                     "type": "error",
                     "description": "This is a rule"
                 },
-                "schema": [{"type": "object"}, "think again"],
+                "schema": [{ "type": "object" }, "think again"],
                 "fixable": "code"
             },
             "create": function(context) {}
@@ -310,7 +310,7 @@ describe("Test rule-inspector functions", function() {
                 "docs": {
                     "recommended": true,
                     "type": "error",
-                    "description": {"cutie": 3.142}
+                    "description": { "cutie": 3.142 }
                 },
                 "schema": [],
                 "fixable": "code"
@@ -489,27 +489,27 @@ describe("Test rule-inspector functions", function() {
     });
 
     let listItemsSchema = [
-        {type: "string", minLength: 3},
-        {type: "integer", minimum: 0, maximum: 10},
-        {type: "object", properties: { name: {type: "string", minLength: 1} }, additionalProperties: false}
+        { type: "string", minLength: 3 },
+        { type: "integer", minimum: 0, maximum: 10 },
+        { type: "object", properties: { name: { type: "string", minLength: 1 } }, additionalProperties: false }
     ];
 
     it("should correctly classify when a rule is provided a valid set of options", function(done) {
-        ruleInspector.areValidOptionsPassed(["hello", 5, {name: "chuck norris"}], listItemsSchema).should.equal(true);
+        ruleInspector.areValidOptionsPassed(["hello", 5, { name: "chuck norris" }], listItemsSchema).should.equal(true);
         done();
     });
 
     it("should correctly classify when a rule is provided an invalid set of options", function(done) {
         let invalidOptionLists = [
             null, undefined, "", {}, 100, -9, 89.23, 0, function() {}, NaN,
-            ["", 5, {name: "chuck norris"}],
-            ["hello", -189, {name: "chuck norris"}],
-            ["", 5, {name: ""}],
+            ["", 5, { name: "chuck norris" }],
+            ["hello", -189, { name: "chuck norris" }],
+            ["", 5, { name: "" }],
             [],
             ["hello"],
             ["hell", 9],
-            [9, {name: "chuck norris"}],
-            ["sss", {name: "chuck norris"}]
+            [9, { name: "chuck norris" }],
+            ["sss", { name: "chuck norris" }]
         ];
 
         invalidOptionLists.forEach(function(ops) {

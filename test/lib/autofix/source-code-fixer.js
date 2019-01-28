@@ -24,7 +24,7 @@ describe("Test the source-code-fixer API", function() {
             type: "error",
             line: 1,
             column: 4,
-            node: {type: "Literal", start: 1, end: 9}
+            node: { type: "Literal", start: 1, end: 9 }
         }];
 
         let msgsWithFixes = [{
@@ -33,8 +33,8 @@ describe("Test the source-code-fixer API", function() {
             type: "error",
             line: 1,
             column: 4,
-            node: {type: "Literal", start: 1, end: 9},
-            fix: {range: [1, 4], text: ""}
+            node: { type: "Literal", start: 1, end: 9 },
+            fix: { range: [1, 4], text: "" }
         }];
 
         scf.applyFixes("", msgsNoFixes);
@@ -88,7 +88,7 @@ describe("Test the source-code-fixer API", function() {
             type: "error",
             line: 1,
             column: 4,
-            node: {type: "Literal", start: 1, end: 9}
+            node: { type: "Literal", start: 1, end: 9 }
         }];
 
         let sourceCode = "abcd123@@@***&^###;;{}[]";
@@ -131,7 +131,7 @@ describe("Test the source-code-fixer API", function() {
                 type: "error",
                 line: 1,
                 column: 4,
-                node: {type: "Literal", start: 1, end: 9}
+                node: { type: "Literal", start: 1, end: 9 }
             },
             {
                 ruleName: "b",
@@ -139,8 +139,8 @@ describe("Test the source-code-fixer API", function() {
                 type: "error",
                 line: 1,
                 column: 4,
-                node: {type: "Literal", start: 1, end: 9},
-                fix: {range: [3, 8], text: "***"}	// replace
+                node: { type: "Literal", start: 1, end: 9 },
+                fix: { range: [3, 8], text: "***" }	// replace
             },
             {
                 ruleName: "c",
@@ -148,7 +148,7 @@ describe("Test the source-code-fixer API", function() {
                 type: "error",
                 line: 1,
                 column: 4,
-                node: {type: "Literal", start: 1, end: 9}
+                node: { type: "Literal", start: 1, end: 9 }
             },
             {
                 ruleName: "d",
@@ -156,8 +156,8 @@ describe("Test the source-code-fixer API", function() {
                 type: "error",
                 line: 1,
                 column: 4,
-                node: {type: "Literal", start: 1, end: 9},
-                fix: {range: [8, 24], text: ""}	// delete
+                node: { type: "Literal", start: 1, end: 9 },
+                fix: { range: [8, 24], text: "" }	// delete
             }
         ];
 
@@ -193,8 +193,8 @@ describe("Test the source-code-fixer API", function() {
                 type: "error",
                 line: 1,
                 column: 4,
-                node: {type: "Literal", start: 1, end: 9},
-                fix: {range: [5, 10], text: "^_^"}	// shouldn't get applied
+                node: { type: "Literal", start: 1, end: 9 },
+                fix: { range: [5, 10], text: "^_^" }	// shouldn't get applied
             },
             {
                 ruleName: "b",
@@ -202,8 +202,8 @@ describe("Test the source-code-fixer API", function() {
                 type: "error",
                 line: 1,
                 column: 4,
-                node: {type: "Literal", start: 1, end: 9},
-                fix: {range: [3, 8], text: "***"}
+                node: { type: "Literal", start: 1, end: 9 },
+                fix: { range: [3, 8], text: "***" }
             }
         ];
 
@@ -234,7 +234,7 @@ describe("Test the source-code-fixer API", function() {
         // if rule ABC reports a fix inside an error object, and if that fix is an array of fixer packets,
         // those packets must not have overlapping ranges.
         scf.applyFixes.bind(scf,
-            [{range: [2, 5], text: ""}, {range: [4, 8], text: "%%%"}], "abcdefghijk"
+            [{ range: [2, 5], text: "" }, { range: [4, 8], text: "%%%" }], "abcdefghijk"
         ).should.throw();
 
         done();

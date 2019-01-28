@@ -58,7 +58,7 @@ describe("Checking exported rules object", function() {
         rules.loadUsingDeprecatedConfigFormat.bind(rules, {}).should.not.throw();
 
         //specified rule is neither pre-defined nor custom
-        rules.loadUsingDeprecatedConfigFormat.bind(rules, {"NON_EXISTANT_RULE_1": true}).should.throw();
+        rules.loadUsingDeprecatedConfigFormat.bind(rules, { "NON_EXISTANT_RULE_1": true }).should.throw();
 
         done();
     });
@@ -145,7 +145,7 @@ describe("Checking exported rules object", function() {
         rules.getRuleSeverity.bind(rules, 3).should.throw();
         rules.getRuleSeverity.bind(rules, 19028).should.throw();
         rules.getRuleSeverity.bind(rules, "arbitrary").should.throw();
-        rules.getRuleSeverity.bind(rules, {a: true, b: "c"}).should.throw();
+        rules.getRuleSeverity.bind(rules, { a: true, b: "c" }).should.throw();
         rules.getRuleSeverity.bind(rules, []).should.throw();
         rules.getRuleSeverity.bind(rules, [null]).should.throw();
 
@@ -181,7 +181,7 @@ describe("Checking exported rules object", function() {
                 "imports-on-top": 1,
                 "array-declarations": 2,
                 "operator-whitespace": ["off", "double"],
-                "lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
+                "lbrace": ["warning", 1, 2, { a: 100, h: "world" }],
                 "mixedcase": ["error"],
                 "camelcase": [0, 100, "hello", 9.283],
                 "uppercase": [1],
@@ -227,7 +227,7 @@ describe("Checking exported rules object", function() {
                 "imports-on-top": 1,
                 "array-declarations": 2,
                 "operator-whitespace": ["off", "double"],
-                "lbrace": ["warning", 1, 2, {a: 100, h: "world"}],
+                "lbrace": ["warning", 1, 2, { a: 100, h: "world" }],
                 "mixedcase": ["error"],
                 "camelcase": [0, 100, "hello", 9.283],
                 "uppercase": [1],

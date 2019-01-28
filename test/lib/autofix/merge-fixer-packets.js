@@ -25,10 +25,10 @@ describe("check exposed API", function() {
         // fixerPackets represent the outputs of the functions exposed by rule-fixer
         // when a particular node & text are provided
         let fixerPackets = [
-            rf.insertTextAfter({type: "a", start: 0, end: 3}, "123"),
-            rf.insertTextBefore({type: "a", start: 4, end: 6}, "@@@"),
-            rf.replaceText({type: "a", start: 8, end: 11}, "+++"),
-            rf.remove({type: "a", start: 12, end: 14}),
+            rf.insertTextAfter({ type: "a", start: 0, end: 3 }, "123"),
+            rf.insertTextBefore({ type: "a", start: 4, end: 6 }, "@@@"),
+            rf.replaceText({ type: "a", start: 8, end: 11 }, "+++"),
+            rf.remove({ type: "a", start: 12, end: 14 }),
             rf.insertTextAfterRange([15, 16], "==="),
             rf.insertTextBeforeRange([18, 22], "$$$"),
             rf.removeRange([23, 25]),
@@ -79,7 +79,7 @@ describe("check exposed API", function() {
 		
         // overlapping ranges
         mfp.bind(
-            mfp, [{range: [2, 5], text: ""}, {range: [4, 8], text: "%%%"}], "abcdefghijk"
+            mfp, [{ range: [2, 5], text: "" }, { range: [4, 8], text: "%%%" }], "abcdefghijk"
         ).should.throw();
 
         done();

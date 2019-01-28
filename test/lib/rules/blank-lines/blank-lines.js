@@ -336,7 +336,7 @@ describe("[RULE] blank-lines: Fixes", () => {
 
     it("Should correct spacing between top level declarations with < 2 lines of gap between them", done => {
         const code = fs.readFileSync(path.join(__dirname, "./reject/contract.sol"), "utf8");
-        let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(addPragma(code), userConfig);
+        let { errorMessages: errors, fixedSourceCode } = Solium.lintAndFix(addPragma(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
@@ -353,7 +353,7 @@ describe("[RULE] blank-lines: Fixes", () => {
 
     it("Should correct multiline functions not followed by a blank line", done => {
         let code = fs.readFileSync(path.join(__dirname, "./reject/function.sol"), "utf8"),
-            {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(addPragma(code), userConfig);
+            { errorMessages: errors, fixedSourceCode } = Solium.lintAndFix(addPragma(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
@@ -463,7 +463,7 @@ describe("[RULE] blank-lines: Fixes", () => {
         ];
 
         snippets.forEach(code => {
-            let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(code, userConfig);
+            let { errorMessages: errors, fixedSourceCode } = Solium.lintAndFix(code, userConfig);
             errors.should.be.Array();
             errors.should.have.size(0);
 

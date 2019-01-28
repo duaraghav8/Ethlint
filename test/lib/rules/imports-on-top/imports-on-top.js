@@ -588,7 +588,7 @@ contract foo {}
 
     it("Should move the import statements below the last valid import node", function(done) {
         let code = fs.readFileSync(path.join(__dirname, "./fixes/only-one-error.sol"), "utf8");
-        let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(code, userConfig);
+        let { errorMessages: errors, fixedSourceCode } = Solium.lintAndFix(code, userConfig);
 
         // All errors should've been corrected
         errors.constructor.name.should.equal("Array");
@@ -611,7 +611,7 @@ contract foo {}
 
     it("Should move the import statements two lines below the pragma if no valid import exists", function(done) {
         let code = fs.readFileSync(path.join(__dirname, "./fixes/before-pragma.sol"), "utf8");
-        let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(code, userConfig);
+        let { errorMessages: errors, fixedSourceCode } = Solium.lintAndFix(code, userConfig);
 
         // There should be no errors
         errors.constructor.name.should.equal("Array");
@@ -631,7 +631,7 @@ contract foo {}
 
     it("Should still fix the file correctly if there's only one invalid import statement", function(done) {
         let code = fs.readFileSync(path.join(__dirname, "./fixes/only-one-error.sol"), "utf8");
-        let {errorMessages: errors, fixedSourceCode} = Solium.lintAndFix(code, userConfig);
+        let { errorMessages: errors, fixedSourceCode } = Solium.lintAndFix(code, userConfig);
 
         // There should be no errors
         errors.constructor.name.should.equal("Array");

@@ -166,21 +166,21 @@ describe("Checking Exported Solium API", function() {
         Solium.report.bind(Solium, null).should.throw();
         Solium.report.bind(Solium).should.throw();
 
-        Solium.report.bind(Solium, {node: null}).should.throw();
-        Solium.report.bind(Solium, {node: undefined}).should.throw();
-        Solium.report.bind(Solium, {node: 100}).should.throw();
-        Solium.report.bind(Solium, {node: {}}).should.throw();
-        Solium.report.bind(Solium, {node: {type: 100}}).should.throw();
+        Solium.report.bind(Solium, { node: null }).should.throw();
+        Solium.report.bind(Solium, { node: undefined }).should.throw();
+        Solium.report.bind(Solium, { node: 100 }).should.throw();
+        Solium.report.bind(Solium, { node: {} }).should.throw();
+        Solium.report.bind(Solium, { node: { type: 100 } }).should.throw();
 
         let n = { type: "Type", start: 0, end: 89 };
 
-        Solium.report.bind(Solium, {node: n}).should.throw();
-        Solium.report.bind(Solium, {node: n, message: ""}).should.throw();
-        Solium.report.bind(Solium, {node: n, message: null}).should.throw();
-        Solium.report.bind(Solium, {node: n, message: 100}).should.throw();
+        Solium.report.bind(Solium, { node: n }).should.throw();
+        Solium.report.bind(Solium, { node: n, message: "" }).should.throw();
+        Solium.report.bind(Solium, { node: n, message: null }).should.throw();
+        Solium.report.bind(Solium, { node: n, message: 100 }).should.throw();
 
-        Solium.report.bind(Solium, {node: n, message: "helo", ruleMeta: {}}).should.throw();
-        Solium.report.bind(Solium, {node: n, message: "helo", ruleMeta: null}).should.throw();
+        Solium.report.bind(Solium, { node: n, message: "helo", ruleMeta: {} }).should.throw();
+        Solium.report.bind(Solium, { node: n, message: "helo", ruleMeta: null }).should.throw();
         Solium.report.bind(Solium, {
             node: n, message: "helo", ruleMeta: [], ruleName: "hola", type: "warning"
         }).should.throw();
@@ -281,8 +281,8 @@ describe("Checking Exported Solium API", function() {
         //config object validation
         Solium.lint.bind(Solium, minimalSourceCode).should.throw();
         Solium.lint.bind(Solium, minimalSourceCode, {}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: null}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: "foo"}).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: null }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: "foo" }).should.throw();
         Solium.lint.bind(Solium, minimalSourceCode, []).should.throw();
         Solium.lint.bind(Solium, minimalSourceCode, null).should.throw();
         Solium.lint.bind(Solium, minimalSourceCode, 19082).should.throw();
@@ -292,19 +292,19 @@ describe("Checking Exported Solium API", function() {
         // config (v1.0.0) object validation
         // These tests just ensure that Solium internally calls configInspector.isValid() on config.
         // Extensive testing of validation is done on isValid() (see test for config-inspector).
-        Solium.lint.bind(Solium, minimalSourceCode, {extends: ""}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {extends: 908}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {extends: {}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {extends: []}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {extends: "hello", rules: {a: true}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {extends: null}).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { extends: "" }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { extends: 908 }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { extends: {} }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { extends: [] }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { extends: "hello", rules: { a: true } }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { extends: null }).should.throw();
 
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: {a: []}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: {a: "koala bear"}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: {a: 9018}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: {a: -1}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {rules: {a: null}}).should.throw();
-        Solium.lint.bind(Solium, minimalSourceCode, {plugins: ["1*&&67%``"], rules: {}}).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: { a: [] } }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: { a: "koala bear" } }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: { a: 9018 } }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: { a: -1 } }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { rules: { a: null } }).should.throw();
+        Solium.lint.bind(Solium, minimalSourceCode, { plugins: ["1*&&67%``"], rules: {} }).should.throw();
 
         // Minimal valid arguments
         Solium.lint.bind(Solium, minimalSourceCode, minimalConfig).should.not.throw();
@@ -701,31 +701,31 @@ describe("Checking Exported Solium API", function() {
         error.fix = function(f) { return ["humpty dumpty"]; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: ""}; };
+        error.fix = function(f) { return { text: "" }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: 19082, range: [0, 0]}; };
+        error.fix = function(f) { return { text: 19082, range: [0, 0] }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: [-1, 0]}; };
+        error.fix = function(f) { return { text: "", range: [-1, 0] }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: null}; };
+        error.fix = function(f) { return { text: "", range: null }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: "foobar"}; };
+        error.fix = function(f) { return { text: "", range: "foobar" }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: [27, 25.7]}; };
+        error.fix = function(f) { return { text: "", range: [27, 25.7] }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: [27]}; };
+        error.fix = function(f) { return { text: "", range: [27] }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: [27, 29, 33]}; };
+        error.fix = function(f) { return { text: "", range: [27, 29, 33] }; };
         Solium.report.bind(Solium, error).should.throw();
 
-        error.fix = function(f) { return {text: "", range: [27, 29], randomAttribute: true}; };
+        error.fix = function(f) { return { text: "", range: [27, 29], randomAttribute: true }; };
         Solium.report.bind(Solium, error).should.throw();
 
 
@@ -736,12 +736,12 @@ describe("Checking Exported Solium API", function() {
 
 
         error.fix = function(f) {
-            return [{text: "", range: [0, 10]}, {text: "aighjbhsjga", range: [900, 6754]}];
+            return [{ text: "", range: [0, 10] }, { text: "aighjbhsjga", range: [900, 6754] }];
         };
         Solium.report.bind(Solium, error).should.not.throw();
 
         error.fix = function(f) {
-            return {text: "    ", range: [90, 100]};
+            return { text: "    ", range: [90, 100] };
         };
         Solium.report.bind(Solium, error).should.not.throw();
 
@@ -2296,7 +2296,7 @@ describe("Solium.lint() comment directives", () => {
             }
         ];
 
-        snippets.forEach(({code, expectedIssues}) => {
+        snippets.forEach(({ code, expectedIssues }) => {
             let errors = Solium.lint(wrappers.toContract(code), config);
             errors.should.have.size(expectedIssues);
         });
