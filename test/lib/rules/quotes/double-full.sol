@@ -12,6 +12,16 @@ contract Foo {
         function f () returns (string){
                 var foobar = "Hello world";
                 string fuu = "chumma";
+
+                var x = (                    "hello world"                 );
+                var x = (                       "hello world"          );
+                var x = (                    "hello world");
+                var x = ("hello world"        );
+
                 return ("Hello World");
+
+                return(
+                        "Lorem Ipsum"
+                );
         }
 }

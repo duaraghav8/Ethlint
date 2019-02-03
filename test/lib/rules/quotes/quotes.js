@@ -122,7 +122,7 @@ describe("[RULE] quotes: Fix when double quotes are mandatory", function() {
         fixed.errorMessages.should.be.Array();
         fixed.errorMessages.length.should.equal(0);
         fixed.fixesApplied.should.be.Array();
-        fixed.fixesApplied.length.should.equal(12);
+        fixed.fixesApplied.length.should.equal(17);
 
         Solium.reset();
         done();
@@ -189,7 +189,7 @@ describe("[RULE] quotes: Fix when single quotes are mandatory", function() {
         fixed.errorMessages.should.be.Array();
         fixed.errorMessages.length.should.equal(0);
         fixed.fixesApplied.should.be.Array();
-        fixed.fixesApplied.length.should.equal(12);
+        fixed.fixesApplied.length.should.equal(17);
 
         Solium.reset();
         done();
