@@ -9,8 +9,19 @@ import '../myContract.sol' as MyContract;
 
 contract Foo {
         string fucker = 'hello wordl';
-        function f () {
+        function f () returns (string){
                 var foobar = 'Hello world';
                 string fuu = 'chumma';
+
+                var x = (                    'hello world'                 );
+                var x = (                       'hello world'          );
+                var x = (                    'hello world');
+                var x = ('hello world'        );
+
+                return ('Hello World');
+
+                return(
+                        'Lorem Ipsum'
+                );
         }
 }
