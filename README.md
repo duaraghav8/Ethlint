@@ -11,6 +11,8 @@ Ethlint (Formerly Solium) analyzes your Solidity code for style & security issue
 
 See [Documentation](https://ethlint.readthedocs.io/), [Changelog](./CHANGELOG.md) and [upcoming releases](https://github.com/duaraghav8/Ethlint/projects).
 
+Before beginning to work on a contribution, please read the [Guidelines](./CONTRIBUTING.md).
+
 ## Install
 ```bash
 npm install -g ethlint
