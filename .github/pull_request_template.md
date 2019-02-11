@@ -6,10 +6,11 @@ If your PR proposes a major change and you haven't discussed it first with the m
 ## Changes
 Describe the changes proposed in this PR.
 
-- [ ] I have read the [Contribution Guidelines](../CONTRIBUTING.md)
-- [ ] All tests are passing
-- [ ] ESLint doesn't produce any `warnings`
-- [ ] ESLint doesn't produce any `errors`
-- [x] I'm awesome
+## Declaration
+- [ ] I have followed the [Contribution Guidelines](https://github.com/duaraghav8/Ethlint/blob/master/CONTRIBUTING.md).
+- [ ] All tests are passing.
+- [ ] ESLint doesn't produce any `warnings`.
+- [ ] ESLint doesn't produce any `errors`.
+- [x] I'm awesome.
 
-It is fine if ESLint does produce warnings for your PR **if** there is a good reason for it.
+**NOTE**: It is fine if ESLint does produce warnings for your PR **if** there is a good reason for it.
