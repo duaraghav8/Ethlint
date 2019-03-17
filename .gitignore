@@ -4,3 +4,4 @@ npm-debug.log
 docs/_build
 coverage/
 .nyc_output/
+.idea/

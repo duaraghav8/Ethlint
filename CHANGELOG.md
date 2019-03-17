@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.4 ()
+- Added `getLines()` sourceCode utility function for rule developers
+
 ## 1.2.3 (2019-02-11)
 - Added support for `solium-disable-previous-line` comment directive.
 - Added support for `solium-enable` comment directive. See [configuring with comments](https://ethlint.readthedocs.io/en/latest/user-guide.html#configuring-with-comments). This feature currently has a limitation which has been documented in [Known Issues](https://ethlint.readthedocs.io/en/latest/known-issues.html).

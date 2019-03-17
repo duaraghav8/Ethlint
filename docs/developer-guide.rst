@@ -254,6 +254,8 @@ The functions exposed by SourceCode object are as follows:
 
 13. ``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
 
+14. ``getLines ()`` - get the source code split into lines
+
 - ``context.report()`` - Lastly, the context object provides you with a clean interface to report lint issues:
 
 .. code-block:: javascript

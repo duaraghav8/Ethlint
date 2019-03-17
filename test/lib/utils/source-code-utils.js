@@ -79,6 +79,9 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.should.have.property("getTextOnLine");
         sourceCodeObject.getText.should.be.type("function");
 
+        sourceCodeObject.should.have.property("getLines");
+        sourceCodeObject.getText.should.be.type("function");
+
         sourceCodeObject.should.have.property("getNextChar");
         sourceCodeObject.getNextChar.should.be.type("function");
 
@@ -269,6 +272,18 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject
             .getStringBetweenNodes
             .bind(sourceCodeObject, currentNode, prevNode).should.throw();
+
+        done();
+    });
+
+    it("should return source code split into lines when calling getLines()", done => {
+        const sourceCodeObject = new SourceCode(sourceCodeText),
+            sourceCodeTextLines = sourceCodeText.split(/\r?\n/),
+            linesToTest = sourceCodeObject.getLines();
+
+        sourceCodeTextLines.forEach((line, i) => {
+            linesToTest[i].should.equal(line);
+        });
 
         done();
     });
