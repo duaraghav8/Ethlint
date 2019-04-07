@@ -230,6 +230,13 @@
 			"recommended": true,
 			"type": "error",
 			"description": "Ensure consistent linebreak style"
+		},
+
+		"no-trailing-whitespace": {
+			"enabled": true,
+			"recommended": true,
+			"type": "warning",
+			"description": "Disallow trailing spaces and tabs at the end of lines"
 		}
 	}
 }

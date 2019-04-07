@@ -1,7 +1,9 @@
 # Changelog
 
 ## 1.2.4 ()
-- Added `getLines()` sourceCode utility function for rule developers
+- Added rule `no-trailing-whitespace` to warn the user when code, comment or blank lines contain trailing whitespaces. This rule will supply the `fix` functionality in a future release.
+- Added `getLines()` sourceCode utility function for rule developers. This method returns the source code split into lines.
+- Added `getComments()` sourceCode utility function for rule developers. This method returns a list of AST Nodes representing comments in the source code.
 
 ## 1.2.3 (2019-02-11)
 - Added support for `solium-disable-previous-line` comment directive.
