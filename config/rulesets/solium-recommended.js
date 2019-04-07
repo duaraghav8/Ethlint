@@ -41,6 +41,7 @@ module.exports = {
         "function-order": "off",
         "conditionals-whitespace": "off",
         "no-experimental": "off",
+        "no-trailing-whitespace": "warning",
 
         // Disable deprecated rules
         "double-quotes": "off",

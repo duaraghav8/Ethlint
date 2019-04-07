@@ -400,7 +400,7 @@ You're now ready to write your tests (see `shouldjs documentation <https://shoul
 After writing your tests, add an entry for your rule ``foo-bar`` in `solium json <https://github.com/duaraghav8/Solium/blob/master/config/solium.json>`_.
 You also need to add your rule's entry to the ``List of Style Rules`` section in User Guide.
 
-Finally, add an entry for your rule in `solium all <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-all.js>`_ ruleset: ``foo-bar: <SEVERITY>`` where severity should be how your rule should be treated by default (as an error or warning). Severity should be same as what you specified in your rule's ``meta.docs.type``.
+Finally, add an entry for your rule in `solium all <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-all.js>`_ and `solium recommended <https://github.com/duaraghav8/Solium/blob/master/config/rulesets/solium-recommended.js>`_ rulesets: ``foo-bar: <SEVERITY>`` where severity should be how your rule should be treated by default (as an error or warning). Severity should be same as what you specified in your rule's ``meta.docs.type``.
 
 Now run ``npm run lint`` to let eslint work its magic. Resolve any lint issues you might see in your rule & test files.
 Run ``npm test`` and resolve any failures.

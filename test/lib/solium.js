@@ -866,7 +866,14 @@ describe("Solium.lint() comment directives", () => {
 
 
         `;
-        const errors = Solium.lint(code, { "extends": "solium:all" });
+        const config = {
+            "extends": "solium:all",
+            "rules": {
+                "no-trailing-whitespace": "off"
+            }
+        };
+
+        const errors = Solium.lint(code, config);
 
         errors.should.be.Array();
         errors.should.have.size(10); // This no. can change if changes are made in any rules from solium:all ruleset
@@ -876,7 +883,13 @@ describe("Solium.lint() comment directives", () => {
     });
 
     it("should respect solium-disable", done => {
-        const config = { "extends": "solium:all" };
+        const config = {
+            "extends": "solium:all",
+            "rules": {
+                "no-trailing-whitespace": "off"
+            }
+        };
+
         let code = `//    \t   solium-disable
             contract blah{}
             contract f {
@@ -1392,7 +1405,13 @@ describe("Solium.lint() comment directives", () => {
     });
 
     it("should respect solium-disable-line", done => {
-        const config = { "extends": "solium:all" };
+        const config = {
+            "extends": "solium:all",
+            "rules": {
+                "no-trailing-whitespace": "off"
+            }
+        };
+
         let code = `
             contract blah{}//    \t   solium-disable-line
             contract f {
@@ -1759,7 +1778,13 @@ describe("Solium.lint() comment directives", () => {
     });
 
     it("should respect solium-disable-next-line", done => {
-        const config = { "extends": "solium:all" };
+        const config = {
+            "extends": "solium:all",
+            "rules": {
+                "no-trailing-whitespace": "off"
+            }
+        };
+
         let code = `
             contract blah{}//    \t   solium-disable-next-line
             contract f {

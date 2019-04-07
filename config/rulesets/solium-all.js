@@ -40,6 +40,7 @@ module.exports = {
         "error-reason": "warning",
         "visibility-first": "warning",
         "constructor": "warning",
+        "no-trailing-whitespace": "warning",
 
         // Turn OFF all deprecated rules
         "double-quotes": "off",
