@@ -216,7 +216,7 @@ Your rule should expose an object that contains 2 attributes - ``meta`` object w
 ``create()``
 
 This function is responsible for actual processing of the contract code, determining whether something is wrong or not, reporting an issue and suggesting fixes.
-create() must return an object whose Key is an AST node type, and value is the function to execute on that node. So, for example, ``IfStatement`` is the type of the AST node representing an ``if`` clause and block in solidity.
+create() must return an object whose Key is an AST node type, and value is the function to execute on that node (i.e., the *handler function*). So, for example, ``IfStatement`` is the type of the AST node representing an ``if`` clause and block in solidity.
 
 .. note::
 	To know which node type you need to capture, install `solparse <https://github.com/duaraghav8/solparse>`_, parse some sample code into AST, then examine the particular node of interest for its ``type`` field. Specify that type as your return object key. You can see `any rule implementation <https://github.com/duaraghav8/Solium/tree/master/lib/rules>`_ to understand what create()'s return object looks like.
@@ -248,13 +248,18 @@ The functions exposed by SourceCode object are as follows:
 
 10. ``getNextChars (node, charCount)`` - get charCount no. of characters after the code of specified node
 
-11. ``getPrevChars (node, charCount)`` - get charCount no. of characters befre the code of specified node
+11. ``getPrevChars (node, charCount)`` - get charCount no. of characters before the code of specified node
 
 12. ``isASTNode (arg)`` - Returns true if the given argument is a valid (Spider-Monkey compliant) AST Node
 
 13. ``getStringBetweenNodes (prevNode, nextNode)`` - get the complete code between 2 specified nodes. (The code ranges from prevNode.end (inclusive) to nextNode.start (exclusive) )
 
 14. ``getLines ()`` - get the source code split into lines
+
+15. ``getComments()`` - get the list of AST nodes representing comments in the code. Call ``getSourceCode()`` inside your *handler function* if you wish to use this method.
+
+.. note::
+	The recommended way to use the ``getSourceCode()`` method is inside the *handler function* in which you will be calling the functions the SourceCode object provides. If you call ``getSourceCode()`` inside the main ``create()`` function, some functions will return empty results because the data hasn't been populated yet. This is by design. If you see some rule implementations calling the function outside of their handler functions, it means that the SourceCode object functions they use are unaffected by whether you call them inside or outside the handler functions.
 
 - ``context.report()`` - Lastly, the context object provides you with a clean interface to report lint issues:
 
