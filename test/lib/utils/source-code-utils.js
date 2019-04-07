@@ -20,7 +20,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         };
 
     it("should create instance of SourceCode & expose set of functions (its own & those of astUtils)", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText);
+        let sourceCodeObject = new SourceCode(sourceCodeText, []);
 
         sourceCodeObject.should.be.type("object");
         sourceCodeObject.should.be.instanceof(SourceCode);
@@ -28,12 +28,15 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.should.have.ownProperty("text");
         sourceCodeObject.text.should.equal(sourceCodeText);
 
+        sourceCodeObject.should.have.ownProperty("commentObjects");
+        sourceCodeObject.commentObjects.should.be.Array();
+
         //functions inherited from astUtils
         sourceCodeObject.should.have.property("getLine");
         sourceCodeObject.getLine.should.be.type("function");
 
         sourceCodeObject.should.have.property("getEndingLine");
-        sourceCodeObject.getLine.should.be.type("function");
+        sourceCodeObject.getEndingLine.should.be.type("function");
 
         sourceCodeObject.should.have.property("getColumn");
         sourceCodeObject.getColumn.should.be.type("function");
@@ -77,10 +80,10 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.getText.should.be.type("function");
 
         sourceCodeObject.should.have.property("getTextOnLine");
-        sourceCodeObject.getText.should.be.type("function");
+        sourceCodeObject.getTextOnLine.should.be.type("function");
 
         sourceCodeObject.should.have.property("getLines");
-        sourceCodeObject.getText.should.be.type("function");
+        sourceCodeObject.getLines.should.be.type("function");
 
         sourceCodeObject.should.have.property("getNextChar");
         sourceCodeObject.getNextChar.should.be.type("function");
@@ -95,13 +98,16 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.getPrevChars.should.be.type("function");
 
         sourceCodeObject.should.have.property("getStringBetweenNodes");
-        sourceCodeObject.getPrevChars.should.be.type("function");
+        sourceCodeObject.getStringBetweenNodes.should.be.type("function");
+
+        sourceCodeObject.should.have.property("getComments");
+        sourceCodeObject.getComments.should.be.type("function");
 
         done();
     });
 
     it("should behave as expected upon calling getText ()", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText);
+        let sourceCodeObject = new SourceCode(sourceCodeText, []);
         let functionCallText = "fooBar ();",
             functionCallNode = { type: "ExpressionStatement",
                 expression: 
@@ -123,7 +129,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.getText(varDeclarator, -4, -1).should.equal("var x = 100;");
         sourceCodeObject.getText(varDeclarator, 100, 100).should.equal(sourceCodeText);
 
-        sourceCodeObject = new SourceCode(functionCallText);
+        sourceCodeObject = new SourceCode(functionCallText, []);
 
         sourceCodeObject.getText(functionCallNode).should.equal(functionCallText);
 
@@ -131,7 +137,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
     });
 
     it("should behave as expected upon calling getNextChar ()", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText);
+        let sourceCodeObject = new SourceCode(sourceCodeText, []);
 
         sourceCodeObject.getNextChar.bind(sourceCodeObject, {}).should.throw();
         sourceCodeObject.getNextChar.bind(sourceCodeObject).should.throw();
@@ -150,7 +156,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
     });
 
     it("should behave as expected upon calling getPrevChar ()", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText);
+        let sourceCodeObject = new SourceCode(sourceCodeText, []);
 
         sourceCodeObject.getPrevChar.bind(sourceCodeObject, {}).should.throw();
         sourceCodeObject.getPrevChar.bind(sourceCodeObject).should.throw();
@@ -164,7 +170,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
     });
 
     it("should behave as expected upon calling getNextChars ()", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText);
+        let sourceCodeObject = new SourceCode(sourceCodeText, []);
 
         sourceCodeObject.getNextChars.bind(sourceCodeObject, {}).should.throw();
         sourceCodeObject.getNextChars.bind(sourceCodeObject).should.throw();
@@ -177,7 +183,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
     });
 
     it("should behave as expected upon calling getPrevChars ()", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText);
+        let sourceCodeObject = new SourceCode(sourceCodeText, []);
 
         sourceCodeObject.getPrevChars.bind(sourceCodeObject, {}).should.throw();
         sourceCodeObject.getPrevChars.bind(sourceCodeObject).should.throw();
@@ -193,7 +199,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
 
     it("should behave as expected upon calling getStringBetweenNodes ()", function(done) {
         let sourceCodeText = "var x = 100;\n\tvar (y) = 200;\n\n\tvar z = 300;",
-            sourceCodeObject = new SourceCode(sourceCodeText);
+            sourceCodeObject = new SourceCode(sourceCodeText, []);
 
         let prevNode = {
             "type": "VariableDeclaration",
@@ -277,7 +283,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
     });
 
     it("should return source code split into lines when calling getLines()", done => {
-        const sourceCodeObject = new SourceCode(sourceCodeText),
+        const sourceCodeObject = new SourceCode(sourceCodeText, []),
             sourceCodeTextLines = sourceCodeText.split(/\r?\n/),
             linesToTest = sourceCodeObject.getLines();
 
@@ -289,7 +295,7 @@ describe("Testing SourceCode instance for exposed functionality", function() {
     });
 
     it("should behave as expected upon calling getTextOnLine()", function(done) {
-        let sourceCodeObject = new SourceCode(sourceCodeText),
+        let sourceCodeObject = new SourceCode(sourceCodeText, []),
             sourceCodeTextLines = sourceCodeText.split(/\r?\n/);
 
         for (let i = 0; i < sourceCodeTextLines.length; i++) {
@@ -305,6 +311,34 @@ describe("Testing SourceCode instance for exposed functionality", function() {
         sourceCodeObject.getTextOnLine.bind(sourceCodeObject, -1).should.throw();
         sourceCodeObject.getTextOnLine.bind(sourceCodeObject, 100).should.throw();
         sourceCodeObject.getTextOnLine.bind(sourceCodeObject, 2.3).should.throw();
+
+        done();
+    });
+
+    it("should return comment objects list upon calling getComments()", done => {
+        const dummyCommentObjects = [
+            {
+                type: "Line",
+                text: "// hello world\\t\\t\\t",
+                start: 204,
+                end: 221
+            },
+            {
+                type: "Block",
+                text: "/*\\n\\t\\thwlloo worldd        \\n\\t\\t*/",
+                start: 225,
+                end: 256
+            }
+        ];
+
+        const sourceCodeObject = new SourceCode("", dummyCommentObjects),
+            comments = sourceCodeObject.getComments();
+
+        comments[0].type.should.equal("Line");
+        comments[0].start.should.equal(204);
+
+        comments[1].type.should.equal("Block");
+        comments[1].start.should.equal(225);
 
         done();
     });

@@ -41,6 +41,7 @@ describe("Checking Exported Solium API", function() {
         Solium.getSourceCode.should.be.type("function");
         Solium.should.have.ownProperty("getDefaultConfig");
         Solium.getDefaultConfig.should.be.type("function");
+
         Solium.should.have.ownProperty("version");
         Solium.version.should.be.type("string");
 
@@ -140,21 +141,27 @@ describe("Checking Exported Solium API", function() {
         sourceCode.should.have.property("getPrevChars");
         sourceCode.getPrevChars.should.be.type("function");
 
+        sourceCode.should.have.property("getComments");
+        sourceCode.getComments.should.be.type("function");
+
         done();
     });
 
-    it("should be completely reset after call to Solium.reset ()", function(done) {
+    it("should be completely reset after call to Solium.reset()", function(done) {
         Solium.reset();
 
         let minmalConfig = { rules: {} };
         let sourceCode = Solium.getSourceCode();
-        let errorMessages = Solium.lint(wrappers.toFunction("var foo = 100;"), minmalConfig, true);
+        let errorMessages = Solium.lint(wrappers.toFunction("var foo = 100; /* helo */"), minmalConfig, true);
 
         sourceCode.text.should.equal("");
         (sourceCode.getText()).should.equal(sourceCode.text);
 
         errorMessages.should.be.instanceof(Array);
         errorMessages.length.should.equal(0);
+
+        // comments array should be empty
+        sourceCode.getComments().should.be.empty();
 
         //all event listeners should've been removed
         Object.keys(Solium._events).length.should.equal(0);
@@ -211,7 +218,7 @@ describe("Checking Exported Solium API", function() {
         done();
     });
 
-    it("should push a sample error object in messages upon calling Solium.report ()", function(done) {
+    it("should push a sample error object in messages upon calling Solium.report()", function(done) {
         let sampleErrorObject = {
             ruleName: "sample",
             type: "error",
