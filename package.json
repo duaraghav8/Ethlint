@@ -1,6 +1,6 @@
 {
   "name": "ethlint",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Linter to identify and fix Style & Security issues in Solidity",
   "main": "./lib/solium.js",
   "bin": {
