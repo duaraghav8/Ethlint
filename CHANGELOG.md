@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.2.5 ()
+- Added option `errorMessageMaxLength` for rule `error-reason` to specify a character limit on error message.
+
 ## 1.2.4 (2019-04-08)
 - Added rule `no-trailing-whitespace` to warn the user when code, comment or blank lines contain trailing whitespaces. This rule will supply the `fix` functionality in a future release.
 - Added `getLines()` sourceCode utility function for rule developers. This method returns the source code split into lines.

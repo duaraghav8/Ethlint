@@ -72,6 +72,54 @@ describe("[RULE] error-reason: Acceptances", function() {
         done();
     });
 
+    it("should accept error messages that don't breach max character limit", done => {
+        const userConfig = {
+            "rules": {
+                "error-reason": ["warning", { "errorMessageMaxLength": 10 }]
+            }
+        };
+
+        const snippets = [
+            toFunction("require(1 == 1, \"123456789\");"),
+            toFunction("revert(\"123456789\");"),
+            toFunction("require(1 == 1, \"0123456789\");"),
+            toFunction("revert(\"0123456789\");"),
+            toFunction("require(1 == 1, \"\");"),
+            toFunction("revert(\"\");")
+        ];
+
+        snippets.forEach(code => {
+            const errors = Solium.lint(code, userConfig);
+            errors.should.be.Array();
+            errors.should.be.empty();
+        });
+
+        Solium.reset();
+        done();
+    });
+
+    it("should accept error messages that breach max character limit when function is disabled", done => {
+        const userConfig = {
+            "rules": {
+                "error-reason": ["warning", { "revert": false, "require": false, "errorMessageMaxLength": 10 }]
+            }
+        };
+
+        const snippets = [
+            toFunction("require(1 == 1, \"12345shdh782728617626789\");"),
+            toFunction("revert(\"12310-2908sjbjsb456789\");")
+        ];
+
+        snippets.forEach(code => {
+            const errors = Solium.lint(code, userConfig);
+            errors.should.be.Array();
+            errors.should.be.empty();
+        });
+
+        Solium.reset();
+        done();
+    });
+
 });
 
 describe("[RULE] error-reason: Rejections", function() {
@@ -115,6 +163,30 @@ describe("[RULE] error-reason: Rejections", function() {
 
         errors.should.be.Array();
         errors.should.have.size(1);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should reject error messages that breach max character limit", done => {
+        const userConfig = {
+            "rules": {
+                "error-reason": ["warning", { "errorMessageMaxLength": 10 }]
+            }
+        };
+
+        const snippets = [
+            toFunction("require(1 == 1, \"0123456789-\");"),
+            toFunction("revert(\"0123456789-\");"),
+            toFunction("require(1 == 1, \"0123456789-----------\");"),
+            toFunction("revert(\"0123456789----------\");")
+        ];
+
+        snippets.forEach(code => {
+            const errors = Solium.lint(code, userConfig);
+            errors.should.be.Array();
+            errors.should.have.size(1);
+        });
 
         Solium.reset();
         done();
