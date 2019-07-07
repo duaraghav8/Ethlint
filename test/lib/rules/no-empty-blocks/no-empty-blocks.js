@@ -5,11 +5,11 @@
 
 "use strict";
 
-let Solium = require("../../../../lib/solium");
-let wrappers = require("../../../utils/wrappers");
-let toContract = wrappers.toContract;
-let toFunction = wrappers.toFunction;
-let addPragma = wrappers.addPragma;
+const Solium = require("../../../../lib/solium");
+const wrappers = require("../../../utils/wrappers");
+const toContract = wrappers.toContract;
+const toFunction = wrappers.toFunction;
+const addPragma = wrappers.addPragma;
 
 let userConfig = {
     "custom-rules-filename": null,
@@ -54,7 +54,7 @@ describe("[RULE] no-empty-blocks: Acceptances", function() {
         done();
     });
 
-    it("should allow fallback and payable functions & payable constructors", done => {
+    it("should allow fallback and payable functions & payable constructors to have empty bodies", done => {
         let snippets = [
             "function(string address) {}",
             "function foo(string address) payable external {}",
@@ -71,6 +71,30 @@ describe("[RULE] no-empty-blocks: Acceptances", function() {
             let errors = Solium.lint(toContract(code), userConfig);
             errors.should.be.empty();
         });
+
+        Solium.reset();
+        done();
+    });
+
+    it("should allow constructors calling base constructors to have empty bodies", done => {
+        const code = `
+contract Foo is Bar {
+    constructor(uint _y) Bar(_y * _y) public {}
+}
+
+contract Jax is Base(10) {
+    constructor() public blah Base foo bar(100) {}
+}
+
+// This should be accepted because payable constructor
+contract Ipsum is Foo {
+    constructor() payable public {}
+}
+`;
+        const errors = Solium.lint(code, userConfig);
+
+        errors.should.be.Array();
+        errors.should.be.empty();
 
         Solium.reset();
         done();
