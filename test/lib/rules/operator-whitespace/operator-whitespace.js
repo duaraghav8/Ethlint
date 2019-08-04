@@ -342,8 +342,9 @@ describe("[RULE] operator-whitespace: Rejections", function() {
 
 describe("[RULE] operator-whitespace: Fixes", function() {
 
-    it("should fix whitespace around assignment operator when fix is enabled", function(done) {
+    it("should fix whitespace around operators when fix is enabled", function(done) {
         const testCases = [
+            // Assignments
             {
                 input: "foo   \t= bar;\n",
                 output: "foo = bar;\n"
@@ -357,9 +358,31 @@ describe("[RULE] operator-whitespace: Fixes", function() {
                 output: "foo = bar;\n"
             },
             {
-                input: "foo    += bar;",
+                input: "foo    +=    bar;",
                 output: "foo += bar;"
+            },
+
+            // // Variable declaration
+            {
+                input: "var a = \t\t      \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a\t  \t      \t= \"hello\";",
+                output: "var a = \"hello\";"
+
+            },
+            {
+                input: "var a  \t\t      =  \t\t      \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a= \"hello\";",
+                output: "var a = \"hello\";"
             }
+
+            // Binary expressions
+
         ];
 
         testCases.forEach(testCase => {
@@ -373,8 +396,9 @@ describe("[RULE] operator-whitespace: Fixes", function() {
             fixed.fixedSourceCode.should.equal(toFunction(testCase.output));
             fixed.errorMessages.should.be.Array();
             fixed.errorMessages.length.should.equal(0);
+
             fixed.fixesApplied.should.be.Array();
-            fixed.fixesApplied.length.should.equal(1);
+            fixed.fixesApplied.length.should.be.aboveOrEqual(1);
         });
 
         Solium.reset();
