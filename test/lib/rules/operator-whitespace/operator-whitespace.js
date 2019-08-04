@@ -175,7 +175,7 @@ describe("[RULE] operator-whitespace: Rejections", function() {
         let errors;
 
         code = code.map(function(item){return toFunction(item);});
-		
+
         errors = Solium.lint(code [0], userConfig);
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
@@ -338,4 +338,46 @@ describe("[RULE] operator-whitespace: Rejections", function() {
         done();
     });
 
+});
+
+describe("[RULE] operator-whitespace: Fixes", function() {
+
+    it("should fix whitespace around assignment operator when fix is enabled", function(done) {
+        const testCases = [
+            {
+                input: "foo   \t= bar;\n",
+                output: "foo = bar;\n"
+            },
+            {
+                input: "foo =     \t\tbar;\n",
+                output: "foo = bar;\n"
+            },
+            {
+                input: "foo      =      bar;\n",
+                output: "foo = bar;\n"
+            },
+            {
+                input: "foo    += bar;",
+                output: "foo += bar;"
+            }
+        ];
+
+        testCases.forEach(testCase => {
+            let fixed = Solium.lintAndFix(toFunction(testCase.input), userConfig);
+
+            fixed.should.be.type("object");
+            fixed.should.have.ownProperty("fixedSourceCode");
+            fixed.should.have.ownProperty("errorMessages");
+            fixed.should.have.ownProperty("fixesApplied");
+
+            fixed.fixedSourceCode.should.equal(toFunction(testCase.output));
+            fixed.errorMessages.should.be.Array();
+            fixed.errorMessages.length.should.equal(0);
+            fixed.fixesApplied.should.be.Array();
+            fixed.fixesApplied.length.should.equal(1);
+        });
+
+        Solium.reset();
+        done();
+    });
 });
