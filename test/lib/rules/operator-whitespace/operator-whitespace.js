@@ -178,7 +178,7 @@ describe("[RULE] operator-whitespace: Rejections", function() {
 
         errors = Solium.lint(code [0], userConfig);
         errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
+        errors.length.should.equal(2);
 
         errors = Solium.lint(code [1], userConfig);
         errors.constructor.name.should.equal("Array");
@@ -230,7 +230,7 @@ describe("[RULE] operator-whitespace: Rejections", function() {
 
         errors = Solium.lint(code [13], userConfig);
         errors.constructor.name.should.equal("Array");
-        errors.length.should.equal(1);
+        errors.length.should.equal(2);
 
         errors = Solium.lint(code [14], userConfig);
         errors.constructor.name.should.equal("Array");
@@ -362,7 +362,7 @@ describe("[RULE] operator-whitespace: Fixes", function() {
                 output: "foo += bar;"
             },
 
-            // // Variable declaration
+            // Variable declaration
             {
                 input: "var a = \t\t      \"hello\";",
                 output: "var a = \"hello\";"
@@ -379,10 +379,36 @@ describe("[RULE] operator-whitespace: Fixes", function() {
             {
                 input: "var a= \"hello\";",
                 output: "var a = \"hello\";"
+            },
+
+            // Multiline binary expressions
+            {
+                input: "if (foobarMotherfuckers (price, 100)&&\n\n\t++crazyCounter) {\n}",
+                output: "if (foobarMotherfuckers (price, 100)&&\n++crazyCounter) {\n}"
+            },
+            {
+                input: "if (foobarMotherfuckers (price, 100)\t\n&&++crazyCounter) {\n}",
+                output: "if (foobarMotherfuckers (price, 100) &&\n++crazyCounter) {\n}"
+            },
+            {
+                input: "if (foobarMotherfuckers (price, 100)\t\n&&\n\n\n++crazyCounter) {\n}",
+                output: "if (foobarMotherfuckers (price, 100) &&\n++crazyCounter) {\n}"
+            },
+
+            // Binary operators
+            {
+                input: "if (foobarMotherfuckers (price, 100) &&crazyCounter) {\n}",
+                output: "if (foobarMotherfuckers (price, 100) && crazyCounter) {\n}"
+            },
+            {
+                input: "if (foobarMotherfuckers (price, 100)&& crazyCounter) {\n}",
+                output: "if (foobarMotherfuckers (price, 100)&&crazyCounter) {\n}"
             }
 
-            // Binary expressions
-
+            // {
+            //     input: "if (foobarMotherfuckers (price, 100)\t\t\t &&crazyCounter) {\n}",
+            //     output: "if (foobarMotherfuckers (price, 100) && ++crazyCounter) {\n}"
+            // }
         ];
 
         testCases.forEach(testCase => {
