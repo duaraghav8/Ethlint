@@ -396,14 +396,23 @@ describe("[RULE] operator-whitespace: Fixes", function() {
             },
 
             // Binary operators
+            // - force no spacing if no spacing on the left
+            {
+                input: "if (foo (price, 100)&& bar) {\n}",
+                output: "if (foo (price, 100)&&bar) {\n}"
+            },
+
+            // - add missing space on the right
             {
                 input: "if (foo (price, 100) &&bar) {\n}",
                 output: "if (foo (price, 100) && bar) {\n}"
             },
             {
-                input: "if (foo (price, 100)&& bar) {\n}",
-                output: "if (foo (price, 100)&&bar) {\n}"
+                input: "if (foo (price, 100)\t\t\t   &&bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
             },
+
+            // - trim extra whitespace
             {
                 input: "if (foo (price, 100)\t&& bar) {\n}",
                 output: "if (foo (price, 100) && bar) {\n}"
@@ -412,8 +421,22 @@ describe("[RULE] operator-whitespace: Fixes", function() {
                 input: "if (foo (price, 100)\t\t\t   && bar) {\n}",
                 output: "if (foo (price, 100) && bar) {\n}"
             },
+
+            // - trim comments
             {
-                input: "if (foo (price, 100)\t\t\t   &&bar) {\n}",
+                input: "if (foo (price, 100) /** **/ && bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100) && /** **/ bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100) /** **/ && /** **/ bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100) /** **/ &&bar) {\n}",
                 output: "if (foo (price, 100) && bar) {\n}"
             }
         ];
