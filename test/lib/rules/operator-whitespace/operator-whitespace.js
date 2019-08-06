@@ -383,32 +383,39 @@ describe("[RULE] operator-whitespace: Fixes", function() {
 
             // Multiline binary expressions
             {
-                input: "if (foobarMotherfuckers (price, 100)&&\n\n\t++crazyCounter) {\n}",
-                output: "if (foobarMotherfuckers (price, 100)&&\n++crazyCounter) {\n}"
+                input: "if (foo (price, 100)&&\n\n\t++bar) {\n}",
+                output: "if (foo (price, 100)&&\n++bar) {\n}"
             },
             {
-                input: "if (foobarMotherfuckers (price, 100)\t\n&&++crazyCounter) {\n}",
-                output: "if (foobarMotherfuckers (price, 100) &&\n++crazyCounter) {\n}"
+                input: "if (foo (price, 100)\t\n&&++bar) {\n}",
+                output: "if (foo (price, 100) &&\n++bar) {\n}"
             },
             {
-                input: "if (foobarMotherfuckers (price, 100)\t\n&&\n\n\n++crazyCounter) {\n}",
-                output: "if (foobarMotherfuckers (price, 100) &&\n++crazyCounter) {\n}"
+                input: "if (foo (price, 100)\t\n&&\n\n\n++bar) {\n}",
+                output: "if (foo (price, 100) &&\n++bar) {\n}"
             },
 
             // Binary operators
             {
-                input: "if (foobarMotherfuckers (price, 100) &&crazyCounter) {\n}",
-                output: "if (foobarMotherfuckers (price, 100) && crazyCounter) {\n}"
+                input: "if (foo (price, 100) &&bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
             },
             {
-                input: "if (foobarMotherfuckers (price, 100)&& crazyCounter) {\n}",
-                output: "if (foobarMotherfuckers (price, 100)&&crazyCounter) {\n}"
+                input: "if (foo (price, 100)&& bar) {\n}",
+                output: "if (foo (price, 100)&&bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100)\t&& bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100)\t\t\t   && bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100)\t\t\t   &&bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
             }
-
-            // {
-            //     input: "if (foobarMotherfuckers (price, 100)\t\t\t &&crazyCounter) {\n}",
-            //     output: "if (foobarMotherfuckers (price, 100) && ++crazyCounter) {\n}"
-            // }
         ];
 
         testCases.forEach(testCase => {
