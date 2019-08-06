@@ -361,6 +361,18 @@ describe("[RULE] operator-whitespace: Fixes", function() {
                 input: "foo    +=    bar;",
                 output: "foo += bar;"
             },
+            {
+                input: "foo  /** **/  +=    bar;",
+                output: "foo += bar;"
+            },
+            {
+                input: "foo   += /** **/   bar;",
+                output: "foo += bar;"
+            },
+            {
+                input: "foo  /** **/ += /** **/   bar;",
+                output: "foo += bar;"
+            },
 
             // Variable declaration
             {
