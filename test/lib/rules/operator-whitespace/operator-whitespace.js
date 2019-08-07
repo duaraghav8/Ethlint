@@ -373,6 +373,10 @@ describe("[RULE] operator-whitespace: Fixes", function() {
                 input: "foo  /** **/ += /** **/   bar;",
                 output: "foo += bar;"
             },
+            {
+                input: "foo  /** += **/ += /** += **/   bar;",
+                output: "foo += bar;"
+            },
 
             // Variable declaration
             {
@@ -390,6 +394,26 @@ describe("[RULE] operator-whitespace: Fixes", function() {
             },
             {
                 input: "var a= \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a/** **/ = \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a = /** **/ \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a /** **/ = /** **/ \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a /** = **/ = /** = **/ \"hello\";",
+                output: "var a = \"hello\";"
+            },
+            {
+                input: "var a/****/=/****/\"hello\";",
                 output: "var a = \"hello\";"
             },
 
@@ -449,6 +473,10 @@ describe("[RULE] operator-whitespace: Fixes", function() {
             },
             {
                 input: "if (foo (price, 100) /** **/ &&bar) {\n}",
+                output: "if (foo (price, 100) && bar) {\n}"
+            },
+            {
+                input: "if (foo (price, 100) /** && **/ && /** && d**/ bar) {\n}",
                 output: "if (foo (price, 100) && bar) {\n}"
             }
         ];
