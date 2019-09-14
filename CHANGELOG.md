@@ -1,6 +1,7 @@
 # Changelog
 
-## 1.2.5 ()
+## 1.2.5 (2019-09-14)
+- Fixed `no-empty-blocks` to not report inherited constructors with empty blocks ([#264](https://github.com/duaraghav8/Ethlint/issues/264#issue-447647594)).
 - Added option `errorMessageMaxLength` for rule `error-reason` to specify a character limit on error message.
 
 ## 1.2.4 (2019-04-08)
