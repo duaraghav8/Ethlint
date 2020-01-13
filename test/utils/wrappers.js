@@ -33,6 +33,17 @@ module.exports = {
     },
 
     /**
+     * Wrap a solidity statement in valid contract and constructor boilerplate. 
+     * @param  {String} code Solidity snippet
+     * @return {String}      wrapped snippet
+     */
+    toConstructor: function(code) {
+        let pre = `pragma solidity ^0.4.3;${EOL.repeat(3)}contract Wrap {${EOL}\tconstructor() {${EOL}\t\t`;
+        let post = `${EOL}\t}${EOL}}`;
+        return pre + code + post;
+    },
+
+    /**
      * Prepend solidity contract / library with a pragma statement 
      * @param  {String} code Solidity snippet
      * @return {String}      snippet with pragma statement.

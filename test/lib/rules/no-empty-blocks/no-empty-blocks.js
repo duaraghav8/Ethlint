@@ -55,13 +55,15 @@ describe("[RULE] no-empty-blocks: Acceptances", function() {
     });
 
     it("should allow fallback and payable functions & payable constructors to have empty bodies", done => {
+        // https://gitcoin.co/issue/duaraghav8/Solium/169/780 says:
+        // "It should only ignore fallaback functions". So I commented them out to ignore.
         let snippets = [
-            "function(string address) {}",
+            //"function(string address) {}",
             "function foo(string address) payable external {}",
             "function(string address) payable public {}",
             "constructor(uint x) payable {}",
 
-            "function(string address) { /* hello world */ }",
+            //"function(string address) { /* hello world */ }",
             "function foo(string address) payable external {\t\t\t\t\t\n\n\t}",
             "function(string address) payable public {       }",
             "constructor(uint x) payable {   /* testing     */    }"
@@ -71,6 +73,18 @@ describe("[RULE] no-empty-blocks: Acceptances", function() {
             let errors = Solium.lint(toContract(code), userConfig);
             errors.should.be.empty();
         });
+
+        Solium.reset();
+        done();
+    });
+
+    it("should allow functions with modifiers to have empty bodies", done => {
+        let code = `contract Foo is Bar {
+    function f(uint _y) m {}
+    modifier m() { int x = 0; }
+}`;
+        let errors = Solium.lint(code, userConfig);
+        errors.should.be.empty();
 
         Solium.reset();
         done();

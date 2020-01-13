@@ -165,6 +165,44 @@ describe("[RULE] indentation: Acceptances", function() {
         done();
     });
 
+    it("should accept a file with an inline assembly", function(done) {
+        let userConfig = {
+            "rules": {
+                "indentation": "error"
+            }
+        };
+
+        let file = "assembly.sol";
+        let code = fs.readFileSync(path.join(acceptDir, file), "utf8");
+
+        let errors = Solium.lint(code, userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should accept a file with an assembly in one line", function(done) {
+        let userConfig = {
+            "rules": {
+                "indentation": "error"
+            }
+        };
+
+        let file = "one-line-assembly.sol";
+        let code = fs.readFileSync(path.join(acceptDir, file), "utf8");
+
+        let errors = Solium.lint(code, userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        Solium.reset();
+        done();
+    });
+
     it("should accept a file with an array in one line", function(done) {
         let userConfig = {
             "rules": {
@@ -352,6 +390,25 @@ describe("[RULE] indentation: Rejections", function() {
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(8);
+
+        Solium.reset();
+        done();
+    });
+
+    it("should reject an invalid file with an inline assembly", function(done) {
+        let userConfig = {
+            "rules": {
+                "indentation": "error"
+            }
+        };
+
+        let file = "assembly.sol";
+        let code = fs.readFileSync(path.join(rejectDir, file), "utf8");
+
+        let errors = Solium.lint(code, userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(4);
 
         Solium.reset();
         done();

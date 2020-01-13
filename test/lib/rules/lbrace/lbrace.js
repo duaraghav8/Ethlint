@@ -10,6 +10,7 @@ const Solium = require("../../../../lib/solium"),
 
 const toContract = wrappers.toContract,
     toFunction = wrappers.toFunction,
+    toConstructor = wrappers.toConstructor,
     addPragma = wrappers.addPragma,
     { EOL } = require("os");
 
@@ -93,6 +94,12 @@ describe("[RULE] lbrace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = `constructor (bytes32 name) {${EOL}\t/*body*/${EOL}}`;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         code = `struct Student {${EOL}\tstring name;${EOL}\tuint age;${EOL}\taddress account;${EOL}}`;
         errors = Solium.lint(toContract(code), userConfig);
 
@@ -146,6 +153,31 @@ describe("[RULE] lbrace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+
+        code = "if (true) { hello (); }",
+            errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `if (true) {${EOL}\thello ();${EOL}} else if (true) {${EOL}\tworld ();${EOL}} else {${EOL}\tfoobar ();${EOL}}`;
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "constructor () {hello ();}";
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `constructor () {${EOL}\thello ();${EOL}}`;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         Solium.reset();
         done();
     });
@@ -172,6 +204,26 @@ describe("[RULE] lbrace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+
+        //since this rule doesn't lint for indentation, only ${EOL} without \t should also be valid
+        code = `if (true)${EOL}newNumber = (10 * 78 + 982 % 6**2);${EOL}else${EOL}newNumber = 0;`;
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `if (true)${EOL}\tlaunchEvent (\"foo bar!\");`;
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `if (true)${EOL}createStructObject ({ name: \"Chuck Norris\", age: \"inf\" });`;
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         Solium.reset();
         done();
 
@@ -180,6 +232,12 @@ describe("[RULE] lbrace: Acceptances", function() {
     it("should allow functions with arguments spanning over multiple lines to NOT have opening brace on same line", function(done) {
         let code = `function lotsOfArgs (${EOL}\tuint x,${EOL}\tstring y,${EOL}\taddress z${EOL}) {${EOL}\tfoobar ();${EOL}}`,
             errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `constructor (${EOL}\tuint x,${EOL}\tstring y,${EOL}\taddress z${EOL}) {${EOL}\tfoobar ();${EOL}}`,
+        errors = Solium.lint(toContract(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
@@ -270,7 +328,13 @@ describe("[RULE] lbrace: Acceptances", function() {
 
     it("should allow opening brace to be on its own line in case a function has base constructor arguments", function(done) {
         let code = `function baseArgs ()${EOL}\tA (10)${EOL}\tB (\"hello\")${EOL}\tC (0x0)${EOL}\tD (frodo)${EOL}{${EOL}\tfoobar ();${EOL}}`,
-            errors = Solium.lint(toContract(code), userConfig);
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `constructor ()${EOL}\tA (10)${EOL}\tB (\"hello\")${EOL}\tC (0x0)${EOL}\tD (frodo)${EOL}{${EOL}\tfoobar ();${EOL}}`,
+        errors = Solium.lint(toContract(code), userConfig);
 
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
@@ -310,6 +374,36 @@ describe("[RULE] lbrace: Acceptances", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(0);
 
+        code = "if (true) {h();} else if (true) {h();} else {h();}",
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "if (true) {h();} else {h();}";
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = "if (true) {h();} else if (true) {h();}";
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `if (true) {h();} else if (true)${EOL}hello ();`;
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
+        code = `if (true) {h();} else if (true)${EOL}hello ();`;
+        errors = Solium.lint(toConstructor(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+
         Solium.reset();
         done();
     });
@@ -317,6 +411,8 @@ describe("[RULE] lbrace: Acceptances", function() {
 });
 
 
+// For rejections do not test everything for constructors, because it is the same code in lbrace.js,
+// no need to test twice. Let make just one test for a constructor to ensure it is parsed correctly.
 describe("[RULE] lbrace: Rejections", function() {
 
     it("should reject any opening brace which is not preceded by EXACTLY single space (exception: functions with modifiers)", function(done) {
@@ -587,6 +683,13 @@ describe("[RULE] lbrace: Rejections", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
 
+        
+        // just one test for constructors (see above)
+        code = `constructor (${EOL}\tuint x,${EOL}\tstring y,${EOL}\taddress z${EOL}){${EOL}\tfoobar ();${EOL}}`;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
 
         code = `function lotsOfArgs (${EOL}\tuint x,${EOL}\tstring y,${EOL}\taddress z${EOL}){${EOL}\tfoobar ();${EOL}}`;
         errors = Solium.lint(toContract(code), userConfig);
