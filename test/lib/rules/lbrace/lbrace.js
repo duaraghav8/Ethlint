@@ -10,6 +10,7 @@ const Solium = require("../../../../lib/solium"),
 
 const toContract = wrappers.toContract,
     toFunction = wrappers.toFunction,
+    toConstructor = wrappers.toConstructor,
     addPragma = wrappers.addPragma,
     { EOL } = require("os");
 
@@ -410,7 +411,8 @@ describe("[RULE] lbrace: Acceptances", function() {
 });
 
 
-// For rejections do not test for constructors, because it is the same code, no need to test twice
+// For rejections do not test everything for constructors, because it is the same code in lbrace.js,
+// no need to test twice. Let make just one test for a constructor to ensure it is parsed correctly.
 describe("[RULE] lbrace: Rejections", function() {
 
     it("should reject any opening brace which is not preceded by EXACTLY single space (exception: functions with modifiers)", function(done) {
@@ -681,6 +683,13 @@ describe("[RULE] lbrace: Rejections", function() {
         errors.constructor.name.should.equal("Array");
         errors.length.should.equal(1);
 
+        
+        // just one test for constructors (see above)
+        code = `constructor (${EOL}\tuint x,${EOL}\tstring y,${EOL}\taddress z${EOL}){${EOL}\tfoobar ();${EOL}}`;
+        errors = Solium.lint(toContract(code), userConfig);
+
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(1);
 
         code = `function lotsOfArgs (${EOL}\tuint x,${EOL}\tstring y,${EOL}\taddress z${EOL}){${EOL}\tfoobar ();${EOL}}`;
         errors = Solium.lint(toContract(code), userConfig);
