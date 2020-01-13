@@ -191,7 +191,7 @@ describe("[RULE] indentation: Acceptances", function() {
             }
         };
 
-        let file = "one-line-struct.sol";
+        let file = "one-line-assembly.sol";
         let code = fs.readFileSync(path.join(acceptDir, file), "utf8");
 
         let errors = Solium.lint(code, userConfig);
