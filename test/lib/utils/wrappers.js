@@ -68,6 +68,26 @@ describe("Test wrappers", function() {
         done();
     });
 
+    it("toConstructor: should correctly wrap a solidity statement in contract/constructor code", function(done) {
+        let toConstructor = wrappers.toConstructor;
+        let statement = "uint x = 1;";
+        let expected = 
+            `pragma solidity ^0.4.3;${EOL.repeat(3)}` +
+            `contract Wrap {${EOL}` +
+            `\tconstructor() {${EOL}` +
+            "\t\t" + statement + EOL +
+            `\t}${EOL}` +
+            "}";
+
+        let errors = Solium.lint(expected, userConfig);
+        errors.constructor.name.should.equal("Array");
+        errors.length.should.equal(0);
+        toConstructor(statement).should.equal(expected);
+
+        Solium.reset();
+        done();
+    });
+
     it("addPragma: should correctly pre-pend a pragma statement to a solidity contract or library", function(done) {
         let addPragma = wrappers.addPragma;
         let contract = "contract Abc { }";
