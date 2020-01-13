@@ -15,6 +15,18 @@ library GetCode {
                 sum := add(sum, mload(data))
             }
 
+            for
+                {
+                    let end := add(data, mul(len, 0x20))
+                }
+                lt(data, end)
+                {
+                    data := add(data, 0x20)
+                }
+            {
+                sum := add(sum, mload(data))
+            }
+
             for { let end := add(data, mul(len, 0x20)) } lt(data, end) { data := add(data, 0x20) }
             {
                 sum := add(sum, mload(data))
