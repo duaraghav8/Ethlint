@@ -24,7 +24,7 @@ For backward-compatibility, you can still use `npm install -g solium`.
 If you're currently using the `solium` package for `npm install`, it is highly recommended that you move to `ethlint`. The `solium` package will not receive updates after December, 2019. There are no differences between the updates pushed to `ethlint` and `solium` packages.
 
 ## Usage
-In the root directory of your DApp:
+In the root directory of your DApp, run:
 ```bash
 solium --init
 ```
