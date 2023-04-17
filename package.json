@@ -52,7 +52,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "eslint": "^4.13.0",
-    "mocha": "^3.4.2",
+    "mocha": "^10.2.0",
     "nyc": "^11.2.1",
     "should": "^11.0.0",
     "solium-config-test": "0.0.1",
