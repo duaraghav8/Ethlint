@@ -40,6 +40,22 @@ describe("[RULE] whitespace: Acceptances", function() {
         done();
     });
 
+    it("should not crash on dynamic array types in abi.decode", function(done) {
+        let code = "pragma solidity 0.5.7;\n" +
+            "pragma experimental \"ABIEncoderV2\";\n\n" +
+            "contract Decoder {\n" +
+            "  function interpret(bytes memory input) public {\n" +
+            "    uint256[] memory ret = abi.decode(input, (uint256[]));\n" +
+            "  }\n" +
+            "}";
+        let errors = Solium.lint(code, userConfig);
+
+        errors.constructor.name.should.equal("Array");
+
+        Solium.reset();
+        done();
+    });
+
     it("should allow function / event calls with no extraneous whitespace", function(done) {
         let code = "spam(ham[1], Coin({name: \"ham\"}));",
             errors = Solium.lint(toFunction(code), userConfig);
